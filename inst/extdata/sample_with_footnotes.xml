@@ -1,0 +1,106 @@
+<article dtd-version="1.0" article-type="research-article">
+   <front>
+      <journal-meta>
+         <journal-id xmlns:xlink="http://www.w3.org/1999/xlink" journal-id-type="jstor">washhistq</journal-id>
+         <journal-id xmlns:xlink="http://www.w3.org/1999/xlink" journal-id-type="jstor">j50000665</journal-id>
+         <journal-title-group xmlns:xlink="http://www.w3.org/1999/xlink">
+            <journal-title>The Washington Historical Quarterly</journal-title>
+         </journal-title-group>
+         <publisher>
+            <publisher-name>The Washington University State Historical Society</publisher-name>
+         </publisher>
+         <issn xmlns:xlink="http://www.w3.org/1999/xlink" pub-type="ppub">03616223</issn>
+      </journal-meta>
+      <article-meta>
+         <article-id xmlns:xlink="http://www.w3.org/1999/xlink" pub-id-type="jstor">40428382</article-id>
+         <article-categories>
+            <subj-group>
+               <subject>Documents</subject>
+            </subj-group>
+         </article-categories>
+         <title-group>
+            <article-title>The Nisqually Journal (Continued)</article-title>
+         </title-group>
+         <contrib-group>
+            <contrib>
+               <string-name xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <given-names>Victor J.</given-names>
+                  <surname>Farrar</surname>
+               </string-name>
+            </contrib>
+         </contrib-group>
+         <pub-date xmlns:xlink="http://www.w3.org/1999/xlink">
+            <day>1</day>
+            <month>4</month>
+            <year>1922</year>
+         </pub-date>
+         <volume>13</volume>
+         <issue>2</issue>
+         <issue-id xmlns:xlink="http://www.w3.org/1999/xlink">i40019384</issue-id>
+         <fpage>131</fpage>
+         <lpage>141</lpage>
+         <self-uri xmlns:xlink="http://www.w3.org/1999/xlink"
+                   xlink:href="http://www.jstor.org/stable/40428382"/>
+         <custom-meta-group xmlns:xlink="http://www.w3.org/1999/xlink">
+            <custom-meta>
+               <meta-name>lang</meta-name>
+               <meta-value>eng</meta-value>
+            </custom-meta>
+         </custom-meta-group>
+      </article-meta>
+   </front>
+   <back>
+      <fn-group xmlns:xlink="http://www.w3.org/1999/xlink">
+         <title>[Footnotes]</title>
+         <fn id="d10354e110a1310">
+            <label>9</label>
+            <p>
+               <mixed-citation id="d10354e117" publication-type="other">
+Quarterly, vol. XIII, no. 1,
+entries for April 19 and 21.</mixed-citation>
+            </p>
+         </fn>
+         <fn id="d10354e127a1310">
+            <label>10</label>
+            <p>
+               <mixed-citation id="d10354e134" publication-type="other">
+Quarterly, vol. XIII,
+no. 1, p. 8.</mixed-citation>
+            </p>
+         </fn>
+         <fn id="d10354e144a1310">
+            <label>14</label>
+            <p>
+               <mixed-citation id="d10354e151" publication-type="other">
+Quarterly, vol. VIII, no. 1.</mixed-citation>
+            </p>
+            <p>
+               <mixed-citation id="d10354e157" publication-type="other">
+Olympia Columbian, Sept. 11, 1852,</mixed-citation>
+            </p>
+         </fn>
+         <fn id="d10354e164a1310">
+            <label>26</label>
+            <p>
+               <mixed-citation id="d10354e171" publication-type="other">
+Quarterly, vol. XII,
+no. 2, p. 141.</mixed-citation>
+            </p>
+         </fn>
+         <fn id="d10354e182a1310">
+            <label>32</label>
+            <p>
+               <mixed-citation id="d10354e189" publication-type="other">
+Dr. David S. Maynard, later (March 31, 1852)</mixed-citation>
+            </p>
+         </fn>
+         <fn id="d10354e196a1310">
+            <label>34</label>
+            <p>
+               <mixed-citation id="d10354e203" publication-type="other">
+Thomas Linklater, Shepherd, since October 6, 1849,</mixed-citation>
+            </p>
+         </fn>
+      </fn-group>
+   </back>
+</article>

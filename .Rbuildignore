@@ -1,0 +1,6 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+
+^dev_scripts$
+^\.travis\.yml$
+^LICENSE\.md$

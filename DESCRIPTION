@@ -1,0 +1,23 @@
+Package: jstor
+Title: Functions for importing data from JSTOR
+Version: 0.2.2.9000
+Authors@R: person("Thomas", "Klebel", email = "thomas.klebel@uni-graz.at", role = c("aut", "cre"))
+Description: Extract information from metadata, which is of interest to us.
+Depends: R (>= 3.3.2)
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: dplyr, 
+    purrr,
+    xml2,
+    magrittr,
+    stringr,
+    readr,
+    tidyr
+Suggests: testthat,
+    covr,
+    knitr,
+    rmarkdown
+RoxygenNote: 6.0.1
+Roxygen: list(markdown = TRUE)
+VignetteBuilder: knitr
