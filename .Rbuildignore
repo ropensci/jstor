@@ -4,3 +4,4 @@
 ^dev_scripts$
 ^\.travis\.yml$
 ^LICENSE\.md$
+^appveyor\.yml$
