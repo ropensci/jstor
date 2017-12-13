@@ -1,0 +1,60 @@
+---
+title: "Automating File Import"
+author: "Thomas Klebel"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Intro
+```{r}
+library(stringr)
+```
+
+# List files
+From my knowledge, there are two ways to generate a list of all files: 
+`list.files` or using `system` in conjunction with `find` on unix-like systems.
+
+```{r, echo=FALSE}
+my_dir <- system.file("extdata", package = "jstor")
+```
+
+## `list.files`
+
+```{r}
+file_names_listed <- list.files(path = my_dir, full.names = T, pattern = "*.xml")
+file_names_listed
+```
+
+## `system` and `find`
+```{r}
+file_names <- system(paste0("cd ", my_dir, "; find . -name '*.xml' -type f"), intern = TRUE)
+```
+
+```{r}
+file_names_system <- file_names %>%
+  str_replace("^\\.\\/", "") %>%
+  str_c(my_dir, "/", .)
+file_names_system
+```
+
+In this case the two approaches give the same result.
+```{r}
+identical(file_names_listed, file_names_system)
+```
+
+The main difference seems to be though, that `list.files` sorts the output, 
+wherase `find` does not. For a large amout of files (200,000) this makes a
+difference, for smaller datasets the difference shouldn't make an impact.
+
+# Batch import
