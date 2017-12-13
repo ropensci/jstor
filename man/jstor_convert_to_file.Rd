@@ -5,7 +5,7 @@
 \title{Batch import data}
 \usage{
 jstor_convert_to_file(file_paths, chunk_number, path, fun, col_names = FALSE,
-  cores = getOption("mc.cores", 2L))
+  cores = getOption("mc.cores", 1L))
 }
 \arguments{
 \item{file_paths}{A character vector of file-paths.}

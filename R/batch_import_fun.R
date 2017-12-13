@@ -16,7 +16,7 @@
 #' @export
 jstor_convert_to_file <- function(file_paths, chunk_number, path, fun,
                                   col_names = FALSE,
-                                  cores = getOption("mc.cores", 2L)) {
+                                  cores = getOption("mc.cores", 1L)) {
   safe_fun <- purrr::safely(fun)
 
   raw_result <- parallel::mclapply(file_paths, safe_fun, mc.cores = cores) %>%
@@ -78,7 +78,7 @@ jstor_convert_to_file <- function(file_paths, chunk_number, path, fun,
 #' @export
 jstor_import_wrapper <- function(file_paths, out_file, path = NULL, .f,
                                  files_per_batch = 4000,
-                                 cores = getOption("mc.cores", 2L)) {
+                                 cores = getOption("mc.cores", 1L)) {
 
   file_list <- split(file_paths, ceiling(seq_along(file_paths)/files_per_batch))
   chunk_numbers <- unique(names(file_list)) %>% as.list()
