@@ -5,7 +5,7 @@
 \title{Wrapper for file conversion}
 \usage{
 jstor_import_wrapper(in_paths, out_file, out_path = NULL, .f,
-  files_per_batch = 4000, cores = getOption("mc.cores", 1L))
+  files_per_batch = 10000, cores = getOption("mc.cores", 1L))
 }
 \arguments{
 \item{in_paths}{A character vector to the \code{xml}-files which should be imported}

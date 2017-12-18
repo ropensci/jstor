@@ -82,7 +82,7 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #'
 #' @export
 jstor_import_wrapper <- function(in_paths, out_file, out_path = NULL, .f,
-                                 files_per_batch = 4000,
+                                 files_per_batch = 10000,
                                  cores = getOption("mc.cores", 1L)) {
 
   file_list <- split(in_paths, ceiling(seq_along(in_paths)/files_per_batch))
