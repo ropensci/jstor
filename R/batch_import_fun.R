@@ -2,10 +2,10 @@
 #'
 #' This function does the heavy lifting of importing all data.
 #'
-#' @param file_paths A character vector of file-paths.
+#' @param in_paths A character vector of file-paths.
 #' @param chunk_number An integer, specifying the number of the chunk. Will be
 #' appended to the output-file.
-#' @param path The path where the files should be written to. Should include the
+#' @param out_path The path where the files should be written to. Should include the
 #' basename for the files too, i.e. `path/to/outfiles/meta_data`.
 #' @param fun The function to use when importing files, i.e. `find_meta`,
 #' `find_authors` and `read_full_text`.
@@ -14,12 +14,12 @@
 #' @param cores Number of cores to use for parallel processing.
 #'
 #' @export
-jstor_convert_to_file <- function(file_paths, chunk_number, path, fun,
+jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
                                   col_names = FALSE,
                                   cores = getOption("mc.cores", 1L)) {
   safe_fun <- purrr::safely(fun)
 
-  raw_result <- parallel::mclapply(file_paths, safe_fun, mc.cores = cores) %>%
+  raw_result <- parallel::mclapply(in_paths, safe_fun, mc.cores = cores) %>%
     purrr::transpose()
 
   is_ok <- raw_result[["error"]] %>%
@@ -31,7 +31,7 @@ jstor_convert_to_file <- function(file_paths, chunk_number, path, fun,
   res_ok <- res[is_ok] %>%
     dplyr::bind_rows()
 
-  write_csv(res_ok, path = paste0(path, "-", chunk_number, ".csv"),
+  write_csv(res_ok, path = paste0(out_path, "-", chunk_number, ".csv"),
             na = "", col_names = col_names)
 
   # in case we have errors, write them to file too
@@ -51,7 +51,7 @@ jstor_convert_to_file <- function(file_paths, chunk_number, path, fun,
     # combine ids with error messages
     res_error <- dplyr::bind_cols(error_ids, error_message = error_message)
 
-    write_csv(res_error, path = paste0(path, "_broken-", chunk_number, ".csv"),
+    write_csv(res_error, path = paste0(out_path, "_broken-", chunk_number, ".csv"),
               na = "", col_names = TRUE)
 
   } # end of "in case we have errors"

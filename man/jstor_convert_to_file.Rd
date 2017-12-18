@@ -4,16 +4,16 @@
 \alias{jstor_convert_to_file}
 \title{Batch import data}
 \usage{
-jstor_convert_to_file(file_paths, chunk_number, path, fun, col_names = FALSE,
-  cores = getOption("mc.cores", 1L))
+jstor_convert_to_file(in_paths, chunk_number, out_path, fun,
+  col_names = FALSE, cores = getOption("mc.cores", 1L))
 }
 \arguments{
-\item{file_paths}{A character vector of file-paths.}
+\item{in_paths}{A character vector of file-paths.}
 
 \item{chunk_number}{An integer, specifying the number of the chunk. Will be
 appended to the output-file.}
 
-\item{path}{The path where the files should be written to. Should include the
+\item{out_path}{The path where the files should be written to. Should include the
 basename for the files too, i.e. \code{path/to/outfiles/meta_data}.}
 
 \item{fun}{The function to use when importing files, i.e. \code{find_meta},
