@@ -17,6 +17,11 @@
 jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
                                   col_names = FALSE,
                                   cores = getOption("mc.cores", 1L)) {
+  if (.Platform$OS.type == "windows" & cores > 1) {
+    cores <- 1L
+    message("Parallel processing is currently not supported on windows. Computing with single core.")
+  }
+  
   safe_fun <- purrr::safely(fun)
 
   raw_result <- parallel::mclapply(in_paths, safe_fun, mc.cores = cores) %>%
