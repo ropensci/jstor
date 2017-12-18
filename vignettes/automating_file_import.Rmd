@@ -17,8 +17,19 @@ knitr::opts_chunk$set(
 ```
 
 # Intro
-```{r}
+The `find_*` functions from `jstor` all work on a single file. Data from DfR
+however contains many single files, from up to 25,000 when using the self-service
+functions, up to several hundreds of thousands of files when requesting a large
+dataset via an agreement.
+
+In this vignette I will introduce _one_ way to deal with this large amount of
+files. I start with how to list all corresponding files and follow up with some
+utility functions implemented in `jstor`.
+
+```{r, echo=FALSE}
 library(stringr)
+library(purrr)
+library(jstor)
 ```
 
 # List files
@@ -58,3 +69,59 @@ wherase `find` does not. For a large amout of files (200,000) this makes a
 difference, for smaller datasets the difference shouldn't make an impact.
 
 # Batch import
+Once the file list is generated, we can apply any of the `find_*`-functions to
+the list. A good and simple way for small to moderate amounts of files is to use
+`map_df` from purrr:
+
+```{r}
+result <- file_names_system %>% 
+  map_df(find_meta)
+
+tibble::as_tibble(result)
+```
+
+This works well if 1) there are no errors and 2) if there is only a moderate
+size of files. If you try to import many files, you could either run into
+problems regarding RAM, or it would take a long time and would benefit from
+parallising the process.
+
+The function `jstor_convert_to_file` takes care of errors and uses
+`parallel::mclapply` to speed up the process. Because of this, parallel processing
+on windows is currently not implemented.
+
+The whole approach about importing many files is implemented like this:
+
+- list all files which are to be converted
+- split this list of files into batches of reasonable size
+- apply on each batch the following process:
+    + import and convert data in parallel
+    + write the result into a single .csv-file
+    + write any errors in a separate .csv-file
+    
+The easiest way to acheive this pipeline is by using `jstor_import_wrapper`. It
+takes up to six arguments:
+
+- *in_paths*: this should be a character fector of all `xml-`files you want to
+import
+- *out_file*: the filename for the resulting `.csv-`files. 
+- *out_path*: in case you want to export the files to a specific diretory, 
+specify it here.
+- *.f*: the function to use (one of `find_meta`, `find_authors`, `find_references`,
+or `find_footnotes`)
+- *files_per_batch*: how many files shoud be converted per batch? For my system,
+20,000 files per batch worked well.
+- *cores* number of cores to use for parallel processing (not on windows).
+
+You could specify all parameters like this:
+```{r, eval=FALSE}
+jstor_import_wrapper(in_paths = vector_of_all_my_files, out_file = "metadata",
+                     out_path = "path/to/out/dir", .f = find_meta,
+                     files_per_batch = 20000, cores = 4)
+```
+
+Suppose you had 100,000 files to convert, and no errors happend, then you should
+have in your `"path/to/out/dir"` the following five files:
+```{r, echo=FALSE}
+paste0("metadata-", 1:5, ".csv")
+```
+
