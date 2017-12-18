@@ -4,16 +4,16 @@
 \alias{jstor_import_wrapper}
 \title{Wrapper for file conversion}
 \usage{
-jstor_import_wrapper(file_paths, out_file, path = NULL, .f,
+jstor_import_wrapper(in_paths, out_file, out_path = NULL, .f,
   files_per_batch = 4000, cores = getOption("mc.cores", 1L))
 }
 \arguments{
-\item{file_paths}{A character vector to the \code{xml}-files which should be imported}
+\item{in_paths}{A character vector to the \code{xml}-files which should be imported}
 
 \item{out_file}{Name of files to export to. Each batch gets appended by an
 increasing number.}
 
-\item{path}{Path to export files to (combined with filename).}
+\item{out_path}{Path to export files to (combined with filename).}
 
 \item{.f}{Function to use for import. Can be one of \code{find_meta}, \code{find_authors},
 \code{find_references} or \code{find_footnotes}.}

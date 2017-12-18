@@ -69,10 +69,10 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' This function applies an import function to a list of `xml`-files and saves
 #' them in batches of .csv-files to disk.
 #'
-#' @param file_paths A character vector to the `xml`-files which should be imported
+#' @param in_paths A character vector to the `xml`-files which should be imported
 #' @param out_file Name of files to export to. Each batch gets appended by an
 #' increasing number.
-#' @param path Path to export files to (combined with filename).
+#' @param out_path Path to export files to (combined with filename).
 #' @param .f Function to use for import. Can be one of `find_meta`, `find_authors`,
 #' `find_references` or `find_footnotes`.
 #' @param files_per_batch Number of files for each batch.
@@ -81,15 +81,15 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' @return Writes .csv-files to disk.
 #'
 #' @export
-jstor_import_wrapper <- function(file_paths, out_file, path = NULL, .f,
+jstor_import_wrapper <- function(in_paths, out_file, out_path = NULL, .f,
                                  files_per_batch = 4000,
                                  cores = getOption("mc.cores", 1L)) {
 
-  file_list <- split(file_paths, ceiling(seq_along(file_paths)/files_per_batch))
+  file_list <- split(in_paths, ceiling(seq_along(in_paths)/files_per_batch))
   chunk_numbers <- unique(names(file_list)) %>% as.list()
 
-  if (!is.null(path)) {
-    out_file <- file.path(path, out_file)
+  if (!is.null(out_path)) {
+    out_file <- file.path(out_path, out_file)
   }
 
   purrr::pwalk(list(file_list, chunk_numbers, out_file, list(.f), cores = cores),
