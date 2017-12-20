@@ -48,22 +48,20 @@ file_names_listed
 ```
 
 ## `system` and `find`
-```{r}
+```{r, eval=FALSE}
 file_names <- system(paste0("cd ", my_dir, "; find . -name '*.xml' -type f"), intern = TRUE)
 ```
 
-```{r}
+```{r, eval=FALSE}
 file_names_system <- file_names %>%
   str_replace("^\\.\\/", "") %>%
   str_c(my_dir, "/", .)
 file_names_system
+#> [1] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_footnotes.xml" 
+#> [2] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_references.xml"
 ```
 
 In this case the two approaches give the same result.
-```{r}
-identical(file_names_listed, file_names_system)
-```
-
 The main difference seems to be though, that `list.files` sorts the output, 
 wherase `find` does not. For a large amout of files (200,000) this makes a
 difference, for smaller datasets the difference shouldn't make an impact.
@@ -74,7 +72,7 @@ the list. A good and simple way for small to moderate amounts of files is to use
 `map_df` from purrr:
 
 ```{r}
-result <- file_names_system %>% 
+result <- file_names_listed %>% 
   map_df(find_meta)
 
 tibble::as_tibble(result)
