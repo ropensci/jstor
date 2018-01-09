@@ -61,16 +61,12 @@ library(dplyr)
 ```
 
 
-```{r, echo=FALSE}
-example_file <- system.file("extdata", "sample_with_references.xml", package = "jstor")
-```
-
 
 ### `find_meta`
 The basic usage of the `find_*` functions is very simple. They take only one 
 argument, the path to the file to import:
 ```{r}
-meta_data <- find_meta(file_path = example_file)
+meta_data <- find_meta(file_path = jstor_example("sample_with_references.xml"))
 ```
 
 The resulting object is a `data.frame` with one row and 12 columns. The columns
@@ -104,7 +100,7 @@ meta_data %>%
 Extracting the authors works in similar fashion:
 
 ```{r, results='asis'}
-authors <- find_authors(example_file)
+authors <- find_authors(jstor_example("sample_with_references.xml"))
 knitr::kable(authors)
 ```
 
@@ -123,7 +119,7 @@ The number of rows matches the number of authors -- each author get its' own row
 
 ### `find_references`
 ```{r}
-references <- find_references(example_file)
+references <- find_references(jstor_example("sample_with_references.xml"))
 ```
 
 We have three columns:
@@ -156,7 +152,7 @@ contain only the first author, or none. Use at your own discretion.
 
 ### `find_footnotes`
 ```{r}
-find_footnotes(example_file)
+find_footnotes(jstor_example("sample_with_references.xml"))
 ```
 
 Very commonly, articles either have footnotes or references. The sample file
@@ -165,12 +161,8 @@ footnotes is returned.
 
 I will use another file to demonstrate footnotes.
 
-```{r, echo=FALSE}
-example_footnotes <- system.file("extdata", "sample_with_footnotes.xml", package = "jstor")
-```
-
 ```{r}
-footnotes <- find_footnotes(example_footnotes)
+footnotes <- find_footnotes(jstor_example("sample_with_footnotes.xml"))
 footnotes
 ```
 
