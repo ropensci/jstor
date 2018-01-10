@@ -13,8 +13,7 @@ Imports: dplyr,
     xml2,
     magrittr,
     stringr,
-    readr,
-    tidyr
+    readr
 Suggests: testthat,
     covr,
     knitr,
