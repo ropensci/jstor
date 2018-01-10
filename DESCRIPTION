@@ -20,6 +20,8 @@ Suggests: testthat,
     knitr,
     rmarkdown,
     tibble
+BugReports: https://github.com/tklebel/jstor/issues
+URL: https://github.com/tklebel/jstor
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
