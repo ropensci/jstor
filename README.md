@@ -11,7 +11,7 @@ The package `jstor` provides functions and suggests workflows for importing data
 
 The most important set of functions is a group of `find_*` functions:
 
--   `find_meta`
+-   `find_metadata`
 -   `find_authors`
 -   `find_references`
 -   `find_footnotes`
@@ -45,7 +45,7 @@ library(jstor)
 The basic usage is simple: supply one of the `find_*`-functions with a path and it will return a data.frame with the extracted information.
 
 ``` r
-find_meta(jstor_example("sample_with_references.xml"))
+find_metadata(jstor_example("sample_with_references.xml"))
 #>         journal_id            basename_id      article_id
 #> 1 tranamermicrsoci sample_with_references 10.2307/3221896
 #>                        article_title volume issue language pub_day

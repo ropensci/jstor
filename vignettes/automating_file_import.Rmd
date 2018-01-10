@@ -84,7 +84,7 @@ library(jstor)
 library(purrr)
 
 result <- file_names_listed %>% 
-  map_df(find_meta)
+  map_df(find_metadata)
 
 tibble::as_tibble(result)
 ```
@@ -117,7 +117,7 @@ import
 - *out_file*: the filename for the resulting `.csv-`files. 
 - *out_path*: in case you want to export the files to a specific diretory, 
 specify it here.
-- *.f*: the function to use (one of `find_meta`, `find_authors`, `find_references`,
+- *.f*: the function to use (one of `find_metadata`, `find_authors`, `find_references`,
 or `find_footnotes`)
 - *files_per_batch*: how many files shoud be converted per batch? For my system,
 20,000 files per batch worked well.
@@ -126,7 +126,7 @@ or `find_footnotes`)
 You can specify all parameters like this:
 ```{r, eval=FALSE}
 jstor_import_wrapper(in_paths = vector_of_all_my_files, out_file = "metadata",
-                     out_path = "path/to/out/dir", .f = find_meta,
+                     out_path = "path/to/out/dir", .f = find_metadata,
                      files_per_batch = 20000, cores = 4)
 ```
 

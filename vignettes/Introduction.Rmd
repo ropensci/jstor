@@ -31,7 +31,7 @@ ones as well.
 
 The most important set of functions is a group of `find_*` functions:
 
-- `find_meta`
+- `find_metadata`
 - `find_authors`
 - `find_references`
 - `find_footnotes`
@@ -62,11 +62,11 @@ library(dplyr)
 
 
 
-### `find_meta`
+### `find_metadata`
 The basic usage of the `find_*` functions is very simple. They take only one 
 argument, the path to the file to import:
 ```{r}
-meta_data <- find_meta(file_path = jstor_example("sample_with_references.xml"))
+meta_data <- find_metadata(file_path = jstor_example("sample_with_references.xml"))
 ```
 
 The resulting object is a `data.frame` with one row and 12 columns. The columns

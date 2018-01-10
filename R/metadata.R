@@ -1,6 +1,6 @@
 #' Extract meta information
 #'
-#' `find_meta()` extracts meta-data from JSTOR-XML files.
+#' `find_metadata()` extracts meta-data from JSTOR-XML files.
 #'
 #' **Publication dates**:
 #'
@@ -8,14 +8,14 @@
 #' date, in case there is more than one date.
 #'
 #' @param file_path A file from JSTOR containing meta-data which can be read in with
-#' [xml2::read_xml()]. `find_meta` takes care of importing the file.
+#' [xml2::read_xml()]. `find_metadata` takes care of importing the file.
 #'
 #' @return A `tibble` containing the extracted meta-data.
 #'
 #' @export
 #' @examples 
-#' find_meta(jstor_example("sample_with_references.xml"))
-find_meta <- function(file_path) {
+#' find_metadata(jstor_example("sample_with_references.xml"))
+find_metadata <- function(file_path) {
   validate_file_path(file_path, "xml")
 
   xml_file <- xml2::read_xml(file_path)
