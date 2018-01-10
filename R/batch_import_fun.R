@@ -43,7 +43,7 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
   if (sum(!is_ok) > 0) {
 
     # find error-id
-    error_ids <- data_frame(id = 1:length(is_ok),
+    error_ids <- data_frame(id = seq_along(is_ok),
                             is_ok = is_ok) %>%
       dplyr::filter(!is_ok) %>%
       dplyr::select(-is_ok)
