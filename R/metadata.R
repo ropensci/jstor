@@ -28,7 +28,7 @@ find_metadata <- function(file_path) {
   last_page <- extract_page(article, "lpage")
 
 
-  data.frame(
+  out <- data.frame(
     journal_id = extract_jcode(front),
     basename_id = extract_basename(file_path, type = "xml"),
     article_id = extract_from_article(article, "article-id"),
@@ -45,6 +45,8 @@ find_metadata <- function(file_path) {
     last_page = last_page,
     stringsAsFactors = FALSE
   )
+  
+  structure(out, class = c("jstor", "data.frame"))
 }
 
 

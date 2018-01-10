@@ -18,7 +18,8 @@ find_footnotes <- function(file_path) {
   out <- data.frame(basename_id = extract_basename(file_path, type = "xml"),
                     footnotes = extract_footnotes(xml_file),
                     stringsAsFactors = FALSE)
-  out
+  
+  structure(out, class = c("jstor", "data.frame"))
 }
 
 

@@ -30,7 +30,8 @@ find_references <- function(file_path) {
   out <- data.frame(basename_id = extract_basename(file_path, type = "xml"),
                     list(extract_references(xml_file)),
                     stringsAsFactors = FALSE)
-  out
+  
+  structure(out, class = c("jstor", "data.frame"))
 }
 
 
