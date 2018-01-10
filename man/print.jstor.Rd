@@ -2,14 +2,16 @@
 % Please edit documentation in R/print.R
 \name{print.jstor}
 \alias{print.jstor}
-\title{Print results in a pretty way}
+\title{Print results in a pretty way.}
 \usage{
 \method{print}{jstor}(x, ...)
 }
 \arguments{
 \item{x}{A jstor object, created via one of the \code{find_*}-functions.}
+
+\item{...}{Arguments which can be passed down to \link[tibble:format.tbl]{tibble::format.tbl}.}
 }
 \description{
-Print results in a pretty way
+This print method simply leverages the functionality of \code{tibble} for printing,
+without sacrificing speed when computing results with \code{find_*}-variants.
 }
-\keyword{internal}
