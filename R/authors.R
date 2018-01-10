@@ -37,7 +37,7 @@ find_authors <- function(file_path) {
     stringsAsFactors = FALSE
   )
 
-  out
+  structure(out, class = c("jstor", "data.frame"))
 }
 
 
