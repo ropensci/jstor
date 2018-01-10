@@ -32,3 +32,6 @@ With this approach some information is omitted: some authors may have a suffix
 to their name, like \emph{Jr}, or like \emph{III} (i.e. William the Third).
 Those are currently not being extracted.
 }
+\examples{
+find_authors(jstor_example("sample_with_references.xml"))
+}

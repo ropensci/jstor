@@ -20,6 +20,8 @@
 #' authors, there might be only the first author in `author_names`.
 
 #' @export
+#' @examples 
+#' find_references(jstor_example("sample_with_references.xml"))
 find_references <- function(file_path) {
   validate_file_path(file_path, "xml")
 

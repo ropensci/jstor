@@ -29,3 +29,6 @@ authors, there might be only the first author in \code{author_names}.
 This function extracts the content of \code{ref-list} within the \code{xml}-file. If
 there are no references, a single \code{NA} is returend.
 }
+\examples{
+find_references(jstor_example("sample_with_references.xml"))
+}

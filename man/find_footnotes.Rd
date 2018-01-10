@@ -17,3 +17,6 @@ A \code{tibble} containing the footnotes
 This function extracts the content of \code{fn-group} within the \code{xml}-file. If
 there are no footnotes, \code{NA} is returend.
 }
+\examples{
+find_footnotes(jstor_example("sample_with_footnotes.xml"))
+}

@@ -13,6 +13,8 @@
 #' @return A `tibble` containing the extracted meta-data.
 #'
 #' @export
+#' @examples 
+#' find_meta(jstor_example("sample_with_references.xml"))
 find_meta <- function(file_path) {
   validate_file_path(file_path, "xml")
 

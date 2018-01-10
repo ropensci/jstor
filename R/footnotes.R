@@ -8,6 +8,8 @@
 #'
 #' @return A `tibble` containing the footnotes
 #' @export
+#' @examples 
+#' find_footnotes(jstor_example("sample_with_footnotes.xml"))
 find_footnotes <- function(file_path) {
   validate_file_path(file_path, "xml")
 

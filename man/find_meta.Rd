@@ -22,3 +22,6 @@ A \code{tibble} containing the extracted meta-data.
 Always the first entry is being extracted, which should correspond to the oldest
 date, in case there is more than one date.
 }
+\examples{
+find_meta(jstor_example("sample_with_references.xml"))
+}

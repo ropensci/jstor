@@ -21,6 +21,8 @@
 #' @return A `tibble` containing the extracted authors
 #'
 #' @export
+#' @examples 
+#' find_authors(jstor_example("sample_with_references.xml"))
 find_authors <- function(file_path) {
   validate_file_path(file_path, "xml")
 
