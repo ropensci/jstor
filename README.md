@@ -45,19 +45,20 @@ library(jstor)
 The basic usage is simple: supply one of the `find_*`-functions with a path and it will return a data.frame with the extracted information.
 
 ``` r
-find_metadata(jstor_example("sample_with_references.xml"))
-#>         journal_id            basename_id      article_id
-#> 1 tranamermicrsoci sample_with_references 10.2307/3221896
-#>                        article_title volume issue language pub_day
-#> 1 On the Protozoa Parasitic in Frogs     41     2      eng       1
-#>   pub_month pub_year first_page last_page
-#> 1         4     1922         59        76
-
-find_authors(jstor_example("sample_with_references.xml"))
-#>              basename_id prefix given_name surname string_name suffix
-#> 1 sample_with_references   <NA>         R.    Kudo        <NA>   <NA>
-#>   author_number
-#> 1             1
+find_metadata(jstor_example("sample_with_references.xml")) %>% knitr::kable()
 ```
+
+| journal\_id      | basename\_id             | article\_id     | article\_title                     | volume | issue | language |  pub\_day|  pub\_month|  pub\_year|  first\_page|  last\_page|
+|:-----------------|:-------------------------|:----------------|:-----------------------------------|:-------|:------|:---------|---------:|-----------:|----------:|------------:|-----------:|
+| tranamermicrsoci | sample\_with\_references | 10.2307/3221896 | On the Protozoa Parasitic in Frogs | 41     | 2     | eng      |         1|           4|       1922|           59|          76|
+
+``` r
+
+find_authors(jstor_example("sample_with_references.xml")) %>% knitr::kable()
+```
+
+| basename\_id             | prefix | given\_name | surname | string\_name | suffix |  author\_number|
+|:-------------------------|:-------|:------------|:--------|:-------------|:-------|---------------:|
+| sample\_with\_references | NA     | R.          | Kudo    | NA           | NA     |               1|
 
 Further explanations, especially on how to use jstor's functions for importing many files, can be found in the vignettes.

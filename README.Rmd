@@ -60,10 +60,10 @@ library(jstor)
 
 The basic usage is simple: supply one of the `find_*`-functions with a path and
 it will return a data.frame with the extracted information.
-```{r}
-find_metadata(jstor_example("sample_with_references.xml"))
+```{r, results='asis'}
+find_metadata(jstor_example("sample_with_references.xml")) %>% knitr::kable()
 
-find_authors(jstor_example("sample_with_references.xml"))
+find_authors(jstor_example("sample_with_references.xml")) %>% knitr::kable()
 ```
 
 Further explanations, especially on how to use jstor's functions for importing
