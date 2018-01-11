@@ -6,3 +6,4 @@
 ^LICENSE\.md$
 ^appveyor\.yml$
 ^README\.Rmd$
+^codecov\.yml$
