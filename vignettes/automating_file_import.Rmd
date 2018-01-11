@@ -100,7 +100,7 @@ on windows, there is currently no support for parallel processing on windows wit
 `jstor_convert_to_file`. Obviously, you could write your own implementation using
 a different engine that works on windows.
 
-The whole approach about importing many files is implemented like this:
+A complete pipeline for importing many files can be implemented like this:
 
 - list all files which are to be converted
 - split this list of files into batches of reasonable size
