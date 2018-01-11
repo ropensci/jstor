@@ -21,9 +21,6 @@ knitr::opts_chunk$set(
 The tool [Data for Research (DfR)](http://www.jstor.org/dfr/) by JSTOR is a
 valuable source for citation analysis and text mining. `jstor`
 provides functions and suggests workflows for importing
-datasets from DfR.
-
-The package `jstor` provides functions and suggests workflows for importing
 datasets from DfR. It was developed to deal with very large datasets which
 require an agreement, but can be used with smaller ones as well.
 
