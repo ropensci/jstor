@@ -1,0 +1,31 @@
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:mml="http://www.w3.org/1998/Math/MathML"
+         dtd-version="1.0"
+         article-type="research-article">
+   <front>
+      <article-meta>
+         <contrib-group>
+            <contrib contrib-type="author">
+               <string-name>
+                  <given-names>Seung Ho</given-names>
+                  <surname>Park</surname>
+               </string-name>
+            </contrib>
+            <contrib contrib-type="author">
+               <string-name>
+                  <given-names>Roger</given-names>
+                  <given-names>(Rongxin)</given-names>
+                  <surname>Chen</surname>
+               </string-name>
+            </contrib>
+            <contrib contrib-type="author">
+               <string-name>
+                  <given-names>Scott</given-names>
+                  <surname>Gallagher</surname>
+               </string-name>
+            </contrib>
+         </contrib-group>
+      </article-meta>
+   </front>
+</article>
