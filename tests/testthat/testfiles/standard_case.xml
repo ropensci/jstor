@@ -1,0 +1,55 @@
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:mml="http://www.w3.org/1998/Math/MathML"
+         dtd-version="1.0"
+         article-type="research-article">
+   <front>
+      <journal-meta>
+         <journal-id journal-id-type="jstor">kewbulletin</journal-id>
+         <journal-id journal-id-type="jstor">j101220</journal-id>
+         <journal-title-group>
+            <journal-title>Kew Bulletin</journal-title>
+         </journal-title-group>
+         <publisher>
+            <publisher-name>Her Majesty�s Stationery Office</publisher-name>
+         </publisher>
+         <issn pub-type="ppub">00755974</issn>
+         <issn pub-type="epub">1874933X</issn>
+      </journal-meta>
+      <article-meta>
+         <article-id pub-id-type="doi">10.2307/4117222</article-id>
+         <title-group>
+            <article-title>Two New Species of Ischaemum</article-title>
+         </title-group>
+         <contrib-group>
+            <contrib contrib-type="author">
+               <string-name>
+                  <given-names>N. L.</given-names>
+                  <surname>Bor</surname>
+               </string-name>
+            </contrib>
+         </contrib-group>
+         <pub-date>
+            <day>1</day>
+            <month>1</month>
+            <year>1950</year>
+         </pub-date>
+         <volume>5</volume>
+         <issue>2</issue>
+         <issue-id>i385457</issue-id>
+         <fpage>187</fpage>
+         <lpage>188</lpage>
+         <page-range>187-188</page-range>
+         <permissions>
+            <copyright-statement/>
+         </permissions>
+         <self-uri xlink:href="http://www.jstor.org/stable/4117222"/>
+         <custom-meta-group>
+            <custom-meta>
+               <meta-name>lang</meta-name>
+               <meta-value>eng</meta-value>
+            </custom-meta>
+         </custom-meta-group>
+      </article-meta>
+   </front>
+</article>
