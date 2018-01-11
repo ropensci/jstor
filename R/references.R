@@ -52,6 +52,8 @@ extract_references <- function(xml_file) {
     map_chr(xml_text) %>%
     str_replace("^\\\n", "") # remove "\n" at beginning of strings
 
+  full_string <- gsub("^$", NA_character_, full_string)
+  
   author_strings <- refs %>%
     map(xml_find_all, ".//string-name") %>%
     map_if(is_empty, ~NA_character_) %>%
