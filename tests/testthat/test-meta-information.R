@@ -7,23 +7,23 @@ context("meta-information")
 result <- "testfiles/standard_case.xml" %>%
   find_metadata()
 
-result_erratum <- "testfiles/test-file-erratum.xml" %>%
-  find_metadata()
-
-result_multiple_dates <- "testfiles/test-file-multiple-dates.xml" %>%
-  find_metadata()
-
-result_no_vol_issue <- "testfiles/test-file-no-vol-issue.xml" %>%
-  find_metadata()
-
-result_weird_title <- "testfiles/test-file-weird-title.xml" %>%
-  find_metadata()
-
-result_weird_title2 <- "testfiles/test-file-weird-title-2.xml" %>%
-  find_metadata()
-
-result_new_nov_17 <- "testfiles/test-file-new-format-nov-17.xml" %>%
-  find_metadata()
+# result_erratum <- "testfiles/test-file-erratum.xml" %>%
+#   find_metadata()
+# 
+# result_multiple_dates <- "testfiles/test-file-multiple-dates.xml" %>%
+#   find_metadata()
+# 
+# result_no_vol_issue <- "testfiles/test-file-no-vol-issue.xml" %>%
+#   find_metadata()
+# 
+# result_weird_title <- "testfiles/test-file-weird-title.xml" %>%
+#   find_metadata()
+# 
+# result_weird_title2 <- "testfiles/test-file-weird-title-2.xml" %>%
+#   find_metadata()
+# 
+# result_new_nov_17 <- "testfiles/test-file-new-format-nov-17.xml" %>%
+#   find_metadata()
 
 # tests -----
 test_that("Input data is checked", {
