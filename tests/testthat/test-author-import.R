@@ -1,0 +1,87 @@
+library(xml2)
+library(magrittr)
+library(tibble)
+context("author-import")
+
+
+# import files
+test_file_no_author <- "testfiles/test-file-erratum.xml" %>%
+  find_authors()
+
+# contrib group but no authors
+test_file_no_author2 <- "testfiles/test-file-no-authors.xml" %>%
+  find_authors()
+
+test_file_single_author <- "testfiles/test-file-single-author.xml" %>%
+  find_authors()
+
+test_file_multiple_authors <- "testfiles/test-file-multiple-authors.xml" %>%
+  find_authors()
+
+test_file_author_string <- "testfiles/test-file-author-string.xml" %>%
+  find_authors()
+
+test_file_author_prefix <- "testfiles/test-file-author-prefix.xml" %>%
+  find_authors()
+
+test_file_author_suffix <- "testfiles/test-file-author-suffix.xml" %>%
+  find_authors()
+
+# expected output
+single_author <- tribble(
+  ~basename_id,              ~prefix,       ~given_name, ~surname,     ~string_name, ~suffix,        ~author_number,
+  "test-file-single-author", NA_character_, "Lewis A.",  "Kornhauser", NA_character_, NA_character_,  1L
+) %>% as.data.frame() %>% as_jstor()
+
+multiple_authors <- tribble(
+  ~basename_id,                 ~prefix,       ~given_name, ~surname,  ~string_name, ~suffix,        ~author_number,
+  "test-file-multiple-authors", NA_character_, "Louis",     "Kaplow",  NA_character_, NA_character_,  1L,
+  "test-file-multiple-authors", NA_character_, "Steven",    "Shavell", NA_character_, NA_character_,  2L
+) %>% as.data.frame() %>% as_jstor()
+
+multiple_given_names <- tribble(
+  ~basename_id,                    ~prefix,       ~given_name,    ~surname, ~string_name,  ~suffix,        ~author_number,
+  "test-file-multiple-given-names", NA_character_, "Seung Ho",      "Park", NA_character_, NA_character_,  1L,
+  "test-file-multiple-given-names", NA_character_, "Roger",         "Chen", NA_character_, NA_character_,  2L,
+  "test-file-multiple-given-names", NA_character_, "Scott",    "Gallagher", NA_character_, NA_character_,  3L
+) %>% as.data.frame() %>% as_jstor()
+
+author_string <- tribble(
+  ~basename_id,              ~prefix,      ~given_name,    ~surname,     ~string_name,               ~suffix,        ~author_number,
+  "test-file-author-string", NA_character_, NA_character_, NA_character_, " Michèle de la Pradelle ", NA_character_,  1L,
+  "test-file-author-string", NA_character_, NA_character_, NA_character_, "Emmanuelle Lallement",     NA_character_,  2L
+) %>% as.data.frame() %>% as_jstor()
+
+no_authors <- tribble(
+  ~prefix,      ~given_name,    ~surname,     ~string_name,   ~suffix,       ~author_number,
+  NA_character_, NA_character_, NA_character_, NA_character_, NA_character_, NA_real_
+) %>% as.data.frame() %>% as_jstor()
+
+
+test_that("class is correct", {
+  expect_s3_class(test_file_single_author, "jstor")
+  expect_s3_class(test_file_single_author, "data.frame")
+})
+
+test_that("extracting authors works", {
+  expect_identical(single_author, test_file_single_author)
+  expect_identical(multiple_authors, test_file_multiple_authors)
+  expect_identical(author_string, test_file_author_string)
+
+  expect_identical(no_authors, test_file_no_author[-1])
+  expect_identical(no_authors, test_file_no_author2[-1])
+})
+
+test_that("prefixes and suffixes are recognized", {
+  expect_identical(test_file_author_prefix[1, ][["prefix"]][1], "M.")
+  expect_identical(test_file_author_suffix[3, ][["suffix"]], "Jr.")
+})
+
+test_that("trailing comma is removed from surnames", {
+  expect_identical(test_file_author_suffix[["surname"]][3], "Elder")
+})
+
+test_that("multiple given-names are handled", {
+  res <- find_authors("testfiles/test-file-multiple-given-names.xml")
+  expect_identical(res, multiple_given_names)
+})
