@@ -32,6 +32,7 @@ find_metadata <- function(file_path) {
     journal_id = extract_jcode(front),
     basename_id = extract_basename(file_path, type = "xml"),
     article_id = extract_from_article(article, "article-id"),
+    article_type = xml2::xml_attr(xml_file, "article-type"),
     article_title = extract_title(article),
     volume = extract_from_article(article, "volume"),
     issue = extract_from_article(article, "issue"),
