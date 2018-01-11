@@ -89,9 +89,16 @@ extract_from_article <- function(article, element) {
 }
 
 extract_title <- function(article) {
-  xml_find_all(article, ".//article-title/node()[not(self::xref)]") %>% # find title, but exclude possible references/footnotes
-    xml_text() %>%
-    paste(collapse = "") # in case there are more elements, paste them together
+  # find title, but exclude possible references/footnotes
+  title <- xml_find_all(article, ".//article-title/node()[not(self::xref)]")
+  
+  if (is_empty(title)) {
+    return(NA_character_)
+  } else {
+    title %>% 
+      xml_text() %>%
+      paste(collapse = "") # in case there are more elements, collapse them
+  }
 }
 
 
