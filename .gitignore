@@ -6,3 +6,6 @@
 .DS_Store
 inst/doc
 dev_scripts
+vignettes
+tests/testthat/testfiles/test-file-*
+tests/testthat/testfiles/correct*
