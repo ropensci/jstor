@@ -1,0 +1,22 @@
+<article dtd-version="1.0" article-type="research-article">
+   <front>
+      <journal-meta>
+      </journal-meta>
+      <article-meta>
+         <contrib-group>
+            <contrib>
+               <string-name xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <given-names>Louis</given-names>
+                  <surname>Kaplow</surname>
+               </string-name>
+            </contrib>
+            <contrib>
+               <string-name xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <given-names>Steven</given-names>
+                  <surname>Shavell</surname>
+               </string-name>
+            </contrib>
+         </contrib-group>
+      </article-meta>
+   </front>
+</article>

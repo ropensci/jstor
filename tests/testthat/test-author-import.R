@@ -7,16 +7,16 @@ context("author-import")
 # import files
 test_file_no_author <- "testfiles/erratum.xml" %>%
   find_authors()
-# 
-# # contrib group but no authors
-# test_file_no_author2 <- "testfiles/test-file-no-authors.xml" %>%
-#   find_authors()
+
+# contrib group but no authors
+test_file_no_author2 <- "testfiles/no-authors.xml" %>%
+  find_authors()
 
 test_file_single_author <- "testfiles/standard_case.xml" %>%
   find_authors()
-# 
-# test_file_multiple_authors <- "testfiles/test-file-multiple-authors.xml" %>%
-#   find_authors()
+
+test_file_multiple_authors <- "testfiles/multiple-authors.xml" %>%
+  find_authors()
 # 
 # test_file_author_string <- "testfiles/test-file-author-string.xml" %>%
 #   find_authors()
@@ -33,11 +33,11 @@ single_author <- tribble(
   "standard_case", NA_character_, "N. L.",  "Bor", NA_character_, NA_character_,  1L
 ) %>% as.data.frame() %>% as_jstor()
 
-# multiple_authors <- tribble(
-#   ~basename_id,                 ~prefix,       ~given_name, ~surname,  ~string_name, ~suffix,        ~author_number,
-#   "test-file-multiple-authors", NA_character_, "Louis",     "Kaplow",  NA_character_, NA_character_,  1L,
-#   "test-file-multiple-authors", NA_character_, "Steven",    "Shavell", NA_character_, NA_character_,  2L
-# ) %>% as.data.frame() %>% as_jstor()
+multiple_authors <- tribble(
+  ~basename_id,                 ~prefix,       ~given_name, ~surname,  ~string_name, ~suffix,        ~author_number,
+  "multiple-authors", NA_character_, "Louis",     "Kaplow",  NA_character_, NA_character_,  1L,
+  "multiple-authors", NA_character_, "Steven",    "Shavell", NA_character_, NA_character_,  2L
+) %>% as.data.frame() %>% as_jstor()
 # 
 # multiple_given_names <- tribble(
 #   ~basename_id,                    ~prefix,       ~given_name,    ~surname, ~string_name,  ~suffix,        ~author_number,
@@ -65,11 +65,11 @@ test_that("class is correct", {
 
 test_that("extracting authors works", {
   expect_identical(single_author, test_file_single_author)
-#   expect_identical(multiple_authors, test_file_multiple_authors)
+  expect_identical(multiple_authors, test_file_multiple_authors)
 #   expect_identical(author_string, test_file_author_string)
 # 
   expect_identical(no_authors, test_file_no_author[-1])
-#   expect_identical(no_authors, test_file_no_author2[-1])
+  expect_identical(no_authors, test_file_no_author2[-1])
 })
 # 
 # test_that("prefixes and suffixes are recognized", {
