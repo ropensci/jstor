@@ -1,0 +1,138 @@
+---
+title: "Automating File Import"
+author: "Thomas Klebel"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Intro
+The `find_*` functions from `jstor` all work on a single file. Data from DfR
+however contains many single files, from up to 25,000 when using the self-service
+functions, up to several hundreds of thousands of files when requesting a large
+dataset via an agreement.
+
+In this vignette I will introduce _one_ way to deal with this large amount of
+files. I start with how to list all corresponding files and follow up with some
+utility functions implemented in `jstor`. Possibly there are other ways one could
+import all those files, but this is how I did it four our research.
+
+
+# Unzip containers
+Data from DfR comes in `*.zip`-files. For simple purposes it might be sensible
+to unzip to a temporary directory (with `temp()` and `unzip()`) but for my 
+research I simply extracted files to an external SSD, since I a) lacked disk space,
+b) need to read them fast, and c) wanted to be able to look at specific files for
+debugging.
+
+# List files
+From my knowledge, there are two ways to generate a list of all files: 
+`list.files` or using `system` in conjunction with `find` on unix-like systems.
+
+For demonstration purposes I use files contained in `jstor` which can be accessed
+via `system.file`:
+```{r, echo=TRUE}
+example_dir <- system.file("extdata", package = "jstor")
+```
+
+## `list.files`
+
+```{r}
+file_names_listed <- list.files(path = example_dir, full.names = T, pattern = "*.xml")
+file_names_listed
+```
+
+## `system` and `find`
+```{r, eval=FALSE}
+file_names <- system(paste0("cd ", example_dir, "; find . -name '*.xml' -type f"), intern = TRUE)
+```
+
+```{r, eval=FALSE}
+library(stringr)
+
+file_names_system <- file_names %>%
+  str_replace("^\\.\\/", "") %>%
+  str_c(my_dir, "/", .)
+
+file_names_system
+#> [1] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_footnotes.xml" 
+#> [2] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_references.xml"
+```
+
+In this case the two approaches give the same result.
+The main difference seems to be though, that `list.files` sorts the output, 
+wherase `find` does not. For a large amout of files (200,000) this makes
+`list.files` slower, for smaller datasets the difference shouldn't make an impact.
+
+# Batch import
+Once the file list is generated, we can apply any of the `find_*`-functions to
+the list. A good and simple way for small to moderate amounts of files is to use
+`map_df` from purrr:
+
+```{r}
+library(jstor)
+library(purrr)
+
+result <- file_names_listed %>% 
+  map_df(find_metadata)
+
+tibble::as_tibble(result)
+```
+
+This works well if 1) there are no errors and 2) if there is only a moderate
+size of files. If you try to import many files, you could either run into
+problems regarding RAM, or it would take a long time and would benefit from
+executing the process in parallel.
+
+The function `jstor_convert_to_file` takes care of errors and uses
+`parallel::mclapply` to speed up the process. Since `mclapply` is not supported
+on windows, there is currently no support for parallel processing on windows with
+`jstor_convert_to_file`. Obviously, you could write your own implementation using
+a different engine that works on windows.
+
+The whole approach about importing many files is implemented like this:
+
+- list all files which are to be converted
+- split this list of files into batches of reasonable size
+- apply on each batch the following process:
+    + import and convert data in parallel
+    + write the result into a single .csv-file
+    + write any errors in a separate .csv-file
+    
+The easiest way to acheive this pipeline is by using `jstor_import_wrapper`. It
+takes up to six arguments:
+
+- *in_paths*: this should be a character fector of all `xml-`files you want to
+import
+- *out_file*: the filename for the resulting `.csv-`files. 
+- *out_path*: in case you want to export the files to a specific diretory, 
+specify it here.
+- *.f*: the function to use (one of `find_metadata`, `find_authors`, `find_references`,
+or `find_footnotes`)
+- *files_per_batch*: how many files shoud be converted per batch? For my system,
+20,000 files per batch worked well.
+- *cores* number of cores to use for parallel processing (`1` on windows).
+
+You can specify all parameters like this:
+```{r, eval=FALSE}
+jstor_import_wrapper(in_paths = vector_of_all_my_files, out_file = "metadata",
+                     out_path = "path/to/out/dir", .f = find_metadata,
+                     files_per_batch = 20000, cores = 4)
+```
+
+Suppose you had 100,000 files to convert, and no errors happend, then you should
+have in your `"path/to/out/dir"` the following five files:
+```{r, echo=FALSE}
+paste0("metadata-", 1:5, ".csv")
+```
+
