@@ -59,6 +59,12 @@ extract_jcode <- function(front) {
 
   journal_id <- front %>%
     xml_find_all("journal-meta/journal-id")
+  
+  # in the very improbable case, information on the journal is missing, exit
+  # early
+  if (is_empty(journal_id)) {
+    return(NA_character_)
+  }
 
   journal_id_attributes <- journal_id %>%
     xml2::xml_attr("journal-id-type") %>%

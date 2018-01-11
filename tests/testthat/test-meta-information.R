@@ -7,6 +7,9 @@ context("meta-information")
 result <- "testfiles/standard_case.xml" %>%
   find_metadata()
 
+result_erratum <- "testfiles/erratum.xml" %>% 
+  find_metadata()
+
 # result_multiple_dates <- "testfiles/test-file-multiple-dates.xml" %>%
 #   find_metadata()
 # 
@@ -34,6 +37,7 @@ test_that("class is correct", {
 
 test_that("jcode is correct", {
   expect_equal(result[["journal_id"]], "kewbulletin")
+  expect_equal(result_erratum[["journal_id"]], NA_character_)
   # expect_equal(result_new_nov_17[["journal_id"]], "statecrime")
 })
 
