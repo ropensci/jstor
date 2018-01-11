@@ -7,9 +7,6 @@ context("meta-information")
 result <- "testfiles/standard_case.xml" %>%
   find_metadata()
 
-# result_erratum <- "testfiles/test-file-erratum.xml" %>%
-#   find_metadata()
-# 
 # result_multiple_dates <- "testfiles/test-file-multiple-dates.xml" %>%
 #   find_metadata()
 # 
@@ -78,5 +75,4 @@ test_that("date is correct", {
 
 test_that("language is correct", {
   expect_identical(result[["language"]], "eng")
-  # expect_identical(result_erratum[["language"]], "eng")
 })
