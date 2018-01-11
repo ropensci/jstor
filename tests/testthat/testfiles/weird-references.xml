@@ -1,0 +1,28 @@
+<article 
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:mml="http://www.w3.org/1998/Math/MathML"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  article-type="research-article"
+  dtd-version="1.0"
+  xml:lang="en">
+  <back>
+    <ref-list content-type="unparsed">
+      <title>References</title>
+      <ref id="rf1"><mixed-citation xlink:type="simple" publication-type=""/>
+      </ref>
+      <ref id="rf2">
+        <mixed-citation xlink:type="simple" publication-type="">
+          <italic>Producer Dynamics: New Evidence from Micro Data</italic>
+        </mixed-citation>
+      </ref>
+      <ref id="rf3">
+        <mixed-citation xlink:type="simple" publication-type="">
+          <italic>American Economic Review</italic>
+        </mixed-citation>
+      </ref>
+      <ref id="rf4">
+        <mixed-citation xlink:type="simple" publication-type=""/>
+      </ref>
+    </ref-list>
+  </back>
+</article>

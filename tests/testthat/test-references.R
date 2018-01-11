@@ -12,7 +12,7 @@ result_empty <- "testfiles/empty_file.xml" %>%
  
 # weird_pages <- "testfiles/test-file-weird-pages.xml"
 
-weird_references <- "testfiles/test-file-weird-references.xml"
+weird_references <- "testfiles/weird-references.xml"
 # 
 # single_and_multiple_references <- "testfiles/test-file-multiple-and-single-references.xml" %>%
 #   find_references()
