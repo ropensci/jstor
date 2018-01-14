@@ -16,8 +16,10 @@ knitr::opts_chunk$set(
 
 [![Travis build status](https://travis-ci.org/tklebel/jstor.svg?branch=master)](https://travis-ci.org/tklebel/jstor)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/tklebel/jstor?branch=master&svg=true)](https://ci.appveyor.com/project/tklebel/jstor)
-[![CRAN status](http://www.r-pkg.org/badges/version/jstor)](https://cran.r-project.org/package=jstor)
 [![Coverage status](https://codecov.io/gh/tklebel/jstor/branch/master/graph/badge.svg)](https://codecov.io/github/tklebel/jstor?branch=master)
+[![CRAN status](http://www.r-pkg.org/badges/version/jstor)](https://cran.r-project.org/package=jstor)
+[![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/patchwork)](https://CRAN.R-project.org/package=patchwork)
+[![Repo\_Status](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
   
 The tool [Data for Research (DfR)](http://www.jstor.org/dfr/) by JSTOR is a
 valuable source for citation analysis and text mining. `jstor`
