@@ -31,17 +31,17 @@ find_metadata <- function(file_path) {
   out <- data.frame(
     journal_id = extract_jcode(front),
     basename_id = extract_basename(file_path, type = "xml"),
-    article_id = extract_from_article(article, "article-id"),
+    article_id = extract_element(article, "article-id"),
     article_type = xml2::xml_attr(xml_file, "article-type"),
     article_title = extract_title(article),
-    volume = extract_from_article(article, "volume"),
-    issue = extract_from_article(article, "issue"),
-    language = extract_from_article(article, ".//meta-value"),
+    volume = extract_element(article, "volume"),
+    issue = extract_element(article, "issue"),
+    language = extract_element(article, ".//meta-value"),
     # the XPATH for the dates grabs always the first date by default.
     # dates like "May" get turned into NA
-    pub_day = extract_from_article(article, ".//day") %>% as.integer(),
-    pub_month = extract_from_article(article, ".//month") %>% as.integer(),
-    pub_year = extract_from_article(article, ".//year") %>% as.integer(),
+    pub_day = extract_element(article, ".//day") %>% as.integer(),
+    pub_month = extract_element(article, ".//month") %>% as.integer(),
+    pub_year = extract_element(article, ".//year") %>% as.integer(),
     first_page = first_page,
     last_page = last_page,
     stringsAsFactors = FALSE
@@ -82,7 +82,7 @@ extract_jcode <- function(front) {
 # general helper to extract children from an XML-file
 # should be be used with a string like "volume", or with an XPATH specification
 # like ".//meta-value"
-extract_from_article <- function(article, element) {
+extract_element <- function(article, element) {
   article %>%
     xml_child(element) %>%
     xml_text()
@@ -104,7 +104,7 @@ extract_title <- function(article) {
 
 # page helpers
 extract_page <- function(article, element) {
-  x <- extract_from_article(article, element)
+  x <- extract_element(article, element)
 
   # check if there are any non-digits
   if (grepl("\\D", x)) {
