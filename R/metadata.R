@@ -19,6 +19,8 @@ find_metadata <- function(file_path) {
   validate_file_path(file_path, "xml")
 
   xml_file <- xml2::read_xml(file_path)
+  
+  validate_doc_type(xml_file, "article", "book")
 
   front <- xml_find_all(xml_file, "front")
   article <- xml_child(front, "article-meta")

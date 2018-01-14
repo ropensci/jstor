@@ -25,6 +25,7 @@ result_weird_title2 <- "testfiles/weird-title-2.xml" %>%
 # tests -----
 test_that("Input data is checked", {
   expect_error(find_metadata("my_path.txt"))
+  expect_error(find_metadata("testfiles/standard_book.xml"), "You are using")
 })
 
 test_that("class is correct", {

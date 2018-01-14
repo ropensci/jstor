@@ -9,7 +9,7 @@ result <- "testfiles/standard_book.xml" %>%
 # tests -----
 test_that("Input data is checked", {
   expect_error(find_book("my_path.txt"))
-  expect_error(find_book("testfiles/standard_case.xml"))
+  expect_error(find_book("testfiles/standard_case.xml"), "You are using")
 })
 
 test_that("class is correct", {
