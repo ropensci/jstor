@@ -1,0 +1,980 @@
+<book xmlns:oasis="http://docs.oasis-open.org/ns/oasis-exchange/table"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:mml="http://www.w3.org/1998/Math/MathML"
+      dtd-version="0.2"
+      xml:lang="eng">
+   <collection-meta>
+      <collection-id collection-id-type="jstor">j.ctt234x6d</collection-id>
+      <volume>4</volume>
+   </collection-meta>
+   <book-meta>
+      <book-id book-id-type="jstor">j.ctt24hdz7</book-id>
+      <subj-group>
+         <subject content-type="lcsh">Government, Resistance to</subject>
+         <subj-group>
+            <subject content-type="lcsh">Fiji</subject>
+         </subj-group>
+      </subj-group>
+      <subj-group>
+         <subject content-type="lcsh">Fiji</subject>
+         <subj-group>
+            <subject content-type="lcsh">History</subject>
+            <subj-group>
+               <subject content-type="lcsh">21st century</subject>
+            </subj-group>
+         </subj-group>
+      </subj-group>
+      <subj-group>
+         <subject content-type="lcsh">Fiji</subject>
+         <subj-group>
+            <subject content-type="lcsh">Politics and government</subject>
+            <subj-group>
+               <subject content-type="lcsh">21st century</subject>
+            </subj-group>
+         </subj-group>
+      </subj-group>
+      <subj-group subj-group-type="discipline">
+         <subject>Political Science</subject>
+      </subj-group>
+      <book-title-group>
+         <book-title>The 2006 Military Takeover in Fiji</book-title>
+         <subtitle>A Coup to End All Coups?</subtitle>
+      </book-title-group>
+      <contrib-group>
+         <contrib contrib-type="editor" id="contrib1">
+            <name name-style="western">
+               <surname>Fraenkel</surname>
+               <given-names>Jon</given-names>
+            </name>
+         </contrib>
+         <contrib contrib-type="editor" id="contrib2">
+            <name name-style="western">
+               <surname>Firth</surname>
+               <given-names>Stewart</given-names>
+            </name>
+         </contrib>
+         <contrib contrib-type="editor" id="contrib3">
+            <name name-style="western">
+               <surname>Lal</surname>
+               <given-names>Brij V.</given-names>
+            </name>
+         </contrib>
+         <role content-type="editor">(eds)</role>
+      </contrib-group>
+      <pub-date>
+         <day>30</day>
+         <month>04</month>
+         <year>2009</year>
+      </pub-date>
+      <isbn content-type="ppub">9781921536502</isbn>
+      <isbn content-type="epub">9781921536519</isbn>
+      <publisher>
+         <publisher-name>ANU E Press</publisher-name>
+         <publisher-loc>Canberra</publisher-loc>
+      </publisher>
+      <permissions>
+         <copyright-year>2009</copyright-year>
+         <copyright-holder>ANU E Press</copyright-holder>
+      </permissions>
+      <self-uri xlink:href="http://www.jstor.org/stable/j.ctt24hdz7"/>
+      <abstract abstract-type="short">
+         <p>This book explores the factors behind - and the implications of - the 2006 coup. It brings together contributions from leading scholars, local personalities, civil society activists, union leaders, journalists, lawyers, soldiers and politicians - including deposed Prime Ministers Laisenia Qarase and Mahendra Chaudhry. The 2006 Military Takeover in Fiji: A Coup to End All Coups? is essential reading for those with an interest in the contemporary history of Fiji, politics in deeply divided societies, or in military intervention in civilian politics.</p>
+      </abstract>
+      <custom-meta-group>
+         <custom-meta>
+            <meta-name>
+                    lang
+                </meta-name>
+            <meta-value>eng</meta-value>
+         </custom-meta>
+      </custom-meta-group>
+   </book-meta>
+   <body>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.1</book-part-id>
+                  <title-group>
+                     <title>Front Matter</title>
+                  </title-group>
+                  <fpage>i</fpage>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.2</book-part-id>
+                  <title-group>
+                     <title>Table of Contents</title>
+                  </title-group>
+                  <fpage>v</fpage>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.3</book-part-id>
+                  <title-group>
+                     <title>Acronyms and abbreviations</title>
+                  </title-group>
+                  <fpage>vii</fpage>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.4</book-part-id>
+                  <title-group>
+                     <title>Authors’ biographies</title>
+                  </title-group>
+                  <fpage>xi</fpage>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.5</book-part-id>
+                  <title-group>
+                     <label>1.</label>
+                     <title>The enigmas of Fiji’s good governance coup</title>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Fraenkel</surname>
+                           <given-names>Jon</given-names>
+                        </name>
+                     </contrib>
+                     <contrib contrib-type="author" id="contrib2" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Firth</surname>
+                           <given-names>Stewart</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>3</fpage>
+                  <abstract abstract-type="extract">
+                     <p>Fiji’s December 2006 coup defied the assumptions upon which that country’s post-independence history had hitherto been written. Until then, it had been assumed that the indigenous Fijians would control the country’s politics. Even in the 1970s, 1980s and 1990s, when numbers of indigenous Fijians and Fiji Indians were close to parity, election victories by parties with predominantly Fiji Indian support had each entailed constitutional crises (April 1977) or coups (1987, 1999-2000). Writing of the 1987 election with the benefit of hindsight, one scholar described the objectives of the leftist and multiracially oriented but largely Indian-backed Fiji Labour Party – which briefly</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.6</book-part-id>
+                  <title-group>
+                     <label>2.</label>
+                     <title>‘Anxiety, uncertainty and fear in our land’:</title>
+                     <subtitle>Fiji’s road to military coup, 2006</subtitle>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Lal</surname>
+                           <given-names>Brij V.</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>21</fpage>
+                  <abstract abstract-type="extract">
+                     <p>Fiji experienced the whole gamut of emotions over the course of a fateful 2006. The year ended on an unsettled note, as it had begun. Fiji was yet again caught in a political quagmire of its own making, hobbled by manufactured tensions, refusing to heed the lessons of its recent tumultuous past, and reeling from the effects of the coup. Ironies abound. A Fijian army confronted a Fijian government, fuelling the indigenous community’s worst fears about a Fijian army spilling Fijian blood on Fijian soil. The military overthrow took place 19 years to the day after frustrated coup-maker of 1987</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.7</book-part-id>
+                  <title-group>
+                     <label>3.</label>
+                     <title>Fiji’s December 2006 coup:</title>
+                     <subtitle>Who, what, where and why?</subtitle>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Fraenkel</surname>
+                           <given-names>Jon</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>43</fpage>
+                  <abstract abstract-type="extract">
+                     <p>The Fiji military’s ‘clean-up’ coup reached a climax on 5 December 2006. Although President Ratu Josefa Iloilo rubber-stamped the takeover that morning,² he was swayed by Vice-President Ratu Joni Madraiwiwi to disassociate himself from it in the afternoon. The official statement from Government House said that the Republic of Fiji Military Forces (RFMF) had acted ‘contrary to the wishes of their Commander in Chief ’, but conveyed the President’s intention to remain in office only to preserve some semblance of continuity.³ That was not to be. Because the Prime Minister had declined to resign and the President equivocated, the illegality</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.8</book-part-id>
+                  <title-group>
+                     <label>4.</label>
+                     <title>‘This process of political readjustment’:</title>
+                     <subtitle>The aftermath of the 2006 Fiji Coup</subtitle>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Lal</surname>
+                           <given-names>Brij V.</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>67</fpage>
+                  <abstract abstract-type="extract">
+                     <p>‘We consider that Fiji has reached a crossroads and that the government and all those empowered to make decisions in our constitutional democracy are unable to make these decisions to save our people from destruction’, Commodore Josaia Voreqe (Frank) Bainimarama told Fiji at 6 pm on 5 December 2006. The military, which had ‘observed the concern and anguish of the deteriorating state of our beloved Fiji’, had, therefore, ‘taken over the government as executive authority in the running of the country’. Those fateful words brought to a close the long-running saga of escalating tension and the mounting war of words</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.9</book-part-id>
+                  <title-group>
+                     <label>5.</label>
+                     <title>The changing role of the Great Council of Chiefs</title>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Norton</surname>
+                           <given-names>Robert</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>97</fpage>
+                  <abstract abstract-type="extract">
+                     <p>The central dilemma in Fiji’s political development has been the problem of how to devise constitutional government that can reconcile the indigenous Fijian conviction of entitlement to political pre-eminence with a just representation of the interests of other sections of the population, primarily the Indians. Both the army and the Great Council of Chiefs (GCC) have gained prominence during the last 20 years as institutions of indigenous Fijian power with capacities for the extra-constitutional management of crises arising after the electoral defeat of Fijian-dominated governments. Both have grappled with the dangerous force of Fijian nationalist sentiment, at times endorsing it</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.10</book-part-id>
+                  <title-group>
+                     <label>6.</label>
+                     <title>The Fiji military and ethno-nationalism:</title>
+                     <subtitle>Analyzing the paradox</subtitle>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Firth</surname>
+                           <given-names>Stewart</given-names>
+                        </name>
+                     </contrib>
+                     <contrib contrib-type="author" id="contrib2" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Fraenkel</surname>
+                           <given-names>Jon</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>117</fpage>
+                  <abstract abstract-type="extract">
+                     <p>Despite three years of regular public criticism and threats by the commander of the Republic of Fiji Military Forces (RFMF), Commodore Voreqe (‘Frank’) Bainimarama, most people in Fiji during the period 2002–06 thought he would not overthrow the government of Laisenia Qarase. The rank and file in the RFMF were solidly ethnic Fijian and had backed Qarase’s SDL party in large numbers. Bainimarama had put Qarase into office, and the RFMF had initially backed the latter’s ‘blueprint’ for lifting Fijian living standards. It seemed odd that Bainimarama could so change his political tune. The commander himself repeatedly said that</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.11</book-part-id>
+                  <title-group>
+                     <label>7.</label>
+                     <title>Swim or sink:</title>
+                     <subtitle>The post-coup economy in limbo</subtitle>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Chand</surname>
+                           <given-names>Satish</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>139</fpage>
+                  <abstract abstract-type="extract">
+                     <p>The interim finance minister, Mahendra Chaudhry, in launching the revised budget for 2007, stated that the economy was in a ‘sink or swim’ situation, but that he was determined to swim out of the turbulence that followed the military coup of December 2006. As of mid-2007, the state of the economy could have been described as being in limbo, and a year later things were hardly better. Fiji’s coups have been costly. Each coup has pushed back the economy some three years in terms of per capita income. More importantly, all of the four past coups have contributed to the</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.12</book-part-id>
+                  <title-group>
+                     <label>8.</label>
+                     <title>The great roadmap charade:</title>
+                     <subtitle>Electoral issues in post-coup Fiji</subtitle>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Fraenkel</surname>
+                           <given-names>Jon</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>155</fpage>
+                  <abstract abstract-type="extract">
+                     <p>Electoral issues were to figure prominently in the wake of Fiji’s 2006 coup – as instruments in the ideological justification of the military takeover; as internationally required stepping stones on the ‘roadmap’ back to democracy; and as predominant features of the interim government’s vision for social transformation. The coup-makers and their supporters justified the seizure of power on the grounds that the May 2006 election had been marred by ethnically biased ballot-rigging; that the preparations of the Elections Office had been gravely mismanaged; that the constitution had been violated; and that Qarase’s <italic>Soqosoqo Duavata ni Lewenivanua</italic> (SDL) party had abused its</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.13</book-part-id>
+                  <title-group>
+                     <label>9.</label>
+                     <title>Religion and politics:</title>
+                     <subtitle>The Christian churches and the 2006 coup in Fiji</subtitle>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Newland</surname>
+                           <given-names>Lynda</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>187</fpage>
+                  <abstract abstract-type="extract">
+                     <p>On 5 December 2006, Commodore Bainimarama led a successful military coup against a Qarase government that had been strongly supported by the Assembly of Christian Churches of Fiji (ACCF), an umbrella organization in which the Methodist Church of Fiji is the most dominant member. Within two days of the coup, the Assistant General Secretary of the Methodist Church, in his capacity as chair of both the ACCF and a second umbrella group, the Fiji Council of Churches (FCC), condemned the coup as illegal and unconstitutional. This position has been retained – by the Methodist Church in particular, despite its support for</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.14</book-part-id>
+                  <title-group>
+                     <label>10.</label>
+                     <title>The good, the bad and the faithful:</title>
+                     <subtitle>The response by Indian religious groups</subtitle>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Prasad</surname>
+                           <given-names>Jonathon</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>209</fpage>
+                  <abstract abstract-type="extract">
+                     <p>Shortly after lunchtime on 5 December 2006, crowds began to assemble outside Prime Minister Laisenia Qarase’s residence on Richards Road, Suva. At first they arrived slowly, a few at a time; but, as the afternoon progressed, numbers rapidly swelled, particularly after the arrival of the Republic of Fiji Military Forces (RFMF).² The crowds were drawn by the news that <italic>their</italic> government was in the process of being overthrown, and the rumour that <italic>their</italic> prime minister would shortly be placed under house arrest.³ The congregated sang mournful hymns and offered prayers for the nation in both Fijian and English. They rallied</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.15</book-part-id>
+                  <title-group>
+                     <label>11.</label>
+                     <title>Heading for the scrap heap of history?</title>
+                     <subtitle>The consequences of the coup for the Fiji labour movement</subtitle>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Naidu</surname>
+                           <given-names>Vijay</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>237</fpage>
+                  <abstract abstract-type="extract">
+                     <p>During the period 2001–06, in between his repeated media skirmishes with Prime Minister Laisenia Qarase’s government, the commander of the Republic of Fiji Military Forces (RFMF), Commodore Frank Bainimarama, proclaimed his intention to depose Qarase’s <italic>Soqosoqo Duavata ni Lewenivanua</italic> (SDL) party from government.¹ Even though Qarase had, for the first time, followed Fiji constitution’s power-sharing provision, and established a multiparty government, with ministerial appointments for eight Fiji Labour Party (FLP) members of parliament, it was evident, from three very controversial bills, that Qarase continued to push an ethno-nationalist agenda; this was used by the Commodore as a justification for</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.16</book-part-id>
+                  <title-group>
+                     <label>12.</label>
+                     <title>The Fiji nurses’ strike</title>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Lutua</surname>
+                           <given-names>Kuini</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>253</fpage>
+                  <abstract abstract-type="extract">
+                     <p>On 5 December 2006, when news of the 2006 coup surfaced, I was with seven senior members of the Fiji Nursing Association (FNA) at our MacGregor Road headquarters. We were practicing presentations of the FNA’s submission on the draft Radium Protection Bill. A special cabinet select committee was scheduled to meet with us at 10am that morning. Just as we left the office to go to Parliament House, mobile phones started ringing as distressed family members called their relatives about the coup and the trouble at the parliamentary complex at Veiuto. Amongst the callers was my secretary, calling to alert</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.17</book-part-id>
+                  <title-group>
+                     <label>13.</label>
+                     <title>The Fiji coup six months on:</title>
+                     <subtitle>The role of the media</subtitle>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Pareti</surname>
+                           <given-names>Samisoni</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>267</fpage>
+                  <abstract abstract-type="extract">
+                     <p>I came across a very interesting story not too long ago, the headline-grabbing type, one sure to be a best seller. The story revealed the wisdom and farsightedness of the founders of modern Fiji as portrayed in the islands’ coat of arms. The sugar cane on the national emblem is reflective of the leadership of Fiji’s first modern leader and prime minister, the late Ratu Sir Kamisese Mara, and his unquestioned role in securing unparalleled prices for our sugar in Europe. Then there’s the coconut palm, symbolic – the story claimed – of the policies and leadership of the late Dr Timoci</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.18</book-part-id>
+                  <title-group>
+                     <label>14.</label>
+                     <title>State control and self-censorship in the media after the coup</title>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Hunter</surname>
+                           <given-names>Russell</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>277</fpage>
+                  <abstract abstract-type="extract">
+                     <p>Fiji’s media grew exponentially in the three decades following independence. With that growth and diversification came a radically altered relationship between the media and the government.</p>
+                     <p>At independence the media consisted of <italic>The Fiji Times</italic>, then a reliably pro-establishment organ, and the government radio station, which, while nominally independent, could be relied upon not to rock the boat too much. By 2006, Fiji had three national dailies, a range of magazines, a flourishing independent radio industry and a monopoly television broadcaster. Per head of population Fiji had and continues to have among the greatest choice of local media in the</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.19</book-part-id>
+                  <title-group>
+                     <label>15.</label>
+                     <title>The impact of the coup on Fiji’s judiciary</title>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Leung</surname>
+                           <given-names>Graham</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>291</fpage>
+                  <abstract abstract-type="extract">
+                     <p>The December 2006 coup had important ramifications for Fiji’s judiciary.¹ It was Fiji’s fourth coup in a little under 20 years. What was significant about this one was the extent to which senior members of the Bench and Bar appear to have been complicit, either before the event or subsequently. There is as yet an incomplete awareness in the wider community about the sanctity of the rule of law. In circumstances such as a coup, where the ordinary person looks to lawyers for leadership and guidance and finds instead ambivalence and dissembling, the implications, both immediate and long term, are</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.20</book-part-id>
+                  <title-group>
+                     <label>16.</label>
+                     <title>The erosion of judicial independence</title>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Leung</surname>
+                           <given-names>Graham</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>301</fpage>
+                  <abstract abstract-type="extract">
+                     <p>Fifteen months after the coup, Fiji is drifting inexorably towards the abyss. As every day goes by, new examples of the capricious and unprincipled assertion of power without authority emerge. The new status quo is the product of an equilibrium of fear – on the one hand, the people fear the instruments of power and being pressed into silence and, on the other hand, those who wield power in Fiji fear the light of any objective scrutiny and debate. As a result, the authorities have become habituated to the use of coercion and intimidation to control the free circulation of ideas</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.21</book-part-id>
+                  <title-group>
+                     <label>17.</label>
+                     <title>The rule of law and judicial independence amidst the coups and attempted coups in Fiji since 1987</title>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Draunidalo</surname>
+                           <given-names>Tupou</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>311</fpage>
+                  <abstract abstract-type="extract">
+                     <p>The purported ‘coup’ or rebellion¹ of 5 December 2006 had a major impact on the Fiji judiciary, and the rule of law. But it did not come out of the blue. The judicial schisms that were exposed in early 2007 followed a pattern established much earlier, in the wake of the 1987 and 2000 coups. This chapter examines those earlier events, showing how they shaped the legal fraternity in Fiji and set the stage for the late 2006 crisis.</p>
+                     <p>When Lieutenant Colonel Sitiveni Ligamamada Rabuka and the Fiji Military Forces entered the parliament of Fiji with arms on 14 May</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.22</book-part-id>
+                  <title-group>
+                     <label>18.</label>
+                     <title>The coup d’état and the Fiji Human Rights Commission</title>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Cox</surname>
+                           <given-names>Noel</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>321</fpage>
+                  <abstract abstract-type="extract">
+                     <p>The report of the Fiji Human Rights Commission (‘the Commission’), ‘The Assumption of Executive Authority on December 5th 2006 by Commodore J.V. Bainimarama, Commander of the Republic of Fiji Military Forces: Legal, Constitutional and Human Rights Issues’, is a remarkable apology for the military regime in Fiji. There are two elements in it that lead to this conclusion. The first (which has two parts) is the assertion that:</p>
+                     <p>The RFMF overthrew an illegally constituted, unconstitutional Government which was acting against the public interest in violation of public security and public safety protections in the Constitution.¹</p>
+                     <p>This amounts not only to</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.23</book-part-id>
+                  <title-group>
+                     <label>19.</label>
+                     <title>The People’s Charter:</title>
+                     <subtitle>For or against?</subtitle>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Narsey</surname>
+                           <given-names>Wadan</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>339</fpage>
+                  <abstract abstract-type="extract">
+                     <p>The military junta is in the process of creating a ‘People's Charter’ for Fiji. The charter's objectives (ending racism and corruption and ensuring good governance) are praiseworthy. And the charter has the support of eminent persons, like Archbishop Petero Mataca. But the eminent persons forget the hard lesson of the 2000 crisis: That ‘the method is just as important as the cause’ and that how the charter is put in place is just as important as the good objectives themselves. The public are being asked to build a castle on a foundation of sand, violently thrown up on the beach</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.24</book-part-id>
+                  <title-group>
+                     <label>20.</label>
+                     <title>‘Democracy’ versus good governance</title>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Chaudhry</surname>
+                           <given-names>Mahendra P.</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>343</fpage>
+                  <abstract abstract-type="extract">
+                     <p>Fiji’s intelligentsia – be they academics, politicians, clerics, the legal fraternity or the suddenly vocal human rights activists – have been deeply divided by the events of 5 December 2006 and the best way forward for the nation.</p>
+                     <p>From day one, a marked delineation in thinking has been obvious between those who see the takeover of government by army commander Commodore Voreqe Bainimarama as timely, the only escape route for Fiji from the imminent national disaster posed by six years of misrule by Laisenia Qarase’s <italic>Soqosoqo Duavata ni Lewenivanua</italic> (SDL) government; and others who champion a return to the Laisenia Qarase-style ‘democracy’</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.25</book-part-id>
+                  <title-group>
+                     <label>21.</label>
+                     <title>From fear and turmoil to the possibilities of hope and renewal once again</title>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Qarase</surname>
+                           <given-names>Laisenia</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>353</fpage>
+                  <abstract abstract-type="extract">
+                     <p>The Republic of Fiji Military Forces (RFMF), led by Commodore Frank Bainimarama, plunged Fiji into yet another great crisis when it used force of arms to remove the SDL/Labour multiparty government on 5 December 2006. This act of treason had been building for some time. The Commodore had created fear and anxiety in the minds of the people through a series of threats to stage a coup.</p>
+                     <p>When he finally acted, Commodore Bainimarama brutally knocked Fiji off the course it was then following for a secure and prosperous future, founded on a new political accommodation between the indigenous community and</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.26</book-part-id>
+                  <title-group>
+                     <label>22.</label>
+                     <title>Resolving the current crisis in Fiji – a personal perspective</title>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Kotobalavu</surname>
+                           <given-names>Jioji</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>375</fpage>
+                  <abstract abstract-type="extract">
+                     <p>Public reaction to the military coup of 5 December 2006 has taken several forms. First, there has been a reaction from those who were directly and personally affected; the victims of the coup and the ‘clean-up’ campaign. These included members of the ousted Qarase government; high officials in the civil service, statutory bodies, public enterprises and other organizations who have lost their jobs; and members of the suspended Great Council of Chiefs (GCC). For them, the focus of attention is the legality of the coup and other subsequent actions.</p>
+                     <p>The second group includes those who have not been personal victims</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.27</book-part-id>
+                  <title-group>
+                     <label>23.</label>
+                     <title>Mythic constitutionalism:</title>
+                     <subtitle>Whither Fiji’s course in June 2007?</subtitle>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Madraiwiwi</surname>
+                           <given-names>Joni</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>385</fpage>
+                  <abstract abstract-type="extract">
+                     <p>Reflecting on the statement made by the commander of the Republic of Fiji Military Forces (RFMF), Commodore J. V. Bainimarama, upon seizing power and ousting the multiparty government of Prime Minister Laisenia Qarase on 5 December 2006, one is bemused by some of the commander’s rhetoric. In his remarks he stated <italic>inter alia</italic>:</p>
+                     <p>… The RFMF could have carried out unconstitutional and illegal activities, but had not done so and will not do so. It believes in the rule of law and shall adhere to the Constitution. It not only adheres to the rule of law and Constitution, but more</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.28</book-part-id>
+                  <title-group>
+                     <label>24.</label>
+                     <title>Creating a stable Fiji</title>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Madraiwiwi</surname>
+                           <given-names>Joni</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>393</fpage>
+                  <abstract abstract-type="extract">
+                     <p>Two years ago, Fiji was on the threshold of having a multiparty cabinet. On that occasion, I used a Fijian saying, ‘<italic>kunekunea na eloka ni dilio</italic>’, to describe the rare opportunity it gave us to start afresh. The phrase is a reference to the rarity of finding the eggs of a particular bird. This is so because the bird in question actually lays its eggs in Alaska before returning to Fiji to live. We were unable to take full advantage of the moment and have since regressed. So what is it that can be done at this point to create</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.29</book-part-id>
+                  <title-group>
+                     <label>25.</label>
+                     <title>Making votes count:</title>
+                     <subtitle>The need for electoral reform</subtitle>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Yabaki</surname>
+                           <given-names>Akuila</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>397</fpage>
+                  <abstract abstract-type="extract">
+                     <p>Fiji will be at the crossroads again in 2009. In a span of 10 years, since the first election under the 1997 constitution was contested in 1999, the country will have had four elections. The 1997 constitution – which ordains the alternative vote (AV) system, the use of a mix of open and communal seats, and the multiparty cabinet concept – had been expected to encourage moderation and accommodation, resulting in a more representative and multi-ethnic cabinet. This, sadly, has not happened. On the contrary, the racial groups have become more polarized, and political parties have played the race card to the</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.30</book-part-id>
+                  <title-group>
+                     <label>26.</label>
+                     <title>The impact of Fiji’s 2006 coup on human and women’s rights</title>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Buadromo</surname>
+                           <given-names>Virisila</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>405</fpage>
+                  <abstract abstract-type="extract">
+                     <p>In December 2006, the commander of the Republic of Fiji Military Forces (RFMF), Commodore Voreqe Bainimarama, overthrew the Laisenia Qarase-led multiparty government by claiming to invoke the ‘doctrine of necessity’. He defended his actions by citing legal precedent that supported his ‘clean-up campaign’ to eliminate corruption and racism in government.</p>
+                     <p>Self-appointed President Bainimarama declared a state of emergency in Fiji, arguing that this was the only way that the army could fulfill the aims of its campaign. According to the military, certain fundamental rights and freedoms were suspended as a result of the state of emergency. It warned the public</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.31</book-part-id>
+                  <title-group>
+                     <label>27.</label>
+                     <title>Reflections on Fiji’s ‘coup culture’</title>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Tarte</surname>
+                           <given-names>Sandra</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>409</fpage>
+                  <abstract abstract-type="extract">
+                     <p>Discussions about Fiji’s politics inevitably revolve around military coups. For many years Fiji was preoccupied with the turbulence and aftermath of the two coups in 1987. Then it was the 2000 coup that preoccupied people. Now we have another coup to analyze, to explore, to use as our current reference point; one which took place in December 2006. This installed a military-backed and led interim regime, with the purported mandate of the President.</p>
+                     <p>The periodic upheavals we have experienced over the last twenty years have given rise to the perception that we have a ‘coup culture’. Whether this ‘coup culture’</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.32</book-part-id>
+                  <title-group>
+                     <label>28.</label>
+                     <title>Fijian Ethno-Nationalism</title>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Baledrokadroka</surname>
+                           <given-names>Jone R.</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>415</fpage>
+                  <abstract abstract-type="extract">
+                     <p>According to Jerry Muller, there are two major ways of thinking about national identity.² One is that all people who live within a country's borders are part of the nation, regardless of their ethnic, racial, or religious origins. This liberal or civic nationalist interpretation is the view taken by those drafting Fiji’s People’s Charter. But the liberal view has competed with – and often lost out to – a different view, that of ethno-nationalism. The core of the ethno-nationalist idea is that nations are defined by a shared heritage, which usually includes a common language, a common faith, and a common ethnic</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.33</book-part-id>
+                  <title-group>
+                     <label>29.</label>
+                     <title>Ethno-Nationalism and the People’s Charter</title>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Dakuvula</surname>
+                           <given-names>Jone</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>419</fpage>
+                  <abstract abstract-type="extract">
+                     <p>It has been suggested that it is difficult to promote a common national identity – a national moral vision, narrative, rituals and symbols – because:</p>
+                     <p>… national identities come ‘naturally’ where people are defined by a discretely bordered territory, a stable and sovereign political state, a common language, a common culture and a common history. A national consciousness is easiest when ethnic or race is singular rather then plural (such as in a multiracial, multicultural and multireligious country such as Fiji).²</p>
+                     <p>However, in the modern world, there is hardly any country that fits such a narrow classical definition. Almost every country today</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.34</book-part-id>
+                  <title-group>
+                     <label>30.</label>
+                     <title>One hand clapping:</title>
+                     <subtitle>Reflections on the first anniversary of Fiji’s 2006 coup</subtitle>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Lal</surname>
+                           <given-names>Brij V.</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>425</fpage>
+                  <abstract abstract-type="extract">
+                     <p>The first anniversary of Fiji’s December 2006 coup passed uneventfully, without any rallies, protest marches or vigils – merely an exhausted, scarcely audible mutter from the populace hankering for some semblance of normality. A Fijian political activist once likened Fiji to a swimming duck: All calm on the surface but furiously churning underneath. Just how much turbulence there was among indigenous Fijians is difficult to gauge, but its existence was beyond doubt. To forestall any organized opposition, the interim administration slapped on several states of emergency.</p>
+                     <p>Overall, 2007 remained a depressing and miasmic year, with much movement but little change. The</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.35</book-part-id>
+                  <title-group>
+                     <label>31.</label>
+                     <title>Fiji’s Coup Syndrome</title>
+                  </title-group>
+                  <contrib-group>
+                     <contrib contrib-type="author" id="contrib1" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Fraenkel</surname>
+                           <given-names>Jon</given-names>
+                        </name>
+                     </contrib>
+                     <contrib contrib-type="author" id="contrib2" xlink:type="simple">
+                        <name name-style="western">
+                           <surname>Firth</surname>
+                           <given-names>Stewart</given-names>
+                        </name>
+                     </contrib>
+                  </contrib-group>
+                  <fpage>449</fpage>
+                  <abstract abstract-type="extract">
+                     <p>Fiji’s 2006 coup was, in some ways, curious by international standards. It was not driven by poverty or economic backwardness, although that is often a ‘common denominator’ amongst coups.¹ Samuel Huntington’s claim that successful coups are confined to countries with income per capita at less than US$500 scarcely fits the experience of Fiji, where average income is more than four times that.² Fiji would also sit awkwardly alongside Samuel Finer’s crude continuum between ‘less developed’ states, which, he states, are particularly vulnerable to military coups, and ‘more mature’ states, which are not.³ Fiji is the most economically developed of its</p>
+                  </abstract>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+      <book-part indexed="true" xlink:type="simple">
+         <body>
+            <book-part>
+               <book-part-meta>
+                  <book-part-id book-part-id-type="jstor">j.ctt24hdz7.36</book-part-id>
+                  <title-group>
+                     <title>Index</title>
+                  </title-group>
+                  <fpage>459</fpage>
+               </book-part-meta>
+            </book-part>
+         </body>
+      </book-part>
+   </body>
+</book>
