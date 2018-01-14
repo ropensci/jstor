@@ -60,3 +60,8 @@ find_authors(jstor_example("sample_with_references.xml")) %>% knitr::kable()
 | sample\_with\_references | NA     | R.          | Kudo    | NA           | NA     |               1|
 
 Further explanations, especially on how to use jstor's functions for importing many files, can be found in the vignettes.
+
+Code of conduct
+---------------
+
+Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
