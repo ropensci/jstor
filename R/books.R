@@ -18,6 +18,8 @@ find_book <- function(file_path) {
     pub_month = extract_child(book, ".//month") %>% as.integer(),
     pub_year = extract_child(book, ".//year") %>% as.integer(),
     isbn = extract_all(book, "isbn"),
+    publisher_name = extract_child(book, ".//publisher-name"),
+    publisher_location = extract_child(book, ".//publisher-loc"),
     stringsAsFactors = FALSE
   )
   

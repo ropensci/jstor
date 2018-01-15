@@ -31,4 +31,6 @@ test_that("book-meta fields are correct", {
   expect_identical(result[["pub_month"]], 4L)
   expect_identical(result[["pub_year"]], 2009L)
   expect_identical(result[["isbn"]], "9781921536502; 9781921536519")
+  expect_identical(result[["publisher_name"]], "ANU E Press")
+  expect_identical(result[["publisher_location"]], "Canberra")
 })
