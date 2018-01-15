@@ -22,6 +22,13 @@ extract_child <- function(article, element) {
     xml_text()
 }
 
+extract_all <- function(article, element) {
+  article %>%
+    xml_find_all(element) %>%
+    xml_text() %>% 
+    paste0(collapse = "; ")
+}
+
 extract_basename <- function(file_path, type) {
   basename(file_path) %>%
     stringr::str_extract(paste0(".*?(?=\\.", type, ")"))
