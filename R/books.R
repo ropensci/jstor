@@ -30,12 +30,7 @@ find_book <- function(file_path) {
 
 
 extract_book_pages <- function(book) {
-  counts <- xml_child(book, ".//counts/page-count")
-  
-  if (is_empty(counts)) {
-    return(NA_integer_)
-  }
-  counts %>% 
+  xml_child(book, ".//counts/page-count") %>% 
     xml2::xml_attr("count") %>%
     as.integer()
 }
