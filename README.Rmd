@@ -69,6 +69,15 @@ find_authors(jstor_example("sample_with_references.xml")) %>% knitr::kable()
 Further explanations, especially on how to use jstor's functions for importing
 many files, can be found in the vignettes.
 
+## Getting started
+In order to use `jstor`, you need some data from DfR. From the
+[main page](http://www.jstor.org/dfr/) you can create a dataset by searching for
+terms and restricting the search regarding time, subject and content type. After
+you created an account, you can download your selection. In case you don't have
+access to the content, you can download 
+[sample datasets](http://www.jstor.org/dfr/about/sample-datasets) with documents
+from before 1923 for the US, and before 1870 for all other countries. 
+
 ## Code of conduct
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md).
 By participating in this project you agree to abide by its terms.
