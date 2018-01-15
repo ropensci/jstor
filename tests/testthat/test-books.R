@@ -25,4 +25,6 @@ test_that("book-meta fields are correct", {
     find_book("testfiles/multiple-disciplines.xml")[["discipline"]],
     "Political Science; Sociology"
   )
+  expect_identical(result[["book_title"]], "The 2006 Military Takeover in Fiji")
+  expect_identical(result[["book_subtitle"]], "A Coup to End All Coups?")
 })

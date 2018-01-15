@@ -12,6 +12,8 @@ find_book <- function(file_path) {
     discipline = extract_all(
       book, ".//subj-group[@subj-group-type='discipline']"
     ),
+    book_title = extract_child(book, ".//book-title"),
+    book_subtitle = extract_child(book, ".//book-title-group/subtitle"),
     stringsAsFactors = FALSE
   )
   
