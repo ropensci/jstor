@@ -19,6 +19,9 @@ result_weird_title <- "testfiles/weird-title.xml" %>%
 result_weird_title2 <- "testfiles/weird-title-2.xml" %>%
   find_metadata()
 
+result_multiple_languages <- "testfiles/multiple-languages.xml" %>% 
+  find_metadata()
+
 # result_new_nov_17 <- "testfiles/test-file-new-format-nov-17.xml" %>%
 #   find_metadata()
 
@@ -80,4 +83,5 @@ test_that("date is correct", {
 
 test_that("language is correct", {
   expect_identical(result[["language"]], "eng")
+  expect_identical(result_multiple_languages[["language"]], "eng fre")
 })
