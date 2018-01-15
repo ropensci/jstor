@@ -23,10 +23,16 @@ extract_child <- function(article, element) {
 }
 
 extract_all <- function(article, element) {
-  article %>%
-    xml_find_all(element) %>%
-    xml_text() %>% 
-    paste0(collapse = "; ")
+  res <- article %>%
+    xml_find_all(element)
+  
+  if (is_empty(res)) {
+    return(NA_character_)
+  } else {
+    res %>%   
+      xml_text() %>% 
+      paste0(collapse = "; ")
+  }
 }
 
 extract_basename <- function(file_path, type) {
