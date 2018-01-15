@@ -20,3 +20,7 @@ test_that("class is correct", {
 test_that("book_id is correct", {
   expect_identical(result[["book_id"]], "j.ctt24hdz7")
 })
+
+test_that("book-meta fields are correct", {
+  expect_identical(result[["discipline"]], "Political Science")
+})

@@ -9,6 +9,9 @@ find_book <- function(file_path) {
   
   out <- data.frame(
     book_id = extract_element(book, ".//book-id"),
+    discipline = extract_element(
+      book, ".//subj-group[@subj-group-type='discipline']"
+    ),
     stringsAsFactors = FALSE
   )
   
