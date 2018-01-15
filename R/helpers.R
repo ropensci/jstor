@@ -16,14 +16,14 @@ validate_doc_type <- function(xml_file, correct_type, wrong_type) {
 # general helper to extract children from an XML-file
 # should be be used with a string like "volume", or with an XPATH specification
 # like ".//meta-value"
-extract_child <- function(article, element) {
-  article %>%
+extract_child <- function(doc, element) {
+  doc %>%
     xml_child(element) %>%
     xml_text()
 }
 
-extract_all <- function(article, element) {
-  res <- article %>%
+extract_all <- function(doc, element) {
+  res <- doc %>%
     xml_find_all(element)
   
   if (is_empty(res)) {
