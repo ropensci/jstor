@@ -1,0 +1,50 @@
+<book xmlns:oasis="http://docs.oasis-open.org/ns/oasis-exchange/table"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:mml="http://www.w3.org/1998/Math/MathML"
+      dtd-version="0.2"
+      xml:lang="eng">
+   <collection-meta>
+      <collection-id collection-id-type="jstor">j.ctt234x6d</collection-id>
+      <volume>4</volume>
+   </collection-meta>
+   <book-meta>
+      <book-id book-id-type="jstor">j.ctt24hdz7</book-id>
+      <subj-group>
+         <subject content-type="lcsh">Government, Resistance to</subject>
+         <subj-group>
+            <subject content-type="lcsh">Fiji</subject>
+         </subj-group>
+      </subj-group>
+      <subj-group>
+         <subject content-type="lcsh">Fiji</subject>
+         <subj-group>
+            <subject content-type="lcsh">History</subject>
+            <subj-group>
+               <subject content-type="lcsh">21st century</subject>
+            </subj-group>
+         </subj-group>
+      </subj-group>
+      <subj-group>
+         <subject content-type="lcsh">Fiji</subject>
+         <subj-group>
+            <subject content-type="lcsh">Politics and government</subject>
+            <subj-group>
+               <subject content-type="lcsh">21st century</subject>
+            </subj-group>
+         </subj-group>
+      </subj-group>
+      <subj-group subj-group-type="discipline">
+         <subject>Political Science</subject>
+      </subj-group>
+      <subj-group subj-group-type="discipline">
+         <subject>Sociology</subject>
+      </subj-group>
+      <book-title-group>
+         <book-title>The 2006 Military Takeover in Fiji</book-title>
+         <subtitle>A Coup to End All Coups?</subtitle>
+      </book-title-group>
+   </book-meta>
+   <body>
+   </body>
+</book>
