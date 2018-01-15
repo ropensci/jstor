@@ -81,15 +81,6 @@ extract_jcode <- function(front) {
   }
 }
 
-# general helper to extract children from an XML-file
-# should be be used with a string like "volume", or with an XPATH specification
-# like ".//meta-value"
-extract_element <- function(article, element) {
-  article %>%
-    xml_child(element) %>%
-    xml_text()
-}
-
 extract_title <- function(article) {
   # find title, but exclude possible references/footnotes
   title <- xml_find_all(article, ".//article-title/node()[not(self::xref)]")
