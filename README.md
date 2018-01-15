@@ -70,3 +70,8 @@ Citation
 --------
 
 To cite `jstor`, please refer to `citation(package = "jstor")`.
+
+Acknowledgements
+----------------
+
+Work on `jstor` benefited from financial support for the project "Academic Super-Elites in Sociology and Economics" by the Austrian Science Fund (FWF), project number "P 29211 Einzelprojekte".
