@@ -39,4 +39,5 @@ test_that("book-meta fields are correct", {
   expect_identical(result[["publisher_location"]], "Canberra")
   expect_identical(alternative[["n_pages"]], 271L)
   expect_identical(result[["n_pages"]], NA_integer_)
+  expect_identical(result[["language"]], "eng")
 })

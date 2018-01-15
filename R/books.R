@@ -21,6 +21,7 @@ find_book <- function(file_path) {
     publisher_name = extract_child(book, ".//publisher-name"),
     publisher_location = extract_child(book, ".//publisher-loc"),
     n_pages = extract_book_pages(book),
+    language = extract_child(book, ".//meta-value"),
     stringsAsFactors = FALSE
   )
   
