@@ -27,4 +27,7 @@ test_that("book-meta fields are correct", {
   )
   expect_identical(result[["book_title"]], "The 2006 Military Takeover in Fiji")
   expect_identical(result[["book_subtitle"]], "A Coup to End All Coups?")
+  expect_identical(result[["pub_day"]], 30L)
+  expect_identical(result[["pub_month"]], 4L)
+  expect_identical(result[["pub_year"]], 2009L)
 })

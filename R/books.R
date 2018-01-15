@@ -14,6 +14,9 @@ find_book <- function(file_path) {
     ),
     book_title = extract_child(book, ".//book-title"),
     book_subtitle = extract_child(book, ".//book-title-group/subtitle"),
+    pub_day = extract_child(book, ".//day") %>% as.integer(),
+    pub_month = extract_child(book, ".//month") %>% as.integer(),
+    pub_year = extract_child(book, ".//year") %>% as.integer(),
     stringsAsFactors = FALSE
   )
   
