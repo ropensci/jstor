@@ -36,7 +36,7 @@ extract_book_pages <- function(book) {
     return(NA_integer_)
   }
   counts %>% 
-    xml_attr("count") %>%
+    xml2::xml_attr("count") %>%
     as.integer()
 }
 
