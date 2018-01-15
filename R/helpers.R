@@ -16,7 +16,7 @@ validate_doc_type <- function(xml_file, correct_type, wrong_type) {
 # general helper to extract children from an XML-file
 # should be be used with a string like "volume", or with an XPATH specification
 # like ".//meta-value"
-extract_element <- function(article, element) {
+extract_child <- function(article, element) {
   article %>%
     xml_child(element) %>%
     xml_text()

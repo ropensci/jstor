@@ -8,8 +8,8 @@ find_book <- function(file_path) {
   book <- xml_find_all(xml_file, "book-meta")
   
   out <- data.frame(
-    book_id = extract_element(book, ".//book-id"),
-    discipline = extract_element(
+    book_id = extract_child(book, ".//book-id"),
+    discipline = extract_child(
       book, ".//subj-group[@subj-group-type='discipline']"
     ),
     stringsAsFactors = FALSE

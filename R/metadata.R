@@ -33,17 +33,17 @@ find_metadata <- function(file_path) {
   out <- data.frame(
     journal_id = extract_jcode(front),
     basename_id = extract_basename(file_path, type = "xml"),
-    article_id = extract_element(article, "article-id"),
+    article_id = extract_child(article, "article-id"),
     article_type = xml2::xml_attr(xml_file, "article-type"),
     article_title = extract_title(article),
-    volume = extract_element(article, "volume"),
-    issue = extract_element(article, "issue"),
-    language = extract_element(article, ".//meta-value"),
+    volume = extract_child(article, "volume"),
+    issue = extract_child(article, "issue"),
+    language = extract_child(article, ".//meta-value"),
     # the XPATH for the dates grabs always the first date by default.
     # dates like "May" get turned into NA
-    pub_day = extract_element(article, ".//day") %>% as.integer(),
-    pub_month = extract_element(article, ".//month") %>% as.integer(),
-    pub_year = extract_element(article, ".//year") %>% as.integer(),
+    pub_day = extract_child(article, ".//day") %>% as.integer(),
+    pub_month = extract_child(article, ".//month") %>% as.integer(),
+    pub_year = extract_child(article, ".//year") %>% as.integer(),
     first_page = first_page,
     last_page = last_page,
     stringsAsFactors = FALSE
@@ -97,7 +97,7 @@ extract_title <- function(article) {
 
 # page helpers
 extract_page <- function(article, element) {
-  x <- extract_element(article, element)
+  x <- extract_child(article, element)
 
   # check if there are any non-digits
   if (grepl("\\D", x)) {
