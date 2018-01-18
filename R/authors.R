@@ -2,23 +2,21 @@
 #'
 #' `find_authors()` extracts information about authors from JSTOR-XML files.
 #'
-#' **Authors**:
 #'
-#' A list-column with four possible columns:
-#' - given_name
-#' - surname
-#' - author_number among co-authors
-#' - string_name In some cases the name is not availible in separate fields, then
-#' the full name is just available as a full string.
+#' The function returns a `data.frame` with the following six columns:
+#' - *prefix*: in case there was a prefix to the name, like `"Dr."`.
+#' - *given_name*: The author's given name, like `"Albert"`.
+#' - *surname*: The author's surname like `"Einstein"`.
+#' - *string_name*: In some cases data the name is not available in separate
+#'   fields, but just as a complete string: `"Albert Einstein"`.
+#' - *suffix*: a suffix to the name, like `"Jr."`.
+#' - *author_number*: The authors are enumerated in the order they appear in the
+#'   data.
 #'
-#' With this approach some information is omitted: some authors may have a suffix
-#' to their name, like _Jr_, or like _III_ (i.e. William the Third).
-#' Those are currently not being extracted.
+#' @param file_path A `.xml`-file from JSTOR containing meta-data.
 #'
-#' @param file_path A file from JSTOR containing meta-data which can be read in with
-#' [xml2::read_xml()]. `find_authors` takes care of importing the file.
-#'
-#' @return A `tibble` containing the extracted authors
+#' @return A `data.frame` containing the extracted authors. All empty fields are
+#' `NA_character`.
 #'
 #' @export
 #' @examples 

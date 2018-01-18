@@ -7,30 +7,27 @@
 find_authors(file_path)
 }
 \arguments{
-\item{file_path}{A file from JSTOR containing meta-data which can be read in with
-\code{\link[xml2:read_xml]{xml2::read_xml()}}. \code{find_authors} takes care of importing the file.}
+\item{file_path}{A \code{.xml}-file from JSTOR containing meta-data.}
 }
 \value{
-A \code{tibble} containing the extracted authors
+A \code{data.frame} containing the extracted authors. All empty fields are
+\code{NA_character}.
 }
 \description{
 \code{find_authors()} extracts information about authors from JSTOR-XML files.
 }
 \details{
-\strong{Authors}:
-
-A list-column with four possible columns:
+The function returns a \code{data.frame} with the following six columns:
 \itemize{
-\item given_name
-\item surname
-\item author_number among co-authors
-\item string_name In some cases the name is not availible in separate fields, then
-the full name is just available as a full string.
+\item \emph{prefix}: in case there was a prefix to the name, like \code{"Dr."}.
+\item \emph{given_name}: The author's given name, like \code{"Albert"}.
+\item \emph{surname}: The author's surname like \code{"Einstein"}.
+\item \emph{string_name}: In some cases data the name is not available in separate
+fields, but just as a complete string: \code{"Albert Einstein"}.
+\item \emph{suffix}: a suffix to the name, like \code{"Jr."}.
+\item \emph{author_number}: The authors are enumerated in the order they appear in the
+data.
 }
-
-With this approach some information is omitted: some authors may have a suffix
-to their name, like \emph{Jr}, or like \emph{III} (i.e. William the Third).
-Those are currently not being extracted.
 }
 \examples{
 find_authors(jstor_example("sample_with_references.xml"))
