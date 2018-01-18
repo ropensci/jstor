@@ -10,7 +10,7 @@
 #' `browseVignettes("jstor")`
 #' 
 #' If you encounter any issues or have ideas for new features, please file an
-#' issue at [https://github.com/tklebel/jstor/issues].
+#' issue at \url{https://github.com/tklebel/jstor/issues}.
 #' 
 #' @author Thomas Klebel
 #' 
