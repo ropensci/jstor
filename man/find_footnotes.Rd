@@ -7,15 +7,15 @@
 find_footnotes(file_path)
 }
 \arguments{
-\item{file_path}{The path to the xml-file from which footnotes should be
+\item{file_path}{The path to the \code{.xml}-file from which footnotes should be
 extracted.}
 }
 \value{
-A \code{tibble} containing the footnotes
+A \code{data.frame} containing the content from \code{fn-group} (usually the
+footnotes). If there were no footnotes, \code{NA_character} is being returend.
 }
 \description{
-This function extracts the content of \code{fn-group} within the \code{xml}-file. If
-there are no footnotes, \code{NA} is returend.
+This function extracts the content of \code{fn-group} from journal-articles.
 }
 \examples{
 find_footnotes(jstor_example("sample_with_footnotes.xml"))

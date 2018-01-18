@@ -1,12 +1,13 @@
 #' Extract all footnotes
 #'
-#' This function extracts the content of `fn-group` within the `xml`-file. If
-#' there are no footnotes, `NA` is returend.
+#' This function extracts the content of `fn-group` from journal-articles.
 #'
-#' @param file_path The path to the xml-file from which footnotes should be
+#' @param file_path The path to the `.xml`-file from which footnotes should be
 #'   extracted.
 #'
-#' @return A `tibble` containing the footnotes
+#' @return A `data.frame` containing the content from `fn-group` (usually the
+#' footnotes). If there were no footnotes, `NA_character` is being returned.
+#' 
 #' @export
 #' @examples 
 #' find_footnotes(jstor_example("sample_with_footnotes.xml"))
