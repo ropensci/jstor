@@ -7,27 +7,27 @@
 find_references(file_path)
 }
 \arguments{
-\item{file_path}{The path to the xml-file from which references should be
+\item{file_path}{The path to the \code{.xml}-file from which references should be
 extracted.}
 }
 \value{
-A \code{tibble} with three columns containing the references:
+A \code{data.frame} with three columns containing the references:
 \itemize{
-\item \code{basename_id}: the identifier for the article the references come from
-\item \code{full_reference}: the text of the reference
+\item \code{basename_id}: the identifier for the article the references come from.
+\item \code{full_reference}: the text of the reference.
 \item \code{author_names}: in case the information is present in the \code{xml}-file, names
-of the authors for each article. If there is no information present, \code{NA}.
+of the authors for each article.
 }
 
 Due to this structure, a single reference may span multiple rows. Each row
 then has only one author in \code{author_names}. Mind the fact, that data quality
-from JSTOR is mixed. For many articles there will be no data in \code{author_names}.
+from JSTOR is mixed. For many articles there will be no data in
+\code{author_names}.
 For some there will be data, but only incomplete, i.e. if the article has 3
 authors, there might be only the first author in \code{author_names}.
 }
 \description{
-This function extracts the content of \code{ref-list} within the \code{xml}-file. If
-there are no references, a single \code{NA} is returend.
+This function extracts the content of \code{ref-list} within the \code{xml}-file.
 }
 \examples{
 find_references(jstor_example("sample_with_references.xml"))

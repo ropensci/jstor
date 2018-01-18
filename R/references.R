@@ -1,21 +1,21 @@
 #' Extract all references
 #'
-#' This function extracts the content of `ref-list` within the `xml`-file. If
-#' there are no references, a single `NA` is returend.
+#' This function extracts the content of `ref-list` within the `xml`-file.
 #'
-#' @param file_path The path to the xml-file from which references should be
+#' @param file_path The path to the `.xml`-file from which references should be
 #'   extracted.
 #'
-#' @return A `tibble` with three columns containing the references:
+#' @return A `data.frame` with three columns containing the references:
 #'
-#' - `basename_id`: the identifier for the article the references come from
-#' - `full_reference`: the text of the reference
+#' - `basename_id`: the identifier for the article the references come from.
+#' - `full_reference`: the text of the references.
 #' - `author_names`: in case the information is present in the `xml`-file, names
-#' of the authors for each article. If there is no information present, `NA`.
+#' of the authors for each article. 
 #'
 #' Due to this structure, a single reference may span multiple rows. Each row
 #' then has only one author in `author_names`. Mind the fact, that data quality
-#' from JSTOR is mixed. For many articles there will be no data in `author_names`.
+#' from JSTOR is mixed. For many articles there will be no data in
+#' `author_names`.
 #' For some there will be data, but only incomplete, i.e. if the article has 3
 #' authors, there might be only the first author in `author_names`.
 
