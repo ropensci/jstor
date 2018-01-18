@@ -54,8 +54,10 @@ extract_references <- function(xml_file) {
     map_chr(xml_text) %>%
     str_replace("^\\\n", "") # remove "\n" at beginning of strings
 
+  # empty strings should be NA
   full_string <- gsub("^$", NA_character_, full_string)
   
+  # get the names for the authors, if they are present
   author_strings <- refs %>%
     map(xml_find_all, ".//string-name") %>%
     map_if(is_empty, ~NA_character_) %>%
@@ -64,6 +66,8 @@ extract_references <- function(xml_file) {
 
   frequencies <- lengths(author_strings)
 
+  # repeat the references for all occuring authors. This is basically what
+  # `tidyr::unnest` would do, if the authors were a list-column.
   if (any(frequencies > 1)) {
     full_reference <- purrr::map2(full_string, frequencies, rep) %>%
       flatten_chr()
