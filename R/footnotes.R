@@ -16,7 +16,7 @@ find_footnotes <- function(file_path) {
 
   xml_file <- xml2::read_xml(file_path)
   
-  validate_doc_type(xml_file, "article", "book")
+  validate_article(xml_file)
 
   out <- data.frame(basename_id = extract_basename(file_path, type = "xml"),
                     footnotes = extract_footnotes(xml_file),

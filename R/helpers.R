@@ -4,11 +4,23 @@ validate_file_path <- function(file_path, type) {
   }
 }
 
-validate_doc_type <- function(xml_file, correct_type, wrong_type) {
-  if (identical(xml2::xml_name(xml_file), wrong_type)) {
-    stop(paste0("You are using `find_", correct_type, "` on an article. ", 
-               "Please use `find_", wrong_type, "` instead."), call. = FALSE)
-  } else if (!identical(xml2::xml_name(xml_file), correct_type)) {
+validate_article <- function(xml_file) {
+  if (identical(xml2::xml_name(xml_file), "book")) {
+    stop(paste0("You are using `", sys.call(-1)[[1]], "` on a book. ", 
+                "Please use `find_book` or `find_chapter` instead."),
+                call. = FALSE)
+  } else if (!identical(xml2::xml_name(xml_file), "article")) {
+    stop("Unknown input file.")
+  }
+}
+
+validate_book <- function(xml_file) {
+  if (identical(xml2::xml_name(xml_file), "article")) {
+    stop(paste0("You are using `", sys.call(-1)[[1]], "` on an article. ", 
+                "Please use `find_article`, `find_authors`, `find_references` ",
+                "or `find_footnotes` instead."),
+         call. = FALSE)
+  } else if (!identical(xml2::xml_name(xml_file), "book")) {
     stop("Unknown input file.")
   }
 }

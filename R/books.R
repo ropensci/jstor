@@ -3,7 +3,7 @@ find_book <- function(file_path) {
   
   xml_file <- xml2::read_xml(file_path)
   
-  validate_doc_type(xml_file, correct_type = "book", wrong_type = "article")
+  validate_book(xml_file)
   
   book <- xml_find_all(xml_file, "book-meta")
   
