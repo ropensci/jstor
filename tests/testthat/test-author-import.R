@@ -27,6 +27,9 @@ test_file_author_prefix <- "testfiles/author-prefix.xml" %>%
 test_file_author_suffix <- "testfiles/author-suffix.xml" %>%
   find_authors()
 
+test_file_book <- "testfiles/standard_book.xml" %>% 
+  find_authors()
+
 # expected output
 single_author <- tribble(
   ~basename_id,              ~prefix,       ~given_name, ~surname,     ~string_name, ~suffix,        ~author_number,
@@ -57,6 +60,12 @@ no_authors <- tribble(
   NA_character_, NA_character_, NA_character_, NA_character_, NA_character_, NA_real_
 ) %>% as.data.frame() %>% as_jstor()
 
+book_authors <- tribble(
+  ~basename_id, ~prefix, ~given_name, ~surname, ~string_name, ~suffix, ~author_number,
+  "standard_book", NA_character_, "Jon", "Fraenkel",  NA_character_, NA_character_,  1L,
+  "standard_book", NA_character_, "Stewart", "Firth", NA_character_, NA_character_,  2L,
+  "standard_book", NA_character_, "Brij V.",  "Lal",  NA_character_, NA_character_,  3L
+) %>% as.data.frame() %>% as_jstor()
 
 test_that("class is correct", {
   expect_s3_class(test_file_single_author, "jstor")
@@ -67,6 +76,7 @@ test_that("extracting authors works", {
   expect_identical(single_author, test_file_single_author)
   expect_identical(multiple_authors, test_file_multiple_authors)
   expect_identical(author_string, test_file_author_string)
+  expect_identical(book_authors, test_file_book)
 
   expect_identical(no_authors, test_file_no_author[-1])
   expect_identical(no_authors, test_file_no_author2[-1])

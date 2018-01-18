@@ -26,12 +26,17 @@ find_authors <- function(file_path) {
 
   xml_file <- xml2::read_xml(file_path)
 
-  front <- xml_find_all(xml_file, "front")
-  article <- xml_child(front, "article-meta")
+  if (identical(xml2::xml_name(xml_file), "article")) {
+    front <- xml_find_all(xml_file, "front")
+    meta <- xml_child(front, "article-meta")
+  } else if (identical(xml2::xml_name(xml_file), "book")) {
+    meta <- xml_find_all(xml_file, "book-meta")
+  }
+
 
   out <- data.frame(
     basename_id = extract_basename(file_path, type = "xml"),
-    extract_authors(article),
+    extract_authors(meta),
     stringsAsFactors = FALSE
   )
 
