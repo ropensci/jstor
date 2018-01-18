@@ -12,7 +12,8 @@ extracted.}
 }
 \value{
 A \code{data.frame} containing the content from \code{fn-group} (usually the
-footnotes). If there were no footnotes, \code{NA_character} is being returend.
+footnotes). If there were no footnotes, \code{NA_character} is returned for the
+column \code{footnotes}.
 }
 \description{
 This function extracts the content of \code{fn-group} from journal-articles.

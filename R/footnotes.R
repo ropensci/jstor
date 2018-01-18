@@ -6,7 +6,8 @@
 #'   extracted.
 #'
 #' @return A `data.frame` containing the content from `fn-group` (usually the
-#' footnotes). If there were no footnotes, `NA_character` is being returned.
+#' footnotes). If there were no footnotes, `NA_character` is returned for the
+#' column `footnotes`.
 #' 
 #' @export
 #' @examples 
