@@ -11,17 +11,17 @@ result_erratum <- "testfiles/erratum.xml" %>%
 #   find_footnotes()
 # 
 # single_and_multiple_footnotes <- "testfiles/test-file-footnotes.xml" %>%
-  find_footnotes()
+#  find_footnotes()
 
 # tests -----
 test_that("Input data is checked", {
   expect_error(find_footnotes("my_path.txt"))
 })
 
-test_that("class is correct", {
-  expect_s3_class(result, "jstor")
-  expect_s3_class(result, "data.frame")
-})
+# test_that("class is correct", {
+#   expect_s3_class(result, "jstor")
+#   expect_s3_class(result, "data.frame")
+# })
 
 test_that("extracting footnotes works", {
   expect_identical(result_erratum[["footnotes"]][[1]], NA_character_)
