@@ -26,6 +26,7 @@ weird_references <- "testfiles/weird-references.xml"
 # tests -----
 test_that("Input data is checked", {
   expect_error(find_references("my_path.txt"))
+  expect_error(find_references("testfiles/standard_book.xml"), "You are using")
 })
 
 # test_that("class is correct", {
