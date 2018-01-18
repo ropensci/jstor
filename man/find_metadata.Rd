@@ -7,20 +7,35 @@
 find_metadata(file_path)
 }
 \arguments{
-\item{file_path}{A file from JSTOR containing meta-data which can be read in with
-\code{\link[xml2:read_xml]{xml2::read_xml()}}. \code{find_metadata} takes care of importing the file.}
+\item{file_path}{A \code{.xml}-file for a journal-article.}
 }
 \value{
-A \code{tibble} containing the extracted meta-data.
+A \code{data.frame} containing the extracted meta-data with the following
+columns:
+\itemize{
+\item journal_id \emph{(chr)}: The jcode or a DOI. If both are present, the jcode
+(=publisher-id) is extracted.
+\item basename_id \emph{(chr)}: The filename of the original .xml-file. Can be used
+for joining with full-texts.
+\item article_id \emph{(chr)}: The article id, either a combination of digits
+(\code{pub-id-type="jstor"}) or a DOI (\code{pub-id-type="doi"}).
+\item article_title \emph{(chr)}: The title of the article.
+\item volume \emph{(chr)}: The volume the article was published in.
+\item issue \emph{(chr)}: The issue the article was published in.
+\item language \emph{(chr)}: The language of the article.
+\item pub_day \emph{(int)}: Publication day, if specified.
+\item pub_month \emph{(int)}: Publication month, if specified.
+\item pub_yea \emph{(int)}: Year of publication.
+\item first_pag \emph{(int)}: Page number for the first page of the article.
+\item last_page \emph{(int)}: Page number for the last page of the article.
+}
+
+A note about publication dates: always the first entry is being extracted,
+which should correspond to the oldest date, in case there is more than one
+date.
 }
 \description{
 \code{find_metadata()} extracts meta-data from JSTOR-XML files.
-}
-\details{
-\strong{Publication dates}:
-
-Always the first entry is being extracted, which should correspond to the oldest
-date, in case there is more than one date.
 }
 \examples{
 find_metadata(jstor_example("sample_with_references.xml"))
