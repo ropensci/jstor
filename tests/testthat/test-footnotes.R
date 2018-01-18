@@ -16,6 +16,7 @@ result_erratum <- "testfiles/erratum.xml" %>%
 # tests -----
 test_that("Input data is checked", {
   expect_error(find_footnotes("my_path.txt"))
+  expect_error(find_footnotes("testfiles/standard_book.xml"), "You are using")
 })
 
 # test_that("class is correct", {
