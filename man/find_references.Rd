@@ -14,7 +14,7 @@ extracted.}
 A \code{data.frame} with three columns containing the references:
 \itemize{
 \item \code{basename_id}: the identifier for the article the references come from.
-\item \code{full_reference}: the text of the reference.
+\item \code{full_reference}: the text of the references.
 \item \code{author_names}: in case the information is present in the \code{xml}-file, names
 of the authors for each article.
 }
