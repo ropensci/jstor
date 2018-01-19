@@ -7,7 +7,8 @@
 jstor_example(path = NULL)
 }
 \arguments{
-\item{path}{Name of the example file. If \code{NULL}, the example files will be listed.}
+\item{path}{Name of the example file. If \code{NULL}, the example files will be
+listed.}
 }
 \description{
 jstor includes several sample files for demonstration purposes. This helper

@@ -90,7 +90,9 @@ extract_jcode <- function(front) {
     xml_text(journal_id)[1]
   } else if ("publisher-id" %in% journal_id_attributes) {
     front %>%
-      xml_find_first("journal-meta/journal-id[@journal-id-type='publisher-id']") %>%
+      xml_find_first(
+        "journal-meta/journal-id[@journal-id-type='publisher-id']"
+      ) %>%
       xml_text()
   }
 }
@@ -124,8 +126,9 @@ extract_page <- function(article, element) {
 }
 
 find_total_pages <- function(first_page, last_page) {
-  dplyr::case_when(!is.na(first_page) & is.na(last_page) ~ 1,
-                   !is.na(first_page) & !is.na(last_page) ~ last_page - first_page + 1,
-                   TRUE ~ NA_real_
+  dplyr::case_when(
+    !is.na(first_page) & is.na(last_page) ~ 1,
+    !is.na(first_page) & !is.na(last_page) ~ last_page - first_page + 1,
+    TRUE ~ NA_real_
   )
 }

@@ -12,6 +12,7 @@
 \item{...}{Arguments which can be passed down to \link[tibble:format.tbl]{tibble::format.tbl}.}
 }
 \description{
-This print method simply leverages the functionality of \code{tibble} for printing,
-without sacrificing speed when computing results with \code{find_*}-variants.
+This print method simply leverages the functionality of \code{tibble} for
+printing, without sacrificing speed when computing results with
+\code{find_*}-variants.
 }

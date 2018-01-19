@@ -13,8 +13,8 @@ jstor_convert_to_file(in_paths, chunk_number, out_path, fun,
 \item{chunk_number}{An integer, specifying the number of the chunk. Will be
 appended to the output-file.}
 
-\item{out_path}{The path where the files should be written to. Should include the
-basename for the files too, i.e. \code{path/to/outfiles/meta_data}.}
+\item{out_path}{The path where the files should be written to. Should include
+the basename for the files too, i.e. \code{path/to/outfiles/meta_data}.}
 
 \item{fun}{The function to use when importing files, i.e. \code{find_meta},
 \code{find_authors} and \code{read_full_text}.}

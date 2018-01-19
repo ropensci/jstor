@@ -5,8 +5,8 @@
 #' @param in_paths A character vector of file-paths.
 #' @param chunk_number An integer, specifying the number of the chunk. Will be
 #' appended to the output-file.
-#' @param out_path The path where the files should be written to. Should include the
-#' basename for the files too, i.e. `path/to/outfiles/meta_data`.
+#' @param out_path The path where the files should be written to. Should include
+#' the basename for the files too, i.e. `path/to/outfiles/meta_data`.
 #' @param fun The function to use when importing files, i.e. `find_meta`,
 #' `find_authors` and `read_full_text`.
 #' @param col_names Should `col_names` be printed when exporting results? For
@@ -19,7 +19,8 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
                                   cores = getOption("mc.cores", 1L)) {
   if (.Platform$OS.type == "windows" & cores > 1) {
     cores <- 1L
-    message("Parallel processing is currently not supported on windows. Computing with single core.")
+    message("Parallel processing is currently not supported on windows.",
+            "Computing with single core.")
   }
   
   safe_fun <- purrr::safely(fun)
@@ -56,7 +57,8 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
     # combine ids with error messages
     res_error <- dplyr::bind_cols(error_ids, error_message = error_message)
 
-    write_csv(res_error, path = paste0(out_path, "_broken-", chunk_number, ".csv"),
+    write_csv(res_error,
+              path = paste0(out_path, "_broken-", chunk_number, ".csv"),
               na = "", col_names = TRUE)
 
   } # end of "in case we have errors"
@@ -69,12 +71,13 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' This function applies an import function to a list of `xml`-files and saves
 #' them in batches of .csv-files to disk.
 #'
-#' @param in_paths A character vector to the `xml`-files which should be imported
+#' @param in_paths A character vector to the `xml`-files which should be 
+#' imported
 #' @param out_file Name of files to export to. Each batch gets appended by an
 #' increasing number.
 #' @param out_path Path to export files to (combined with filename).
-#' @param .f Function to use for import. Can be one of `find_meta`, `find_authors`,
-#' `find_references` or `find_footnotes`.
+#' @param .f Function to use for import. Can be one of `find_meta`,
+#' `find_authors`, `find_references` or `find_footnotes`.
 #' @param files_per_batch Number of files for each batch.
 #' @param cores Number of cores to use for parallel processing.
 #'
@@ -92,6 +95,8 @@ jstor_import_wrapper <- function(in_paths, out_file, out_path = NULL, .f,
     out_file <- file.path(out_path, out_file)
   }
 
-  purrr::pwalk(list(file_list, chunk_numbers, out_file, list(.f), cores = cores),
-               jstor_convert_to_file)
+  purrr::pwalk(
+    list(file_list, chunk_numbers, out_file, list(.f),cores = cores),
+    jstor_convert_to_file
+  )
 }

@@ -8,15 +8,16 @@ jstor_import_wrapper(in_paths, out_file, out_path = NULL, .f,
   files_per_batch = 10000, cores = getOption("mc.cores", 1L))
 }
 \arguments{
-\item{in_paths}{A character vector to the \code{xml}-files which should be imported}
+\item{in_paths}{A character vector to the \code{xml}-files which should be
+imported}
 
 \item{out_file}{Name of files to export to. Each batch gets appended by an
 increasing number.}
 
 \item{out_path}{Path to export files to (combined with filename).}
 
-\item{.f}{Function to use for import. Can be one of \code{find_meta}, \code{find_authors},
-\code{find_references} or \code{find_footnotes}.}
+\item{.f}{Function to use for import. Can be one of \code{find_meta},
+\code{find_authors}, \code{find_references} or \code{find_footnotes}.}
 
 \item{files_per_batch}{Number of files for each batch.}
 

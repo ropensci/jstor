@@ -5,7 +5,8 @@
 #' 
 #' The code for this function was adapted from the package `readr`.
 #' 
-#' @param path Name of the example file. If `NULL`, the example files will be listed.
+#' @param path Name of the example file. If `NULL`, the example files will be
+#' listed.
 #' @export
 #' @examples
 #' jstor_example()
