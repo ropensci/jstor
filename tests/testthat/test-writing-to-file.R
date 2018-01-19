@@ -48,7 +48,7 @@ test_that("on windows only single core is used", {
   temp_dir <- tempdir()
   
   expect_message(jstor_convert_to_file(paths, 1, paste0(temp_dir, "meta_data"),
-                                       find_metadata),
+                                       find_metadata, cores = 4L),
                  "Parallel processing is")
 
   unlink(temp_dir)
