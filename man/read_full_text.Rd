@@ -2,7 +2,7 @@
 % Please edit documentation in R/full_text.R
 \name{read_full_text}
 \alias{read_full_text}
-\title{Import full_text}
+\title{Import full-text}
 \usage{
 read_full_text(filename)
 }
@@ -10,8 +10,8 @@ read_full_text(filename)
 \item{filename}{The path to the file.}
 }
 \value{
-A \code{data_frame}, containing the file-path as id, the full content of
-the file, and the encoding which was used to read it in.
+A \code{data.frame}, containing the file-path as id, the full content of
+the file, and the encoding which was used to read it.
 }
 \description{
 This function imports the full_text contents of a JSTOR-article.

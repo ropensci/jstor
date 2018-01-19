@@ -9,13 +9,13 @@ get_encoding <- function(filename) {
     as.character()
 }
 
-#' Import full_text
+#' Import full-text
 #'
 #' This function imports the full_text contents of a JSTOR-article.
 #'
 #' @param filename The path to the file.
-#' @return A `data_frame`, containing the file-path as id, the full content of
-#' the file, and the encoding which was used to read it in.
+#' @return A `data.frame`, containing the file-path as id, the full content of
+#' the file, and the encoding which was used to read it.
 #'
 #' @export
 read_full_text <- function(filename) {
