@@ -27,5 +27,8 @@ read_full_text <- function(filename) {
 
   text <- read_file(filename, locale = locale(encoding = encoding))
 
-  data_frame(basename_id = id, full_text = text, encoding = encoding)
+  out <- data.frame(basename_id = id, full_text = text, encoding = encoding,
+                    stringsAsFactors = FALSE)
+  
+  structure(out, class = c("jstor", "data.frame"))
 }
