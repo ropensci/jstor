@@ -58,7 +58,7 @@ test_that("on windows only single core is used", {
 
 test_that("import wrapper works", {
   temp_dir <- tempdir()
-  jstor_import_wrapper(paths, out_file = "meta_data", out_path = temp_dir,
+  jstor_import(paths, out_file = "meta_data", out_path = temp_dir,
                        .f = find_metadata)
 
   expect_identical(read_csv("testfiles/correct_meta_data.csv", col_names = FALSE),
