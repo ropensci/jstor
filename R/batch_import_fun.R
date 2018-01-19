@@ -1,6 +1,7 @@
 #' Batch import data
 #'
-#' This function does the heavy lifting of importing all data.
+#' This function helps you import a large number of files.
+#' 
 #'
 #' @param in_paths A character vector of file-paths.
 #' @param chunk_number An integer, specifying the number of the chunk. Will be
@@ -66,22 +67,52 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 }
 
 
-#' Wrapper for file conversion
+#' Wrapper for file import
 #'
 #' This function applies an import function to a list of `xml`-files and saves
-#' them in batches of .csv-files to disk.
+#' them in batches of `.csv`-files to disk.
 #'
+#' Along the way, we wrap three functions, which make the process of converting 
+#' many files easier:
+#' 
+#' - [purrr::safely()]
+#' - [parallel::mclapply()]
+#' - [readr::write_csv()]
+#' 
+#' When using one of the `find_*` functions, there should usually be no errors.
+#' To avoid the whole computation to fail in the unlikely event that an error
+#' occurs, we use `safely()` which let's us
+#' continue the process, and catch the error along the way.
+#' 
+#' If you have many files to import, you might benefit from using
+#' parallelization. On Linux and Mac, this can be achieved via `mclapply()`,
+#' which we use here.
+#' 
+#' After importing all files, they are written to disk with
+#' [readr::write_csv()].
+#' 
+#' Since you might run out of memory when importing a large quantity of files,
+#' the files to import are split up into batches. Each batch is being treated
+#' separately, therefore for each batch multiple processes from `mclapply()` are
+#' spawned. For this reason, it is not recommended to have very small batches,
+#' as there is an overhead for starting and ending the processes. On the other
+#' hand, the batches should not be too large, to not exceed memory limitations.
+#' A value of 10000 to 20000 for `files_per_batch` should work fine on most
+#' machines.
+#' 
+#' 
 #' @param in_paths A character vector to the `xml`-files which should be 
 #' imported
 #' @param out_file Name of files to export to. Each batch gets appended by an
 #' increasing number.
 #' @param out_path Path to export files to (combined with filename).
-#' @param .f Function to use for import. Can be one of `find_meta`,
-#' `find_authors`, `find_references` or `find_footnotes`.
+#' @param .f Function to use for import. Can be one of `find_article`,
+#' `find_authors`, `find_references`, `find_footnotes`, `find_book` or
+#' `find_chapter`.
 #' @param files_per_batch Number of files for each batch.
 #' @param cores Number of cores to use for parallel processing.
 #'
-#' @return Writes .csv-files to disk.
+#' @return Writes `.csv`-files to disk.
 #'
 #' @export
 jstor_import_wrapper <- function(in_paths, out_file, out_path = NULL, .f,
@@ -96,7 +127,7 @@ jstor_import_wrapper <- function(in_paths, out_file, out_path = NULL, .f,
   }
 
   purrr::pwalk(
-    list(file_list, chunk_numbers, out_file, list(.f),cores = cores),
+    list(file_list, chunk_numbers, out_file, list(.f), cores = cores),
     jstor_convert_to_file
   )
 }

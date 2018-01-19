@@ -25,5 +25,5 @@ errors, col_names are always written to file.}
 \item{cores}{Number of cores to use for parallel processing.}
 }
 \description{
-This function does the heavy lifting of importing all data.
+This function helps you import a large number of files.
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/batch_import_fun.R
 \name{jstor_import_wrapper}
 \alias{jstor_import_wrapper}
-\title{Wrapper for file conversion}
+\title{Wrapper for file import}
 \usage{
 jstor_import_wrapper(in_paths, out_file, out_path = NULL, .f,
   files_per_batch = 10000, cores = getOption("mc.cores", 1L))
@@ -16,8 +16,9 @@ increasing number.}
 
 \item{out_path}{Path to export files to (combined with filename).}
 
-\item{.f}{Function to use for import. Can be one of \code{find_meta},
-\code{find_authors}, \code{find_references} or \code{find_footnotes}.}
+\item{.f}{Function to use for import. Can be one of \code{find_article},
+\code{find_authors}, \code{find_references}, \code{find_footnotes}, \code{find_book} or
+\code{find_chapter}.}
 
 \item{files_per_batch}{Number of files for each batch.}
 
@@ -28,5 +29,35 @@ Writes .csv-files to disk.
 }
 \description{
 This function applies an import function to a list of \code{xml}-files and saves
-them in batches of .csv-files to disk.
+them in batches of \code{.csv}-files to disk.
+}
+\details{
+Along the way, we wrap three functions, which make the process of converting
+many files easier:
+\itemize{
+\item \code{\link[purrr:safely]{purrr::safely()}}
+\item \code{\link[parallel:mclapply]{parallel::mclapply()}}
+\item \code{\link[readr:write_csv]{readr::write_csv()}}
+}
+
+When using one of the \code{find_*} functions, there should usually be no errors.
+To avoid the whole computation to fail in the unlikely event that an error
+occurs, we use \code{safely()} which let's us
+continue the process, and catch the error along the way.
+
+If you have many files to import, you might benefit from using
+parallelization. On Linux and Mac, this can be achieved via \code{mclapply()},
+which we use here.
+
+After importing all files, they are written to disk with
+\code{\link[readr:write_csv]{readr::write_csv()}}.
+
+Since you might run out of memory when importing a large quantity of files,
+the files to import are split up into batches. Each batch is being treated
+separately, therefore for each batch multiple processes from \code{mclapply()} are
+spawned. For this reason, it is not recommended to have very small batches,
+as there is an overhead for starting and ending the processes. On the other
+hand, the batches should not be too large, to not exceed memory limitations.
+A value of 10000 to 20000 for \code{files_per_batch} should work fine on most
+machines.
 }
