@@ -14,7 +14,8 @@ test_that("writing correct results to file works", {
   temp_dir <- tempdir()
   jstor_convert_to_file(paths, 1, paste0(temp_dir, "meta_data"), find_metadata)
 
-  expect_identical(read_csv("testfiles/correct_meta_data.csv", col_names = FALSE),
+  expect_identical(read_csv("testfiles/correct_meta_data.csv",
+                            col_names = FALSE),
                    read_csv(paste0(temp_dir, "meta_data-1.csv"),
                             col_names = FALSE))
 
@@ -61,7 +62,8 @@ test_that("import wrapper works", {
   jstor_import(paths, out_file = "meta_data", out_path = temp_dir,
                        .f = find_metadata)
 
-  expect_identical(read_csv("testfiles/correct_meta_data.csv", col_names = FALSE),
+  expect_identical(read_csv("testfiles/correct_meta_data.csv",
+                            col_names = FALSE),
                    read_csv(paste0(temp_dir, "meta_data-1.csv"),
                             col_names = FALSE))
 
