@@ -13,8 +13,7 @@
 #' @param col_names Should `col_names` be printed when exporting results? For
 #'   errors, col_names are always written to file.
 #' @param cores Number of cores to use for parallel processing.
-#'
-#' @export
+#' @noRd
 jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
                                   col_names = FALSE,
                                   cores = getOption("mc.cores", 1L)) {
