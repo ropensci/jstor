@@ -25,7 +25,7 @@ increasing number.}
 \item{cores}{Number of cores to use for parallel processing.}
 }
 \value{
-Writes .csv-files to disk.
+Writes \code{.csv}-files to disk.
 }
 \description{
 This function applies an import function to a list of \code{xml}-files and saves
