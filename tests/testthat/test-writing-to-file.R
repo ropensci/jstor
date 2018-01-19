@@ -43,6 +43,17 @@ test_that("writing error messages to file works", {
   unlink(temp_dir)
 })
 
+test_that("on windows only single core is used", {
+  skip_on_os(c("linux", "mac"))
+  temp_dir <- tempdir()
+  
+  expect_message(jstor_convert_to_file(paths, 1, paste0(temp_dir, "meta_data"),
+                                       find_metadata),
+                 "Parallel processing is")
+
+  unlink(temp_dir)
+})
+
 
 
 test_that("import wrapper works", {
