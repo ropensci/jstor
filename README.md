@@ -43,12 +43,12 @@ library(jstor)
 The basic usage is simple: supply one of the `find_*`-functions with a path and it will return a data.frame with the extracted information.
 
 ``` r
-find_metadata(jstor_example("sample_with_references.xml")) %>% knitr::kable()
+find_article(jstor_example("sample_with_references.xml")) %>% knitr::kable()
 ```
 
-| journal\_id      | basename\_id             | article\_id     | article\_title                     | volume | issue | language |  pub\_day|  pub\_month|  pub\_year|  first\_page|  last\_page|
-|:-----------------|:-------------------------|:----------------|:-----------------------------------|:-------|:------|:---------|---------:|-----------:|----------:|------------:|-----------:|
-| tranamermicrsoci | sample\_with\_references | 10.2307/3221896 | On the Protozoa Parasitic in Frogs | 41     | 2     | eng      |         1|           4|       1922|           59|          76|
+| journal\_id      | basename\_id             | article\_id     | article\_type    | article\_title                     | volume | issue | language |  pub\_day|  pub\_month|  pub\_year|  first\_page|  last\_page|
+|:-----------------|:-------------------------|:----------------|:-----------------|:-----------------------------------|:-------|:------|:---------|---------:|-----------:|----------:|------------:|-----------:|
+| tranamermicrsoci | sample\_with\_references | 10.2307/3221896 | research-article | On the Protozoa Parasitic in Frogs | 41     | 2     | eng      |         1|           4|       1922|           59|          76|
 
 ``` r
 

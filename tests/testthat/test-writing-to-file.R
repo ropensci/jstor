@@ -5,14 +5,14 @@ paths <- c("testfiles/standard_case.xml", "broken_path.txt")
 
 # # prepare correct result -----
 # "tests/testthat/testfiles/standard_case.xml" %>% 
-#   find_metadata() %>% 
+#   find_article() %>% 
 #   write_csv("tests/testthat/testfiles/correct_meta_data.csv", col_names = F)
 
 
 # tests ------
 test_that("writing correct results to file works", {
   temp_dir <- tempdir()
-  jstor_convert_to_file(paths, 1, paste0(temp_dir, "meta_data"), find_metadata)
+  jstor_convert_to_file(paths, 1, paste0(temp_dir, "meta_data"), find_article)
 
   expect_identical(read_csv("testfiles/correct_meta_data.csv",
                             col_names = FALSE),
@@ -26,7 +26,7 @@ test_that("writing correct results to file works", {
 test_that("writing error messages to file works", {
   temp_dir <- tempdir()
 
-  jstor_convert_to_file(paths, 1, paste0(temp_dir, "meta_data"), find_metadata)
+  jstor_convert_to_file(paths, 1, paste0(temp_dir, "meta_data"), find_article)
 
   res <- read_csv(paste0(temp_dir, "meta_data_broken-1.csv"),
                   col_names = TRUE)
@@ -49,7 +49,7 @@ test_that("on windows only single core is used", {
   temp_dir <- tempdir()
   
   expect_message(jstor_convert_to_file(paths, 1, paste0(temp_dir, "meta_data"),
-                                       find_metadata, cores = 4L),
+                                       find_article, cores = 4L),
                  "Parallel processing is")
 
   unlink(temp_dir)
@@ -60,7 +60,7 @@ test_that("on windows only single core is used", {
 test_that("import wrapper works", {
   temp_dir <- tempdir()
   jstor_import(paths, out_file = "meta_data", out_path = temp_dir,
-                       .f = find_metadata)
+                       .f = find_article)
 
   expect_identical(read_csv("testfiles/correct_meta_data.csv",
                             col_names = FALSE),

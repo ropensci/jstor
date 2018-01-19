@@ -2,9 +2,9 @@
 
 S3method(print,jstor)
 export("%>%")
+export(find_article)
 export(find_authors)
 export(find_footnotes)
-export(find_metadata)
 export(find_references)
 export(jstor_example)
 export(jstor_import)

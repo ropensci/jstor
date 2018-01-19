@@ -5,30 +5,30 @@ context("meta-information")
 
 # import files -----
 result <- "testfiles/standard_case.xml" %>%
-  find_metadata()
+  find_article()
 
 result_empty <- "testfiles/empty_file.xml" %>% 
-  find_metadata()
+  find_article()
 
 result_multiple_dates <- "testfiles/multiple-dates.xml" %>%
-  find_metadata()
+  find_article()
  
 result_weird_title <- "testfiles/weird-title.xml" %>%
-  find_metadata()
+  find_article()
 
 result_weird_title2 <- "testfiles/weird-title-2.xml" %>%
-  find_metadata()
+  find_article()
 
 result_multiple_languages <- "testfiles/multiple-languages.xml" %>% 
-  find_metadata()
+  find_article()
 
 # result_new_nov_17 <- "testfiles/test-file-new-format-nov-17.xml" %>%
-#   find_metadata()
+#   find_article()
 
 # tests -----
 test_that("Input data is checked", {
-  expect_error(find_metadata("my_path.txt"))
-  expect_error(find_metadata("testfiles/standard_book.xml"), "You are using")
+  expect_error(find_article("my_path.txt"))
+  expect_error(find_article("testfiles/standard_book.xml"), "You are using")
 })
 
 test_that("class is correct", {

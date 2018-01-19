@@ -3,13 +3,13 @@ library(xml2)
 
 # import files -----
 result <- "testfiles/standard_case.xml" %>%
-  find_metadata()
+  find_article()
 
 result_weird_pages <- "testfiles/weird-pages.xml" %>%
-  find_metadata()
+  find_article()
 
 result_no_pages <- "testfiles/no-pages.xml" %>%
-  find_metadata()
+  find_article()
 
  
 # tests -----

@@ -1,6 +1,6 @@
 #' Extract meta information
 #'
-#' `find_metadata()` extracts meta-data from JSTOR-XML files.
+#' `find_article()` extracts meta-data from JSTOR-XML files.
 #'
 #' @param file_path A `.xml`-file for a journal-article.
 #'
@@ -28,8 +28,8 @@
 #'
 #' @export
 #' @examples 
-#' find_metadata(jstor_example("sample_with_references.xml"))
-find_metadata <- function(file_path) {
+#' find_article(jstor_example("sample_with_references.xml"))
+find_article <- function(file_path) {
   validate_file_path(file_path, "xml")
 
   xml_file <- xml2::read_xml(file_path)

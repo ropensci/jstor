@@ -8,7 +8,7 @@
 #' appended to the output-file.
 #' @param out_path The path where the files should be written to. Should include
 #' the basename for the files too, i.e. `path/to/outfiles/meta_data`.
-#' @param fun The function to use when importing files, i.e. `find_meta`,
+#' @param fun The function to use when importing files, i.e. `find_article`,
 #' `find_authors` and `read_full_text`.
 #' @param col_names Should `col_names` be printed when exporting results? For
 #'   errors, col_names are always written to file.
