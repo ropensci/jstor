@@ -34,10 +34,14 @@ test_that("book-meta fields are correct", {
   expect_identical(result[["pub_month"]], 4L)
   expect_identical(result[["pub_year"]], 2009L)
   expect_identical(result[["isbn"]], "9781921536502; 9781921536519")
-  expect_identical(alternative[["isbn"]], NA_character_)
   expect_identical(result[["publisher_name"]], "ANU E Press")
   expect_identical(result[["publisher_location"]], "Canberra")
   expect_identical(alternative[["n_pages"]], 271L)
-  expect_identical(result[["n_pages"]], NA_integer_)
   expect_identical(result[["language"]], "eng")
+})
+
+test_that("missing fields are of correct type", {
+  expect_identical(result[["n_pages"]], NA_integer_)
+  expect_identical(alternative[["isbn"]], NA_character_)
+  expect_identical(alternative[["subtitle"]], NA_character_)
 })
