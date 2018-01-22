@@ -35,6 +35,11 @@ unnested with \code{\link[tidyr:unnest]{tidyr::unnest()}}. See the examples and 
 \description{
 \code{find_chapters()} extracts meta-data from JSTOR-XML files for book chapters.
 }
+\details{
+Currently, \code{find_chapters()} is quite a lot slower than most of the other
+functions. It is roughly 10 times slower than \code{find_book}, depending on the
+number of chapters to extract.
+}
 \examples{
 # extract parts without authors
 find_chapters(jstor_example("sample_book.xml"))

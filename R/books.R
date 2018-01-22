@@ -74,6 +74,10 @@ extract_book_pages <- function(book) {
 #' Extract information on book chapters
 #'
 #' `find_chapters()` extracts meta-data from JSTOR-XML files for book chapters.
+#' 
+#' Currently, `find_chapters()` is quite a lot slower than most of the other 
+#' functions. It is roughly 10 times slower than `find_book`, depending on the
+#' number of chapters to extract.
 #'
 #' @param file_path The path to a `.xml`-file for a book or research report.
 #' @param authors Extracting the authors is an expensive operation which makes
