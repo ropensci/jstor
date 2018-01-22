@@ -62,11 +62,12 @@ library(stringr)
 
 file_names_system <- file_names %>%
   str_replace("^\\.\\/", "") %>%
-  str_c(my_dir, "/", .)
+  str_c(example_dir, "/", .)
 
 file_names_system
 #> [1] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_footnotes.xml" 
-#> [2] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_references.xml"
+#> [2] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_book.xml"
+#> [3] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_references.xml"
 ```
 
 In this case the two approaches give the same result.
