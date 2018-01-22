@@ -31,7 +31,7 @@ ones as well.
 
 The most important set of functions is a group of `find_*` functions:
 
-- `find_metadata`
+- `find_article`
 - `find_authors`
 - `find_references`
 - `find_footnotes`
@@ -62,11 +62,11 @@ library(dplyr)
 
 
 
-### `find_metadata`
+### `find_article`
 The basic usage of the `find_*` functions is very simple. They take only one 
 argument, the path to the file to import:
 ```{r}
-meta_data <- find_metadata(file_path = jstor_example("sample_with_references.xml"))
+meta_data <- find_article(file_path = jstor_example("sample_with_references.xml"))
 ```
 
 The resulting object is a `data.frame` with one row and 12 columns. The columns
@@ -74,16 +74,19 @@ correspond to most of the elements documented here: http://www.jstor.org/dfr/abo
 
 The columns are:
 
-- journal_id *(chr)*: The jcode or a DOI. If both are present, the jcode (=publisher-id) is extracted.
-- basename_id *(chr)*: The filename of the original .xml-file. Can be used for joining with full-texts.
-- article_id *(chr)*: The article id, either a combination of digits (`pub-id-type="jstor"`) or a DOI (`pub-id-type="doi"`).
+- journal_id *(chr)*: The jcode or a DOI. If both are present, the jcode
+(=publisher-id) is extracted.
+- basename_id *(chr)*: The filename of the original .xml-file. Can be used 
+ for joining with full-texts.
+- article_id *(chr)*: The article id, either a combination of digits 
+ (`pub-id-type="jstor"`) or a DOI (`pub-id-type="doi"`).
 - article_title *(chr)*: The title of the article.
 - volume *(chr)*: The volume the article was published in.
 - issue *(chr)*: The issue the article was published in.
 - language *(chr)*: The language of the article.
 - pub_day *(int)*: Publication day, if specified.
 - pub_month *(int)*: Publication month, if specified.
-- pub_yea *(int)*: Year of publication.
+- pub_year *(int)*: Year of publication.
 - first_pag *(int)*: Page number for the first page of the article.
 - last_page *(int)*: Page number for the last page of the article.
 
@@ -91,9 +94,7 @@ Currently the output prints as a regualar `data.frame`. You can make the output
 prettier by using `tibble::as_tibble` or, for a single case, by using `tidyr::gather`:
 
 ```{r, results='asis'}
-meta_data %>%
-  tidyr::gather(field, value) %>% 
-  knitr::kable()
+meta_data %>% knitr::kable()
 ```
 
 ### `find_authors`
