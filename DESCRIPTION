@@ -13,12 +13,12 @@ Imports: dplyr,
     xml2,
     magrittr,
     stringr,
-    readr
+    readr,
+    tibble
 Suggests: testthat,
     covr,
     knitr,
     rmarkdown,
-    tibble,
     tidyr
 BugReports: https://github.com/tklebel/jstor/issues
 URL: https://github.com/tklebel/jstor
