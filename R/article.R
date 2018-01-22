@@ -1,6 +1,7 @@
-#' Extract meta information
+#' Extract meta information for articles
 #'
-#' `find_article()` extracts meta-data from JSTOR-XML files.
+#' `find_article()` extracts meta-data from JSTOR-XML files for journal
+#' articles.
 #'
 #' @param file_path A `.xml`-file for a journal-article.
 #'

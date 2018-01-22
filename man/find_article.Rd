@@ -2,7 +2,7 @@
 % Please edit documentation in R/article.R
 \name{find_article}
 \alias{find_article}
-\title{Extract meta information}
+\title{Extract meta information for articles}
 \usage{
 find_article(file_path)
 }
@@ -35,7 +35,8 @@ which should correspond to the oldest date, in case there is more than one
 date.
 }
 \description{
-\code{find_article()} extracts meta-data from JSTOR-XML files.
+\code{find_article()} extracts meta-data from JSTOR-XML files for journal
+articles.
 }
 \examples{
 find_article(jstor_example("sample_with_references.xml"))
