@@ -19,7 +19,7 @@
 #' - language *(chr)*: The language of the article.
 #' - pub_day *(int)*: Publication day, if specified.
 #' - pub_month *(int)*: Publication month, if specified.
-#' - pub_yea *(int)*: Year of publication.
+#' - pub_year *(int)*: Year of publication.
 #' - first_pag *(int)*: Page number for the first page of the article.
 #' - last_page *(int)*: Page number for the last page of the article.
 #'
