@@ -18,7 +18,8 @@ Suggests: testthat,
     covr,
     knitr,
     rmarkdown,
-    tibble
+    tibble,
+    tidyr
 BugReports: https://github.com/tklebel/jstor/issues
 URL: https://github.com/tklebel/jstor
 RoxygenNote: 6.0.1
