@@ -9,6 +9,9 @@ result <- "testfiles/standard_book.xml" %>%
 alternative <- "testfiles/book-alternative-case.xml" %>% 
   find_book()
 
+empty <- "testfiles/book-empty.xml" %>% 
+  find_book()
+
 # tests -----
 test_that("Input data is checked", {
   expect_error(find_book("my_path.txt"))
@@ -41,7 +44,16 @@ test_that("book-meta fields are correct", {
 })
 
 test_that("missing fields are of correct type", {
-  expect_identical(result[["n_pages"]], NA_integer_)
-  expect_identical(alternative[["isbn"]], NA_character_)
-  expect_identical(alternative[["subtitle"]], NA_character_)
+  expect_identical(empty[["book_id"]], NA_character_)
+  expect_identical(empty[["discipline"]], NA_character_)
+  expect_identical(empty[["book_title"]], NA_character_)
+  expect_identical(empty[["book_subtitle"]], NA_character_)
+  expect_identical(empty[["pub_day"]], NA_integer_)
+  expect_identical(empty[["pub_month"]], NA_integer_)
+  expect_identical(empty[["pub_year"]], NA_integer_)
+  expect_identical(empty[["isbn"]], NA_character_)
+  expect_identical(empty[["publisher_name"]], NA_character_)
+  expect_identical(empty[["publisher_location"]], NA_character_)
+  expect_identical(empty[["n_pages"]], NA_integer_)
+  expect_identical(empty[["language"]], NA_character_)
 })
