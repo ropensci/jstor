@@ -1,0 +1,201 @@
+---
+title: "Introduction to `jstor`"
+author: "Thomas Klebel"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+      toc: true
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The tool [Data for Research (DfR)](http://www.jstor.org/dfr/) by JSTOR is a
+valuable source for citation analysis and text mining. `jstor`
+provides functions and suggests workflows for importing
+datasets from DfR.
+
+When using DfR, requests for datasets can
+be made for small excerpts (max. 25,000 records) or large ones, which require an
+agreement between the researcher and JSTOR. `jstor` was developed to deal with
+very large datasets which require an agreement, but can be used with smaller
+ones as well.
+
+The most important set of functions is a group of `find_*` functions:
+
+- `find_metadata`
+- `find_authors`
+- `find_references`
+- `find_footnotes`
+- `find_fulltext`
+
+I will demonstrate their usage using the
+[sample dataset](http://www.jstor.org/dfr/about/sample-datasets)
+which is provided by JSTOR on their website.
+
+## General Concept
+All functions which are concerned with meta data (therefore excluding
+`find_fulltext`) operate along the same lines:
+
+1. The file is read with `xml2::read_xml()`.
+2. Content of the file is extracted via XPATH or CSS-expressions.
+3. The resulting data is returned in a `data.frame`.
+
+The following sections showcase the different functions.
+
+
+## Application
+Apart from `jstor` we only need to load `dplyr` for matching records.
+
+```{r, message=FALSE, warning=FALSE}
+library(jstor)
+library(dplyr)
+```
+
+
+
+### `find_metadata`
+The basic usage of the `find_*` functions is very simple. They take only one 
+argument, the path to the file to import:
+```{r}
+meta_data <- find_metadata(file_path = jstor_example("sample_with_references.xml"))
+```
+
+The resulting object is a `data.frame` with one row and 12 columns. The columns
+correspond to most of the elements documented here: http://www.jstor.org/dfr/about/technical-specifications.
+
+The columns are:
+
+- journal_id *(chr)*: The jcode or a DOI. If both are present, the jcode (=publisher-id) is extracted.
+- basename_id *(chr)*: The filename of the original .xml-file. Can be used for joining with full-texts.
+- article_id *(chr)*: The article id, either a combination of digits (`pub-id-type="jstor"`) or a DOI (`pub-id-type="doi"`).
+- article_title *(chr)*: The title of the article.
+- volume *(chr)*: The volume the article was published in.
+- issue *(chr)*: The issue the article was published in.
+- language *(chr)*: The language of the article.
+- pub_day *(int)*: Publication day, if specified.
+- pub_month *(int)*: Publication month, if specified.
+- pub_yea *(int)*: Year of publication.
+- first_pag *(int)*: Page number for the first page of the article.
+- last_page *(int)*: Page number for the last page of the article.
+
+Currently the output prints as a regualar `data.frame`. You can make the output
+prettier by using `tibble::as_tibble` or, for a single case, by using `tidyr::gather`:
+
+```{r, results='asis'}
+meta_data %>%
+  tidyr::gather(field, value) %>% 
+  knitr::kable()
+```
+
+### `find_authors`
+Extracting the authors works in similar fashion:
+
+```{r, results='asis'}
+authors <- find_authors(jstor_example("sample_with_references.xml"))
+knitr::kable(authors)
+```
+
+Here we have the following columns:
+
+- *basename_id*: The same as above, used for matching articles.
+- *prefix*: A prefix to the name.
+- *given_name*: The given name of the author (i.e. `Albert` or `A.`).
+- *surname*: The surname of the author (i.e. `Einstein`).
+- *string_name*: Sometimes instead of given_name and surname, only a full string is
+supplied, i.e.: `Albert Einstein`, or `Einstein, Albert`.
+- *suffix*: A suffix to the name, as in `Albert Einstein, II.`.
+- *author_number*: An integer representing the order of how the authors appeard in the data.
+
+The number of rows matches the number of authors -- each author get its' own row.
+
+### `find_references`
+```{r}
+references <- find_references(jstor_example("sample_with_references.xml"))
+```
+
+We have three columns:
+
+- *basename_id*: Identifier, can be used for matching.
+- *full_reference*: The content of each entry for reference.
+- *author_names*: The names of the references authors, as far as specified by JSTOR.
+
+Here I display the first 5 entries for each column:
+
+```{r}
+references %>% 
+  purrr::map(head, 5)
+```
+
+This example shows several things: `basename_id` is identical among rows, since
+it identifies the article and all references came from one article.
+
+The content of references (`full_reference`) is in quite a raw state, quite often
+the result of digitising scans via OCR. Very often, the first entry in this column
+is something like "Bibliography" or "References", which is simply the heading 
+within the article. In the above example there are several headings, because the
+sample file doesn't follow a typical convention (it was published in 1922). 
+
+The last column, `author_names`, contains strings with just the names of authors.
+This data is generated by JSTOR/DfR and can be quite messy. In the above
+example it only contains surnames, but no initials. Sometimes it might
+contain only the first author, or none. Use at your own discretion.
+
+
+### `find_footnotes`
+```{r}
+find_footnotes(jstor_example("sample_with_references.xml"))
+```
+
+Very commonly, articles either have footnotes or references. The sample file
+used here does not have footnotes, therefore a simple `data.frame` with missing
+footnotes is returned.
+
+I will use another file to demonstrate footnotes.
+
+```{r}
+footnotes <- find_footnotes(jstor_example("sample_with_footnotes.xml"))
+footnotes
+```
+
+As can be seen from the output above, for footnotes there is no extra column for
+authors, only the id and the content of the footnotes.
+
+### `find_fulltext`
+The function to extract full texts can't be demonstrated with sample data, since
+the full texts are only supplied upen special request with JSTOR. The function
+guesses the encoding of the specified file via `readr::guess_encoding()`, reades
+the whole file and returns a `data.frame` with `basename_id`, `full_text` and
+`encoding`.
+
+### Combining results
+Different parts of meta-data can be combined by using `dplyr::left_join()`.
+
+**Matching with authors**
+
+```{r, results='asis'}
+meta_data %>% 
+  left_join(authors) %>%
+  select(basename_id, article_title, pub_year, given_name, surname) %>% 
+  knitr::kable()
+```
+
+**Matching with references**
+
+```{r, results='asis'}
+meta_data %>% 
+  left_join(references) %>%
+  select(basename_id, article_title, pub_year, author_names) %>% 
+  head(10) %>% 
+  knitr::kable()
+```
+
+
