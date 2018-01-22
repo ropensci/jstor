@@ -3,8 +3,12 @@
 language: R
 r:
   - release
-  - devel
   - oldrel
+
+matrix: 
+  include:
+  - r: devel
+    warnings_are_errors: false
 
 sudo: false
 cache: packages
