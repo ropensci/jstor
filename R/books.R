@@ -9,6 +9,7 @@ find_book <- function(file_path) {
   
   out <- data.frame(
     book_id = extract_child(book, ".//book-id"),
+    basename_id = extract_basename(file_path, "xml"),
     discipline = extract_all(
       book, ".//subj-group[@subj-group-type='discipline']"
     ),

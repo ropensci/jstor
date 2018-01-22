@@ -26,6 +26,7 @@ test_that("class is correct", {
 
 test_that("book-meta fields are correct", {
   expect_identical(result[["book_id"]], "j.ctt24hdz7")
+  expect_identical(result[["basename_id"]], "standard_book")
   expect_identical(result[["discipline"]], "Political Science")
   expect_identical(
     find_book("testfiles/book-alternative-case.xml")[["discipline"]],
