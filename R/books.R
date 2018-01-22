@@ -69,3 +69,83 @@ extract_book_pages <- function(book) {
     as.integer()
 }
 
+
+
+#' Extract information on book chapters
+#'
+#' `find_chapters()` extracts meta-data from JSTOR-XML files for book chapters.
+#'
+#' @param file_path The path to a `.xml`-file for a book or research report.
+#' @param authors Extracting the authors is an expensive operation which makes
+#' the function ~3 times slower, depending on the number of chapters and
+#' the number of authors. Defaults to `FALSE`. Use `authors = TRUE` to
+#' import the authors too.
+#' 
+#' @return A `tibble` containing the extracted meta-data with the following
+#' columns:
+#' - book_id *(chr)*: The jcode or a DOI. If both are present, the jcode
+#'  (=publisher-id) is extracted.
+#' - basename_id *(chr)*: The filename of the original .xml-file. Can be used 
+#'   for joining with other data for the same file.
+#' - part_id *(chr)*: The id of the part.
+#' - part_label *(chr)*: A label for the part, if specified.
+#' - part_title *(chr)*: The title of the part.
+#' - part_subtitle *(chr)*: The subtitle of the part, if specified.
+#' - authors *(list)*: A list-column with information on the authors. Can be
+#'   unnested with [tidyr::unnest()]. See the examples and [find_authors()].
+#' - abstract *(chr)*: The abstract to the part.
+#' - part_first_page *(chr)*: The page where the part begins.
+#' 
+#' @export
+#' @examples 
+#' # extract parts without authors
+#' find_chapters(jstor_example("sample_book.xml"))
+#' 
+#' # import authors too
+#' parts <- find_chapters(jstor_example("sample_book.xml"), authors = TRUE)
+#' parts
+#' 
+#' tidyr::unnest(parts)
+find_chapters <- function(file_path, authors = FALSE) {
+  validate_file_path(file_path, "xml")
+  
+  xml_file <- xml2::read_xml(file_path)
+  
+  validate_book(xml_file)
+  
+  parts <- xml_find_all(xml_file, "body") %>% 
+    xml_find_all("book-part/body/book-part/book-part-meta")
+  
+  out <- list(
+    book_id = extract_child(xml_file, ".//book-id"),
+    basename_id = extract_basename(file_path, "xml"),
+    list(purrr::map_df(parts, find_part, authors))
+  )
+  
+  out %>% 
+    data.frame(stringsAsFactors = FALSE) %>% 
+    tibble::new_tibble()
+}
+
+
+
+find_part <- function(part, authors = FALSE) {
+  if (authors) {
+    authors <- list(extract_authors(part))
+  } else {
+    authors <- NA_character_
+  }
+  
+  out <- list(
+    part_id = extract_child(part, "book-part-id"),
+    part_label = extract_child(part, ".//label"),
+    part_title = extract_child(part, ".//title"),
+    part_subtitle = extract_child(part,".//title-group/subtitle"),
+    authors = authors,
+    abstract = extract_child(part, ".//abstract"),
+    part_first_page = extract_child(part, ".//fpage")
+  )
+
+  tibble::new_tibble(out)
+}
+
