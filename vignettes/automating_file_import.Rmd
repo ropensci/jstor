@@ -80,12 +80,16 @@ Once the file list is generated, we can apply any of the `find_*`-functions to
 the list. A good and simple way for small to moderate amounts of files is to use
 `map_df` from purrr:
 
-```{r}
+```{r, results='asis'}
 library(jstor)
 library(purrr)
+library(stringr)
 
 result <- file_names_listed %>% 
+  keep(str_detect, "with") %>% 
   map_df(find_article)
+
+result %>% knitr::kable()
 ```
 
 This works well if 1) there are no errors and 2) if there is only a moderate
