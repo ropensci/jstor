@@ -39,9 +39,9 @@ test_that("class is correct", {
 test_that("jcode is correct", {
   expect_identical(result[["jcode"]], "kewbulletin")
   expect_identical(result_empty[["journal_doi"]], NA_character_)
-  expect_identical(result_empty[["publisher_id"]], NA_character_)
+  expect_identical(result_empty[["journal_pub_id"]], NA_character_)
   expect_identical(result_empty[["jcode"]], NA_character_)
-  expect_identical(result_new_nov_17[["publisher_id"]], "blabla")
+  expect_identical(result_new_nov_17[["journal_pub_id"]], "blabla")
   expect_identical(result_new_nov_17[["journal_doi"]], "10.123456")
 })
 
