@@ -1,6 +1,7 @@
 context("test-books.R")
 library(xml2)
 library(magrittr)
+library(stringr)
 
 # import files -----
 result <- "testfiles/standard_book.xml" %>%
@@ -15,7 +16,7 @@ empty <- "testfiles/book-empty.xml" %>%
 empty_chapters <- "testfiles/book-empty.xml" %>% 
   find_chapters()
 
-chapter <- "testfiles/standard_book.xml" %>% 
+chapters <- "testfiles/standard_book.xml" %>% 
   find_chapters()
 
 # tests -----
@@ -29,7 +30,7 @@ test_that("Input data is checked", {
 test_that("class is correct", {
   expect_s3_class(result, "jstor")
   expect_s3_class(result, "data.frame")
-  expect_s3_class(chapter, "tbl_df")
+  expect_s3_class(chapters, "tbl_df")
 })
 
 
@@ -76,4 +77,25 @@ test_that("missing fields are of correct type", {
   expect_identical(empty_chapters[["authors"]], NA_character_)
   expect_identical(empty_chapters[["abstract"]], NA_character_)
   expect_identical(empty_chapters[["part_first_page"]], NA_character_)
+})
+
+
+test_that("chapters are correct", {
+  expect_equal(dim(chapters), c(36, 9))
+  expect_identical(chapters[[1, "book_id"]], "j.ctt24hdz7")
+  expect_identical(chapters[[1, "basename_id"]], "standard_book")
+  expect_identical(chapters[[1, "part_id"]], "j.ctt24hdz7.1")
+  expect_identical(chapters[[1, "part_label"]], NA_character_)
+  expect_identical(chapters[[5, "part_label"]], "1.")
+  expect_identical(chapters[[5, "part_title"]],
+                   "The enigmas of Fiji’s good governance coup")
+  expect_identical(chapters[[5, "part_subtitle"]], NA_character_)
+  expect_identical(chapters[[6, "part_subtitle"]],
+                   "Fiji’s road to military coup, 2006")
+  expect_false(any(!is.na(chapters[["authors"]])))
+  expect_identical(chapters[[1, "abstract"]], NA_character_)
+  expect_identical(chapters[[5, "abstract"]] %>% str_trunc(25),
+                   "Fiji’s December 2006 c...")
+  expect_identical(chapters[[1, "part_first_page"]], "i")
+  expect_identical(chapters[[5, "part_first_page"]], "3")
 })
