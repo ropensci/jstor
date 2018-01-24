@@ -5,7 +5,7 @@
 #'
 #' @param file_path A `.xml`-file for a journal-article.
 #'
-#' @return A `data.frame` containing the extracted meta-data with the following
+#' @return A `tibble` containing the extracted meta-data with the following
 #' columns:
 #' - journal_id *(chr)*: The jcode or a DOI. If both are present, the jcode
 #'  (=publisher-id) is extracted.

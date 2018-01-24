@@ -10,7 +10,7 @@ find_article(file_path)
 \item{file_path}{A \code{.xml}-file for a journal-article.}
 }
 \value{
-A \code{data.frame} containing the extracted meta-data with the following
+A \code{tibble} containing the extracted meta-data with the following
 columns:
 \itemize{
 \item journal_id \emph{(chr)}: The jcode or a DOI. If both are present, the jcode
