@@ -34,42 +34,41 @@ test_file_book <- "testfiles/standard_book.xml" %>%
 single_author <- tribble(
   ~basename_id,              ~prefix,       ~given_name, ~surname,     ~string_name, ~suffix,        ~author_number,
   "standard_case", NA_character_, "N. L.",  "Bor", NA_character_, NA_character_,  1L
-) %>% as.data.frame() %>% as_jstor()
+) 
 
 multiple_authors <- tribble(
   ~basename_id,                 ~prefix,       ~given_name, ~surname,  ~string_name, ~suffix,        ~author_number,
   "multiple-authors", NA_character_, "Louis",     "Kaplow",  NA_character_, NA_character_,  1L,
   "multiple-authors", NA_character_, "Steven",    "Shavell", NA_character_, NA_character_,  2L
-) %>% as.data.frame() %>% as_jstor()
+) 
 
 multiple_given_names <- tribble(
   ~basename_id,                    ~prefix,       ~given_name,    ~surname, ~string_name,  ~suffix,        ~author_number,
   "multiple-given-names", NA_character_, "Seung Ho",      "Park", NA_character_, NA_character_,  1L,
   "multiple-given-names", NA_character_, "Roger",         "Chen", NA_character_, NA_character_,  2L,
   "multiple-given-names", NA_character_, "Scott",    "Gallagher", NA_character_, NA_character_,  3L
-) %>% as.data.frame() %>% as_jstor()
+)
 
 author_string <- tribble(
   ~basename_id,              ~prefix,      ~given_name,    ~surname,     ~string_name,               ~suffix,        ~author_number,
   "author-string", NA_character_, NA_character_, NA_character_, " Michèle de la Pradelle ", NA_character_,  1L,
   "author-string", NA_character_, NA_character_, NA_character_, "Emmanuelle Lallement",     NA_character_,  2L
-) %>% as.data.frame() %>% as_jstor()
+) 
 
 no_authors <- tribble(
   ~prefix,      ~given_name,    ~surname,     ~string_name,   ~suffix,       ~author_number,
   NA_character_, NA_character_, NA_character_, NA_character_, NA_character_, NA_real_
-) %>% as.data.frame() %>% as_jstor()
+) 
 
 book_authors <- tribble(
   ~basename_id, ~prefix, ~given_name, ~surname, ~string_name, ~suffix, ~author_number,
   "standard_book", NA_character_, "Jon", "Fraenkel",  NA_character_, NA_character_,  1L,
   "standard_book", NA_character_, "Stewart", "Firth", NA_character_, NA_character_,  2L,
   "standard_book", NA_character_, "Brij V.",  "Lal",  NA_character_, NA_character_,  3L
-) %>% as.data.frame() %>% as_jstor()
+) 
 
 test_that("class is correct", {
-  expect_s3_class(test_file_single_author, "jstor")
-  expect_s3_class(test_file_single_author, "data.frame")
+  expect_s3_class(test_file_single_author, "tbl_df")
 })
 
 test_that("extracting authors works", {

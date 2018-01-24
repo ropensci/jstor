@@ -33,14 +33,13 @@ find_authors <- function(file_path) {
     meta <- xml_find_all(xml_file, "book-meta")
   }
 
-
-  out <- data.frame(
-    basename_id = extract_basename(file_path, type = "xml"),
-    extract_authors(meta),
-    stringsAsFactors = FALSE
-  )
-
-  structure(out, class = c("jstor", "data.frame"))
+  authors <- extract_authors(meta)
+  
+  list(
+    basename_id = extract_basename(file_path, type = "xml") %>% 
+      rep(times = nrow(authors))
+  ) %>% 
+    dplyr::bind_cols(authors)
 }
 
 
@@ -62,14 +61,14 @@ extract_authors <- function(article) {
       is_empty(xml_find_all(article, ".//surname")) &
       is_empty(xml_find_all(article, ".//string-name"))) {
 
-    data.frame(
+    tibble::new_tibble(list(
       prefix = NA_character_,
       given_name = NA_character_,
       surname = NA_character_,
       string_name = NA_character_,
       suffix = NA_character_,
-      author_number = NA_real_,
-      stringsAsFactors = FALSE)
+      author_number = NA_real_
+    ))
 
     # case for authors with just "string-name"
   } else if (is_empty(xml_find_all(article, ".//given-names")) &
@@ -77,14 +76,16 @@ extract_authors <- function(article) {
 
     string_name <- xml_find_all(article, ".//string-name") %>% xml_text()
 
-    data.frame(
-      prefix = NA_character_,
-      given_name = NA_character_,
-      surname = NA_character_,
+    missings <- rep(NA_character_, length(string_name))
+    
+    tibble::new_tibble(list(
+      prefix = missings,
+      given_name = missings,
+      surname = missings,
       string_name = string_name,
-      suffix = NA_character_,
-      author_number = seq_along(string_name),
-      stringsAsFactors = FALSE)
+      suffix = missings,
+      author_number = seq_along(string_name)
+    ))
 
     # standard case
   } else {
@@ -98,14 +99,14 @@ extract_authors <- function(article) {
     # replace some trailing ","s after surnames (occurs when there is a suffix)
     surnames <- gsub(pattern = ",$", replacement =  "", x = surnames)
 
-    data.frame(
+    tibble::new_tibble(list(
       prefix = prefix,
       given_name = given_names,
       surname = surnames,
-      string_name = NA_character_,
+      string_name = rep(NA_character_, length(given_names)),
       suffix = suffix,
-      author_number = seq_along(given_names),
-      stringsAsFactors = FALSE)
+      author_number = seq_along(given_names)
+    ))
   }
 }
 
