@@ -12,15 +12,24 @@ alternative <- "testfiles/book-alternative-case.xml" %>%
 empty <- "testfiles/book-empty.xml" %>% 
   find_book()
 
+empty_chapters <- "testfiles/book-empty.xml" %>% 
+  find_chapters()
+
+chapter <- "testfiles/standard_book.xml" %>% 
+  find_chapters()
+
 # tests -----
 test_that("Input data is checked", {
   expect_error(find_book("my_path.txt"))
+  expect_error(find_chapters("my_path.txt"))
   expect_error(find_book("testfiles/standard_case.xml"), "You are using")
+  expect_error(find_chapters("testfiles/standard_case.xml"), "You are using")
 })
 
 test_that("class is correct", {
   expect_s3_class(result, "jstor")
   expect_s3_class(result, "data.frame")
+  expect_s3_class(chapter, "tbl_df")
 })
 
 
@@ -58,4 +67,13 @@ test_that("missing fields are of correct type", {
   expect_identical(empty[["publisher_location"]], NA_character_)
   expect_identical(empty[["n_pages"]], NA_integer_)
   expect_identical(empty[["language"]], NA_character_)
+  
+  expect_identical(empty_chapters[["book_id"]], NA_character_)
+  expect_identical(empty_chapters[["part_id"]], NA_character_)
+  expect_identical(empty_chapters[["part_label"]], NA_character_)
+  expect_identical(empty_chapters[["part_title"]], NA_character_)
+  expect_identical(empty_chapters[["part_subtitle"]], NA_character_)
+  expect_identical(empty_chapters[["authors"]], NA_character_)
+  expect_identical(empty_chapters[["abstract"]], NA_character_)
+  expect_identical(empty_chapters[["part_first_page"]], NA_character_)
 })
