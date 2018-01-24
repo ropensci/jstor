@@ -13,13 +13,11 @@ find_book(file_path)
 A \code{data.frame} containing the extracted meta-data with the following
 columns:
 \itemize{
-\item book_id \emph{(chr)}: The jcode or a DOI. If both are present, the jcode
-(=publisher-id) is extracted.
 \item basename_id \emph{(chr)}: The filename of the original .xml-file. Can be used
 for joining with other data for the same file.
 \item discipline \emph{(chr)}: The discipline from the discipline names used on JSTOR.
-\item book_id \emph{(chr)}: The book id, either a combination of digits
-(\code{pub-id-type="jstor"}) or a DOI (\code{pub-id-type="doi"}).
+\item book_id \emph{(chr)}: The book id of type "jstor", which is not a registered
+DOI.
 \item book_title \emph{(chr)}: The title of the book.
 \item book_subtitle \emph{(chr)}: The subtitle of the book.
 \item pub_day \emph{(int)}: Publication day, if specified.

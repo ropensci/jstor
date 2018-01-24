@@ -6,13 +6,11 @@
 #' 
 #' @return A `data.frame` containing the extracted meta-data with the following
 #' columns:
-#' - book_id *(chr)*: The jcode or a DOI. If both are present, the jcode
-#'  (=publisher-id) is extracted.
 #' - basename_id *(chr)*: The filename of the original .xml-file. Can be used 
 #'   for joining with other data for the same file.
 #' - discipline *(chr)*: The discipline from the discipline names used on JSTOR.
-#' - book_id *(chr)*: The book id, either a combination of digits 
-#'   (`pub-id-type="jstor"`) or a DOI (`pub-id-type="doi"`).
+#' - book_id *(chr)*: The book id of type "jstor", which is not a registered 
+#'   DOI.
 #' - book_title *(chr)*: The title of the book.
 #' - book_subtitle *(chr)*: The subtitle of the book.
 #' - pub_day *(int)*: Publication day, if specified.
@@ -28,6 +26,7 @@
 #' A note about publication dates: always the first entry is being extracted,
 #' which should correspond to the oldest date, in case there is more than one
 #' date.
+#' 
 #' @export
 #' @examples 
 #' find_book(jstor_example("sample_book.xml"))
