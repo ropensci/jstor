@@ -120,7 +120,7 @@ find_chapters <- function(file_path, authors = FALSE) {
   
   # catch case with no parts
   if (purrr::is_empty(parts)) {
-    parts_out <- new_tibble(list(
+    parts_out <- tibble::new_tibble(list(
       part_id = NA_character_,
       part_label = NA_character_,
       part_title = NA_character_,
