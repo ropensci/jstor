@@ -19,6 +19,9 @@ empty_chapters <- "testfiles/book-empty.xml" %>%
 chapters <- "testfiles/standard_book.xml" %>% 
   find_chapters()
 
+chap_auth <- "testfiles/standard_book.xml" %>% 
+  find_chapters(authors = T)
+
 # tests -----
 test_that("Input data is checked", {
   expect_error(find_book("my_path.txt"))
@@ -98,4 +101,17 @@ test_that("chapters are correct", {
                    "Fiji’s December 2006 c...")
   expect_identical(chapters[[1, "part_first_page"]], "i")
   expect_identical(chapters[[5, "part_first_page"]], "3")
+})
+
+
+# authors ----
+correct_authors <- tribble(
+  ~prefix, ~given_name, ~surname, ~string_name, ~suffix, ~author_number,
+  NA_character_, "Jon", "Fraenkel",  NA_character_, NA_character_,  1L,
+  NA_character_, "Stewart", "Firth", NA_character_, NA_character_,  2L
+) %>% as.data.frame()
+
+test_that("authors are correct", {
+  expect_type(chap_auth[["authors"]], "list")
+  expect_identical(chap_auth[[5, "authors"]], correct_authors)
 })
