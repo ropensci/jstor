@@ -4,7 +4,7 @@
 #'
 #' @param file_path A `.xml`-file for a book or research report.
 #' 
-#' @return A `data.frame` containing the extracted meta-data with the following
+#' @return A `tibble` containing the extracted meta-data with the following
 #' columns:
 #' - basename_id *(chr)*: The filename of the original .xml-file. Can be used 
 #'   for joining with other data for the same file.
@@ -39,7 +39,7 @@ find_book <- function(file_path) {
   
   book <- xml_find_all(xml_file, "book-meta")
   
-  out <- data.frame(
+  out <- list(
     book_id = extract_child(book, ".//book-id"),
     basename_id = extract_basename(file_path, "xml"),
     discipline = extract_all(
@@ -54,11 +54,10 @@ find_book <- function(file_path) {
     publisher_name = extract_child(book, ".//publisher-name"),
     publisher_location = extract_child(book, ".//publisher-loc"),
     n_pages = extract_book_pages(book),
-    language = extract_child(book, ".//meta-value"),
-    stringsAsFactors = FALSE
+    language = extract_child(book, ".//meta-value")
   )
   
-  structure(out, class = c("jstor", "data.frame"))
+  tibble::new_tibble(out)
 }
 
 

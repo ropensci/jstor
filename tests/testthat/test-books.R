@@ -31,8 +31,7 @@ test_that("Input data is checked", {
 })
 
 test_that("class is correct", {
-  expect_s3_class(result, "jstor")
-  expect_s3_class(result, "data.frame")
+  expect_s3_class(result, "tbl_df")
   expect_s3_class(chapters, "tbl_df")
 })
 
