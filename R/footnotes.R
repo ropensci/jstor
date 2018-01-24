@@ -19,11 +19,9 @@ find_footnotes <- function(file_path) {
   
   validate_article(xml_file)
 
-  out <- data.frame(basename_id = extract_basename(file_path, type = "xml"),
-                    footnotes = extract_footnotes(xml_file),
-                    stringsAsFactors = FALSE)
+  footnotes <- extract_footnotes(xml_file)
   
-  structure(out, class = c("jstor", "data.frame"))
+  expand_and_bind(file_path, footnotes)
 }
 
 
@@ -32,11 +30,14 @@ extract_footnotes <- function(xml_file) {
 
   # if there are no footnotes, exit and return NA
   if (is_empty(res)) {
-    return(NA_character_)
+    return(new_tibble(list(footnotes = NA_character_)))
   }
 
   res %>%
     xml_children() %>%
     map_chr(xml_text) %>%
-    str_replace("^\\\n", "") # remove "\n" at beginning of strings
+    str_replace("^\\\n", "") %>%  # remove "\n" at beginning of strings
+    list() %>% 
+    purrr::set_names("footnotes") %>% 
+    new_tibble()
 }
