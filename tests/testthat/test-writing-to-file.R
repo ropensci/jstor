@@ -4,8 +4,8 @@ context("writing-to-file")
 paths <- c("testfiles/standard_case.xml", "broken_path.txt")
 
 # # prepare correct result -----
-# "tests/testthat/testfiles/standard_case.xml" %>% 
-#   find_article() %>% 
+# "tests/testthat/testfiles/standard_case.xml" %>%
+#   find_article() %>%
 #   write_csv("tests/testthat/testfiles/correct_meta_data.csv", col_names = F)
 
 
