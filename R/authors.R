@@ -35,11 +35,7 @@ find_authors <- function(file_path) {
 
   authors <- extract_authors(meta)
   
-  list(
-    basename_id = extract_basename(file_path, type = "xml") %>% 
-      rep(times = nrow(authors))
-  ) %>% 
-    dplyr::bind_cols(authors)
+  expand_and_bind(file_path, authors)
 }
 
 

@@ -64,3 +64,11 @@ as_jstor <- function(x) {
   
   structure(x, class = c("jstor", "data.frame"))
 }
+
+expand_and_bind <- function(file_path, individual_part) {
+  list(
+    basename_id = extract_basename(file_path, type = "xml") %>% 
+      rep(times = nrow(individual_part))
+  ) %>% 
+    dplyr::bind_cols(individual_part)
+}
