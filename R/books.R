@@ -120,15 +120,29 @@ find_chapters <- function(file_path, authors = FALSE) {
   parts <- xml_find_all(xml_file, "body") %>% 
     xml_find_all("book-part/body/book-part/book-part-meta")
   
-  out <- list(
-    book_id = extract_child(xml_file, ".//book-id"),
-    basename_id = extract_basename(file_path, "xml"),
-    list(purrr::map_df(parts, find_part, authors))
+  # catch case with no parts
+  if (purrr::is_empty(parts)) {
+    parts_out <- new_tibble(list(
+      part_id = NA_character_,
+      part_label = NA_character_,
+      part_title = NA_character_,
+      part_subtitle = NA_character_,
+      authors = NA_character_,
+      abstract = NA_character_,
+      part_first_page = NA_character_
+    ))
+  } else {
+    parts_out <- purrr::map_df(parts, find_part, authors)
+  }
+  
+  base <- list(
+    book_id = extract_child(xml_file, ".//book-id") %>% 
+      rep(times = nrow(parts_out)),
+    basename_id = extract_basename(file_path, "xml") %>%
+      rep(times = nrow(parts_out))
   )
   
-  out %>% 
-    data.frame(stringsAsFactors = FALSE) %>% 
-    tibble::new_tibble()
+  dplyr::bind_cols(base, parts_out)
 }
 
 
@@ -149,7 +163,7 @@ find_part <- function(part, authors = FALSE) {
     abstract = extract_child(part, ".//abstract"),
     part_first_page = extract_child(part, ".//fpage")
   )
-
+  
   tibble::new_tibble(out)
 }
 
