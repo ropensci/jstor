@@ -10,7 +10,7 @@ find_book(file_path)
 \item{file_path}{A \code{.xml}-file for a book or research report.}
 }
 \value{
-A \code{data.frame} containing the extracted meta-data with the following
+A \code{tibble} containing the extracted meta-data with the following
 columns:
 \itemize{
 \item basename_id \emph{(chr)}: The filename of the original .xml-file. Can be used
