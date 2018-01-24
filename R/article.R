@@ -45,7 +45,7 @@ find_article <- function(file_path) {
   last_page <- extract_page(article, "lpage")
 
 
-  out <- data.frame(
+  out <- list(
     journal_id = extract_jcode(front),
     basename_id = extract_basename(file_path, type = "xml"),
     article_id = extract_child(article, "article-id"),
@@ -60,11 +60,10 @@ find_article <- function(file_path) {
     pub_month = extract_child(article, ".//month") %>% as.integer(),
     pub_year = extract_child(article, ".//year") %>% as.integer(),
     first_page = first_page,
-    last_page = last_page,
-    stringsAsFactors = FALSE
+    last_page = last_page
   )
   
-  structure(out, class = c("jstor", "data.frame"))
+  tibble::new_tibble(out)
 }
 
 
