@@ -4,6 +4,7 @@
 #' @importFrom readr read_file write_csv guess_encoding locale
 #' @importFrom xml2 xml_child xml_find_all xml_find_first xml_text xml_children
 #' @importFrom stringr str_detect str_replace
+#' @importFrom tibble new_tibble
 NULL
 
 #' Pipe operator
