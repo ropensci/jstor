@@ -46,8 +46,14 @@ test_that("jcode is correct", {
 })
 
 test_that("article_id is correct", {
-  expect_equal(result[["article_id"]], "10.2307/4117222")
-  expect_equal(result_empty[["article_id"]], NA_character_)
+  expect_equal(result[["article_doi"]], "10.2307/4117222")
+  expect_identical(result_empty[["article_doi"]], NA_character_)
+  expect_identical(result_empty[["article_pub_id"]], NA_character_)
+  expect_identical(result_empty[["article_jcode"]], NA_character_)
+  expect_identical(result_new_nov_17[["article_doi"]],
+                   "10.123456/blabla.3.6.0111")
+  expect_identical(result_new_nov_17[["article_pub_id"]], "blabla.3.6.0111")
+  expect_identical(result_new_nov_17[["article_jcode"]], NA_character_)
 })
 
 test_that("basename_id is correct", {

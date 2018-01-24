@@ -44,11 +44,12 @@ find_article <- function(file_path) {
   first_page <- extract_page(article, "fpage")
   last_page <- extract_page(article, "lpage")
 
+  basename_id <- list(basename_id = extract_basename(file_path, type = "xml"))
+
   journal_ids <- extract_jcode(front)
+  article_ids <- extract_article_id(front)
 
   out <- list(
-    basename_id = extract_basename(file_path, type = "xml"),
-    article_id = extract_child(article, "article-id"),
     article_type = xml2::xml_attr(xml_file, "article-type"),
     article_title = extract_title(article),
     volume = extract_child(article, "volume"),
@@ -63,7 +64,7 @@ find_article <- function(file_path) {
     last_page = last_page
   )
   
-  dplyr::bind_cols(journal_ids, out)
+  dplyr::bind_cols(basename_id, journal_ids, article_ids, out)
 }
 
 
@@ -88,6 +89,28 @@ extract_jcode <- function(front) {
   jcode <- extract_first(front, id_constructor("journal", "journal", "jstor"))
   
   list(journal_doi = doi, journal_pub_id = journal_pub_id, jcode = jcode)
+}
+
+extract_article_id <- function(front) {
+  article_id <- front %>%
+    xml_find_all("article-meta/article-id")
+  
+  if (is_empty(article_id)) {
+    return(list(article_doi = NA_character_,
+                article_pub_id = NA_character_,
+                article_jcode = NA_character_))
+  }
+  
+  doi <- extract_first(front, id_constructor("article", "pub", "doi"))
+  
+  article_pub_id <- extract_first(front, id_constructor("article", "pub",
+                                                        "publisher-id"))
+  
+  article_jcode <- extract_first(front, id_constructor("article", "pub", 
+                                                       "jstor"))
+  
+  list(article_doi = doi, article_pub_id = article_pub_id,
+       article_jcode = article_jcode)
 }
 
 
