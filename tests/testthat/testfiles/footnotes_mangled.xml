@@ -1,0 +1,100 @@
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:mml="http://www.w3.org/1998/Math/MathML"
+         dtd-version="1.0"
+         article-type="research-article">
+   <front>
+   </front>
+   <back>
+      <fn-group>
+         <title>[Footnotes]</title>
+         <fn id="d654e120a1310">
+            <label>9</label>
+            <p>
+               <mixed-citation id="d654e127" publication-type="book">
+R. E. Bellman, Dynamic Programming (Princeton, N.J.: Princeton University Press,
+1957)<person-group>
+                     <string-name>
+                        <surname>Bellman</surname>
+                     </string-name>
+                  </person-group>
+                  <source>Dynamic Programming</source>
+                  <year>1957</year>
+               </mixed-citation>
+            </p>
+         </fn>
+         <fn id="d654e152a1310">
+            <label>10</label>
+            <p>
+               <mixed-citation id="d654e159" publication-type="book">
+C.
+R. Carr and C. W. Howe, Quantitative Decision Procedures in Management and Economics
+(New York: McGraw-Hill 1964), Ch. 7<person-group>
+                     <string-name>
+                        <surname>Carr</surname>
+                     </string-name>
+                  </person-group>
+                  <source>Quantitative Decision Procedures in Management and Economics</source>
+                  <year>1964</year>
+               </mixed-citation>
+            </p>
+            <p>
+               <mixed-citation id="d654e187" publication-type="book">
+W. J. Fabrycky and P. E. Torgersen, Operations
+Economy: Industrial Applications of Operations Research (Englewood Cliffs, N. J.: Prentice-
+Hall, 1966), Ch. 16<person-group>
+                     <string-name>
+                        <surname>Fabrycky</surname>
+                     </string-name>
+                  </person-group>
+                  <source>Operations Economy: Industrial Applications of Operations Research</source>
+                  <year>1966</year>
+               </mixed-citation>
+            </p>
+            <p>
+               <mixed-citation id="d654e215" publication-type="book">
+G. Hadley, Nonlinear and Dynamic Programming (Reading: Addison-
+Wesley, 1964), Chs. 10 and 11<person-group>
+                     <string-name>
+                        <surname>Hadley</surname>
+                     </string-name>
+                  </person-group>
+                  <source>Nonlinear and Dynamic Programming</source>
+                  <year>1964</year>
+               </mixed-citation>
+            </p>
+            <p>
+               <mixed-citation id="d654e240" publication-type="journal">
+R. A. Howard, "Dynamic Programming," Management
+Science, XII, No. 5 (Jan., 1966), p. 317<object-id pub-id-type="jstor">10.2307/2627818</object-id>
+                  <fpage>317</fpage>
+               </mixed-citation>
+            </p>
+            <p>
+               <mixed-citation id="d654e255" publication-type="book">
+G. L. Nemhauser, Dynamic Programming (New York:
+John Wiley and Sons, 1966)<person-group>
+                     <string-name>
+                        <surname>Nemhauser</surname>
+                     </string-name>
+                  </person-group>
+                  <source>Dynamic Programming</source>
+                  <year>1966</year>
+               </mixed-citation>
+            </p>
+            <p>
+               <mixed-citation id="d654e279" publication-type="book">
+M. Sasieni, A. Yaspan, L. Friedman, Operations Research
+(New York: John Wiley and Sons, 1959), Ch. 10<person-group>
+                     <string-name>
+                        <surname>Sasieni</surname>
+                     </string-name>
+                  </person-group>
+                  <source>Operations Research</source>
+                  <year>1959</year>
+               </mixed-citation>
+            </p>
+         </fn>
+      </fn-group>
+   </back>
+</article>
