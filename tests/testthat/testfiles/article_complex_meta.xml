@@ -1,0 +1,57 @@
+<article article-type="research-article" dtd-version="1.0" xml:lang="en">
+   <front>
+      <journal-meta>
+         <journal-id xmlns:xlink="http://www.w3.org/1999/xlink" journal-id-type="doi">10.123456</journal-id>
+         <journal-id xmlns:xlink="http://www.w3.org/1999/xlink" journal-id-type="publisher-id">blabla</journal-id>
+         <journal-title-group>
+            <journal-title content-type="full">Bla Bla Journal</journal-title>
+         </journal-title-group>
+         <publisher>
+            <publisher-name>Bla Journals</publisher-name>
+         </publisher>
+         <custom-meta-group xmlns:xlink="http://www.w3.org/1999/xlink"/>
+      </journal-meta>
+      <article-meta>
+         <article-id pub-id-type="publisher-id">blabla.3.6.0111</article-id>
+         <article-id xmlns:xlink="http://www.w3.org/1999/xlink" pub-id-type="doi">10.123456/blabla.3.6.0111</article-id>
+         <article-categories>
+            <subj-group>
+               <subject>Articles</subject>
+            </subj-group>
+         </article-categories>
+         <title-group>
+            <article-title>“This is the title”: This seems to be a subtitle</article-title>
+         </title-group>
+         <pub-date xmlns:xlink="http://www.w3.org/1999/xlink" pub-type="ppub">
+                <day>5</day>
+                <month>1</month>
+                <year>9999</year>
+                <string-date>Autumn 1111</string-date>
+            </pub-date>
+         <volume xmlns:xlink="http://www.w3.org/1999/xlink">3</volume>
+         <issue xmlns:xlink="http://www.w3.org/1999/xlink">6</issue>
+         <issue-id xmlns:xlink="http://www.w3.org/1999/xlink">mixture.of.234234-2</issue-id>
+         <fpage>182</fpage>
+         <lpage>199</lpage>
+         <permissions>
+            <copyright-statement>© 2014 International State Crime Initiative</copyright-statement>
+            <copyright-year>2014</copyright-year>
+         </permissions>
+         <abstract>
+            <p>This is the abstract.</p>
+         </abstract>
+         <kwd-group>
+            <kwd>keyword1</kwd>
+            <kwd>keyword2</kwd>
+         </kwd-group>
+         <custom-meta-group xmlns:xlink="http://www.w3.org/1999/xlink">
+            <custom-meta>
+               <meta-name>lang</meta-name>
+               <meta-value>en</meta-value>
+            </custom-meta>
+         </custom-meta-group>
+      </article-meta>
+   </front>
+   <back>
+   </back>
+</article>
