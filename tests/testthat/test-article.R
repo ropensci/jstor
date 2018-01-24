@@ -22,8 +22,8 @@ result_weird_title2 <- "testfiles/weird-title-2.xml" %>%
 result_multiple_languages <- "testfiles/multiple-languages.xml" %>% 
   find_article()
 
-# result_new_nov_17 <- "testfiles/test-file-new-format-nov-17.xml" %>%
-#   find_article()
+result_new_nov_17 <- "testfiles/test-file-new-format-nov-17.xml" %>%
+  find_article()
 
 # tests -----
 test_that("Input data is checked", {
@@ -37,9 +37,12 @@ test_that("class is correct", {
 })
 
 test_that("jcode is correct", {
-  expect_equal(result[["journal_id"]], "kewbulletin")
-  expect_equal(result_empty[["journal_id"]], NA_character_)
-  # expect_equal(result_new_nov_17[["journal_id"]], "statecrime")
+  expect_identical(result[["jcode"]], "kewbulletin")
+  expect_identical(result_empty[["journal_doi"]], NA_character_)
+  expect_identical(result_empty[["publisher_id"]], NA_character_)
+  expect_identical(result_empty[["jcode"]], NA_character_)
+  expect_identical(result_new_nov_17[["publisher_id"]], "statecrime")
+  expect_identical(result_new_nov_17[["journal_doi"]], "10.13169")
 })
 
 test_that("article_id is correct", {

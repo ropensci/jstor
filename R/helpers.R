@@ -34,6 +34,12 @@ extract_child <- function(doc, element) {
     xml_text()
 }
 
+extract_first <- function(doc, element) {
+  doc %>%
+    xml_find_first(element) %>%
+    xml_text()
+}
+
 extract_all <- function(doc, element) {
   res <- doc %>%
     xml_find_all(element)

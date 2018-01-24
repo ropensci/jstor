@@ -44,9 +44,9 @@ find_article <- function(file_path) {
   first_page <- extract_page(article, "fpage")
   last_page <- extract_page(article, "lpage")
 
+  journal_ids <- extract_jcode(front)
 
   out <- list(
-    journal_id = extract_jcode(front),
     basename_id = extract_basename(file_path, type = "xml"),
     article_id = extract_child(article, "article-id"),
     article_type = xml2::xml_attr(xml_file, "article-type"),
@@ -63,38 +63,36 @@ find_article <- function(file_path) {
     last_page = last_page
   )
   
-  tibble::new_tibble(out)
+  dplyr::bind_cols(journal_ids, out)
 }
 
 
 extract_jcode <- function(front) {
-  # Algorithm: if both files have journal-id-type = 'jstor', then we take the
-  # first one, since this is always the short name.
-  #
-  # In case there is a publisher-id, take this one.
-
   journal_id <- front %>%
     xml_find_all("journal-meta/journal-id")
   
   # in the very improbable case, information on the journal is missing, exit
   # early
   if (is_empty(journal_id)) {
-    return(NA_character_)
+    return(list(journal_doi = NA_character_,
+                publisher_id = NA_character_,
+                jcode = NA_character_))
   }
+  
+  
+  doi <- extract_first(front, id_constructor("journal", "journal", "doi"))
+  
+  publisher_id <- extract_first(front, id_constructor("journal", "journal",
+                                                      "publisher-id"))
+  
+  jcode <- extract_first(front, id_constructor("journal", "journal", "jstor"))
+  
+  list(journal_doi = doi, publisher_id = publisher_id, jcode = jcode)
+}
 
-  journal_id_attributes <- journal_id %>%
-    xml2::xml_attr("journal-id-type") %>%
-    unique()
 
-  if (identical(journal_id_attributes, "jstor")) {
-    xml_text(journal_id)[1]
-  } else if ("publisher-id" %in% journal_id_attributes) {
-    front %>%
-      xml_find_first(
-        "journal-meta/journal-id[@journal-id-type='publisher-id']"
-      ) %>%
-      xml_text()
-  }
+id_constructor <- function(level_one, level_two, type) {
+  glue::glue("{level_one}-meta/{level_one}-id[@{level_two}-id-type='{type}']")
 }
 
 extract_title <- function(article) {
