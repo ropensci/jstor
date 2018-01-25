@@ -15,8 +15,7 @@ Imports:
     magrittr,
     stringr,
     readr,
-    tibble,
-    glue
+    tibble
 Suggests: testthat,
     covr,
     knitr,

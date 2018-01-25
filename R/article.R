@@ -115,7 +115,8 @@ extract_article_id <- function(front) {
 
 
 id_constructor <- function(level_one, level_two, type) {
-  glue::glue("{level_one}-meta/{level_one}-id[@{level_two}-id-type='{type}']")
+  paste0(level_one, "-meta/", level_one, "-id[@", level_two, "-id-type='", type,
+         "']")
 }
 
 extract_title <- function(article) {
