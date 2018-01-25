@@ -43,43 +43,37 @@ extract_references <- function(xml_file) {
   # if there are no references, exit and return NA
   if (is_empty(res)) {
     return(data.frame(full_reference = NA_character_,
-                      author_names = NA_character_,
                       stringsAsFactors = FALSE)
            )
   }
 
-  refs <- xml_children(res)
-
-  full_string <- refs %>%
-    map_chr(xml_text) %>%
-    str_replace("^\\\n", "") # remove "\n" at beginning of strings
+  full_string <- res %>% 
+    map(extract_ref_content) %>% 
+    flatten_chr()
 
   # empty strings should be NA
   full_string <- gsub("^$", NA_character_, full_string)
-  
-  # get the names for the authors, if they are present
-  author_strings <- refs %>%
-    map(xml_find_all, ".//string-name") %>%
-    map_if(is_empty, ~NA_character_) %>%
-    map_if(any_not_missing, xml_text)
 
-
-  frequencies <- lengths(author_strings)
-
-  # repeat the references for all occuring authors. This is basically what
-  # `tidyr::unnest` would do, if the authors were a list-column.
-  if (any(frequencies > 1)) {
-    full_reference <- purrr::map2(full_string, frequencies, rep) %>%
-      flatten_chr()
-  } else {
-    full_reference <- full_string
-  }
-
-
-  data.frame(full_reference  = full_reference,
-             author_names = flatten_chr(author_strings),
+  data.frame(full_reference  = full_string,
              stringsAsFactors = FALSE)
 }
 
 
-any_not_missing <- function(x) any(!is.na(x))
+extract_ref_content <- function(x) {
+  if (identical(xml_attr(x, "content-type"), "parsed-citations")) {
+    warning("Parsed citations are not supported yet.", call. = FALSE)
+    return(NA_character_)
+    
+  } else if (is.na(xml_attr(x, "content-type"))) {
+    x %>%
+      xml_find_all("title|ref/mixed-citation/node()[not(self::*)]") %>%
+      xml_text() %>% 
+      purrr::keep(str_detect, "[a-z]") %>%
+      str_replace("^\\\n", "") # remove "\n" at beginning of strings
+    
+  } else if (identical(xml_attr(x, "content-type"), "unparsed")) {
+    x %>%
+      xml_find_all("title|ref/mixed-citation") %>%
+      xml_text()
+  }
+}

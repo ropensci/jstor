@@ -1,0 +1,104 @@
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:mml="http://www.w3.org/1998/Math/MathML"
+         dtd-version="1.0"
+         article-type="research-article">
+   <front>
+      <journal-meta>
+         <journal-id journal-id-type="jstor">tranamermicrsoci</journal-id>
+         <journal-id journal-id-type="jstor">j100072</journal-id>
+         <journal-title-group>
+            <journal-title>Transactions of the American Microscopical Society</journal-title>
+         </journal-title-group>
+         <publisher>
+            <publisher-name>American Microscopical Society</publisher-name>
+         </publisher>
+         <issn pub-type="ppub">00030023</issn>
+      </journal-meta>
+      <article-meta>
+         <article-id pub-id-type="doi">10.2307/3221896</article-id>
+         <title-group>
+            <article-title>On the Protozoa Parasitic in Frogs</article-title>
+         </title-group>
+         <contrib-group>
+            <contrib contrib-type="author">
+               <string-name>
+                  <given-names>R.</given-names>
+                  <surname>Kudo</surname>
+               </string-name>
+            </contrib>
+         </contrib-group>
+         <pub-date>
+            <day>1</day>
+            <month>4</month>
+            <year>1922</year>
+         </pub-date>
+         <volume>41</volume>
+         <issue>2</issue>
+         <issue-id>i361697</issue-id>
+         <fpage>59</fpage>
+         <lpage>76</lpage>
+         <page-range>59-76</page-range>
+         <permissions>
+            <copyright-statement/>
+         </permissions>
+         <self-uri xlink:href="http://www.jstor.org/stable/3221896"/>
+         <custom-meta-group>
+            <custom-meta>
+               <meta-name>lang</meta-name>
+               <meta-value>eng</meta-value>
+            </custom-meta>
+         </custom-meta-group>
+      </article-meta>
+   </front>
+   <back>
+      <ref-list>
+         <title>Bibliography: Entamoeba ranarumn</title>
+         <ref id="d441e186a1310">
+            <mixed-citation id="d441e190" publication-type="journal">
+DOBELL, C.C.
+1909 Researches on the intestinal Protozoa of frogs and toads. Quart. Jour. Micros.
+Sc., 53:201-276, 4 pl. and 1 textfig.<person-group>
+                  <string-name>
+                     <surname>Dobell</surname>
+                  </string-name>
+               </person-group>
+               <fpage>201</fpage>
+               <volume>53</volume>
+               <source>Quart. Jour. Micros. Sc.</source>
+               <year>1909</year>
+            </mixed-citation>
+            <mixed-citation id="d441e224" publication-type="journal">
+1918 Are Entamoeba histolytica and Entamoeba ranarum the same species? An experi-
+mental study. Parasit., 10:294-310.<person-group>
+                  <string-name>
+                     <surname>Dobell</surname>
+                  </string-name>
+               </person-group>
+               <fpage>294</fpage>
+               <volume>10</volume>
+               <source>An experimental study. Parasit.</source>
+               <year>1918</year>
+            </mixed-citation>
+         </ref>
+      </ref-list>
+      <ref-list>
+         <title>References: Leptotheca ohilmacheri</title>
+         <ref id="d441e265a1310">
+            <mixed-citation id="d441e269" publication-type="journal">
+KUDO, R.
+1920 Studies on Myxosporidia. A Synopsis of Genera and Species of Myxosporidia.
+ill. Biol. Monogr., 5:243-503, 25 pl. and 2 textfig.<person-group>
+                  <string-name>
+                     <surname>Kudo</surname>
+                  </string-name>
+               </person-group>
+               <fpage>243</fpage>
+               <volume>5</volume>
+               <source>Biol. Monogr.</source>
+               <year>1920</year>
+            </mixed-citation>
+         </ref>
+      </ref-list>
+   </back>
+</article>
