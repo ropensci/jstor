@@ -60,18 +60,18 @@ extract_references <- function(xml_file) {
 
 
 extract_ref_content <- function(x) {
-  if (identical(xml_attr(x, "content-type"), "parsed-citations")) {
+  if (identical(xml2::xml_attr(x, "content-type"), "parsed-citations")) {
     warning("Parsed citations are not supported yet.", call. = FALSE)
     return(NA_character_)
     
-  } else if (is.na(xml_attr(x, "content-type"))) {
+  } else if (is.na(xml2::xml_attr(x, "content-type"))) {
     x %>%
       xml_find_all("title|ref/mixed-citation/node()[not(self::*)]") %>%
       xml_text() %>% 
       purrr::keep(str_detect, "[a-z]") %>%
       str_replace("^\\\n", "") # remove "\n" at beginning of strings
     
-  } else if (identical(xml_attr(x, "content-type"), "unparsed")) {
+  } else if (identical(xml2::xml_attr(x, "content-type"), "unparsed")) {
     x %>%
       xml_find_all("title|ref/mixed-citation") %>%
       xml_text()
