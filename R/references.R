@@ -62,8 +62,10 @@ extract_references <- function(xml_file) {
 
 extract_ref_content <- function(x) {
   if (identical(xml2::xml_attr(x, "content-type"), "parsed-citations")) {
-    warning("Parsed citations are not supported yet.", call. = FALSE)
-    return(NA_character_)
+    message("Parsed citations are not fully supported yet.")
+    x %>%
+      xml_find_all("title|ref/mixed-citation") %>% 
+      map_chr(collapse_text)
     
   } else if (is.na(xml2::xml_attr(x, "content-type"))) {
     x %>%
@@ -77,4 +79,10 @@ extract_ref_content <- function(x) {
       xml_find_all("title|ref/mixed-citation") %>%
       xml_text()
   }
+}
+
+collapse_text <- function(x) {
+  xml_find_all(x, ".//text()") %>%
+    xml_text() %>%
+    paste(collapse = " ")
 }

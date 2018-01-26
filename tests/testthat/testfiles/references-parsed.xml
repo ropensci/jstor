@@ -1,0 +1,32 @@
+<article article-type="research-article" dtd-version="1.0" xml:lang="en">
+   <back>
+      <ref-list content-type="parsed-citations">
+         <title>Notes</title>
+         <ref id="ref1">
+            <label>1.</label>
+            <mixed-citation publication-type="other">The USA PATRIOT Act expanded the government's surveillance power in numerous other ways (see, e.g. Keenan<year>2005</year>).</mixed-citation>
+         </ref>
+      </ref-list>
+      <ref-list content-type="parsed-citations">
+         <title>References</title>
+         <ref id="ref3">
+            <mixed-citation publication-type="other">
+               <person-group person-group-type="author">
+                  <string-name>Acohido, B.</string-name>
+               </person-group>and<person-group person-group-type="author">
+                  <string-name>Eisler, P.</string-name>
+               </person-group>(<year>2013</year>)<article-title>“Snowden Case: How Low-Level Insider Could Steal from NSA”</article-title>,<source>
+                  <italic>USA Today</italic>
+               </source>, 12 June. Available online at<ext-link xmlns:xlink="http://www.w3.org/1999/xlink"
+                         ext-link-type="uri"
+                         xlink:href="http://www.usatoday.com/story/news/nation/2013/06/11/snowden-nsa-hacking-privileged-accounts/2412507/">http://www.usatoday.com/story/news/nation/2013/06/11/snowden-nsa-hacking-privileged-accounts/2412507/</ext-link>(accessed 15 June 2013).</mixed-citation>
+         </ref>
+         <ref id="ref4">
+            <mixed-citation publication-type="other">
+               <collab>Amnesty International</collab>(<year>2013</year>)<source>“USA: Revelations about Government Surveillance ‘raise red flags’”</source>, 7 June. Available online at<ext-link xmlns:xlink="http://www.w3.org/1999/xlink"
+                         ext-link-type="uri"
+                         xlink:href="http://www.amnesty.org/en/news/usa-revelations-about-government-surveillance-raise-red-flags-2013-06-07">http://www.amnesty.org/en/news/usa-revelations-about-government-surveillance-raise-red-flags-2013–06–07</ext-link>(accessed 14 June 2013).</mixed-citation>
+         </ref>
+      </ref-list>
+   </back>
+</article>

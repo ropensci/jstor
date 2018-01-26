@@ -16,13 +16,13 @@ half_empty <- "testfiles/references-half-empty.xml"
 
 unparsed <- "testfiles/unparsed-references.xml"
 
+parsed <- "testfiles/references-parsed.xml"
+
 # single_and_multiple_references <- "testfiles/test-file-multiple-and-single-references.xml" %>%
 #   find_references()
 # 
 # random_problem <- "testfiles/test-file-random-problem-reference.xml"
 # 
-# new_format <- "testfiles/test-file-new-format-nov-17.xml" %>%
-#   find_references()
 
 
 # tests -----
@@ -71,12 +71,28 @@ unparsed_refs <- c(
   NA_character_
 )
 
+parsed_refs <- c(
+  "Notes",
+  paste("The USA PATRIOT Act expanded the government's surveillance power in",
+        "numerous other ways (see, e.g. Keenan 2005 )."),
+  "References",
+  paste0("Acohido, B. and Eisler, P. ( 2013 ) “Snowden Case: How Low-Level ",
+         "Insider Could Steal from NSA” , USA Today , 12 June. Available ",
+         "online at http://www.usatoday.com/story/news/nation/2013/06/11/",
+         "snowden-nsa-hacking-privileged-accounts/2412507/ ",
+         "(accessed 15 June 2013)."),
+  paste0("Amnesty International ( 2013 ) “USA: Revelations about Government ",
+         "Surveillance ‘raise red flags’” , 7 June. Available online at ",
+         "http://www.amnesty.org/en/news/usa-revelations-about-government-",
+         "surveillance-raise-red-flags-2013–06–07 (accessed 14 June 2013).")
+)
+
 
 test_that("extracting references works", {
   skip_on_os("windows")
   expect_identical(result[["full_reference"]], correct_refs)
   expect_identical(find_references(unparsed)[["full_reference"]], unparsed_refs)
-  # expect_known_output(new_format[["full_reference"]], "testfiles/correct_new_format_refs.txt", print = T)
+  expect_identical(find_references(parsed)[["full_reference"]], parsed_refs)
 })
 
 
