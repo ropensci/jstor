@@ -106,8 +106,9 @@ extract_article_id <- function(front) {
   article_pub_id <- extract_first(front, id_constructor("article", "pub",
                                                         "publisher-id"))
   
-  article_jcode <- extract_first(front, id_constructor("article", "pub", 
-                                                       "jstor"))
+  article_jcode <- extract_first(front, paste0("article-meta/article-id",
+                                               "[@pub-id-type='jstor' or ",
+                                               "@pub-id-type='jstor-stable']"))
   
   list(article_doi = doi, article_pub_id = article_pub_id,
        article_jcode = article_jcode)

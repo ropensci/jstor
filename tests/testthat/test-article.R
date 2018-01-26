@@ -25,6 +25,9 @@ result_multiple_languages <- "testfiles/multiple-languages.xml" %>%
 result_new_nov_17 <- "testfiles/article_complex_meta.xml" %>% 
   find_article()
 
+article_jcode_stable <- "testfiles/article-jcode-stable.xml" %>% 
+  find_article()
+
 # tests -----
 test_that("Input data is checked", {
   expect_error(find_article("my_path.txt"))
@@ -54,6 +57,7 @@ test_that("article_id is correct", {
                    "10.123456/blabla.3.6.0111")
   expect_identical(result_new_nov_17[["article_pub_id"]], "blabla.3.6.0111")
   expect_identical(result_new_nov_17[["article_jcode"]], NA_character_)
+  expect_identical(article_jcode_stable[["article_jcode"]], "4122385")
 })
 
 test_that("basename_id is correct", {
