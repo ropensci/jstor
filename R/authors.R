@@ -2,8 +2,7 @@
 #'
 #' `find_authors()` extracts information about authors from JSTOR-XML files.
 #'
-#'
-#' The function returns a `data.frame` with the following six columns:
+#' The function returns a `tibble` with the following six columns:
 #' - *prefix*: in case there was a prefix to the name, like `"Dr."`.
 #' - *given_name*: The author's given name, like `"Albert"`.
 #' - *surname*: The author's surname like `"Einstein"`.
@@ -15,7 +14,7 @@
 #'
 #' @param file_path A `.xml`-file from JSTOR containing meta-data.
 #'
-#' @return A `data.frame` containing the extracted authors. All empty fields are
+#' @return A `tibble` containing the extracted authors. All empty fields are
 #' `NA_character`.
 #'
 #' @export

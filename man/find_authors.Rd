@@ -10,14 +10,14 @@ find_authors(file_path)
 \item{file_path}{A \code{.xml}-file from JSTOR containing meta-data.}
 }
 \value{
-A \code{data.frame} containing the extracted authors. All empty fields are
+A \code{tibble} containing the extracted authors. All empty fields are
 \code{NA_character}.
 }
 \description{
 \code{find_authors()} extracts information about authors from JSTOR-XML files.
 }
 \details{
-The function returns a \code{data.frame} with the following six columns:
+The function returns a \code{tibble} with the following six columns:
 \itemize{
 \item \emph{prefix}: in case there was a prefix to the name, like \code{"Dr."}.
 \item \emph{given_name}: The author's given name, like \code{"Albert"}.

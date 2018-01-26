@@ -11,7 +11,7 @@ find_footnotes(file_path)
 extracted.}
 }
 \value{
-A \code{data.frame} containing the content from \code{fn-group} (usually the
+A \code{tibble} containing the content from \code{fn-group} (usually the
 footnotes). If there were no footnotes, \code{NA_character} is returned for the
 column \code{footnotes}.
 }

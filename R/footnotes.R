@@ -5,7 +5,7 @@
 #' @param file_path The path to the `.xml`-file from which footnotes should be
 #'   extracted.
 #'
-#' @return A `data.frame` containing the content from `fn-group` (usually the
+#' @return A `tibble` containing the content from `fn-group` (usually the
 #' footnotes). If there were no footnotes, `NA_character` is returned for the
 #' column `footnotes`.
 #' 
