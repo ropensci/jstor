@@ -59,12 +59,6 @@ extract_basename <- function(file_path, type) {
 }
 
 
-as_jstor <- function(x) {
-  stopifnot(is.data.frame(x))
-  
-  structure(x, class = c("jstor", "data.frame"))
-}
-
 expand_and_bind <- function(file_path, individual_part) {
   list(
     basename_id = extract_basename(file_path, type = "xml") %>%
