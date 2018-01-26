@@ -14,12 +14,14 @@ The most important set of functions is a group of `find_*` functions:
 -   `find_references`
 -   `find_footnotes`
 -   `find_fulltext`
+-   `find_book`
+-   `find_chapters`
 
 All functions which are concerned with meta data (therefore excluding `find_fulltext`) operate along the same lines:
 
 1.  The file is read with `xml2::read_xml()`.
 2.  Content of the file is extracted via XPATH or CSS-expressions.
-3.  The resulting data is returned in a `data.frame`.
+3.  The resulting data is returned in a `tibble`.
 
 Installation
 ------------
@@ -40,15 +42,15 @@ In order to use `jstor`, you first need to load it:
 library(jstor)
 ```
 
-The basic usage is simple: supply one of the `find_*`-functions with a path and it will return a data.frame with the extracted information.
+The basic usage is simple: supply one of the `find_*`-functions with a path and it will return a tibble with the extracted information.
 
 ``` r
 find_article(jstor_example("sample_with_references.xml")) %>% knitr::kable()
 ```
 
-| journal\_id      | basename\_id             | article\_id     | article\_type    | article\_title                     | volume | issue | language |  pub\_day|  pub\_month|  pub\_year|  first\_page|  last\_page|
-|:-----------------|:-------------------------|:----------------|:-----------------|:-----------------------------------|:-------|:------|:---------|---------:|-----------:|----------:|------------:|-----------:|
-| tranamermicrsoci | sample\_with\_references | 10.2307/3221896 | research-article | On the Protozoa Parasitic in Frogs | 41     | 2     | eng      |         1|           4|       1922|           59|          76|
+| basename\_id             | journal\_doi | journal\_pub\_id | jcode            | article\_doi    | article\_pub\_id | article\_jcode | article\_type    | article\_title                     | volume | issue | language |  pub\_day|  pub\_month|  pub\_year|  first\_page|  last\_page|
+|:-------------------------|:-------------|:-----------------|:-----------------|:----------------|:-----------------|:---------------|:-----------------|:-----------------------------------|:-------|:------|:---------|---------:|-----------:|----------:|------------:|-----------:|
+| sample\_with\_references | NA           | NA               | tranamermicrsoci | 10.2307/3221896 | NA               | NA             | research-article | On the Protozoa Parasitic in Frogs | 41     | 2     | eng      |         1|           4|       1922|           59|          76|
 
 ``` r
 
@@ -64,7 +66,7 @@ Further explanations, especially on how to use jstor's functions for importing m
 Getting started
 ---------------
 
-In order to use `jstor`, you need some data from DfR. From the [main page](http://www.jstor.org/dfr/) you can create a dataset by searching for terms and restricting the search regarding time, subject and content type. After you created an account, you can download your selection. In case you don't have access to the content, you can download [sample datasets](http://www.jstor.org/dfr/about/sample-datasets) with documents from before 1923 for the US, and before 1870 for all other countries.
+In order to use `jstor`, you need some data from DfR. From the [main page](http://www.jstor.org/dfr/) you can create a dataset by searching for terms and restricting the search regarding time, subject and content type. After you created an account, you can download your selection. Alternatively, you can download [sample datasets](http://www.jstor.org/dfr/about/sample-datasets) with documents from before 1923 for the US, and before 1870 for all other countries.
 
 Code of conduct
 ---------------
