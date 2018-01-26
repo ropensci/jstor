@@ -1,0 +1,33 @@
+<article xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:mml="http://www.w3.org/1998/Math/MathML"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         article-type="research-article"
+         dtd-version="1.0"
+         xml:lang="en">
+   <front>
+      <journal-meta>
+      </journal-meta>
+      <article-meta>
+      </article-meta>
+   </front>
+   <body>
+      <p>Lorem</p>
+      <sec id="sc1">
+         <title>What Is Comparative Education?</title>
+         <p>In one sense, all evaluations of education are comparative.</p>
+         <fn-group>
+            <fn id="fn1">
+               <label>1</label>
+               <p>Martin Carnoy, “The Costs and Returns to Education in Mexico” (PhD diss., University of Chicago, 1964).</p>
+            </fn>
+            <fn id="fn2">
+               <label>2</label>
+               <p>Martin Carnoy and Hans Thias,<italic>Cost‐Benefit Analysis in Education: A Case Study of Kenya</italic>(Baltimore: Johns Hopkins University Press, for World Bank, 1972).</p>
+            </fn>
+         </fn-group>
+      </sec>
+   </body>
+   <back>
+      <ref-list content-type="unparsed"/>
+   </back>
+</article>
