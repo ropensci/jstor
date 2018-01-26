@@ -1,6 +1,6 @@
 Package: jstor
 Title: Read Data from JSTOR/DfR
-Version: 0.2.2.9000
+Version: 0.2.5.9000
 Authors@R: person("Thomas", "Klebel", email = "thomas.klebel@uni-graz.at", role = c("aut", "cre"))
 Description: Functions and helpers to import metadata and full-texts delivered
     by Data for Research (DfR) by JSTOR. 
