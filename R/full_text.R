@@ -14,7 +14,7 @@ get_encoding <- function(filename) {
 #' This function imports the full_text contents of a JSTOR-article.
 #'
 #' @param filename The path to the file.
-#' @return A `data.frame`, containing the file-path as id, the full content of
+#' @return A `tibble`, containing the file-path as id, the full content of
 #' the file, and the encoding which was used to read it.
 #'
 #' @export
@@ -27,8 +27,9 @@ read_full_text <- function(filename) {
 
   text <- read_file(filename, locale = locale(encoding = encoding))
 
-  out <- data.frame(basename_id = id, full_text = text, encoding = encoding,
-                    stringsAsFactors = FALSE)
-  
-  structure(out, class = c("jstor", "data.frame"))
+  new_tibble(
+    list(
+      basename_id = id, full_text = text, encoding = encoding
+    )
+  )  
 }

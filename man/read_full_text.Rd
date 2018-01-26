@@ -10,7 +10,7 @@ read_full_text(filename)
 \item{filename}{The path to the file.}
 }
 \value{
-A \code{data.frame}, containing the file-path as id, the full content of
+A \code{tibble}, containing the file-path as id, the full content of
 the file, and the encoding which was used to read it.
 }
 \description{
