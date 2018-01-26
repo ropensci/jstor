@@ -4,7 +4,7 @@
 #'
 #' References are currently not fully supported by DfR, and there is no 
 #' comprehensive documentation on the different variants. Currently, `jstor`
-#' tries to extract the references as closely to what they appear in the data.
+#' tries to extract the references as closely to how they appear in the data.
 #' 
 #' For newer `xml`-files, there would be the option to extract single elements
 #' like authors, title or date of the source, but this is not yet implemented.
