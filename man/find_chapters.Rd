@@ -18,8 +18,8 @@ import the authors too.}
 A \code{tibble} containing the extracted meta-data with the following
 columns:
 \itemize{
-\item book_id \emph{(chr)}: The jcode or a DOI. If both are present, the jcode
-(=publisher-id) is extracted.
+\item book_id \emph{(chr)}: The book id of type "jstor", which is not a registered
+DOI.
 \item basename_id \emph{(chr)}: The filename of the original .xml-file. Can be used
 for joining with other data for the same file.
 \item part_id \emph{(chr)}: The id of the part.

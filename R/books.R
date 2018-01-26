@@ -85,8 +85,8 @@ extract_book_pages <- function(book) {
 #' 
 #' @return A `tibble` containing the extracted meta-data with the following
 #' columns:
-#' - book_id *(chr)*: The jcode or a DOI. If both are present, the jcode
-#'  (=publisher-id) is extracted.
+#' - book_id *(chr)*: The book id of type "jstor", which is not a registered 
+#'   DOI.
 #' - basename_id *(chr)*: The filename of the original .xml-file. Can be used 
 #'   for joining with other data for the same file.
 #' - part_id *(chr)*: The id of the part.
