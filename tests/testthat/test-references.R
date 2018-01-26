@@ -32,7 +32,7 @@ test_that("Input data is checked", {
 })
 
 test_that("class is correct", {
-  expect_s3_class(result, "jstor")
+  expect_s3_class(result, "tbl_df")
 })
 
 test_that("catching errors works", {
@@ -42,10 +42,10 @@ test_that("catching errors works", {
 })
 
 test_that("null results work", {
-  expect_identical(result_empty[["full_reference"]], NA_character_)
-  expect_identical(find_references(unparsed)[["full_reference"]][2],
+  expect_identical(result_empty[["references"]], NA_character_)
+  expect_identical(find_references(unparsed)[["references"]][2],
                    NA_character_)
-  expect_identical(find_references(half_empty)[["full_reference"]],
+  expect_identical(find_references(half_empty)[["references"]],
                    NA_character_)
 })
 
@@ -90,9 +90,9 @@ parsed_refs <- c(
 
 test_that("extracting references works", {
   skip_on_os("windows")
-  expect_identical(result[["full_reference"]], correct_refs)
-  expect_identical(find_references(unparsed)[["full_reference"]], unparsed_refs)
-  expect_identical(find_references(parsed)[["full_reference"]], parsed_refs)
+  expect_identical(result[["references"]], correct_refs)
+  expect_identical(find_references(unparsed)[["references"]], unparsed_refs)
+  expect_identical(find_references(parsed)[["references"]], parsed_refs)
 })
 
 

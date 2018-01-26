@@ -29,11 +29,11 @@ find_references <- function(file_path) {
 
   validate_article(xml_file)
   
-  out <- data.frame(basename_id = extract_basename(file_path, type = "xml"),
-                    list(extract_references(xml_file)),
-                    stringsAsFactors = FALSE)
+  references <- extract_references(xml_file) %>% 
+    rlang::set_names("references") %>% 
+    new_tibble()
   
-  structure(out, class = c("jstor", "data.frame"))
+  expand_and_bind(file_path, references)
 }
 
 
@@ -42,9 +42,7 @@ extract_references <- function(xml_file) {
 
   # if there are no references, exit and return NA
   if (is_empty(res)) {
-    return(data.frame(full_reference = NA_character_,
-                      stringsAsFactors = FALSE)
-           )
+    return(list(NA_character_))
   }
 
   full_string <- res %>% 
@@ -55,8 +53,7 @@ extract_references <- function(xml_file) {
   if (is_empty(full_string)) {full_string <- NA_character_}
   full_string <- gsub("^$", NA_character_, full_string)
 
-  data.frame(full_reference  = full_string,
-             stringsAsFactors = FALSE)
+  list(full_string)
 }
 
 
