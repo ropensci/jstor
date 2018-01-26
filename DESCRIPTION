@@ -15,7 +15,8 @@ Imports:
     magrittr,
     stringr,
     readr,
-    tibble
+    tibble,
+    rlang
 Suggests: testthat,
     covr,
     knitr,
