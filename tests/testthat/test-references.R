@@ -11,18 +11,10 @@ result_empty <- "testfiles/empty_file.xml" %>%
   find_references()
 
 half_empty <- "testfiles/references-half-empty.xml" 
- 
-# weird_pages <- "testfiles/test-file-weird-pages.xml"
 
 unparsed <- "testfiles/unparsed-references.xml"
 
 parsed <- "testfiles/references-parsed.xml"
-
-# single_and_multiple_references <- "testfiles/test-file-multiple-and-single-references.xml" %>%
-#   find_references()
-# 
-# random_problem <- "testfiles/test-file-random-problem-reference.xml"
-# 
 
 
 # tests -----
@@ -37,8 +29,6 @@ test_that("class is correct", {
 
 test_that("catching errors works", {
   expect_silent(find_references(unparsed))
-  # expect_silent(find_references(weird_pages))
-  # expect_silent(find_references(random_problem))
 })
 
 test_that("null results work", {
