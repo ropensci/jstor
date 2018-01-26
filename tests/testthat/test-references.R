@@ -9,6 +9,8 @@ result <- "testfiles/references.xml" %>%
 
 result_empty <- "testfiles/empty_file.xml" %>%
   find_references()
+
+half_empty <- "testfiles/references-half-empty.xml" 
  
 # weird_pages <- "testfiles/test-file-weird-pages.xml"
 
@@ -42,6 +44,8 @@ test_that("catching errors works", {
 test_that("null results work", {
   expect_identical(result_empty[["full_reference"]], NA_character_)
   expect_identical(find_references(unparsed)[["full_reference"]][2],
+                   NA_character_)
+  expect_identical(find_references(half_empty)[["full_reference"]],
                    NA_character_)
 })
 

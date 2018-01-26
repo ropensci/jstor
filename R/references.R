@@ -52,6 +52,7 @@ extract_references <- function(xml_file) {
     flatten_chr()
 
   # empty strings should be NA
+  if (is_empty(full_string)) {full_string <- NA_character_}
   full_string <- gsub("^$", NA_character_, full_string)
 
   data.frame(full_reference  = full_string,
