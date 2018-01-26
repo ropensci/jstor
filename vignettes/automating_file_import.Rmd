@@ -36,8 +36,9 @@ b) need to read them fast, and c) wanted to be able to look at specific files fo
 debugging.
 
 # List files
-From my knowledge, there are two ways to generate a list of all files: 
-`list.files` or using `system` in conjunction with `find` on unix-like systems.
+There are many ways to generate a list of all files: 
+`list.files` or using `system` in conjunction with `find` on unix-like systems
+are common options. 
 
 For demonstration purposes I use files contained in `jstor` which can be accessed
 via `system.file`:
@@ -73,7 +74,8 @@ file_names_system
 In this case the two approaches give the same result.
 The main difference seems to be though, that `list.files` sorts the output, 
 wherase `find` does not. For a large amout of files (200,000) this makes
-`list.files` slower, for smaller datasets the difference shouldn't make an impact.
+`list.files` slower, for smaller datasets the difference shouldn't make an
+impact.
 
 # Batch import
 Once the file list is generated, we can apply any of the `find_*`-functions to
@@ -86,7 +88,7 @@ library(purrr)
 library(stringr)
 
 result <- file_names_listed %>% 
-  keep(str_detect, "with") %>% 
+  keep(str_detect, "with") %>% # only operate on articles, remove book sample
   map_df(find_article)
 
 result %>% knitr::kable()
