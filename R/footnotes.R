@@ -38,6 +38,6 @@ extract_footnotes <- function(xml_file) {
     map_chr(xml_text) %>%
     str_replace("^\\\n", "") %>%  # remove "\n" at beginning of strings
     list() %>% 
-    purrr::set_names("footnotes") %>% 
+    rlang::set_names("footnotes") %>% 
     new_tibble()
 }
