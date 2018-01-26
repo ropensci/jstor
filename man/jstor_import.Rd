@@ -45,9 +45,9 @@ To avoid the whole computation to fail in the unlikely event that an error
 occurs, we use \code{safely()} which let's us
 continue the process, and catch the error along the way.
 
-If you have many files to import, you might benefit from using
-parallelization. On Linux and Mac, this can be achieved via \code{mclapply()},
-which we use here.
+If you have many files to import, you might benefit from executing the
+function in parallel. On Linux and Mac, this can be achieved via
+\code{mclapply()}, which we use here.
 
 After importing all files, they are written to disk with
 \code{\link[readr:write_csv]{readr::write_csv()}}.

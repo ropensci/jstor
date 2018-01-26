@@ -83,9 +83,9 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' occurs, we use `safely()` which let's us
 #' continue the process, and catch the error along the way.
 #' 
-#' If you have many files to import, you might benefit from using
-#' parallelization. On Linux and Mac, this can be achieved via `mclapply()`,
-#' which we use here.
+#' If you have many files to import, you might benefit from executing the
+#' function in parallel. On Linux and Mac, this can be achieved via
+#' `mclapply()`, which we use here.
 #' 
 #' After importing all files, they are written to disk with
 #' [readr::write_csv()].
