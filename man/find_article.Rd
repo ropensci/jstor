@@ -13,15 +13,19 @@ find_article(file_path)
 A \code{tibble} containing the extracted meta-data with the following
 columns:
 \itemize{
+\item basename_id \emph{(chr)}: The filename of the original .xml-file. Can be used
+for joining with other parts (authors, references, footnotes, full-texts).
 \item journal_doi \emph{(chr)}: A registered identifier for the journal.
 \item journal_jcode \emph{(chr)}: A identifier for the journal like "amerjsoci" for
 the "American Journal of Sociology".
-\item journal_pub_id \emph{(chr)}: Similar to journal_jcode Most of the time either
+\item journal_pub_id \emph{(chr)}: Similar to journal_jcode. Most of the time either
 one is present.
-\item basename_id \emph{(chr)}: The filename of the original .xml-file. Can be used
-for joining with full-texts.
-\item article_id \emph{(chr)}: The article id, either a combination of digits
-(\code{pub-id-type="jstor"}) or a DOI (\code{pub-id-type="doi"}).
+\item article_doi \emph{(chr)}: A registered unique identifier for the article.
+\item article_jcode \emph{(chr)}: A unique identifier for the article (not a DOI).
+\item article_pub_id \emph{(chr)}: Infrequent, either part of the DOI or the
+article_jcode.
+\item article_type \emph{(chr)}: The type of article (research-article, book-review,
+etc.).
 \item article_title \emph{(chr)}: The title of the article.
 \item volume \emph{(chr)}: The volume the article was published in.
 \item issue \emph{(chr)}: The issue the article was published in.

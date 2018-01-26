@@ -7,15 +7,19 @@
 #'
 #' @return A `tibble` containing the extracted meta-data with the following
 #' columns:
+#' - basename_id *(chr)*: The filename of the original .xml-file. Can be used 
+#'   for joining with other parts (authors, references, footnotes, full-texts).
 #' - journal_doi *(chr)*: A registered identifier for the journal.
 #' - journal_jcode *(chr)*: A identifier for the journal like "amerjsoci" for
 #'   the "American Journal of Sociology".
-#' - journal_pub_id *(chr)*: Similar to journal_jcode Most of the time either
+#' - journal_pub_id *(chr)*: Similar to journal_jcode. Most of the time either
 #'   one is present.
-#' - basename_id *(chr)*: The filename of the original .xml-file. Can be used 
-#'   for joining with full-texts.
-#' - article_id *(chr)*: The article id, either a combination of digits 
-#'   (`pub-id-type="jstor"`) or a DOI (`pub-id-type="doi"`).
+#' - article_doi *(chr)*: A registered unique identifier for the article.
+#' - article_jcode *(chr)*: A unique identifier for the article (not a DOI).
+#' - article_pub_id *(chr)*: Infrequent, either part of the DOI or the 
+#'   article_jcode.
+#' - article_type *(chr)*: The type of article (research-article, book-review,
+#'   etc.).
 #' - article_title *(chr)*: The title of the article.
 #' - volume *(chr)*: The volume the article was published in.
 #' - issue *(chr)*: The issue the article was published in.
