@@ -11,23 +11,25 @@ find_references(file_path)
 extracted.}
 }
 \value{
-A \code{data.frame} with three columns containing the references:
+A \code{tibble} with three two containing the references:
 \itemize{
 \item \code{basename_id}: the identifier for the article the references come from.
-\item \code{full_reference}: the text of the references.
-\item \code{author_names}: in case the information is present in the \code{xml}-file, names
-of the authors for each article.
+\item \code{references}: the text of the references.
 }
-
-Due to this structure, a single reference may span multiple rows. Each row
-then has only one author in \code{author_names}. Mind the fact, that data quality
-from JSTOR is mixed. For many articles there will be no data in
-\code{author_names}.
-For some there will be data, but only incomplete, i.e. if the article has 3
-authors, there might be only the first author in \code{author_names}.
 }
 \description{
-This function extracts the content of \code{ref-list} within the \code{xml}-file.
+This function extracts the content of \code{ref-list} from the \code{xml}-file.
+}
+\details{
+References are currently not fully supported by DfR, and there is no
+comprehensive documentation on the different variants. Currently, \code{jstor}
+tries to extract the references as closely to what they appear in the data.
+
+For newer \code{xml}-files, there would be the option to extract single elements
+like authors, title or date of the source, but this is not yet implemented.
+
+In general, the implementation is not very fast - articles with many
+references slow the process down.
 }
 \examples{
 find_references(jstor_example("sample_with_references.xml"))

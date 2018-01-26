@@ -1,24 +1,25 @@
 #' Extract all references
 #'
-#' This function extracts the content of `ref-list` within the `xml`-file.
+#' This function extracts the content of `ref-list` from the `xml`-file.
 #'
+#' References are currently not fully supported by DfR, and there is no 
+#' comprehensive documentation on the different variants. Currently, `jstor`
+#' tries to extract the references as closely to what they appear in the data.
+#' 
+#' For newer `xml`-files, there would be the option to extract single elements
+#' like authors, title or date of the source, but this is not yet implemented.
+#' 
+#' In general, the implementation is not very fast - articles with many
+#' references slow the process down.
+#' 
 #' @param file_path The path to the `.xml`-file from which references should be
 #'   extracted.
 #'
-#' @return A `data.frame` with three columns containing the references:
+#' @return A `tibble` with three two containing the references:
 #'
 #' - `basename_id`: the identifier for the article the references come from.
-#' - `full_reference`: the text of the references.
-#' - `author_names`: in case the information is present in the `xml`-file, names
-#' of the authors for each article. 
+#' - `references`: the text of the references.
 #'
-#' Due to this structure, a single reference may span multiple rows. Each row
-#' then has only one author in `author_names`. Mind the fact, that data quality
-#' from JSTOR is mixed. For many articles there will be no data in
-#' `author_names`.
-#' For some there will be data, but only incomplete, i.e. if the article has 3
-#' authors, there might be only the first author in `author_names`.
-
 #' @export
 #' @examples 
 #' find_references(jstor_example("sample_with_references.xml"))
@@ -59,7 +60,6 @@ extract_references <- function(xml_file) {
 
 extract_ref_content <- function(x) {
   if (identical(xml2::xml_attr(x, "content-type"), "parsed-citations")) {
-    message("Parsed citations are not fully supported yet.")
     x %>%
       xml_find_all("title|ref/mixed-citation") %>% 
       map_chr(collapse_text)
