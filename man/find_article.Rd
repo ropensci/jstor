@@ -13,8 +13,11 @@ find_article(file_path)
 A \code{tibble} containing the extracted meta-data with the following
 columns:
 \itemize{
-\item journal_id \emph{(chr)}: The jcode or a DOI. If both are present, the jcode
-(=publisher-id) is extracted.
+\item journal_doi \emph{(chr)}: A registered identifier for the journal.
+\item journal_jcode \emph{(chr)}: A identifier for the journal like "amerjsoci" for
+the "American Journal of Sociology".
+\item journal_pub_id \emph{(chr)}: Similar to journal_jcode Most of the time either
+one is present.
 \item basename_id \emph{(chr)}: The filename of the original .xml-file. Can be used
 for joining with full-texts.
 \item article_id \emph{(chr)}: The article id, either a combination of digits
