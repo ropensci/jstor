@@ -79,8 +79,8 @@ extract_jcode <- function(front) {
   # early
   if (is_empty(journal_id)) {
     return(list(journal_doi = NA_character_,
-                journal_pub_id = NA_character_,
-                jcode = NA_character_))
+                journal_jcode = NA_character_,
+                journal_pub_id = NA_character_))
   }
   
   
@@ -91,7 +91,8 @@ extract_jcode <- function(front) {
   
   jcode <- extract_first(front, id_constructor("journal", "journal", "jstor"))
   
-  list(journal_doi = doi, journal_pub_id = journal_pub_id, jcode = jcode)
+  list(journal_doi = doi, journal_jcode = jcode,
+       journal_pub_id = journal_pub_id)
 }
 
 extract_article_id <- function(front) {
