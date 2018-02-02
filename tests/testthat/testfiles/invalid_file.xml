@@ -1,0 +1,50 @@
+<article xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:mml="http://www.w3.org/1998/Math/MathML"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         dtd-version="1.0"
+         xml:lang="en">
+   <front>
+      <journal-meta>
+      </journal-meta>
+      <article-meta>
+      </article-meta>
+   </front>
+   <body>
+      <sec id="sc3">
+         <p><table-wrap id="tb1" position="float">
+               <graphic mimetype="image"
+                        position="float"
+                        xlink:type="simple"
+                        xlink:href="tb1_1.eps"/>
+               <oasis_0:table xmlns:oasis="//OASIS//DTD XML Exchange Table Model 19990315//EN"
+                              xmlns:oasis_0="http://docs.oasis-open.org/ns/oasis-exchange/table"
+                              frame="topbot">
+                  <oasis_0:tgroup cols="3" align="left">
+                     <oasis_0:colspec colname="col1" colwidth="0.57*"/>
+                     <oasis_0:colspec colname="col2" colwidth="1.07*"/>
+                     <oasis_0:colspec colname="col3" colwidth="1.36*"/>
+                     <oasis_0:thead>
+                        <oasis_0:row valign="top">
+                           <oasis_0:entry colsep="0" rowsep="1"/>
+                           <oasis_0:entry colsep="0" rowsep="1" align="center" valign="top">text</oasis_0:entry>
+                           <oasis_0:entry colsep="0" rowsep="1" align="center" valign="top">text<xref ref-type="table-fn" rid="tb1fna">
+                                 <sup>a</sup>
+                              </xref>
+                           </oasis_0:entry>
+                        </oasis_0:row>
+                     </oasis_0:thead>
+                     <oasis_0:tbody>
+                        <oasis_0:row valign="top">
+                           <oasis_0:entry colsep="0" rowsep="0">text</oasis_0:entry>
+                           <oasis_0:entry colsep="0" rowsep="0">text</oasis_0:entry>
+                           <oasis_0:entry colsep="0" rowsep="0">text</oasis_0:entry>
+                        </oasis_0:row>
+
+                     </oasis_0:tbody>
+                  </oasis_0:tgroup>
+               </oasis_0:table>
+            </table-wrap>
+         </p>
+      </sec>
+   </body>
+</article>
