@@ -30,8 +30,8 @@ etc.).
 \item volume \emph{(chr)}: The volume the article was published in.
 \item issue \emph{(chr)}: The issue the article was published in.
 \item language \emph{(chr)}: The language of the article.
-\item pub_day \emph{(int)}: Publication day, if specified.
-\item pub_month \emph{(int)}: Publication month, if specified.
+\item pub_day \emph{(chr)}: Publication day, if specified.
+\item pub_month \emph{(chr)}: Publication month, if specified.
 \item pub_year \emph{(int)}: Year of publication.
 \item first_pag \emph{(int)}: Page number for the first page of the article.
 \item last_page \emph{(int)}: Page number for the last page of the article.

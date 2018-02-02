@@ -87,10 +87,10 @@ test_that("issue is correct", {
 })
 
 test_that("date is correct", {
-  expect_identical(result[["pub_day"]], 1L)
-  expect_identical(result[["pub_month"]], 1L)
+  expect_identical(result[["pub_day"]], "1")
+  expect_identical(result[["pub_month"]], "1")
   expect_identical(result[["pub_year"]], 1950L)
-  expect_identical(result_multiple_dates[["pub_month"]], 4L)
+  expect_identical(result_multiple_dates[["pub_month"]], "4")
   expect_identical(result_multiple_dates[["pub_year"]], 1990L)
 })
 

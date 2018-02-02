@@ -24,8 +24,8 @@
 #' - volume *(chr)*: The volume the article was published in.
 #' - issue *(chr)*: The issue the article was published in.
 #' - language *(chr)*: The language of the article.
-#' - pub_day *(int)*: Publication day, if specified.
-#' - pub_month *(int)*: Publication month, if specified.
+#' - pub_day *(chr)*: Publication day, if specified.
+#' - pub_month *(chr)*: Publication month, if specified.
 #' - pub_year *(int)*: Year of publication.
 #' - first_pag *(int)*: Page number for the first page of the article.
 #' - last_page *(int)*: Page number for the last page of the article.
@@ -64,8 +64,8 @@ find_article <- function(file_path) {
     language = extract_child(article, ".//meta-value"),
     # the XPATH for the dates grabs always the first date by default.
     # dates like "May" get turned into NA
-    pub_day = extract_child(article, ".//day") %>% as.integer(),
-    pub_month = extract_child(article, ".//month") %>% as.integer(),
+    pub_day = extract_child(article, ".//day"),
+    pub_month = extract_child(article, ".//month"),
     pub_year = extract_child(article, ".//year") %>% as.integer(),
     first_page = first_page,
     last_page = last_page
