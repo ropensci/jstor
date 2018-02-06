@@ -21,7 +21,7 @@ get_encoding <- function(filename) {
 read_full_text <- function(filename) {
   validate_file_path(filename, "txt")
 
-  id <- extract_basename(filename)
+  id <- get_basename(filename)
 
   encoding <- get_encoding(filename)
 

@@ -1,3 +1,15 @@
+#' Extract the basename of a path
+#' 
+#' This helper simply extracts the basename of a path and removes the extension,
+#' e.g. `foo/bar.txt` is shortend to `bar`.
+#' 
+#' @param file_path A path to a file
+#' @export
+get_basename <- function(file_path) {
+  basename(file_path) %>%
+    tools::file_path_sans_ext()
+}
+
 validate_file_path <- function(file_path, type) {
   if (identical(stringr::str_detect(file_path, type), FALSE)) {
     stop("`file_path` must be a `*.", type, "` file", call. = FALSE)
@@ -53,15 +65,10 @@ extract_all <- function(doc, element) {
   }
 }
 
-extract_basename <- function(file_path) {
-  basename(file_path) %>%
-    tools::file_path_sans_ext()
-}
-
 
 expand_and_bind <- function(file_path, individual_part) {
   list(
-    basename_id = extract_basename(file_path) %>%
+    basename_id = get_basename(file_path) %>%
       rep(times = NROW(individual_part))
   ) %>% 
     dplyr::bind_cols(individual_part)
