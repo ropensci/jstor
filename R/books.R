@@ -41,7 +41,7 @@ find_book <- function(file_path) {
   
   out <- list(
     book_id = extract_child(book, ".//book-id"),
-    basename_id = extract_basename(file_path, "xml"),
+    basename_id = extract_basename(file_path),
     discipline = extract_all(
       book, ".//subj-group[@subj-group-type='discipline']"
     ),
@@ -136,7 +136,7 @@ find_chapters <- function(file_path, authors = FALSE) {
   base <- list(
     book_id = extract_child(xml_file, ".//book-id") %>% 
       rep(times = nrow(parts_out)),
-    basename_id = extract_basename(file_path, "xml") %>%
+    basename_id = extract_basename(file_path) %>%
       rep(times = nrow(parts_out))
   )
   

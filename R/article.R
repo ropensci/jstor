@@ -51,7 +51,7 @@ find_article <- function(file_path) {
   first_page <- extract_page(article, "fpage")
   last_page <- extract_page(article, "lpage")
 
-  basename_id <- list(basename_id = extract_basename(file_path, type = "xml"))
+  basename_id <- list(basename_id = extract_basename(file_path))
 
   journal_ids <- extract_jcode(front)
   article_ids <- extract_article_id(front)

@@ -53,15 +53,15 @@ extract_all <- function(doc, element) {
   }
 }
 
-extract_basename <- function(file_path, type) {
+extract_basename <- function(file_path) {
   basename(file_path) %>%
-    stringr::str_extract(paste0(".*?(?=\\.", type, ")"))
+    tools::file_path_sans_ext()
 }
 
 
 expand_and_bind <- function(file_path, individual_part) {
   list(
-    basename_id = extract_basename(file_path, type = "xml") %>%
+    basename_id = extract_basename(file_path) %>%
       rep(times = NROW(individual_part))
   ) %>% 
     dplyr::bind_cols(individual_part)
