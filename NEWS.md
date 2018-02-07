@@ -1,5 +1,9 @@
 # jstor 0.2.5.9000
 
+* changed implementation of parallel execution in `jstor_import` from 
+`parallel::mclapply` to `foreach::foreach` with `snow` as a backend for
+`%dopar%`. 
+* added support for progress bars #34
 * `jstor_import` now writes column names by default #29
 * new helper `get_basename` helps to get the basename of a file without its
 extension
