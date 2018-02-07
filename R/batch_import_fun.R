@@ -172,5 +172,5 @@ jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
   end_time <- Sys.time()
   run_time <- end_time - start_time
   message("Finished importing ", length(in_paths), " file(s) in ",
-          round(run_time, 2), " seconds.")
+          format(round(run_time, 2)), ".")
 }
