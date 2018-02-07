@@ -41,7 +41,7 @@ find_article <- function(file_path) {
   validate_file_path(file_path, "xml")
 
   xml_file <- xml2::read_xml(file_path)
-  
+
   validate_article(xml_file)
 
   front <- xml_find_all(xml_file, "front")
@@ -70,7 +70,7 @@ find_article <- function(file_path) {
     first_page = first_page,
     last_page = last_page
   )
-  
+
   dplyr::bind_cols(basename_id, journal_ids, article_ids, out)
 }
 
@@ -78,7 +78,7 @@ find_article <- function(file_path) {
 extract_jcode <- function(front) {
   journal_id <- front %>%
     xml_find_all("journal-meta/journal-id")
-  
+
   # in the very improbable case, information on the journal is missing, exit
   # early
   if (is_empty(journal_id)) {
@@ -86,15 +86,15 @@ extract_jcode <- function(front) {
                 journal_jcode = NA_character_,
                 journal_pub_id = NA_character_))
   }
-  
-  
+
+
   doi <- extract_first(front, id_constructor("journal", "journal", "doi"))
-  
+
   journal_pub_id <- extract_first(front, id_constructor("journal", "journal",
                                                         "publisher-id"))
-  
+
   jcode <- extract_first(front, id_constructor("journal", "journal", "jstor"))
-  
+
   list(journal_doi = doi, journal_jcode = jcode,
        journal_pub_id = journal_pub_id)
 }
@@ -102,22 +102,22 @@ extract_jcode <- function(front) {
 extract_article_id <- function(front) {
   article_id <- front %>%
     xml_find_all("article-meta/article-id")
-  
+
   if (is_empty(article_id)) {
     return(list(article_doi = NA_character_,
                 article_pub_id = NA_character_,
                 article_jcode = NA_character_))
   }
-  
+
   doi <- extract_first(front, id_constructor("article", "pub", "doi"))
-  
+
   article_pub_id <- extract_first(front, id_constructor("article", "pub",
                                                         "publisher-id"))
-  
+
   article_jcode <- extract_first(front, paste0("article-meta/article-id",
                                                "[@pub-id-type='jstor' or ",
                                                "@pub-id-type='jstor-stable']"))
-  
+
   list(article_doi = doi, article_pub_id = article_pub_id,
        article_jcode = article_jcode)
 }
@@ -131,11 +131,11 @@ id_constructor <- function(level_one, level_two, type) {
 extract_title <- function(article) {
   # find title, but exclude possible references/footnotes
   title <- xml_find_all(article, ".//article-title/node()[not(self::xref)]")
-  
+
   if (is_empty(title)) {
     return(NA_character_)
   } else {
-    title %>% 
+    title %>%
       xml_text() %>%
       paste(collapse = "") # in case there are more elements, collapse them
   }

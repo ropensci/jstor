@@ -29,11 +29,11 @@ find_references <- function(file_path) {
   xml_file <- xml2::read_xml(file_path)
 
   validate_article(xml_file)
-  
-  references <- extract_references(xml_file) %>% 
-    rlang::set_names("references") %>% 
+
+  references <- extract_references(xml_file) %>%
+    rlang::set_names("references") %>%
     new_tibble()
-  
+
   expand_and_bind(file_path, references)
 }
 
@@ -46,12 +46,14 @@ extract_references <- function(xml_file) {
     return(list(NA_character_))
   }
 
-  full_string <- res %>% 
-    map(extract_ref_content) %>% 
+  full_string <- res %>%
+    map(extract_ref_content) %>%
     flatten_chr()
 
   # empty strings should be NA
-  if (is_empty(full_string)) {full_string <- NA_character_}
+  if (is_empty(full_string)) {
+    full_string <- NA_character_
+  }
   full_string <- gsub("^$", NA_character_, full_string)
 
   list(full_string)
@@ -61,16 +63,16 @@ extract_references <- function(xml_file) {
 extract_ref_content <- function(x) {
   if (identical(xml2::xml_attr(x, "content-type"), "parsed-citations")) {
     x %>%
-      xml_find_all("title|ref/mixed-citation") %>% 
+      xml_find_all("title|ref/mixed-citation") %>%
       map_chr(collapse_text)
-    
+
   } else if (is.na(xml2::xml_attr(x, "content-type"))) {
     x %>%
       xml_find_all("title|ref/mixed-citation/node()[not(self::*)]") %>%
-      xml_text() %>% 
+      xml_text() %>%
       purrr::keep(str_detect, "[a-z]") %>%
       str_replace("^\\\n", "") # remove "\n" at beginning of strings
-    
+
   } else if (identical(xml2::xml_attr(x, "content-type"), "unparsed")) {
     x %>%
       xml_find_all("title|ref/mixed-citation") %>%

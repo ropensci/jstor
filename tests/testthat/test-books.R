@@ -7,19 +7,19 @@ library(stringr)
 result <- "testfiles/standard_book.xml" %>%
   find_book()
 
-alternative <- "testfiles/book-alternative-case.xml" %>% 
+alternative <- "testfiles/book-alternative-case.xml" %>%
   find_book()
 
-empty <- "testfiles/book-empty.xml" %>% 
+empty <- "testfiles/book-empty.xml" %>%
   find_book()
 
-empty_chapters <- "testfiles/book-empty.xml" %>% 
+empty_chapters <- "testfiles/book-empty.xml" %>%
   find_chapters()
 
-chapters <- "testfiles/standard_book.xml" %>% 
+chapters <- "testfiles/standard_book.xml" %>%
   find_chapters()
 
-chap_auth <- "testfiles/standard_book.xml" %>% 
+chap_auth <- "testfiles/standard_book.xml" %>%
   find_chapters(authors = T)
 
 # tests -----
@@ -70,7 +70,7 @@ test_that("missing fields are of correct type", {
   expect_identical(empty[["publisher_location"]], NA_character_)
   expect_identical(empty[["n_pages"]], NA_integer_)
   expect_identical(empty[["language"]], NA_character_)
-  
+
   expect_identical(empty_chapters[["book_id"]], NA_character_)
   expect_identical(empty_chapters[["part_id"]], NA_character_)
   expect_identical(empty_chapters[["part_label"]], NA_character_)

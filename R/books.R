@@ -32,13 +32,13 @@
 #' find_book(jstor_example("sample_book.xml"))
 find_book <- function(file_path) {
   validate_file_path(file_path, "xml")
-  
+
   xml_file <- xml2::read_xml(file_path)
-  
+
   validate_book(xml_file)
-  
+
   book <- xml_find_all(xml_file, "book-meta")
-  
+
   out <- list(
     book_id = extract_child(book, ".//book-id"),
     basename_id = get_basename(file_path),
@@ -56,13 +56,13 @@ find_book <- function(file_path) {
     n_pages = extract_book_pages(book),
     language = extract_child(book, ".//meta-value")
   )
-  
+
   tibble::new_tibble(out)
 }
 
 
 extract_book_pages <- function(book) {
-  xml_child(book, ".//counts/page-count") %>% 
+  xml_child(book, ".//counts/page-count") %>%
     xml2::xml_attr("count") %>%
     as.integer()
 }
@@ -110,14 +110,14 @@ extract_book_pages <- function(book) {
 #' tidyr::unnest(parts)
 find_chapters <- function(file_path, authors = FALSE) {
   validate_file_path(file_path, "xml")
-  
+
   xml_file <- xml2::read_xml(file_path)
-  
+
   validate_book(xml_file)
-  
-  parts <- xml_find_all(xml_file, "body") %>% 
+
+  parts <- xml_find_all(xml_file, "body") %>%
     xml_find_all("book-part/body/book-part/book-part-meta")
-  
+
   # catch case with no parts
   if (purrr::is_empty(parts)) {
     parts_out <- new_tibble(list(
@@ -132,14 +132,14 @@ find_chapters <- function(file_path, authors = FALSE) {
   } else {
     parts_out <- purrr::map_df(parts, find_part, authors)
   }
-  
+
   base <- list(
-    book_id = extract_child(xml_file, ".//book-id") %>% 
+    book_id = extract_child(xml_file, ".//book-id") %>%
       rep(times = nrow(parts_out)),
     basename_id = get_basename(file_path) %>%
       rep(times = nrow(parts_out))
   )
-  
+
   dplyr::bind_cols(base, parts_out)
 }
 
@@ -151,17 +151,16 @@ find_part <- function(part, authors = FALSE) {
   } else {
     authors <- NA_character_
   }
-  
+
   out <- list(
     part_id = extract_child(part, "book-part-id"),
     part_label = extract_child(part, ".//label"),
     part_title = extract_child(part, ".//title"),
-    part_subtitle = extract_child(part,".//title-group/subtitle"),
+    part_subtitle = extract_child(part, ".//title-group/subtitle"),
     authors = authors,
     abstract = extract_child(part, ".//abstract"),
     part_first_page = extract_child(part, ".//fpage")
   )
-  
+
   new_tibble(out)
 }
-

@@ -16,11 +16,11 @@ find_footnotes <- function(file_path) {
   validate_file_path(file_path, "xml")
 
   xml_file <- xml2::read_xml(file_path)
-  
+
   validate_article(xml_file)
 
   footnotes <- extract_footnotes(xml_file)
-  
+
   expand_and_bind(file_path, footnotes)
 }
 
@@ -37,7 +37,7 @@ extract_footnotes <- function(xml_file) {
     xml_children() %>%
     map_chr(xml_text) %>%
     str_replace("^\\\n", "") %>%  # remove "\n" at beginning of strings
-    list() %>% 
-    rlang::set_names("footnotes") %>% 
+    list() %>%
+    rlang::set_names("footnotes") %>%
     new_tibble()
 }

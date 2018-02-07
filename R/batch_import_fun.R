@@ -22,7 +22,7 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
     message("Parallel processing is currently not supported on windows.",
             "Computing with single core.")
   }
-  
+
   safe_fun <- purrr::safely(fun)
 
   raw_result <- parallel::mclapply(in_paths, safe_fun, mc.cores = cores) %>%
@@ -118,7 +118,7 @@ jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
                                  files_per_batch = 10000,
                                  cores = getOption("mc.cores", 1L)) {
 
-  file_list <- split(in_paths, ceiling(seq_along(in_paths)/files_per_batch))
+  file_list <- split(in_paths, ceiling(seq_along(in_paths) / files_per_batch))
   chunk_numbers <- unique(names(file_list)) %>% as.list()
 
   if (!is.null(out_path)) {

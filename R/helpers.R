@@ -18,7 +18,7 @@ validate_file_path <- function(file_path, type) {
 
 validate_article <- function(xml_file) {
   if (identical(xml2::xml_name(xml_file), "book")) {
-    stop(paste0("You are using `", sys.call(-1)[[1]], "` on a book. ", 
+    stop(paste0("You are using `", sys.call(-1)[[1]], "` on a book. ",
                 "Please use `find_book` or `find_chapter` instead."),
                 call. = FALSE)
   } else if (!identical(xml2::xml_name(xml_file), "article")) {
@@ -28,7 +28,7 @@ validate_article <- function(xml_file) {
 
 validate_book <- function(xml_file) {
   if (identical(xml2::xml_name(xml_file), "article")) {
-    stop(paste0("You are using `", sys.call(-1)[[1]], "` on an article. ", 
+    stop(paste0("You are using `", sys.call(-1)[[1]], "` on an article. ",
                 "Please use `find_article`, `find_authors`, `find_references` ",
                 "or `find_footnotes` instead."),
          call. = FALSE)
@@ -55,12 +55,12 @@ extract_first <- function(doc, element) {
 extract_all <- function(doc, element) {
   res <- doc %>%
     xml_find_all(element)
-  
+
   if (is_empty(res)) {
     return(NA_character_)
   } else {
-    res %>%   
-      xml_text() %>% 
+    res %>%
+      xml_text() %>%
       paste0(collapse = "; ")
   }
 }
@@ -70,6 +70,6 @@ expand_and_bind <- function(file_path, individual_part) {
   list(
     basename_id = get_basename(file_path) %>%
       rep(times = NROW(individual_part))
-  ) %>% 
+  ) %>%
     dplyr::bind_cols(individual_part)
 }

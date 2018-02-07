@@ -7,7 +7,7 @@ context("meta-information")
 result <- "testfiles/standard_case.xml" %>%
   find_article()
 
-result_empty <- "testfiles/empty_file.xml" %>% 
+result_empty <- "testfiles/empty_file.xml" %>%
   find_article()
 
 result_multiple_dates <- "testfiles/multiple-dates.xml" %>%
@@ -19,13 +19,13 @@ result_weird_title <- "testfiles/weird-title.xml" %>%
 result_weird_title2 <- "testfiles/weird-title-2.xml" %>%
   find_article()
 
-result_multiple_languages <- "testfiles/multiple-languages.xml" %>% 
+result_multiple_languages <- "testfiles/multiple-languages.xml" %>%
   find_article()
 
-result_new_nov_17 <- "testfiles/article_complex_meta.xml" %>% 
+result_new_nov_17 <- "testfiles/article_complex_meta.xml" %>%
   find_article()
 
-article_jcode_stable <- "testfiles/article-jcode-stable.xml" %>% 
+article_jcode_stable <- "testfiles/article-jcode-stable.xml" %>%
   find_article()
 
 invalid_file <- "testfiles/invalid_file.xml"
@@ -36,7 +36,7 @@ test_that("Input data is checked", {
   expect_error(find_article("testfiles/standard_book.xml"), "You are using")
 })
 
-test_that("invalid xml files raise no warning",{
+test_that("invalid xml files raise no warning", {
   expect_silent(find_article(invalid_file))
 })
 
@@ -78,7 +78,7 @@ test_that("article_type is correct", {
 test_that("article_title is correct", {
   expect_equal(result[["article_title"]], "Two New Species of Ischaemum")
   expect_equal(result_weird_title[["article_title"]], "V‐Goods and the Role")
-  expect_equal(result_weird_title2[["article_title"]], "Struggling over the Boundaries of Belonging: A Formal Model of Nation Building, Ethnic Closure, and Populism")
+  expect_equal(result_weird_title2[["article_title"]], "Struggling over the Boundaries of Belonging: A Formal Model of Nation Building, Ethnic Closure, and Populism") # nolint
   expect_equal(result_empty[["article_title"]], NA_character_)
 })
 

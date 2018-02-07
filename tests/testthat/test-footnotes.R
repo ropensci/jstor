@@ -13,7 +13,7 @@ result <- "testfiles/footnotes.xml" %>%
 single_and_multiple_footnotes <- "testfiles/footnotes_mangled.xml" %>%
  find_footnotes()
 
-footnotes_in_body <- "testfiles/footnotes-in-body.xml" %>% 
+footnotes_in_body <- "testfiles/footnotes-in-body.xml" %>%
   find_footnotes()
 
 # tests -----
@@ -32,7 +32,7 @@ test_that("extracting footnotes works", {
                       "testfiles/correct_footnotes.txt")
   expect_known_output(print(single_and_multiple_footnotes[["footnotes"]]),
                       "testfiles/correct_footnotes_mangled.txt")
-  expect_identical(footnotes_in_body[[1, "footnotes"]], 
+  expect_identical(footnotes_in_body[[1, "footnotes"]],
                    paste("1Martin Carnoy, “The Costs and Returns to Education",
                          "in Mexico” (PhD diss., University of Chicago, 1964).")
   )

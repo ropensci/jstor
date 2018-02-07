@@ -33,7 +33,7 @@ find_authors <- function(file_path) {
   }
 
   authors <- extract_authors(meta)
-  
+
   expand_and_bind(file_path, authors)
 }
 
@@ -72,7 +72,7 @@ extract_authors <- function(article) {
     string_name <- xml_find_all(article, ".//string-name") %>% xml_text()
 
     missings <- rep(NA_character_, length(string_name))
-    
+
     tibble::new_tibble(list(
       prefix = missings,
       given_name = missings,

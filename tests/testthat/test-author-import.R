@@ -27,20 +27,22 @@ test_file_author_prefix <- "testfiles/author-prefix.xml" %>%
 test_file_author_suffix <- "testfiles/author-suffix.xml" %>%
   find_authors()
 
-test_file_book <- "testfiles/standard_book.xml" %>% 
+test_file_book <- "testfiles/standard_book.xml" %>%
   find_authors()
+
+# nolint start
 
 # expected output
 single_author <- tribble(
   ~basename_id,              ~prefix,       ~given_name, ~surname,     ~string_name, ~suffix,        ~author_number,
   "standard_case", NA_character_, "N. L.",  "Bor", NA_character_, NA_character_,  1L
-) 
+)
 
 multiple_authors <- tribble(
   ~basename_id,                 ~prefix,       ~given_name, ~surname,  ~string_name, ~suffix,        ~author_number,
   "multiple-authors", NA_character_, "Louis",     "Kaplow",  NA_character_, NA_character_,  1L,
   "multiple-authors", NA_character_, "Steven",    "Shavell", NA_character_, NA_character_,  2L
-) 
+)
 
 multiple_given_names <- tribble(
   ~basename_id,                    ~prefix,       ~given_name,    ~surname, ~string_name,  ~suffix,        ~author_number,
@@ -53,19 +55,21 @@ author_string <- tribble(
   ~basename_id,              ~prefix,      ~given_name,    ~surname,     ~string_name,               ~suffix,        ~author_number,
   "author-string", NA_character_, NA_character_, NA_character_, " Michèle de la Pradelle ", NA_character_,  1L,
   "author-string", NA_character_, NA_character_, NA_character_, "Emmanuelle Lallement",     NA_character_,  2L
-) 
+)
 
 no_authors <- tribble(
   ~prefix,      ~given_name,    ~surname,     ~string_name,   ~suffix,       ~author_number,
   NA_character_, NA_character_, NA_character_, NA_character_, NA_character_, NA_real_
-) 
+)
 
 book_authors <- tribble(
   ~basename_id, ~prefix, ~given_name, ~surname, ~string_name, ~suffix, ~author_number,
   "standard_book", NA_character_, "Jon", "Fraenkel",  NA_character_, NA_character_,  1L,
   "standard_book", NA_character_, "Stewart", "Firth", NA_character_, NA_character_,  2L,
   "standard_book", NA_character_, "Brij V.",  "Lal",  NA_character_, NA_character_,  3L
-) 
+)
+
+# nolint end
 
 test_that("class is correct", {
   expect_s3_class(test_file_single_author, "tbl_df")

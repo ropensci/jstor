@@ -10,7 +10,7 @@ result <- "testfiles/references.xml" %>%
 result_empty <- "testfiles/empty_file.xml" %>%
   find_references()
 
-half_empty <- "testfiles/references-half-empty.xml" 
+half_empty <- "testfiles/references-half-empty.xml"
 
 unparsed <- "testfiles/unparsed-references.xml"
 
@@ -39,7 +39,7 @@ test_that("null results work", {
                    NA_character_)
 })
 
-
+# nolint start
 correct_refs <- c(
   "Bibliography: Entamoeba ranarumn",
   "DOBELL, C.C.
@@ -52,6 +52,7 @@ mental study. Parasit., 10:294-310.",
 1920 Studies on Myxosporidia. A Synopsis of Genera and Species of Myxosporidia.
 ill. Biol. Monogr., 5:243-503, 25 pl. and 2 textfig."
 )
+# nolint end
 
 unparsed_refs <- c(
   "References",
@@ -84,5 +85,3 @@ test_that("extracting references works", {
   expect_identical(find_references(unparsed)[["references"]], unparsed_refs)
   expect_identical(find_references(parsed)[["references"]], parsed_refs)
 })
-
-

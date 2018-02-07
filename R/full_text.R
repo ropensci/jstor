@@ -31,5 +31,5 @@ read_full_text <- function(filename) {
     list(
       basename_id = id, full_text = text, encoding = encoding
     )
-  )  
+  )
 }
