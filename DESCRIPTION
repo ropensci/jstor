@@ -17,7 +17,10 @@ Imports:
     stringr,
     readr,
     tibble,
-    rlang
+    rlang,
+    foreach,
+    doSNOW,
+    snow
 Suggests: testthat,
     covr,
     knitr,

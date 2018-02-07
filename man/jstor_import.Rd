@@ -5,7 +5,8 @@
 \title{Wrapper for file import}
 \usage{
 jstor_import(in_paths, out_file, out_path = NULL, .f, col_names = TRUE,
-  files_per_batch = 10000, cores = getOption("mc.cores", 1L))
+  files_per_batch = 10000, cores = getOption("mc.cores", 1L),
+  show_progress = TRUE)
 }
 \arguments{
 \item{in_paths}{A character vector to the \code{xml}-files which should be
@@ -25,6 +26,9 @@ increasing number.}
 \item{files_per_batch}{Number of files for each batch.}
 
 \item{cores}{Number of cores to use for parallel processing.}
+
+\item{show_progress}{Displays a progress bar for each batch, if the session
+is interactive.}
 }
 \value{
 Writes \code{.csv}-files to disk.
@@ -32,34 +36,4 @@ Writes \code{.csv}-files to disk.
 \description{
 This function applies an import function to a list of \code{xml}-files and saves
 them in batches of \code{.csv}-files to disk.
-}
-\details{
-Along the way, we wrap three functions, which make the process of converting
-many files easier:
-\itemize{
-\item \code{\link[purrr:safely]{purrr::safely()}}
-\item \code{\link[parallel:mclapply]{parallel::mclapply()}}
-\item \code{\link[readr:write_csv]{readr::write_csv()}}
-}
-
-When using one of the \code{find_*} functions, there should usually be no errors.
-To avoid the whole computation to fail in the unlikely event that an error
-occurs, we use \code{safely()} which let's us
-continue the process, and catch the error along the way.
-
-If you have many files to import, you might benefit from executing the
-function in parallel. On Linux and Mac, this can be achieved via
-\code{mclapply()}, which we use here.
-
-After importing all files, they are written to disk with
-\code{\link[readr:write_csv]{readr::write_csv()}}.
-
-Since you might run out of memory when importing a large quantity of files,
-the files to import are split up into batches. Each batch is being treated
-separately, therefore for each batch multiple processes from \code{mclapply()} are
-spawned. For this reason, it is not recommended to have very small batches,
-as there is an overhead for starting and ending the processes. On the other
-hand, the batches should not be too large, to not exceed memory limitations.
-A value of 10000 to 20000 for \code{files_per_batch} should work fine on most
-machines.
 }

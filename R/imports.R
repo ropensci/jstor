@@ -5,6 +5,7 @@
 #' @importFrom xml2 xml_child xml_find_all xml_find_first xml_text xml_children
 #' @importFrom stringr str_detect str_replace
 #' @importFrom tibble new_tibble
+#' @importFrom foreach %dopar%
 NULL
 
 #' Pipe operator
@@ -19,4 +20,4 @@ NULL
 
 
 # global variables
-utils::globalVariables(c("references", "footnotes", "encoding", "authors"))
+utils::globalVariables(c("references", "footnotes", "encoding", "authors", "i"))

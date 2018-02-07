@@ -12,27 +12,50 @@
 #' `find_authors` and `read_full_text`.
 #' @param col_names Should `col_names` be printed when exporting results? For
 #'   errors, col_names are always written to file.
+#' @param n_batches Total number of batches (for progress bar).
 #' @param cores Number of cores to use for parallel processing.
 #' @noRd
 jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
-                                  col_names = FALSE,
-                                  cores = getOption("mc.cores", 1L)) {
-  if (.Platform$OS.type == "windows" & cores > 1) {
-    cores <- 1L
-    message("Parallel processing is currently not supported on windows.",
-            "Computing with single core.")
-  }
+                                  col_names = FALSE, n_batches,
+                                  cores = getOption("mc.cores", 1L),
+                                  show_progress = TRUE) {
+  message("Processing chunk ", chunk_number, "/", n_batches)
 
   safe_fun <- purrr::safely(fun)
+  
+  
+  # start cluster
+  cl <- snow::makeCluster(cores)
+  doSNOW::registerDoSNOW(cl)
+  
+  # create progress bar if we are in console
+  if (interactive() && show_progress) {
+    pb <- utils::txtProgressBar(min = 0, max = length(in_paths), style = 3)
+    progress <- function(n) utils::setTxtProgressBar(pb, n)
+    opts <- list(progress = progress)
+  } else {
+    opts <- list()
+  }
 
-  raw_result <- parallel::mclapply(in_paths, safe_fun, mc.cores = cores) %>%
-    purrr::transpose()
+  
+  # compute results in parallel
+  parallel_result <- foreach::foreach(i = in_paths, .packages = "jstor",
+                                 .options.snow = opts) %dopar%
+    safe_fun(i)
+  
+  # stop cluster and progress bar
+  snow::stopCluster(cl)
+  
+  if (interactive() && show_progress) close(pb)
+  
+  
+  res_transposed <- purrr::transpose(parallel_result)
 
-  is_ok <- raw_result[["error"]] %>%
+  is_ok <- res_transposed[["error"]] %>%
     purrr::map_lgl(purrr::is_null)
 
-  res <- raw_result[["result"]]
-  error <- raw_result[["error"]]
+  res <- res_transposed[["result"]]
+  error <- res_transposed[["error"]]
 
   res_ok <- res[is_ok] %>%
     dplyr::bind_rows()
@@ -75,7 +98,7 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' many files easier:
 #' 
 #' - [purrr::safely()]
-#' - [parallel::mclapply()]
+#' - [foreach::foreach()]
 #' - [readr::write_csv()]
 #' 
 #' When using one of the `find_*` functions, there should usually be no errors.
@@ -84,20 +107,23 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' continue the process, and catch the error along the way.
 #' 
 #' If you have many files to import, you might benefit from executing the
-#' function in parallel. On Linux and Mac, this can be achieved via
-#' `mclapply()`, which we use here.
+#' function in parallel. We use [snow::createCluster()] to setup a cluster and
+#' then compute the results via `foreach` and `%dopar%`. The type of cluster is 
+#' determined by `getClusterOption("type")`.
 #' 
 #' After importing all files, they are written to disk with
 #' [readr::write_csv()].
 #' 
 #' Since you might run out of memory when importing a large quantity of files,
 #' the files to import are split up into batches. Each batch is being treated
-#' separately, therefore for each batch multiple processes from `mclapply()` are
+#' separately, therefore for each batch multiple processes from
+#' [snow::createCluster()] are
 #' spawned. For this reason, it is not recommended to have very small batches,
 #' as there is an overhead for starting and ending the processes. On the other
 #' hand, the batches should not be too large, to not exceed memory limitations.
 #' A value of 10000 to 20000 for `files_per_batch` should work fine on most
-#' machines.
+#' machines. If the session is interactive and `show_progress` is `TRUE`, a
+#' progress bar is displayed for each batch.
 #' 
 #' 
 #' @param in_paths A character vector to the `xml`-files which should be 
@@ -111,13 +137,19 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' @param col_names Should column names be written to file? Defaults to `TRUE`.
 #' @param files_per_batch Number of files for each batch.
 #' @param cores Number of cores to use for parallel processing.
+#' @param show_progress Displays a progress bar for each batch, if the session
+#' is interactive.
 #'
 #' @return Writes `.csv`-files to disk.
 #'
 #' @export
 jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
                          col_names = TRUE, files_per_batch = 10000,
-                         cores = getOption("mc.cores", 1L)) {
+                         cores = getOption("mc.cores", 1L),
+                         show_progress = TRUE) {
+  start_time <- Sys.time()
+  
+  message("Starting to import ", length(in_paths), " file(s).")
 
   file_list <- split(in_paths, ceiling(seq_along(in_paths) / files_per_batch))
   chunk_numbers <- unique(names(file_list)) %>% as.list()
@@ -125,10 +157,18 @@ jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
   if (!is.null(out_path)) {
     out_file <- file.path(out_path, out_file)
   }
+  
+  n_batches <- length(chunk_numbers)
 
   purrr::pwalk(
     list(file_list, chunk_numbers, out_file, list(.f), cores = cores,
-         col_names = col_names),
+         col_names = col_names, n_batches = n_batches,
+         show_progress = show_progress),
     jstor_convert_to_file
   )
+  
+  end_time <- Sys.time()
+  run_time <- end_time - start_time
+  message("Finished importing ", length(in_paths), " file(s) in ",
+          round(run_time, 2), " seconds.")
 }
