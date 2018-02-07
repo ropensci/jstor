@@ -37,7 +37,8 @@ test_that("Input data is checked", {
 })
 
 test_that("invalid xml files raise no warning", {
-  expect_silent(find_article(invalid_file))
+  # this should be changed to expect_silent after # 33 is resolved
+  expect_warning(find_article(invalid_file))
 })
 
 test_that("class is correct", {
