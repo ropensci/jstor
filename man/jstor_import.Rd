@@ -52,7 +52,9 @@ occurs, we use \code{safely()} which let's us
 continue the process, and catch the error along the way.
 
 If you have many files to import, you might benefit from executing the
-function in parallel. We use \code{\link[snow:createCluster]{snow::createCluster()}} to setup a cluster and
+function in parallel. We use
+\code{\link[snow:snow-startstop]{snow::createCluster()}} to setup a cluster
+and
 then compute the results via \code{foreach} and \code{\%dopar\%}. The type of
 cluster is determined by \code{getClusterOption("type")}.
 
@@ -62,7 +64,7 @@ After importing all files, they are written to disk with
 Since you might run out of memory when importing a large quantity of files,
 the files to import are split up into batches. Each batch is being treated
 separately, therefore for each batch multiple processes from
-\code{\link[snow:createCluster]{snow::createCluster()}} are
+\code{\link[snow:snow-startstop]{snow::createCluster()}} are
 spawned. For this reason, it is not recommended to have very small batches,
 as there is an overhead for starting and ending the processes. On the other
 hand, the batches should not be too large, to not exceed memory limitations.
