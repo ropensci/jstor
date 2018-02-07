@@ -108,8 +108,8 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' 
 #' If you have many files to import, you might benefit from executing the
 #' function in parallel. We use [snow::createCluster()] to setup a cluster and
-#' then compute the results via `foreach` and `%dopar%`. The type of cluster is 
-#' determined by `getClusterOption("type")`.
+#' then compute the results via `foreach` and \code{\%dopar\%}. The type of
+#' cluster is determined by `getClusterOption("type")`.
 #' 
 #' After importing all files, they are written to disk with
 #' [readr::write_csv()].
