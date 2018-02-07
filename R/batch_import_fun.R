@@ -108,6 +108,7 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' @param .f Function to use for import. Can be one of `find_article`,
 #' `find_authors`, `find_references`, `find_footnotes`, `find_book` or
 #' `find_chapter`.
+#' @param col_names Should column names be written to file? Defaults to `TRUE`.
 #' @param files_per_batch Number of files for each batch.
 #' @param cores Number of cores to use for parallel processing.
 #'
@@ -115,8 +116,8 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #'
 #' @export
 jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
-                                 files_per_batch = 10000,
-                                 cores = getOption("mc.cores", 1L)) {
+                         col_names = TRUE, files_per_batch = 10000,
+                         cores = getOption("mc.cores", 1L)) {
 
   file_list <- split(in_paths, ceiling(seq_along(in_paths) / files_per_batch))
   chunk_numbers <- unique(names(file_list)) %>% as.list()
@@ -126,7 +127,8 @@ jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
   }
 
   purrr::pwalk(
-    list(file_list, chunk_numbers, out_file, list(.f), cores = cores),
+    list(file_list, chunk_numbers, out_file, list(.f), cores = cores,
+         col_names = col_names),
     jstor_convert_to_file
   )
 }

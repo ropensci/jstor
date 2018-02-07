@@ -4,7 +4,7 @@
 \alias{jstor_import}
 \title{Wrapper for file import}
 \usage{
-jstor_import(in_paths, out_file, out_path = NULL, .f,
+jstor_import(in_paths, out_file, out_path = NULL, .f, col_names = TRUE,
   files_per_batch = 10000, cores = getOption("mc.cores", 1L))
 }
 \arguments{
@@ -19,6 +19,8 @@ increasing number.}
 \item{.f}{Function to use for import. Can be one of \code{find_article},
 \code{find_authors}, \code{find_references}, \code{find_footnotes}, \code{find_book} or
 \code{find_chapter}.}
+
+\item{col_names}{Should column names be written to file? Defaults to \code{TRUE}.}
 
 \item{files_per_batch}{Number of files for each batch.}
 
