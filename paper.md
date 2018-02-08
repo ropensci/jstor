@@ -43,9 +43,6 @@ allow the researchers to
 filter articles based on specific journals, the dates of publication, the
 authors, keywords in titles and other aspects.
 
-<!---`jstor` currently is the only available solution for importing the metadata from
-`.xml`-files delivered by DfR to R for further analysis. --->
-
 Work on `jstor` benefited from financial support for the project "Academic
 Super-Elites in Sociology and Economics" by the Austrian Science Fund (FWF), 
 project number "P 29211 Einzelprojekte". `jstor` is currently being used by
