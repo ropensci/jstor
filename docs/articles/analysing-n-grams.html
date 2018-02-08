@@ -87,7 +87,7 @@
     
     
 <div class="contents">
-<p>The service <a href="http://www.jstor.org/dfr/">DfR</a> by JSTOR offers several ways for text analysis of scientific articles. In this post I will demonstrate how to analyse n-grams which DfR delivers.</p>
+<p>The service <a href="http://www.jstor.org/dfr/">DfR</a> by JSTOR offers several ways for text analysis of scientific articles. In this vignette I will demonstrate how to analyse n-grams which DfR delivers.</p>
 <p>Let’s suppose, we are interested in the topic of “inequality” within the discipline of sociology. Social inequality can be considered a prime subject of sociological inquiry. In order to gain some context on the subject, we might be interested to analyse frequently occurring terms.</p>
 <p>Our analysis starts at the main page of DfR. We create a dataset by searching for “inequality” and selecting “sociology” as our subject. To trim down the number of articles, we only select articles from 1997 to 2017. After logging in/creating an account, we select unigrams and bigrams. After unzipping the archives to a convenient location, we start our analysis.</p>
 <p>Up-front, we need to load some packages. <code>jstor</code> is currently not available from CRAN, but can be installed via <code>devtools</code>.</p>
@@ -321,9 +321,9 @@ bigram_counts</code></pre></div>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/graph_from_data_frame">graph_from_data_frame</a></span>()
 
 bigram_graph</code></pre></div>
-<pre><code>## IGRAPH 3b3aa3c DN-- 170 161 -- 
+<pre><code>## IGRAPH f3a4b3f DN-- 170 161 -- 
 ## + attr: name (v/c), n (e/n)
-## + edges from 3b3aa3c (vertex names):
+## + edges from f3a4b3f (vertex names):
 ##  [1] labor                 -&gt;market   9                     -&gt;7       
 ##  [3] 7                     -&gt;6        10                    -&gt;9       
 ##  [5] amsmath               -&gt;amsxtra  begin                 -&gt;document
@@ -349,7 +349,7 @@ bigram_graph</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot_bigrams</span>(bigram_graph)</code></pre></div>
 <p><img src="analysing-n-grams_files/figure-html/unnamed-chunk-28-1.png" width="1152"> Very obvious is a group of nodes which are not relevant to the topic of inequality. They come from LaTeX documents and somehow made their way into the original dataset. However, since they are more common than most of the other terms, they are quite easy to remove. We can look at the nodes/vertices of our graph with <code><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V(bigram_graph)</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(bigram_graph)</code></pre></div>
-<pre><code>## + 170/170 vertices, named, from 3b3aa3c:
+<pre><code>## + 170/170 vertices, named, from f3a4b3f:
 ##   [1] labor                  9                      7                     
 ##   [4] 10                     amsmath                begin                 
 ##   [7] declaremathsizes       declaretextfontcommand documentclass         
@@ -364,9 +364,9 @@ bigram_graph</code></pre></div>
 <p>The first node, “labor”, is relevant to us, but all other nodes from 2 to at least 40 are clearly irrelevant. We can remove them by simple subtraction:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bigram_graph_clean &lt;-<span class="st"> </span>bigram_graph <span class="op">-</span><span class="st"> </span><span class="dv">2</span><span class="op">:</span><span class="dv">40</span>
 bigram_graph_clean</code></pre></div>
-<pre><code>## IGRAPH 0032cd1 DN-- 131 105 -- 
+<pre><code>## IGRAPH 3862af6 DN-- 131 105 -- 
 ## + attr: name (v/c), n (e/n)
-## + edges from 0032cd1 (vertex names):
+## + edges from 3862af6 (vertex names):
 ##  [1] labor     -&gt;market     labor     -&gt;force      0         -&gt;0         
 ##  [4] table     -&gt;2          1         -&gt;1          income    -&gt;inequality
 ##  [7] black     -&gt;white      table     -&gt;1          table     -&gt;3         
@@ -388,7 +388,7 @@ bigram_graph_clean</code></pre></div>
 <p>The figure is still far from perfect (“eco” -&gt; “nomic” should clearly be one term), but we can begin to analyse our network.</p>
 <p>The most frequent bigrams are now “labor market”, “labor force”, and “income inequality”, which are not very surprising given that most individuals in capitalist societies need to supply their work in exchange for income. For this reason, the labor market and its stratification is a prime subject of the sociological inquiry into inequality.</p>
 <p>A few further key dimension of sociological analysis are apparent from the graph: gender, race/ethnicity, occupational and socioeconomic status. That we find many terms to be associated with the term “social” seems quite likely given the discipline’s subject.</p>
-<p>At least two surprising results should be pointed out. First, it is not evident how the terms “ethnic” and “racial” are connected. They do not form a typical term like “social capital”, “middle class” or similar, nor could they be considered a dichotomy like “black” and “white” which are often included in tables from regressions. Second, there is a group of nodes around the term “university”: university -&gt; chicago, university -&gt; california, harvard -&gt; university, etc. At least two explanations seem plausible: either, many books are being cited which are in some way associated with those universities (“The University of Chicago Press” is the largest university press in the United States), or many researchers who publish in the two flagship-journals we selected are affiliated with those four universities: Harvard, Chicago, Cambridge and California.</p>
+<p>At least two surprising results should be pointed out. First, it is not evident how the terms “ethnic” and “racial” are connected. They do not form a typical term like “social capital”, “middle class” or similar, nor could they be considered a dichotomy like “black” and “white” which are often included in tables from regressions. From a theoretical point of view, they have slightly different meanings but are frequently being used as synonyms. Second, there is a group of nodes around the term “university”: university -&gt; chicago, university -&gt; california, harvard -&gt; university, etc. At least two explanations seem plausible: either, many books are being cited which are in some way associated with those universities (“The University of Chicago Press” is the largest university press in the United States), or many researchers who publish in the two flagship-journals we selected are affiliated with those four universities: Harvard, Chicago, Cambridge and California. At least partly the prominence of university -&gt; chicago -&gt; press might be due to the fact, that it is the publisher of the American Journal of Sociology, and therfore included in each article by this journal.</p>
 </div>
 <div id="comparison-over-time" class="section level1">
 <h1 class="hasAnchor">

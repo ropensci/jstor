@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The service [DfR](http://www.jstor.org/dfr/) by JSTOR offers several ways for
 text analysis of scientific articles. 
-In this post I will demonstrate how to analyse n-grams which DfR delivers.
+In this vignette I will demonstrate how to analyse n-grams which DfR delivers.
 
 Let's suppose, we are interested in the topic of "inequality" within the 
 discipline of sociology. Social inequality can be considered a prime subject of
@@ -434,14 +434,19 @@ At least two surprising results should be pointed out. First, it is not evident
 how the terms "ethnic" and "racial" are connected. They do not form a typical
 term like "social capital", "middle class" or similar, nor could they be 
 considered a dichotomy like "black" and "white" which are often included in
-tables from regressions. Second, there is a group of nodes around the term
+tables from regressions. From a theoretical point of view, they have slightly
+different meanings but are frequently being used as synonyms. 
+Second, there is a group of nodes around the term
 "university": university -> chicago, university -> california,
 harvard -> university, etc. At least two explanations seem plausible: either,
 many books are being cited which are in some way associated with those 
 universities ("The University of Chicago Press" is the largest university press
 in the United States), or many researchers who publish in the two
 flagship-journals we selected are affiliated with those four universities: 
-Harvard, Chicago, Cambridge and California.
+Harvard, Chicago, Cambridge and California. At least partly the prominence of
+university -> chicago -> press might be due to the fact, that it is the
+publisher of the American Journal of Sociology, and therfore included in each
+article by this journal.
 
 # Comparison over time
 Besides looking at the overall relationship of bigrams, we could be interested
