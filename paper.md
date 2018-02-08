@@ -1,23 +1,23 @@
 ---
 title: 'jstor: Extract meta-data from DfR/JSTOR'
 authors:
-- affiliation: 1
-  name: Thomas Klebel
-  orcid: 0000-0002-7331-4751
-date: "2018-02-08"
+ - affiliation: 1
+   name: Thomas Klebel
+   orcid: 0000-0002-7331-4751
+date: 2018-02-08
 output:
   html_document:
     df_print: paged
 bibliography: paper.bib
 tags:
-- JSTOR
-- DfR
-- text mining
-- text analysis
-- citation analysis
+ - JSTOR
+ - DfR
+ - text mining
+ - text analysis
+ - citation analysis
 affiliations:
-- index: 1
-  name: University of Graz
+ - index: 1
+   name: University of Graz
 ---
 
 # Summary
