@@ -8,3 +8,5 @@
 ^README\.Rmd$
 ^codecov\.yml$
 ^CONDUCT\.md$
+^paper.md$
+^paper.bib$
