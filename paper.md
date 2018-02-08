@@ -29,15 +29,15 @@ set of journals and articles. The service
 [Data for Research (DfR)](http://www.jstor.org/dfr/) by JSTOR gives all 
 researchers, regardless of whether they have access to JSTOR or not, the
 opportunity to analyse this rich dataset, by delivering metadata,
-n-grams and, upon special request, fulltext materials about all available
+n-grams and, upon special request, full-text materials about all available
 articles and books from JSTOR. The package `jstor` [@jstor] helps in
 analysing these datasets by enabling researchers to easily import the metadata
 to R [@r_core],
 which can either be analysed on its own, or be used in conjunction with n-grams
-or fulltext-data. Commonly, the metada include information
+or full-text-data. Commonly, the metadata include information
 on the articles' authors, the title, journal, date of publishing, and quite
 frequently all footnotes and references. All this information can be of interest
-for specific research questions. For the analysis of n-grams or fulltexts,
+for specific research questions. For the analysis of n-grams or full-texts,
 the metadata imported with `jstor`
 allow the researchers to
 filter articles based on specific journals, the dates of publication, the
