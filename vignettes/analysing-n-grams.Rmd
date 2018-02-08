@@ -445,7 +445,7 @@ in the United States), or many researchers who publish in the two
 flagship-journals we selected are affiliated with those four universities: 
 Harvard, Chicago, Cambridge and California. At least partly the prominence of
 university -> chicago -> press might be due to the fact, that it is the
-publisher of the American Journal of Sociology, and therfore included in each
+publisher of the American Journal of Sociology, and therefore included in each
 article by this journal.
 
 # Comparison over time
