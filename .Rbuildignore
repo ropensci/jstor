@@ -12,3 +12,4 @@
 ^paper.bib$
 ^docs$
 ^_pkgdown\.yml$
+^vignettes/articles$

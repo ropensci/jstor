@@ -1,0 +1,483 @@
+---
+title: Analysing n-grams with jstor for R
+author: "Thomas Klebel"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+      toc: true
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The service [DfR](http://www.jstor.org/dfr/) by JSTOR offers several ways for
+text analysis of scientific articles. 
+In this post I will demonstrate how to analyse n-grams which DfR delivers.
+
+Let's suppose, we are interested in the topic of "inequality" within the 
+discipline of sociology. Social inequality can be considered a prime subject of
+sociological inquiry. In order to gain some context on the subject, we might be
+interested to analyse frequently occurring terms.
+
+Our analysis starts at the main page of DfR. We create a dataset by searching
+for
+"inequality" and selecting "sociology" as our subject. To trim down the number
+of articles, we only select articles from 1997 to 2017. After
+logging in/creating an account, we select unigrams and bigrams. After unzipping
+the archives to a convenient location, we start our analysis.
+
+
+Up-front, we need to load some packages. `jstor` is currently not available from
+CRAN, but can be installed via `devtools`.
+
+
+```{r, message=FALSE}
+# install.packages("devtools")
+# devtools::install_github("tklebel/jstor")
+
+library(jstor)
+library(tidyverse)
+library(visdat)
+
+# set a lighter theme for plots
+theme_set(theme_bw())
+```
+
+To import the files, we first need to locate them and generate an object with
+their corresponding paths. The following code assumes that you follow a workflow
+organised around projects within RStudio (refer to
+http://r4ds.had.co.nz/workflow-projects.html for further information). 
+
+```{r}
+# list files
+meta_files <- list.files(pattern = "xml", full.names = T, recursive = T)
+```
+
+Since we have a decent amount of articles, let's speed up the process of
+importing the metadata via parallel processing. `jstor_import` is a nice wrapper
+which takes care of setting up the processes and deals with any errors that
+might occur along the way.
+
+```{r, eval=FALSE}
+jstor_import(meta_files, out_file = "imported_metadata", .f = find_article,
+             files_per_batch = 25000, cores = 4)
+#> Starting to import 23909 file(s).
+#> Processing chunk 1/1
+#>   |===================================================================| 100%
+#> Finished importing 23909 file(s) in 2.54 mins.
+```
+
+Since `jstor_import` writes the results to disk, we need to read the metadata
+from the newly created file.^[When reading this data without `guess_max = 2000`,
+a warning is raised because the column type was not recognized properly for one
+column. Increasing `guess_max` 
+helped in this instance.]
+
+
+```{r, message=FALSE}
+imported_metadata <- read_csv("imported_metadata-1.csv", guess_max = 2000)
+imported_metadata
+```
+
+
+
+# Exploration
+Before diving into the analysis of ngrams, we might wish to take an explorative
+look at our metadata.
+
+The first thing to look at are the types of articles.
+```{r}
+ggplot(imported_metadata, aes(article_type)) +
+  geom_bar() +
+  coord_flip()
+```
+
+We can see, that the majority of articles are proper "research-articles", which
+together with book-reviews and miscellaneous articles amount to ~99% of all
+articles.
+
+```{r}
+imported_metadata %>% 
+  count(article_type, sort = T) %>% 
+  mutate(perc = scales::percent(n/sum(n)))
+```
+
+We must be cautious, however, when using this variable to distinguish articles
+into categories. In this instance, we have "research-articles" which are
+actually book-reviews:
+
+```{r}
+imported_metadata %>% 
+  filter(article_type == "research-article" & str_detect(article_title, "Book")) %>% 
+  select(basename_id, article_title, pub_year)
+```
+
+For the current demonstration, we want to restrict the type of articles to
+research articles, therefore we need to steps to remove book reviews and other
+miscellaneous articles: First, filter by `article_type`, then remove articles
+where the title starts with "Book Review".
+
+```{r}
+research_articles <- imported_metadata %>% 
+  filter(article_type == "research-article") %>% 
+  filter(!str_detect(article_title, "^Book Review"))
+```
+
+
+
+## The moving wall - filtering articles by time
+Since JSTOR has a [moving wall](https://support.jstor.org/hc/en-us/articles/115004879547-JSTOR-s-Moving-Wall-Archive-vs-Current-Definitions),
+we could take a look at the number of articles per year in our dataset.
+```{r}
+research_articles %>% 
+  ggplot(aes(pub_year)) +
+  geom_bar() 
+```
+
+From this graph we can see an increase in research articles until 2010, after
+which the number of articles
+first tapers off, and then drops off sharply. For this reason we should
+exclude articles
+from 2015 onward, since the sample might get quite biased toward specific
+journals.
+
+```{r}
+without_wall <- research_articles %>% 
+  filter(pub_year < 2015)
+```
+
+## Flagship journals - filtering articles by journal
+
+Since the amount of articles is still rather large for this demonstration, we
+could select only a few journals. Here, we will look at articles from two
+leading journals within the discipline, "Journal
+of Sociology" and "American Sociological Review". To identify articles from
+those journals, we need to take a look at the columns "journal_doi",
+"journal_jcode", and "journal_pub_id". For sociological journals in general, 
+the most common identifier is "journal_jcode". To demonstrate, we look at the
+missing proportion for each of the three variables:
+
+```{r}
+without_wall %>% 
+  select(contains("journal")) %>% 
+  vis_miss()
+```
+
+This illustrates rather strikingly, that most of the time our information is in
+"journal_jcode", and when it isn't, it is in "journal_pub_id".
+
+There are, however, some cases, where there is information in both variables:
+
+```{r}
+without_wall %>% 
+  filter(!is.na(journal_jcode) & !is.na(journal_pub_id))
+```
+
+
+Since for those cases, the form without digits (for example "geneses") is 
+similar to the usual format in "journal_jcode", we will take the information
+from "journal_jcode" when it is missing in "journal_pub_id" (which is the 
+most frequent case), and from "journal_pub_id" otherwise. 
+
+```{r}
+without_wall <- without_wall %>% 
+  mutate(journal_id = case_when(is.na(journal_pub_id) ~ journal_jcode,
+                                TRUE ~ journal_pub_id))
+```
+
+
+We can check, if there are any missings left:
+```{r}
+without_wall %>% 
+  pull(journal_id) %>% 
+  is.na() %>% 
+  any()
+```
+
+
+After cleaning up the identifier for journals, we can select our two 
+flagship-journals.
+
+```{r}
+flagship_journals <- without_wall %>%
+  filter(journal_id %in% c("amerjsoci", "amersocirevi"))
+```
+
+
+# Importing bigrams
+
+> Disclaimer: Much of the following analysis was inspired by the book
+"Text Mining with R" by Julia Silge and David Robinson:
+https://www.tidytextmining.com
+
+For this demonstration we will look at bigrams to find the most common pairs of
+words. Until now, we were only dealing with the metadata, therefore we need a
+way to link our reduced dataset to the bigram files from DfR. The file name can
+serve as an identifier to the articles, since it is similar between metadata and
+n-grams. 
+
+First, we list all relevant files on disk.
+
+```{r, eval=FALSE}
+bigram_files <- list.files(path = c("receipt-id-624621-part-001/ngram2/",
+                                    "receipt-id-624621-part-002/ngram2/"),
+                           full.names = T)
+```
+
+```{r, echo=FALSE}
+bigram_files <- readr::read_rds("bigram_paths.rds")
+```
+
+
+Next, we select all relevant files from our trimmed down dataset by creating
+a subset of the files. 
+
+```{r}
+# create a search pattern by simply pasting together the ids we want to keep
+search_pattern <- paste(flagship_journals$basename_id, collapse = "|")
+
+reduced_bigrams <- str_subset(bigram_files, search_pattern)
+```
+
+
+Equipped with the paths to all files of interest, we import all relevant bigrams
+to a `data.frame`.
+
+```{r, eval=FALSE}
+imported_bigrams <- data_frame(file_paths = reduced_bigrams) %>%
+  mutate(content = map(file_paths, read_tsv, col_names = c("bigrams", "n"),
+                       col_types = list(col_character(), col_integer())),
+         basename_id = get_basename(file_paths),
+         basename_id = str_replace(basename_id, "-ngram2", "")) %>%
+  select(-file_paths) %>%
+  unnest()
+```
+
+```{r, echo=FALSE, include=TRUE, eval=TRUE}
+# write_csv(imported_bigrams, "imported_bigrams.csv")
+
+imported_bigrams <- data.table::fread("imported_bigrams.csv", showProgress = F)
+```
+
+From the `r dim(flagship_journals)[1]` articles in our two flagship journals we
+now have `r dim(imported_bigrams)[1]` bigrams. The bigrams are calculated by
+JSTOR for each article independently. In order to reduce the sample to the most 
+common bigrams, we have two choices: either to include only terms which occur
+*within each* article a given amount of times, or to include terms which occur 
+*within all* articles a given amount of times. By only including terms which 
+occur more than 5 times in each article, we can drastically reduce the number of
+terms. However, we might miss some important ones: there might be terms which
+do not occur repeatedly within articles, but are present in all of them.
+
+For demonstration purposes we are a bit restrictive and include only those
+terms, which occur at least three times per article. 
+
+```{r}
+top_bigrams <- imported_bigrams %>%
+  filter(n >= 3)
+```
+
+
+
+## Cleaning up bigrams
+When constructing n-grams, DfR uses a stop-word list, which is quite narrow 
+^[for more information see the 
+[technical specifications](http://www.jstor.org/dfr/about/technical-specifications)
+on their page]. If we would like to restrict the terms a bit further, we could
+use stopwords from `tidytext`:
+
+
+```{r}
+library(tidytext)
+bigrams_separated <- top_bigrams %>%
+  separate(bigrams, c("word1", "word2"), sep = " ")
+
+bigrams_filtered <- bigrams_separated %>%
+  filter(!word1 %in% stop_words$word) %>%
+  filter(!word2 %in% stop_words$word)
+```
+
+After removing the stopwords we need to consider the fact, that our bigrams
+were created for each article on its own. In order to analyse them together,
+we need to count the terms for all articles in combination.
+
+```{r}
+bigram_counts <- bigrams_filtered %>%
+  group_by(word1, word2) %>%
+  summarise(n = sum(n)) %>%
+  arrange(desc(n))
+
+bigram_counts
+```
+
+From the first few terms we can see, that there are still many terms which are
+not very interesting for our analysis. The terms "american" and "sociological"
+are simply part of the title of a journal we selected (American Sociological 
+Review). To clean the terms up, we can employ different approaches. One is to
+simply filter the terms we wish to exclude:
+
+```{r}
+bigram_counts_clean <- bigram_counts %>%
+  unite(bigram, word1, word2, sep = " ") %>%
+  filter(!bigram %in% c("american sociological", "sociological review",
+                        "university press", "american journal",
+                        "journal sociology")) %>%
+  separate(bigram, c("word1", "word2"))
+
+```
+
+We will look at another approach after plotting our bigrams.
+
+
+# Visualize relationships
+When analyzing bigrams, we might want to look at the relationships between
+common terms. For this we can leverage the power of
+[igraph](http://igraph.org/r/) and
+[ggraph](https://cran.r-project.org/web/packages/ggraph/index.html).
+
+```{r, message=FALSE}
+library(igraph)
+library(ggraph)
+```
+
+
+First, we only keep the most common terms and then convert our `data.frame` to
+an `igraph`-object. ^[If you are unfamiliar with graph theory, just take a look
+at Wikipedia: [Graph Theory](https://en.wikipedia.org/wiki/Graph_theory).]
+
+
+```{r}
+bigram_graph <- bigram_counts_clean %>%
+  filter(n > 500) %>%
+  graph_from_data_frame()
+
+bigram_graph
+```
+
+For plotting, we will use a simple plotting function, adapted from
+https://www.tidytextmining.com/ngrams.html#visualizing-a-network-of-bigrams-with-ggraph.
+
+```{r}
+plot_bigrams <- function(igraph_df, seed = 2016) {
+  set.seed(seed)
+  
+  a <- grid::arrow(type = "closed", length = unit(.15, "inches"))
+
+  ggraph(igraph_df, layout = "fr") +
+    geom_edge_link(aes(edge_alpha = n), show.legend = FALSE,
+                   arrow = a, end_cap = circle(.07, 'inches')) +
+    geom_node_point(color = "lightblue", size = 4) +
+    geom_node_text(aes(label = name), repel = T) +
+    theme_graph()
+}
+```
+
+```{r, fig.width=12, fig.height=10}
+plot_bigrams(bigram_graph)
+```
+Very obvious is a group of nodes which are not relevant to the topic of
+inequality. They come from LaTeX documents and somehow made their way into the
+original dataset. However, since they are more common than most of the other
+terms, they are quite easy to remove. We can look at the nodes/vertices of our
+graph with `V(bigram_graph)`.
+
+```{r}
+V(bigram_graph)
+```
+
+The first node, "labor", is relevant to us, but all other nodes from 2 to at 
+least 40 are clearly irrelevant. We can remove them by simple subtraction:
+
+```{r}
+bigram_graph_clean <- bigram_graph - 2:40
+bigram_graph_clean
+```
+
+Another apparent group is a combination of "table" or "figure" with digits. This
+evidently comes from tables or figures in the papers and might suggest, that the
+articles in our sample quite frequently employ quantitative methods, where
+figures and tables are very common. For the analysis at hand however, we might
+remove them, along with a few other irrelevant terms.
+
+
+```{r}
+bigram_graph_clean <- bigram_graph_clean - c("table", "model",
+                                             as.character(0:5),
+                                             "xd", "rh", "landscape", "00",
+                                             "figure", "review", "79",
+                                             "http", "www", "000", "01")
+```
+
+
+After cleaning up a bit, we can take a fresh look at our bigrams.
+```{r, fig.width=12, fig.height=10}
+plot_bigrams(bigram_graph_clean, 234)
+```
+
+The figure is still far from perfect ("eco" -> "nomic" should clearly be one
+term), but we can begin to analyse our network.
+
+The most frequent bigrams are now "labor market", "labor force", and "income
+inequality", which are not very surprising given that most individuals in
+capitalist societies need to supply their work in exchange for income. For this
+reason, the labor market and its stratification is a prime subject of the 
+sociological inquiry into inequality.
+
+A few further key dimension of sociological analysis are apparent from the
+graph: gender, race/ethnicity, occupational and socioeconomic status. That we
+find many terms to be associated with the term "social" seems quite likely
+given the discipline's subject.
+
+At least two surprising results should be pointed out. First, it is not evident
+how the terms "ethnic" and "racial" are connected. They do not form a typical
+term like "social capital", "middle class" or similar, nor could they be 
+considered a dichotomy like "black" and "white" which are often included in
+tables from regressions. Second, there is a group of nodes around the term
+"university": university -> chicago, university -> california,
+harvard -> university, etc. At least two explanations seem plausible: either,
+many books are being cited which are in some way associated with those 
+universities ("The University of Chicago Press" is the largest university press
+in the United States), or many researchers who publish in the two
+flagship-journals we selected are affiliated with those four universities: 
+Harvard, Chicago, Cambridge and California.
+
+# Comparison over time
+Besides looking at the overall relationship of bigrams, we could be interested
+in the development over time of specific terms. Here, we want to look at how
+often "labor market" and "income inequality" appear from year to year.
+
+For this, we need to join our bigrams with the metadata.
+
+
+```{r}
+time_bigrams <- top_bigrams %>% 
+  left_join(flagship_journals, by = "basename_id") %>% 
+  select(bigrams, n, pub_year)
+
+head(time_bigrams)
+```
+
+Again, we need to sum up the counts, but this time grouped by year:
+```{r}
+time_bigrams <- time_bigrams %>%
+  group_by(bigrams, pub_year) %>%
+  summarise(n = sum(n)) %>%
+  arrange(desc(n))
+
+time_bigrams
+```
+
+We now only keep the two terms of interest and plot them in a simple chart.
+
+```{r, fig.width=10}
+# filter the terms of interest
+time_comparison <- time_bigrams %>% 
+  filter(bigrams == "labor market" | bigrams == "income inequality")
+
+ggplot(time_comparison, aes(pub_year, n, colour = bigrams)) +
+  geom_point() +
+  geom_line() +
+  scale_x_continuous(breaks = scales::pretty_breaks(7))
+```
