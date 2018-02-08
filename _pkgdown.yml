@@ -13,7 +13,7 @@ navbar:
     - text: Automating File Import
       href: articles/automating_file_import.html
     - text: Analysing n-grams with jstor
-      href: articles/articles/analysing-n-grams.html
+      href: articles/analysing-n-grams.html
   - text: News
     href: news/index.html
   right:

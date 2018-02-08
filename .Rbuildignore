@@ -12,4 +12,7 @@
 ^paper.bib$
 ^docs$
 ^_pkgdown\.yml$
-^vignettes/articles$
+^vignettes/analysing-n-grams.Rmd$
+^vignettes/bigram_paths.rds$
+^vignettes/imported_bigrams.csv$
+^vignettes/imported_metadata-1.csv$
