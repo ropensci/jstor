@@ -1,0 +1,47 @@
+navbar:
+  title: jstor
+  type: default
+  left:
+  - icon: fa-home fa-lg
+    href: index.html
+  - text: Reference
+    href: reference/index.html
+  - text: Articles
+    menu:
+    - text: Introduction to `jstor`
+      href: articles/Introduction.html
+    - text: Automating File Import
+      href: articles/automating_file_import.html
+  - text: News
+    href: news/index.html
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/tklebel/jstor
+
+reference:
+- title: Import metadata
+  desc: All functions in this category are to be applied to a single metadata file
+  contents:
+  - '`find_article`'
+  - '`find_authors`'
+  - '`find_book`'
+  - '`find_chapters`'
+  - '`find_footnotes`'
+  - '`find_references`'
+  
+- title: Batch import many files
+  contents:
+  - '`jstor_import`'
+  
+- title: Import full-text
+  contents:
+  - '`read_full_text`'
+  
+- title: Helper functions
+  contents:
+  - '`get_basename`'
+  - '`jstor_example`'
+  
+- title: Top level documentation
+  contents:
+  - '`jstor`'

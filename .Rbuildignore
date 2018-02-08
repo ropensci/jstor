@@ -10,3 +10,5 @@
 ^CONDUCT\.md$
 ^paper.md$
 ^paper.bib$
+^docs$
+^_pkgdown\.yml$
