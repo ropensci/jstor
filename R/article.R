@@ -27,7 +27,7 @@
 #' - pub_day *(chr)*: Publication day, if specified.
 #' - pub_month *(chr)*: Publication month, if specified.
 #' - pub_year *(int)*: Year of publication.
-#' - first_pag *(int)*: Page number for the first page of the article.
+#' - first_page *(int)*: Page number for the first page of the article.
 #' - last_page *(int)*: Page number for the last page of the article.
 #'
 #' A note about publication dates: always the first entry is being extracted,

@@ -11,5 +11,5 @@ get_basename(file_path)
 }
 \description{
 This helper simply extracts the basename of a path and removes the extension,
-e.g. \code{foo/bar.txt} is shortend to \code{bar}.
+e.g. \code{foo/bar.txt} is shortened to \code{bar}.
 }

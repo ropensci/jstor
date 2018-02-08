@@ -1,7 +1,7 @@
 #' Extract the basename of a path
 #' 
 #' This helper simply extracts the basename of a path and removes the extension,
-#' e.g. `foo/bar.txt` is shortend to `bar`.
+#' e.g. `foo/bar.txt` is shortened to `bar`.
 #' 
 #' @param file_path A path to a file
 #' @export

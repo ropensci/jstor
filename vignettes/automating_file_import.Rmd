@@ -32,7 +32,7 @@ import all those files, but this is how I did it four our research.
 Data from DfR comes in `*.zip`-files. For simple purposes it might be sensible
 to unzip to a temporary directory (with `temp()` and `unzip()`) but for my 
 research I simply extracted files to an external SSD, since I a) lacked disk space,
-b) need to read them fast, and c) wanted to be able to look at specific files for
+b) needed to read them fast, and c) wanted to be able to look at specific files for
 debugging.
 
 # List files
@@ -73,7 +73,7 @@ file_names_system
 
 In this case the two approaches give the same result.
 The main difference seems to be though, that `list.files` sorts the output, 
-wherase `find` does not. For a large amout of files (200,000) this makes
+whereas `find` does not. For a large amour of files (200,000) this makes
 `list.files` slower, for smaller datasets the difference shouldn't make an
 impact.
 
@@ -114,17 +114,17 @@ The whole approach about importing many files is implemented like this:
     + write the result into a single .csv-file
     + write any errors in a separate .csv-file
     
-The easiest way to acheive this pipeline is by using `jstor_import_wrapper`. It
+The easiest way to achieve this pipeline is by using `jstor_import_wrapper`. It
 takes up to six arguments:
 
-- *in_paths*: this should be a character fector of all `xml-`files you want to
+- *in_paths*: this should be a character vector of all `xml-`files you want to
 import
-- *out_file*: the filename for the resulting `.csv-`files. 
-- *out_path*: in case you want to export the files to a specific diretory, 
+- *out_file*: the file name for the resulting `.csv-`files. 
+- *out_path*: in case you want to export the files to a specific directory, 
 specify it here.
 - *.f*: the function to use (one of `find_article`, `find_authors`, `find_references`,
 or `find_footnotes`)
-- *files_per_batch*: how many files shoud be converted per batch? For my system,
+- *files_per_batch*: how many files should be converted per batch? For my system,
 20,000 files per batch worked well.
 - *cores* number of cores to use for parallel processing (`1` on windows).
 
@@ -135,7 +135,7 @@ jstor_import_wrapper(in_paths = vector_of_all_my_files, out_file = "metadata",
                      files_per_batch = 20000, cores = 4)
 ```
 
-Suppose you had 100,000 files to convert, and no errors happend, then you should
+Suppose you had 100,000 files to convert, and no errors happened, then you should
 have in your `"path/to/out/dir"` the following five files:
 ```{r, echo=FALSE}
 paste0("metadata-", 1:5, ".csv")

@@ -33,7 +33,7 @@ etc.).
 \item pub_day \emph{(chr)}: Publication day, if specified.
 \item pub_month \emph{(chr)}: Publication month, if specified.
 \item pub_year \emph{(int)}: Year of publication.
-\item first_pag \emph{(int)}: Page number for the first page of the article.
+\item first_page \emph{(int)}: Page number for the first page of the article.
 \item last_page \emph{(int)}: Page number for the last page of the article.
 }
 

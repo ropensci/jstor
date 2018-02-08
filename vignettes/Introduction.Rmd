@@ -76,7 +76,7 @@ correspond to most of the elements documented here: http://www.jstor.org/dfr/abo
 
 The columns are:
 
-- basename_id *(chr)*: The filename of the original .xml-file. Can be used 
+- basename_id *(chr)*: The file name of the original .xml-file. Can be used 
  for joining with other parts (authors, references, footnotes, full-texts).
 - journal_doi *(chr)*: A registered identifier for the journal.
 - journal_jcode *(chr)*: A identifier for the journal like "amerjsoci" for
@@ -96,7 +96,7 @@ The columns are:
 - pub_day *(chr)*: Publication day, if specified.
 - pub_month *(chr)*: Publication month, if specified.
 - pub_year *(int)*: Year of publication.
-- first_pag *(int)*: Page number for the first page of the article.
+- first_page *(int)*: Page number for the first page of the article.
 - last_page *(int)*: Page number for the last page of the article.
 
 Since the output from all functions are tibbles, the result is nicely formatted:
@@ -122,7 +122,7 @@ Here we have the following columns:
 - *string_name*: Sometimes instead of given_name and surname, only a full string is
 supplied, i.e.: `Albert Einstein`, or `Einstein, Albert`.
 - *suffix*: A suffix to the name, as in `Albert Einstein, II.`.
-- *author_number*: An integer representing the order of how the authors appeard in the data.
+- *author_number*: An integer representing the order of how the authors appeared in the data.
 
 The number of rows matches the number of authors -- each author get its' own row.
 
@@ -173,8 +173,8 @@ footnotes
 
 ## `find_fulltext`
 The function to extract full texts can't be demonstrated with proper data, since
-the full texts are only supplied upen special request with DfR. The function
-guesses the encoding of the specified file via `readr::guess_encoding()`, reades
+the full texts are only supplied upon special request with DfR. The function
+guesses the encoding of the specified file via `readr::guess_encoding()`, reads
 the whole file and returns a `tibble` with `basename_id`, `full_text` and
 `encoding`.
 
