@@ -48,9 +48,9 @@ The basic usage is simple: supply one of the `find_*`-functions with a path and 
 find_article(jstor_example("sample_with_references.xml")) %>% knitr::kable()
 ```
 
-| basename\_id             | journal\_doi | journal\_pub\_id | jcode            | article\_doi    | article\_pub\_id | article\_jcode | article\_type    | article\_title                     | volume | issue | language |  pub\_day|  pub\_month|  pub\_year|  first\_page|  last\_page|
-|:-------------------------|:-------------|:-----------------|:-----------------|:----------------|:-----------------|:---------------|:-----------------|:-----------------------------------|:-------|:------|:---------|---------:|-----------:|----------:|------------:|-----------:|
-| sample\_with\_references | NA           | NA               | tranamermicrsoci | 10.2307/3221896 | NA               | NA             | research-article | On the Protozoa Parasitic in Frogs | 41     | 2     | eng      |         1|           4|       1922|           59|          76|
+| basename\_id             | journal\_doi | journal\_jcode   | journal\_pub\_id | article\_doi    | article\_pub\_id | article\_jcode | article\_type    | article\_title                     | volume | issue | language | pub\_day | pub\_month |  pub\_year|  first\_page|  last\_page|
+|:-------------------------|:-------------|:-----------------|:-----------------|:----------------|:-----------------|:---------------|:-----------------|:-----------------------------------|:-------|:------|:---------|:---------|:-----------|----------:|------------:|-----------:|
+| sample\_with\_references | NA           | tranamermicrsoci | NA               | 10.2307/3221896 | NA               | NA             | research-article | On the Protozoa Parasitic in Frogs | 41     | 2     | eng      | 1        | 4          |       1922|           59|          76|
 
 ``` r
 
