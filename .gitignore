@@ -6,3 +6,6 @@
 .DS_Store
 inst/doc
 dev_scripts
+
+*.csv
+*.rds
