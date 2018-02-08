@@ -47,3 +47,8 @@ reference:
 - title: Top level documentation
   contents:
   - '`jstor`'
+
+authors:
+  Thomas Klebel:
+    href: https://thomasklebel.eu
+    
