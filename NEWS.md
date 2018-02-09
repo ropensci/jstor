@@ -1,5 +1,7 @@
-# jstor 0.2.5.9000
+# jstor 0.2.6
 
+* added lengthy case study at https://tklebel.github.io/jstor/articles/analysing-n-grams.html
+* added a pkgdown site at https://tklebel.github.io/jstor/
 * changed implementation of parallel execution in `jstor_import` from 
 `parallel::mclapply` to `foreach::foreach` with `snow` as a backend for
 `%dopar%`. 
