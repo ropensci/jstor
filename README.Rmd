@@ -81,6 +81,75 @@ you can download
 [sample datasets](http://www.jstor.org/dfr/about/sample-datasets) with documents
 from before 1923 for the US, and before 1870 for all other countries. 
 
+## Supported Elements
+In their [technical specifications](http://www.jstor.org/dfr/about/technical-specifications), 
+DfR lists fields which should be reliably present in all articles and books.
+
+The following table gives an overview, which elements are supported by `jstor`.
+
+### Articles
+|`xml`-field                       |reliably present |supported in `jstor`|
+|:---------------------------------|:----------------|:-------------------|
+|journal-id (type="jstor")         |x                |x                   |
+|journal-id (type="publisher-id")  |x                |x                   |
+|journal-id (type="doi")           |                 |x                   |
+|issn                              |x                |                    |
+|journal-title                     |x                |                    |
+|publisher-name                    |x                |                    |
+|article-id (type="doi")           |x                |x                   |
+|article-id (type="jstor")         |x                |x                   |
+|article-id (type="publisher-id")  |                 |x                   |
+|article-type                      |                 |x                   |
+|volume                            |                 |x                   |
+|issue                             |                 |x                   |
+|article-categories                |x                |                    |
+|article-title                     |x                |x                   |
+|contrib-group                     |x                |x                   |
+|pub-date                          |x                |x                   |
+|fpage                             |x                |x                   |
+|lpage                             |                 |x                   |
+|product                           |x                |                    |
+|self-uri                          |x                |                    |
+|kwd-group                         |x                |                    |
+|custom-meta-group                 |x                |x                   |
+|fn-group (footnotes)              |                 |x                   |
+|ref-list (references)             |                 |x                   |
+
+
+
+### Books
+|`xml`-field                       |reliably present |supported in `jstor`|
+|:---------------------------------|:----------------|:-------------------|
+|book-id (type="jstor")            |x                |x                   |
+|discipline                        |x                |x                   |
+|call-number                       |x                |                    |
+|lcsh                              |x                |                    |
+|book-title                        |x                |x                   |
+|book-subtitle                     |                 |x                   |
+|contrib-group                     |x                |x                   |
+|pub-date                          |x                |x                   |
+|isbn                              |x                |x                   |
+|publisher-name                    |x                |x                   |
+|publisher-loc                     |x                |x                   |
+|permissions                       |x                |                    |
+|self-uri                          |x                |                    |
+|counts                            |x                |x                   |
+|custom-meta-group                 |x                |x                   |
+
+
+### Book Chapters
+|`xml`-field                       |reliably present |supported in `jstor`|
+|:---------------------------------|:----------------|:-------------------|
+|book-id (type="jstor")            |x                |x                   |
+|part_id                           |x                |x                   |
+|part_label                        |x                |x                   |
+|part-title                        |x                |x                   |
+|part-subtitle                     |                 |x                   |
+|contrib-group                     |x                |x                   |
+|fpage                             |x                |x                   |
+|abstract                          |x                |x                   |
+
+
 ## Code of conduct
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md).
 By participating in this project you agree to abide by its terms.
