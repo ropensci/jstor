@@ -64,7 +64,7 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
             na = "", col_names = col_names)
 
   # in case we have errors, write them to file too
-  if (sum(!is_ok) > 0) {
+  if (any(!is_ok)) {
 
     # find error-id
     error_ids <- data_frame(id = seq_along(is_ok),
