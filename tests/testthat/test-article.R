@@ -28,18 +28,12 @@ result_new_nov_17 <- "testfiles/article_complex_meta.xml" %>%
 article_jcode_stable <- "testfiles/article-jcode-stable.xml" %>%
   find_article()
 
-invalid_file <- "testfiles/invalid_file.xml"
-
 # tests -----
 test_that("Input data is checked", {
   expect_error(find_article("my_path.txt"))
   expect_error(find_article("testfiles/standard_book.xml"), "You are using")
 })
 
-test_that("invalid xml files raise no warning", {
-  # this should be changed to expect_silent after # 33 is resolved
-  expect_warning(find_article(invalid_file))
-})
 
 test_that("class is correct", {
   expect_s3_class(result, "tbl_df")

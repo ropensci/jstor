@@ -23,7 +23,7 @@
 find_authors <- function(file_path) {
   validate_file_path(file_path, "xml")
 
-  xml_file <- xml2::read_xml(file_path)
+  xml_file <- read_jstor(file_path)
 
   if (identical(xml2::xml_name(xml_file), "article")) {
     front <- xml_find_all(xml_file, "front")

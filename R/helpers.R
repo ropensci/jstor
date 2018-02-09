@@ -73,3 +73,9 @@ expand_and_bind <- function(file_path, individual_part) {
   ) %>%
     dplyr::bind_cols(individual_part)
 }
+
+#' simple helper to suppress warnings from invalid URIs. see issue #33
+#' @noRd
+read_jstor <- function(file_path) {
+  suppressWarnings(xml2::read_xml(file_path))
+}

@@ -26,7 +26,7 @@
 find_references <- function(file_path) {
   validate_file_path(file_path, "xml")
 
-  xml_file <- xml2::read_xml(file_path)
+  xml_file <- read_jstor(file_path)
 
   validate_article(xml_file)
 

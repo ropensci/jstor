@@ -33,7 +33,7 @@
 find_book <- function(file_path) {
   validate_file_path(file_path, "xml")
 
-  xml_file <- xml2::read_xml(file_path)
+  xml_file <- read_jstor(file_path)
 
   validate_book(xml_file)
 
@@ -111,7 +111,7 @@ extract_book_pages <- function(book) {
 find_chapters <- function(file_path, authors = FALSE) {
   validate_file_path(file_path, "xml")
 
-  xml_file <- xml2::read_xml(file_path)
+  xml_file <- read_jstor(file_path)
 
   validate_book(xml_file)
 
