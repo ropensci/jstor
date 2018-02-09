@@ -106,16 +106,21 @@
     </div>
 
     <div class="contents">
-    <div id="jstor-0-2-5-9000" class="section level1">
+    <div id="jstor-0-2-6" class="section level1">
 <h1 class="hasAnchor">
-<a href="#jstor-0-2-5-9000" class="anchor"></a>jstor 0.2.5.9000</h1>
+<a href="#jstor-0-2-6" class="anchor"></a>jstor 0.2.6</h1>
 <ul>
+<li>added lengthy case study at <a href="https://tklebel.github.io/jstor/articles/analysing-n-grams.html" class="uri">https://tklebel.github.io/jstor/articles/analysing-n-grams.html</a>
+</li>
+<li>added a pkgdown site at <a href="https://tklebel.github.io/jstor/" class="uri">https://tklebel.github.io/jstor/</a>
+</li>
 <li>changed implementation of parallel execution in <code>jstor_import</code> from <code><a href="http://www.rdocumentation.org/packages/parallel/topics/mclapply">parallel::mclapply</a></code> to <code><a href="http://www.rdocumentation.org/packages/foreach/topics/foreach">foreach::foreach</a></code> with <code>snow</code> as a backend for <code>%dopar%</code>.</li>
 <li>added support for progress bars #34</li>
 <li>
 <code>jstor_import</code> now writes column names by default #29</li>
 <li>new helper <code>get_basename</code> helps to get the basename of a file without its extension</li>
-<li>find_article does not coerce days and months to integer any more, since there might be information stored as text.</li>
+<li>
+<code>find_article</code> does not coerce days and months to integer any more, since there might be information stored as text.</li>
 <li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
 </ul>
 </div>
@@ -126,7 +131,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#jstor-0-2-5-9000">0.2.5.9000</a></li>
+        <li><a href="#jstor-0-2-6">0.2.6</a></li>
       </ul>
     </div>
   </div>

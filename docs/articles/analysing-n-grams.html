@@ -81,7 +81,7 @@
       <h1>Analysing n-grams with jstor for R</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-02-08</h4>
+            <h4 class="date">2018-02-09</h4>
           </div>
 
     
@@ -321,9 +321,9 @@ bigram_counts</code></pre></div>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/graph_from_data_frame">graph_from_data_frame</a></span>()
 
 bigram_graph</code></pre></div>
-<pre><code>## IGRAPH 57fbb72 DN-- 170 161 -- 
+<pre><code>## IGRAPH fb59c93 DN-- 170 161 -- 
 ## + attr: name (v/c), n (e/n)
-## + edges from 57fbb72 (vertex names):
+## + edges from fb59c93 (vertex names):
 ##  [1] labor                 -&gt;market   9                     -&gt;7       
 ##  [3] 7                     -&gt;6        10                    -&gt;9       
 ##  [5] amsmath               -&gt;amsxtra  begin                 -&gt;document
@@ -349,7 +349,7 @@ bigram_graph</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot_bigrams</span>(bigram_graph)</code></pre></div>
 <p><img src="analysing-n-grams_files/figure-html/unnamed-chunk-28-1.png" width="1152"> Very obvious is a group of nodes which are not relevant to the topic of inequality. They come from LaTeX documents and somehow made their way into the original dataset. However, since they are more common than most of the other terms, they are quite easy to remove. We can look at the nodes/vertices of our graph with <code><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V(bigram_graph)</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(bigram_graph)</code></pre></div>
-<pre><code>## + 170/170 vertices, named, from 57fbb72:
+<pre><code>## + 170/170 vertices, named, from fb59c93:
 ##   [1] labor                  9                      7                     
 ##   [4] 10                     amsmath                begin                 
 ##   [7] declaremathsizes       declaretextfontcommand documentclass         
@@ -364,9 +364,9 @@ bigram_graph</code></pre></div>
 <p>The first node, “labor”, is relevant to us, but all other nodes from 2 to at least 40 are clearly irrelevant. We can remove them by simple subtraction:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bigram_graph_clean &lt;-<span class="st"> </span>bigram_graph <span class="op">-</span><span class="st"> </span><span class="dv">2</span><span class="op">:</span><span class="dv">40</span>
 bigram_graph_clean</code></pre></div>
-<pre><code>## IGRAPH 6f395b5 DN-- 131 105 -- 
+<pre><code>## IGRAPH dd252d8 DN-- 131 105 -- 
 ## + attr: name (v/c), n (e/n)
-## + edges from 6f395b5 (vertex names):
+## + edges from dd252d8 (vertex names):
 ##  [1] labor     -&gt;market     labor     -&gt;force      0         -&gt;0         
 ##  [4] table     -&gt;2          1         -&gt;1          income    -&gt;inequality
 ##  [7] black     -&gt;white      table     -&gt;1          table     -&gt;3         
