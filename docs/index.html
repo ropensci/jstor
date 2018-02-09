@@ -187,6 +187,292 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <a href="#getting-started" class="anchor"></a>Getting started</h2>
 <p>In order to use <code>jstor</code>, you need some data from DfR. From the <a href="http://www.jstor.org/dfr/">main page</a> you can create a dataset by searching for terms and restricting the search regarding time, subject and content type. After you created an account, you can download your selection. Alternatively, you can download <a href="http://www.jstor.org/dfr/about/sample-datasets">sample datasets</a> with documents from before 1923 for the US, and before 1870 for all other countries.</p>
 </div>
+<div id="supported-elements" class="section level2">
+<h2 class="hasAnchor">
+<a href="#supported-elements" class="anchor"></a>Supported Elements</h2>
+<p>In their <a href="http://www.jstor.org/dfr/about/technical-specifications">technical specifications</a>, DfR lists fields which should be reliably present in all articles and books.</p>
+<p>The following table gives an overview, which elements are supported by <code>jstor</code>.</p>
+<div id="articles" class="section level3">
+<h3 class="hasAnchor">
+<a href="#articles" class="anchor"></a>Articles</h3>
+<table class="table">
+<thead><tr class="header">
+<th align="left">
+<code>xml</code>-field</th>
+<th align="left">reliably present</th>
+<th align="left">supported in <code>jstor</code>
+</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">journal-id (type=“jstor”)</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="even">
+<td align="left">journal-id (type=“publisher-id”)</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="odd">
+<td align="left">journal-id (type=“doi”)</td>
+<td align="left"></td>
+<td align="left">x</td>
+</tr>
+<tr class="even">
+<td align="left">issn</td>
+<td align="left">x</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">journal-title</td>
+<td align="left">x</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">publisher-name</td>
+<td align="left">x</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">article-id (type=“doi”)</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="even">
+<td align="left">article-id (type=“jstor”)</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="odd">
+<td align="left">article-id (type=“publisher-id”)</td>
+<td align="left"></td>
+<td align="left">x</td>
+</tr>
+<tr class="even">
+<td align="left">article-type</td>
+<td align="left"></td>
+<td align="left">x</td>
+</tr>
+<tr class="odd">
+<td align="left">volume</td>
+<td align="left"></td>
+<td align="left">x</td>
+</tr>
+<tr class="even">
+<td align="left">issue</td>
+<td align="left"></td>
+<td align="left">x</td>
+</tr>
+<tr class="odd">
+<td align="left">article-categories</td>
+<td align="left">x</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">article-title</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="odd">
+<td align="left">contrib-group</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="even">
+<td align="left">pub-date</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="odd">
+<td align="left">fpage</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="even">
+<td align="left">lpage</td>
+<td align="left"></td>
+<td align="left">x</td>
+</tr>
+<tr class="odd">
+<td align="left">product</td>
+<td align="left">x</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">self-uri</td>
+<td align="left">x</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">kwd-group</td>
+<td align="left">x</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">custom-meta-group</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="odd">
+<td align="left">fn-group (footnotes)</td>
+<td align="left"></td>
+<td align="left">x</td>
+</tr>
+<tr class="even">
+<td align="left">ref-list (references)</td>
+<td align="left"></td>
+<td align="left">x</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="books" class="section level3">
+<h3 class="hasAnchor">
+<a href="#books" class="anchor"></a>Books</h3>
+<table class="table">
+<thead><tr class="header">
+<th align="left">
+<code>xml</code>-field</th>
+<th align="left">reliably present</th>
+<th align="left">supported in <code>jstor</code>
+</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">book-id (type=“jstor”)</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="even">
+<td align="left">discipline</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="odd">
+<td align="left">call-number</td>
+<td align="left">x</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">lcsh</td>
+<td align="left">x</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">book-title</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="even">
+<td align="left">book-subtitle</td>
+<td align="left"></td>
+<td align="left">x</td>
+</tr>
+<tr class="odd">
+<td align="left">contrib-group</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="even">
+<td align="left">pub-date</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="odd">
+<td align="left">isbn</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="even">
+<td align="left">publisher-name</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="odd">
+<td align="left">publisher-loc</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="even">
+<td align="left">permissions</td>
+<td align="left">x</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">self-uri</td>
+<td align="left">x</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">counts</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="odd">
+<td align="left">custom-meta-group</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="book-chapters" class="section level3">
+<h3 class="hasAnchor">
+<a href="#book-chapters" class="anchor"></a>Book Chapters</h3>
+<table class="table">
+<thead><tr class="header">
+<th align="left">
+<code>xml</code>-field</th>
+<th align="left">reliably present</th>
+<th align="left">supported in <code>jstor</code>
+</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">book-id (type=“jstor”)</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="even">
+<td align="left">part_id</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="odd">
+<td align="left">part_label</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="even">
+<td align="left">part-title</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="odd">
+<td align="left">part-subtitle</td>
+<td align="left"></td>
+<td align="left">x</td>
+</tr>
+<tr class="even">
+<td align="left">contrib-group</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="odd">
+<td align="left">fpage</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+<tr class="even">
+<td align="left">abstract</td>
+<td align="left">x</td>
+<td align="left">x</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div id="code-of-conduct" class="section level2">
 <h2 class="hasAnchor">
 <a href="#code-of-conduct" class="anchor"></a>Code of conduct</h2>
