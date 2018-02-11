@@ -27,7 +27,7 @@ for
 of articles, we only select articles from 1997 to 2017. After
 logging in/creating an account, we select unigrams and bigrams. After unzipping
 the archives to a convenient location, we start our analysis.
-
+(#1)
 
 Up-front, we need to load some packages. `jstor` is currently not available from
 CRAN, but can be installed via `devtools`.
@@ -74,7 +74,7 @@ from the newly created file.^[When reading this data without `guess_max = 2000`,
 a warning is raised because the column type was not recognized properly for one
 column. Increasing `guess_max` 
 helped in this instance.]
-
+(#2)
 
 ```{r, message=FALSE}
 imported_metadata <- read_csv("imported_metadata-1.csv", guess_max = 2000)
@@ -115,7 +115,7 @@ imported_metadata %>%
 ```
 
 For the current demonstration, we want to restrict the type of articles to
-research articles, therefore we need to steps to remove book reviews and other
+research articles, therefore we need to take steps to remove book reviews and other
 miscellaneous articles: First, filter by `article_type`, then remove articles
 where the title starts with "Book Review".
 
@@ -125,11 +125,12 @@ research_articles <- imported_metadata %>%
   filter(!str_detect(article_title, "^Book Review"))
 ```
 
-
+## Filtering articles
+E.g.: It can happen that for one specific filter, one has to search in more than one column (captain obvious?)
 
 ## The moving wall - filtering articles by time
 Since JSTOR has a [moving wall](https://support.jstor.org/hc/en-us/articles/115004879547-JSTOR-s-Moving-Wall-Archive-vs-Current-Definitions),
-we could take a look at the number of articles per year in our dataset.
+we should take a look at the number of articles per year in our dataset. (#3)
 ```{r}
 research_articles %>% 
   ggplot(aes(pub_year)) +
@@ -153,11 +154,17 @@ without_wall <- research_articles %>%
 Since the amount of articles is still rather large for this demonstration, we
 could select only a few journals. Here, we will look at articles from two
 leading journals within the discipline, "Journal
-of Sociology" and "American Sociological Review". To identify articles from
+of Sociology" and "American Sociological Review". 
+
+# Filtering articles
+E.g.: It can happen that for one specific filter, one has to search in more than one column (captain obvious?)
+
+To identify articles from
 those journals, we need to take a look at the columns "journal_doi",
 "journal_jcode", and "journal_pub_id". For sociological journals in general, 
 the most common identifier is "journal_jcode". To demonstrate, we look at the
 missing proportion for each of the three variables:
+(#4)
 
 ```{r}
 without_wall %>% 
@@ -207,7 +214,7 @@ flagship_journals <- without_wall %>%
 
 
 # Importing bigrams
-
+(#5)
 > Disclaimer: Much of the following analysis was inspired by the book
 "Text Mining with R" by Julia Silge and David Robinson:
 https://www.tidytextmining.com
@@ -336,6 +343,7 @@ When analyzing bigrams, we might want to look at the relationships between
 common terms. For this we can leverage the power of
 [igraph](http://igraph.org/r/) and
 [ggraph](https://cran.r-project.org/web/packages/ggraph/index.html).
+(#6)
 
 ```{r, message=FALSE}
 library(igraph)
@@ -425,7 +433,7 @@ capitalist societies need to supply their work in exchange for income. For this
 reason, the labor market and its stratification is a prime subject of the 
 sociological inquiry into inequality.
 
-A few further key dimension of sociological analysis are apparent from the
+A few further key dimensions of sociological analysis are apparent from the
 graph: gender, race/ethnicity, occupational and socioeconomic status. That we
 find many terms to be associated with the term "social" seems quite likely
 given the discipline's subject.
@@ -486,3 +494,4 @@ ggplot(time_comparison, aes(pub_year, n, colour = bigrams)) +
   geom_line() +
   scale_x_continuous(breaks = scales::pretty_breaks(7))
 ```
+(#7)
