@@ -1,5 +1,5 @@
 ---
-title: Analysing n-grams with jstor for R
+title: Analysing n-grams with `jstor` for R
 author: "Thomas Klebel"
 date: "`r Sys.Date()`"
 output:
@@ -19,15 +19,21 @@ In this vignette I will demonstrate how to analyse n-grams which DfR delivers.
 Let's suppose, we are interested in the topic of "inequality" within the 
 discipline of sociology. Social inequality can be considered a prime subject of
 sociological inquiry. In order to gain some context on the subject, we might be
-interested to analyse frequently occurring terms.
+interested to analyse frequently occurring terms. DfR offers different grades of
+tokenization: n-grams for 1-3 words, e.g. unigrams, bigrams and trigrams. In
+case you are unfamiliar with the analysis of tokenized text, you could read
+the first few paragraphs of chapters 1 and 4 in https://www.tidytextmining.com
+as an introduction.
 
-Our analysis starts at the main page of DfR. We create a dataset by searching
-for
+Our analysis starts at the main page of [DfR](http://www.jstor.org/dfr/).
+We create a dataset^[An introduction on how to create datasets can be found
+on the page of DfR: http://www.jstor.org/dfr/about/creating-datasets]
+by searching for
 "inequality" and selecting "sociology" as our subject. To trim down the number
 of articles, we only select articles from 1997 to 2017. After
 logging in/creating an account, we select unigrams and bigrams. After unzipping
 the archives to a convenient location, we start our analysis.
-(#1)
+
 
 Up-front, we need to load some packages. `jstor` is currently not available from
 CRAN, but can be installed via `devtools`.
@@ -71,10 +77,9 @@ jstor_import(meta_files, out_file = "imported_metadata", .f = find_article,
 
 Since `jstor_import` writes the results to disk, we need to read the metadata
 from the newly created file.^[When reading this data without `guess_max = 2000`,
-a warning is raised because the column type was not recognized properly for one
-column. Increasing `guess_max` 
-helped in this instance.]
-(#2)
+a warning is raised because the column type is not being recognized properly for
+one column. Setting `guess_max` to `2000` helps to read the data correctly in
+this case.]
 
 ```{r, message=FALSE}
 imported_metadata <- read_csv("imported_metadata-1.csv", guess_max = 2000)
@@ -84,10 +89,8 @@ imported_metadata
 
 
 # Exploration
-Before diving into the analysis of ngrams, we might wish to take an explorative
-look at our metadata.
-
-The first thing to look at are the types of articles.
+Before diving into the analysis of n-grams, we might wish to take an explorative
+look at our metadata. The first thing to look at are the types of articles.
 ```{r}
 ggplot(imported_metadata, aes(article_type)) +
   geom_bar() +
@@ -125,12 +128,10 @@ research_articles <- imported_metadata %>%
   filter(!str_detect(article_title, "^Book Review"))
 ```
 
-## Filtering articles
-E.g.: It can happen that for one specific filter, one has to search in more than one column (captain obvious?)
 
 ## The moving wall - filtering articles by time
 Since JSTOR has a [moving wall](https://support.jstor.org/hc/en-us/articles/115004879547-JSTOR-s-Moving-Wall-Archive-vs-Current-Definitions),
-we should take a look at the number of articles per year in our dataset. (#3)
+we should take a look at the number of articles per year in our dataset.
 ```{r}
 research_articles %>% 
   ggplot(aes(pub_year)) +
@@ -140,7 +141,7 @@ research_articles %>%
 From this graph we can see an increase in research articles until 2010, after
 which the number of articles
 first tapers off, and then drops off sharply. For this reason we should
-exclude articles
+exclude articles at least
 from 2015 onward, since the sample might get quite biased toward specific
 journals.
 
@@ -156,15 +157,12 @@ could select only a few journals. Here, we will look at articles from two
 leading journals within the discipline, "Journal
 of Sociology" and "American Sociological Review". 
 
-# Filtering articles
-E.g.: It can happen that for one specific filter, one has to search in more than one column (captain obvious?)
-
 To identify articles from
 those journals, we need to take a look at the columns "journal_doi",
 "journal_jcode", and "journal_pub_id". For sociological journals in general, 
-the most common identifier is "journal_jcode". To demonstrate, we look at the
+the most common identifier is "journal_jcode". To demonstrate this, we
+can look at the
 missing proportion for each of the three variables:
-(#4)
 
 ```{r}
 without_wall %>% 
@@ -214,15 +212,42 @@ flagship_journals <- without_wall %>%
 
 
 # Importing bigrams
-(#5)
 > Disclaimer: Much of the following analysis was inspired by the book
 "Text Mining with R" by Julia Silge and David Robinson:
 https://www.tidytextmining.com
 
 For this demonstration we will look at bigrams to find the most common pairs of
 words. Until now, we were only dealing with the metadata, therefore we need a
-way to link our reduced dataset to the bigram files from DfR. The file name can
-serve as an identifier to the articles, since it is similar between metadata and
+way to link our reduced dataset to the bigram files from DfR. The directory
+structure for deliveries from DfR looks something like this:
+
+```r
+receipt-id-123456-part-001
+  -- metadata
+    -- journal_article_foo.xml
+       .
+       .
+       .
+  -- ngram2
+    -- journal_article_foo.txt
+       .
+       .
+       .
+receipt-id-123456-part-002
+  -- metadata
+    -- journal_article_bar.xml
+       .
+       .
+       .
+  -- ngram2
+    -- journal_article_bar.txt
+       .
+       .
+       .
+```
+
+From this structure we can see, that the file name can serve as an identifier to
+match articles and n-grams, since it is similar between metadata and
 n-grams. 
 
 First, we list all relevant files on disk.
@@ -494,4 +519,10 @@ ggplot(time_comparison, aes(pub_year, n, colour = bigrams)) +
   geom_line() +
   scale_x_continuous(breaks = scales::pretty_breaks(7))
 ```
-(#7)
+
+In this instance, the plot does not reveal trends over time-the frequency of 
+the terms is fluctuating a lot but staying on a similar level. Single spikes
+of term frequency for specific years (for example income inequality in 2011)
+could stem from special issues being explicitly concerned with income
+inequality, although a quick glance at the corresponding issues invalidates this
+hypothesis.
