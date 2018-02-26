@@ -81,7 +81,7 @@
       <h1>Automating File Import</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-02-19</h4>
+            <h4 class="date">2018-02-26</h4>
           </div>
 
     
@@ -103,32 +103,32 @@
 <a href="#list-files" class="anchor"></a>List files</h1>
 <p>There are many ways to generate a list of all files: <code>list.files()</code> or using <code>system()</code> in conjunction with <code>find</code> on unix-like systems are common options.</p>
 <p>For demonstration purposes I use files contained in <code>jstor</code> which can be accessed via <code>system.file</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">example_dir &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="dt">package =</span> <span class="st">"jstor"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">example_dir &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="dt">package =</span> <span class="st">"jstor"</span>)</a></code></pre></div>
 <div id="list-files" class="section level2">
 <h2 class="hasAnchor">
 <a href="#list-files" class="anchor"></a><code>list.files</code>
 </h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">file_names_listed &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">path =</span> example_dir, <span class="dt">full.names =</span> T, <span class="dt">pattern =</span> <span class="st">"*.xml"</span>)
-file_names_listed
-<span class="co">#&gt; [1] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_book.xml"           </span>
-<span class="co">#&gt; [2] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_footnotes.xml" </span>
-<span class="co">#&gt; [3] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_references.xml"</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">file_names_listed &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">path =</span> example_dir, <span class="dt">full.names =</span> T, <span class="dt">pattern =</span> <span class="st">"*.xml"</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">file_names_listed</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; [1] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_book.xml"           </span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; [2] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_footnotes.xml" </span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; [3] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_references.xml"</span></a></code></pre></div>
 </div>
 <div id="system-and-find" class="section level2">
 <h2 class="hasAnchor">
 <a href="#system-and-find" class="anchor"></a><code>system</code> and <code>find</code>
 </h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">file_names &lt;-<span class="st"> </span><span class="kw">system</span>(<span class="kw">paste0</span>(<span class="st">"cd "</span>, example_dir, <span class="st">"; find . -name '*.xml' -type f"</span>), <span class="dt">intern =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(stringr)
-
-file_names_system &lt;-<span class="st"> </span>file_names <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_replace">str_replace</a></span>(<span class="st">"^</span><span class="ch">\\</span><span class="st">.</span><span class="ch">\\</span><span class="st">/"</span>, <span class="st">""</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_c">str_c</a></span>(example_dir, <span class="st">"/"</span>, .)
-
-file_names_system
-<span class="co">#&gt; [1] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_footnotes.xml" </span>
-<span class="co">#&gt; [2] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_book.xml"</span>
-<span class="co">#&gt; [3] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_references.xml"</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">file_names &lt;-<span class="st"> </span><span class="kw">system</span>(<span class="kw">paste0</span>(<span class="st">"cd "</span>, example_dir, <span class="st">"; find . -name '*.xml' -type f"</span>), <span class="dt">intern =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(stringr)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">file_names_system &lt;-<span class="st"> </span>file_names <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_replace">str_replace</a></span>(<span class="st">"^</span><span class="ch">\\</span><span class="st">.</span><span class="ch">\\</span><span class="st">/"</span>, <span class="st">""</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_c">str_c</a></span>(example_dir, <span class="st">"/"</span>, .)</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">file_names_system</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; [1] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_footnotes.xml" </span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; [2] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_book.xml"</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; [3] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_references.xml"</span></a></code></pre></div>
 <p>In this case the two approaches give the same result. The main difference seems to be though, that <code>list.files</code> sorts the output, whereas <code>find</code> does not. For a large amour of files (200,000) this makes <code>list.files</code> slower, for smaller datasets the difference shouldn’t make an impact.</p>
 </div>
 </div>
@@ -136,15 +136,15 @@ file_names_system
 <h1 class="hasAnchor">
 <a href="#batch-import" class="anchor"></a>Batch import</h1>
 <p>Once the file list is generated, we can apply any of the <code>find_*</code>-functions to the list. A good and simple way for small to moderate amounts of files is to use <code>map_df</code> from purrr:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(jstor)
-<span class="kw">library</span>(purrr)
-<span class="kw">library</span>(stringr)
-
-result &lt;-<span class="st"> </span>file_names_listed <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/keep">keep</a></span>(str_detect, <span class="st">"with"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># only operate on articles, remove book sample</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map_df</a></span>(find_article)
-
-result <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(jstor)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">library</span>(purrr)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw">library</span>(stringr)</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">result &lt;-<span class="st"> </span>file_names_listed <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/keep">keep</a></span>(str_detect, <span class="st">"with"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># only operate on articles, remove book sample</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map_df</a></span>(find_article)</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">result <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">basename_id</th>
@@ -238,9 +238,9 @@ result <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="
 <em>show_progress</em>: if <code>TRUE</code> and run from an interactive session, a progress bar will be displayed for each batch.</li>
 </ul>
 <p>You can specify all parameters like this:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/jstor_import.html">jstor_import</a></span>(<span class="dt">in_paths =</span> vector_of_all_my_files, <span class="dt">out_file =</span> <span class="st">"metadata"</span>,
-             <span class="dt">out_path =</span> <span class="st">"path/to/out/dir"</span>, <span class="dt">.f =</span> find_article,
-             <span class="dt">files_per_batch =</span> <span class="dv">20000</span>, <span class="dt">cores =</span> <span class="dv">4</span>)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../reference/jstor_import.html">jstor_import</a></span>(<span class="dt">in_paths =</span> vector_of_all_my_files, <span class="dt">out_file =</span> <span class="st">"metadata"</span>,</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">             <span class="dt">out_path =</span> <span class="st">"path/to/out/dir"</span>, <span class="dt">.f =</span> find_article,</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">             <span class="dt">files_per_batch =</span> <span class="dv">20000</span>, <span class="dt">cores =</span> <span class="dv">4</span>)</a></code></pre></div>
 <p>Suppose you had 100,000 files to convert, and no errors happened, then you should have in your <code>"path/to/out/dir"</code> the following five files:</p>
 <pre><code>#&gt; [1] "metadata-1.csv" "metadata-2.csv" "metadata-3.csv" "metadata-4.csv"
 #&gt; [5] "metadata-5.csv"</code></pre>
