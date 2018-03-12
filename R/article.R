@@ -158,7 +158,7 @@ extract_page <- function(article, element) {
 
 find_total_pages <- function(first_page, last_page) {
   dplyr::case_when(
-    !is.na(first_page) & is.na(last_page) ~ 1,
+    !is.na(first_page) & is.na(last_page) ~ NA_real_,
     !is.na(first_page) & !is.na(last_page) ~ last_page - first_page + 1,
     TRUE ~ NA_real_
   )

@@ -31,4 +31,5 @@ test_that("total pages are computed correctly", {
   expect_identical(find_total_pages(first_page = 2L, last_page = 5L), 4)
   expect_identical(find_total_pages(first_page = 2, last_page = 2), 1)
   expect_identical(find_total_pages(first_page = NA, last_page = NA), NA_real_)
+  expect_identical(find_total_pages(1, NA), NA_real_)
 })
