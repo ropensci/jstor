@@ -152,6 +152,9 @@ is something like "Bibliography" or "References", which is simply the heading
 within the article. In the above example there are several headings, because the
 sample file doesn't follow a typical convention (it was published in 1922). 
 
+Note, that there might be other content present like endnotes, in case the
+article used endnotes rather than footnotes.
+
 
 ## `find_footnotes`
 ```{r}
@@ -169,7 +172,8 @@ footnotes <- find_footnotes(jstor_example("sample_with_footnotes.xml"))
 footnotes
 ```
 
-
+In general, you might need to combine `find_footnotes()` with
+`find_references()` to get all available information on citation data.
 
 ## `find_fulltext`
 The function to extract full texts can't be demonstrated with proper data, since
@@ -191,7 +195,7 @@ full_text[["full_text"]]
 ## Combining results
 Different parts of meta-data can be combined by using `dplyr::left_join()`.
 
-###Matching with authors
+### Matching with authors
 
 ```{r, results='asis'}
 meta_data %>% 
@@ -200,7 +204,7 @@ meta_data %>%
   knitr::kable()
 ```
 
-###Matching with references
+### Matching with references
 
 ```{r}
 meta_data %>% 

@@ -21,15 +21,20 @@ A \code{tibble} with three two containing the references:
 This function extracts the content of \code{ref-list} from the \code{xml}-file.
 }
 \details{
-References are currently not fully supported by DfR, and there is no
-comprehensive documentation on the different variants. Currently, \code{jstor}
-tries to extract the references as closely to how they appear in the data.
+This content may contain references or endnotes, depending on how the article
+used citations. Since references are currently not fully supported by DfR,
+there is no comprehensive documentation on the different variants. \code{jstor}
+therefore extracts the content of \code{ref-list} exactly as it appears in the
+data. Because of this, there might be other content present than references.
+
+In order to get all available information on citation data, you might need to
+combine \code{find_references()} with \code{find_footnotes()}.
 
 For newer \code{xml}-files, there would be the option to extract single elements
 like authors, title or date of the source, but this is not yet implemented.
 
-In general, the implementation is not very fast - articles with many
-references slow the process down.
+In general, the implementation is not as fast as \code{find_article()} - articles
+with many references slow the process down.
 }
 \examples{
 find_references(jstor_example("sample_with_references.xml"))

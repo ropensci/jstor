@@ -18,6 +18,16 @@ column \code{footnotes}.
 \description{
 This function extracts the content of \code{fn-group} from journal-articles.
 }
+\details{
+The \code{fn-group} usually contains footnotes corresponding to the article.
+However, since footnotes are currently not fully supported by DfR,
+there is no comprehensive documentation on the different variants. \code{jstor}
+therefore extracts the content of \code{fn-group} exactly as it appears in the
+data. Because of this, there might be other content present than footnotes.
+
+In order to get all available information on citation data, you might need to
+combine \code{find_footnotes()} with \code{find_references()}.
+}
 \examples{
 find_footnotes(jstor_example("sample_with_footnotes.xml"))
 }

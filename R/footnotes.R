@@ -1,6 +1,15 @@
 #' Extract all footnotes
 #'
 #' This function extracts the content of `fn-group` from journal-articles.
+#' 
+#' The `fn-group` usually contains footnotes corresponding to the article.
+#' However, since footnotes are currently not fully supported by DfR, 
+#' there is no comprehensive documentation on the different variants. `jstor`
+#' therefore extracts the content of `fn-group` exactly as it appears in the
+#' data. Because of this, there might be other content present than footnotes.
+#' 
+#' In order to get all available information on citation data, you might need to
+#' combine `find_footnotes()` with `find_references()`.
 #'
 #' @param file_path The path to the `.xml`-file from which footnotes should be
 #'   extracted.

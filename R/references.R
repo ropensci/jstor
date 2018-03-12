@@ -1,16 +1,21 @@
 #' Extract all references
 #'
 #' This function extracts the content of `ref-list` from the `xml`-file.
-#'
-#' References are currently not fully supported by DfR, and there is no 
-#' comprehensive documentation on the different variants. Currently, `jstor`
-#' tries to extract the references as closely to how they appear in the data.
+#' 
+#' This content may contain references or endnotes, depending on how the article
+#' used citations. Since references are currently not fully supported by DfR, 
+#' there is no comprehensive documentation on the different variants. `jstor`
+#' therefore extracts the content of `ref-list` exactly as it appears in the
+#' data. Because of this, there might be other content present than references.
+#' 
+#' In order to get all available information on citation data, you might need to
+#' combine `find_references()` with `find_footnotes()`.
 #' 
 #' For newer `xml`-files, there would be the option to extract single elements
 #' like authors, title or date of the source, but this is not yet implemented.
 #' 
-#' In general, the implementation is not very fast - articles with many
-#' references slow the process down.
+#' In general, the implementation is not as fast as `find_article()` - articles
+#' with many references slow the process down.
 #' 
 #' @param file_path The path to the `.xml`-file from which references should be
 #'   extracted.
