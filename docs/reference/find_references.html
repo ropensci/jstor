@@ -130,13 +130,17 @@ extracted.</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>References are currently not fully supported by DfR, and there is no
-comprehensive documentation on the different variants. Currently, <code>jstor</code>
-tries to extract the references as closely to how they appear in the data.</p>
+    <p>This content may contain references or endnotes, depending on how the article
+used citations. Since references are currently not fully supported by DfR,
+there is no comprehensive documentation on the different variants. <code>jstor</code>
+therefore extracts the content of <code>ref-list</code> exactly as it appears in the
+data. Because of this, there might be other content present than references.</p>
+<p>In order to get all available information on citation data, you might need to
+combine <code>find_references()</code> with <code><a href='find_footnotes.html'>find_footnotes()</a></code>.</p>
 <p>For newer <code>xml</code>-files, there would be the option to extract single elements
 like authors, title or date of the source, but this is not yet implemented.</p>
-<p>In general, the implementation is not very fast - articles with many
-references slow the process down.</p>
+<p>In general, the implementation is not as fast as <code><a href='find_article.html'>find_article()</a></code> - articles
+with many references slow the process down.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
