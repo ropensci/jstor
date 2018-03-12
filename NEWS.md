@@ -1,5 +1,7 @@
 # jstor 0.2.6.9000
 
+* improved documentation regarding endnotes (thanks @elinw)
+
 # jstor 0.2.6
 
 * added lengthy case study at https://tklebel.github.io/jstor/articles/analysing-n-grams.html
