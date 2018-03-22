@@ -154,7 +154,7 @@ without_wall <- research_articles %>%
 
 Since the amount of articles is still rather large for this demonstration, we
 could select only a few journals. Here, we will look at articles from two
-leading journals within the discipline, "Journal
+leading journals within the discipline, "American Journal
 of Sociology" and "American Sociological Review". 
 
 To identify articles from
@@ -294,7 +294,8 @@ imported_bigrams <- data.table::fread("imported_bigrams.csv", showProgress = F)
 ```
 
 From the `r dim(flagship_journals)[1]` articles in our two flagship journals we
-now have `r dim(imported_bigrams)[1]` bigrams. The bigrams are calculated by
+now have `r format(dim(imported_bigrams)[1], big.mark = ",")` bigrams. The 
+bigrams are calculated by
 JSTOR for each article independently. In order to reduce the sample to the most 
 common bigrams, we have two choices: either to include only terms which occur
 *within each* article a given amount of times, or to include terms which occur 
@@ -456,9 +457,8 @@ The most frequent bigrams are now "labor market", "labor force", and "income
 inequality", which are not very surprising given that most individuals in
 capitalist societies need to supply their work in exchange for income. For this
 reason, the labor market and its stratification is a prime subject of the 
-sociological inquiry into inequality.
-
-A few further key dimensions of sociological analysis are apparent from the
+sociological inquiry into inequality. A few further key dimensions of
+sociological analysis are apparent from the
 graph: gender, race/ethnicity, occupational and socioeconomic status. That we
 find many terms to be associated with the term "social" seems quite likely
 given the discipline's subject.
@@ -480,6 +480,21 @@ Harvard, Chicago, Cambridge and California. At least partly the prominence of
 university -> chicago -> press might be due to the fact, that it is the
 publisher of the American Journal of Sociology, and therefore included in each
 article by this journal.
+
+Altogether, these findings will not be surprising to well-educated sociologists.
+Almost all bigrams in the graph are common concepts or terms within the
+discipline. Most importantly, very often those concepts and terms comprise two
+single words, as in "social science", "social structure", "social networks".
+Two approaches might be useful to examine, *how* these concepts are being used:
+
+1. Analyzing trigrams. It could be the case, that many of the above concepts 
+would show up in combination with more interesting terms, if we were to analyze
+combinations of three words. 
+2. Another approach would be to first analyze data for bigrams as above, 
+determining the core concepts of a field. In a second step, one could search for
+those core concepts in the raw data files and extract adjacent terms. This would
+not be possible with the default deliveries from DfR however, since full-text
+content is only available through a dedicated agreement.
 
 # Comparison over time
 Besides looking at the overall relationship of bigrams, we could be interested
