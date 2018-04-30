@@ -91,3 +91,47 @@ test_that("import wrapper works without column names", {
   
   unlink(temp_dir)
 })
+
+test_that("files_per_batch works", {
+  temp_dir <- tempdir()
+  jstor_import(paths, out_file = "meta_data", out_path = temp_dir,
+               .f = find_article, col_names = FALSE, files_per_batch = 2)
+  
+  expect_identical(read_csv("testfiles/correct_meta_data_wo_cols.csv",
+                            col_names = FALSE),
+                   read_csv(paste0(temp_dir, "/meta_data-1.csv"),
+                            col_names = FALSE))
+  
+  unlink(temp_dir)
+})
+
+test_that("n_batches works for n > 1", {
+  temp_dir <- tempdir()
+  
+  paths <- c(paths, paths[1])
+  
+  jstor_import(paths, out_file = "meta_data", out_path = temp_dir,
+               .f = find_article, col_names = FALSE, n_batches = 2)
+  
+  written_files <- list.files(temp_dir, full.names = T, pattern = "meta_data-")
+  
+  expect_identical(length(written_files), 2L)
+  
+  expect_equal(
+    # duplicate correct result, since we read it in duplicated above
+    read_csv("testfiles/correct_meta_data_wo_cols.csv", col_names = FALSE) %>% 
+      dplyr::slice(c(1, 1)),
+    purrr::map_df(written_files, read_csv, col_names = FALSE)
+  )
+                   
+  unlink(temp_dir)
+})
+
+test_that("too many arguments for batches throw error", {
+  expect_error(jstor_import(paths, out_file = "meta_data",
+                            out_path = temp_dir, .f = find_article,
+                            n_batches = 2, files_per_batch = 1),
+               "Either n_batches"
+  )
+})
+

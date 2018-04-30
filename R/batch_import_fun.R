@@ -137,7 +137,9 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' `find_authors`, `find_references`, `find_footnotes`, `find_book` or
 #' `find_chapter`.
 #' @param col_names Should column names be written to file? Defaults to `TRUE`.
-#' @param files_per_batch Number of files for each batch.
+#' @param n_batches Number of batches, defaults to 1.
+#' @param files_per_batch Number of files for each batch. Can be used instead of
+#' n_batches, but not in conjunction.
 #' @param cores Number of cores to use for parallel processing.
 #' @param show_progress Displays a progress bar for each batch, if the session
 #' is interactive.
@@ -146,14 +148,32 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #'
 #' @export
 jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
-                         col_names = TRUE, files_per_batch = 10000,
+                         col_names = TRUE, n_batches = NULL,
+                         files_per_batch = NULL,
                          cores = getOption("mc.cores", 1L),
                          show_progress = TRUE) {
+  
+  if (!is.null(n_batches) && !is.null(files_per_batch)) {
+    stop("Either n_batches or files_per_batch needs to be specified, ",
+         "not both.", call. = FALSE)
+  }
   start_time <- Sys.time()
   
   message("Starting to import ", length(in_paths), " file(s).")
 
-  file_list <- split(in_paths, ceiling(seq_along(in_paths) / files_per_batch))
+  # set n_batches to 1 for default
+  if (is.null(n_batches) && is.null(files_per_batch)) {
+    n_batches <- 1
+  }
+  
+  if (!is.null(files_per_batch)) {
+    file_list <- split(in_paths, ceiling(seq_along(in_paths) / files_per_batch))
+  } else if (identical(as.integer(n_batches), 1L)) {
+    file_list <- list(`1` = in_paths)
+  } else {
+    file_list <- split(in_paths, as.integer(cut(seq_along(in_paths), n_batches)))
+  }
+  
   chunk_numbers <- unique(names(file_list)) %>% as.list()
 
   if (!is.null(out_path)) {
