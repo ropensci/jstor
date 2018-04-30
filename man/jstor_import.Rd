@@ -5,8 +5,8 @@
 \title{Wrapper for file import}
 \usage{
 jstor_import(in_paths, out_file, out_path = NULL, .f, col_names = TRUE,
-  files_per_batch = 10000, cores = getOption("mc.cores", 1L),
-  show_progress = TRUE)
+  n_batches = NULL, files_per_batch = NULL, cores = getOption("mc.cores",
+  1L), show_progress = TRUE)
 }
 \arguments{
 \item{in_paths}{A character vector to the \code{xml}-files which should be
@@ -23,7 +23,10 @@ increasing number.}
 
 \item{col_names}{Should column names be written to file? Defaults to \code{TRUE}.}
 
-\item{files_per_batch}{Number of files for each batch.}
+\item{n_batches}{Number of batches, defaults to 1.}
+
+\item{files_per_batch}{Number of files for each batch. Can be used instead of
+n_batches, but not in conjunction.}
 
 \item{cores}{Number of cores to use for parallel processing.}
 
