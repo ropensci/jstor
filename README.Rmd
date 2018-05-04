@@ -162,3 +162,6 @@ To cite `jstor`, please refer to `citation(package = "jstor")`.
 Work on `jstor` benefited from financial support for the project "Academic
 Super-Elites in Sociology and Economics" by the Austrian Science Fund (FWF), 
 project number "P 29211 Einzelprojekte".
+
+Some internal functions regarding file paths and example files were adapted from
+the package `readr`.

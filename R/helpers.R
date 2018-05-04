@@ -97,7 +97,7 @@ read_jstor <- function(file) {
   
 }
 
-
+# copied from readr
 check_path <- function(path) {
   if (file.exists(path))
     return(normalizePath(path, "/", mustWork = FALSE))
@@ -110,6 +110,7 @@ check_path <- function(path) {
   )
 }
 
+# copied from readr
 is_absolute_path <- function(path) {
   grepl("^(/|[A-Za-z]:|\\\\|~)", path)
 }
