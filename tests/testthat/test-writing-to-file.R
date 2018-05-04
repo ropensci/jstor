@@ -57,7 +57,7 @@ test_that("writing error messages to file works", {
 
   correct_res <- data_frame(
     id = 2L,
-    error_message = "`file_path` must be a `*.xml` file"
+    error_message = "Unknown input file. Must be a `xml`-file."
   )
 
   expect_identical(res, correct_res)

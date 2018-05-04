@@ -76,6 +76,52 @@ expand_and_bind <- function(file_path, individual_part) {
 
 #' simple helper to suppress warnings from invalid URIs. see issue #33
 #' @noRd
-read_jstor <- function(file_path) {
-  suppressWarnings(xml2::read_xml(file_path))
+read_jstor <- function(file) {
+  
+  if (identical(tools::file_ext(file), "xml")) {
+    file <- check_path(file)
+    
+    suppressWarnings(xml2::read_xml(file))
+  } else if (inherits(file, "jstor_zip")) {
+    
+    con <- unz(file$zip_archive, file$file_path, open = "rb")
+    
+    on.exit(close(con))
+    
+    xml2::read_xml(con)
+    
+  } else {
+    stop("Unknown input file. Must be a `xml`-file.", 
+         call. = FALSE)
+  }
+  
 }
+
+
+check_path <- function(path) {
+  if (file.exists(path))
+    return(normalizePath(path, "/", mustWork = FALSE))
+  
+  stop("'", path, "' does not exist",
+       if (!is_absolute_path(path))
+         paste0(" in current working directory ('", getwd(), "')"),
+       ".",
+       call. = FALSE
+  )
+}
+
+is_absolute_path <- function(path) {
+  grepl("^(/|[A-Za-z]:|\\\\|~)", path)
+}
+
+
+specify_zip_loc <- function(zip_archive, file_path) {
+  out <- structure(
+    list(zip_archive = zip_archive,
+         file_path = file_path),
+    class = "jstor_zip"
+  )
+  out
+}
+
+
