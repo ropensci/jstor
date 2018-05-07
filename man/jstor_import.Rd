@@ -75,3 +75,13 @@ A value of 10000 to 20000 for \code{files_per_batch} should work fine on most
 machines. If the session is interactive and \code{show_progress} is \code{TRUE}, a
 progress bar is displayed for each batch.
 }
+\examples{
+\dontrun{
+# find all files
+meta_files <- list.files(pattern = "xml", full.names = T)
+
+# import them via `find_article`
+jstor_import(meta_files, out_file = "imported_metadata", .f = find_article,
+             files_per_batch = 25000, cores = 4)
+} 
+}

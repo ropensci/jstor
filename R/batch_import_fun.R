@@ -147,6 +147,15 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' @return Writes `.csv`-files to disk.
 #'
 #' @export
+#' @examples 
+#' \dontrun{
+#' # find all files
+#' meta_files <- list.files(pattern = "xml", full.names = T)
+#' 
+#' # import them via `find_article`
+#' jstor_import(meta_files, out_file = "imported_metadata", .f = find_article,
+#'              files_per_batch = 25000, cores = 4)
+#' } 
 jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
                          col_names = TRUE, n_batches = NULL,
                          files_per_batch = NULL,
