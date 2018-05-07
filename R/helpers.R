@@ -6,8 +6,12 @@
 #' @param file_path A path to a file
 #' @export
 get_basename <- function(file_path) {
-  basename(file_path) %>%
-    tools::file_path_sans_ext()
+  if (inherits(file_path, "jstor_zip")) {
+    return(file_path[["file_path"]])
+  } else {
+    basename(file_path) %>%
+      tools::file_path_sans_ext()
+  }
 }
 
 validate_file_path <- function(file_path, type) {
@@ -114,15 +118,3 @@ check_path <- function(path) {
 is_absolute_path <- function(path) {
   grepl("^(/|[A-Za-z]:|\\\\|~)", path)
 }
-
-
-specify_zip_loc <- function(zip_archive, file_path) {
-  out <- structure(
-    list(zip_archive = zip_archive,
-         file_path = file_path),
-    class = "jstor_zip"
-  )
-  out
-}
-
-
