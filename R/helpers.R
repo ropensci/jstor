@@ -81,7 +81,10 @@ expand_and_bind <- function(file_path, individual_part) {
 #' simple helper to suppress warnings from invalid URIs. see issue #33
 #' @noRd
 read_jstor <- function(file) {
-  
+  if (length(file > 1)) {
+    stop("file_path should be length 1, not ", length(file))
+  }
+
   if (identical(tools::file_ext(file), "xml")) {
     file <- check_path(file)
     
