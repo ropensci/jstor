@@ -31,8 +31,6 @@
 #' @examples 
 #' find_book(jstor_example("sample_book.xml"))
 find_book <- function(file_path) {
-  validate_file_path(file_path, "xml")
-
   xml_file <- read_jstor(file_path)
 
   validate_book(xml_file)
@@ -109,8 +107,6 @@ extract_book_pages <- function(book) {
 #' 
 #' tidyr::unnest(parts)
 find_chapters <- function(file_path, authors = FALSE) {
-  validate_file_path(file_path, "xml")
-
   xml_file <- read_jstor(file_path)
 
   validate_book(xml_file)

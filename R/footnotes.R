@@ -22,8 +22,6 @@
 #' @examples 
 #' find_footnotes(jstor_example("sample_with_footnotes.xml"))
 find_footnotes <- function(file_path) {
-  validate_file_path(file_path, "xml")
-
   xml_file <- read_jstor(file_path)
 
   validate_article(xml_file)

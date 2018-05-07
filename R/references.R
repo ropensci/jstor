@@ -29,8 +29,6 @@
 #' @examples 
 #' find_references(jstor_example("sample_with_references.xml"))
 find_references <- function(file_path) {
-  validate_file_path(file_path, "xml")
-
   xml_file <- read_jstor(file_path)
 
   validate_article(xml_file)
