@@ -57,11 +57,14 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
   res <- res_transposed[["result"]]
   error <- res_transposed[["error"]]
 
-  res_ok <- res[is_ok] %>%
-    dplyr::bind_rows()
+  if (any(is_ok)) {
+    res_ok <- res[is_ok] %>%
+      dplyr::bind_rows()
+    
+    write_csv(res_ok, path = paste0(out_path, "-", chunk_number, ".csv"),
+              na = "", col_names = col_names)
+  }
 
-  write_csv(res_ok, path = paste0(out_path, "-", chunk_number, ".csv"),
-            na = "", col_names = col_names)
 
   # in case we have errors, write them to file too
   if (any(!is_ok)) {
@@ -203,3 +206,4 @@ jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
   message("Finished importing ", length(in_paths), " file(s) in ",
           format(round(run_time, 2)), ".")
 }
+
