@@ -225,7 +225,7 @@ jstor_import_zip <- function(zip_archive, out_file, out_path = NULL,
   tagged_files <- get_zip_content(zip_archive) 
 
   combined_spec <- import_spec %>% 
-    left_join(tagged_files) %>% 
+    left_join(tagged_files, by = "meta_type") %>% 
     slice(rows) %>% # select rows to read by position
     mutate(path = map2(zip_archive, Name, specify_zip_loc))
   
