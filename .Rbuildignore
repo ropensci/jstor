@@ -2,6 +2,7 @@
 ^\.Rproj\.user$
 
 ^dev_scripts$
+^test_output$
 ^\.travis\.yml$
 ^LICENSE\.md$
 ^appveyor\.yml$
