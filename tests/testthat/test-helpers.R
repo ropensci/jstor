@@ -19,6 +19,8 @@ test_that("Warnings for invalid URI are suppressed", {
 test_that("read_jstor works", {
   expect_equal(read_jstor(standard_case), xml2::read_xml(standard_case))
   expect_error(read_jstor("test.txt"))
+  expect_error(read_jstor(rep(standard_case, 2)), "file_path should be")
+  
   
   zip_loc <- specify_zip_loc("testfiles/standard_case.zip", 
                              "standard_case.xml")
