@@ -50,9 +50,24 @@ walk_spec <- function(spec_df, chunk_number, n_batches, out_path, cores) {
   n_batches <- unique(n_batches)
   chunk_number <- unique(chunk_number)
   
+  
+  # recycle arguments to fit all combinations of cases
+  path_length <- length(in_paths)
+  fun_length <- length(funs)
+  
+  funs_recycled <- rep(funs, each = path_length)
+  in_paths_recycled <- rep(in_paths, times = fun_length)
+  out_paths_recycled <- rep(out_paths, each = path_length)
+  chunk_number_recycled <- rep(chunk_number, fun_length)
 
-  pwalk(list(out_path = out_paths, in_paths = in_paths,
-             n_batches = n_batches, chunk_number = chunk_number,
-             fun = funs), jstor_convert_to_file)
+  
+  # in the following part, neither out_path nor in_path can be first arguments,
+  # due to some quirks in transpose():
+  # https://github.com/tidyverse/purrr/issues/474
+  
+  pwalk(list(n_batches = n_batches, 
+             out_path = out_paths_recycled, in_paths = in_paths_recycled,
+             chunk_number = chunk_number_recycled,
+             fun = funs_recycled, cores = cores), jstor_convert_to_file)
   
 }
