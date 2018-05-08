@@ -2,7 +2,7 @@ get_zip_content <- function(zip_archive) {
   files <- utils::unzip(zip_archive, list = TRUE)
 
   files %>% 
-    as_tibble() %>% 
+    tibble::as_tibble() %>% 
     mutate(type = str_extract(Name, "^.*?(?=\\/)"),
            meta_type = case_when(
              type == "metadata" & str_detect(Name, "article") ~ "journal_article",
