@@ -207,3 +207,65 @@ jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
           format(round(run_time, 2)), ".")
 }
 
+
+jstor_import_zip <- function(zip_archive, out_file, out_path = NULL, 
+                             import_spec,
+                             col_names = TRUE, n_batches = NULL,
+                             files_per_batch = NULL,
+                             cores = getOption("mc.cores", 1L),
+                             show_progress = TRUE,
+                             rows = 1:n()) {
+  
+  if (!is.null(n_batches) && !is.null(files_per_batch)) {
+    stop("Either n_batches or files_per_batch needs to be specified, ",
+         "not both.", call. = FALSE)
+  }
+  
+  
+  tagged_files <- get_zip_content(zip_archive) 
+
+  combined_spec <- import_spec %>% 
+    left_join(tagged_files) %>% 
+    slice(rows) %>% # select rows to read by position
+    mutate(path = map2(zip_archive, Name, specify_zip_loc))
+  
+  if (!is.null(out_path)) {
+    out_file <- file.path(out_path, out_file)
+  }
+  
+  enhanced_spec <- compute_batches(combined_spec,
+                                n_batches, files_per_batch)
+  
+  n_batches <- enhanced_spec$n_batches
+  chunk_number <- enhanced_spec$chunk_number
+  
+  enhanced_spec %>% 
+    split(.$meta_type) %>% 
+    walk(walk_spec, n_batches = n_batches, cores = cores,
+         chunk_number = chunk_number,
+         out_path = out_file)
+  
+}
+
+
+compute_batches <- function(spec, n_batches, files_per_batch) {
+  if (is.null(n_batches) && is.null(files_per_batch)) {
+    n_batches <- 1
+  }
+  
+  if (!is.null(files_per_batch)) {
+    spec <- spec %>% 
+      mutate(chunk_number = ceiling(seq_along(Name) / files_per_batch))
+  } else if (identical(as.integer(n_batches), 1L)) {
+    spec <- spec %>% 
+      mutate_(chunk_number = 1)
+  } else {
+    spec <- spec %>% 
+      mutate(chunk_number = as.integer(cut(seq_along(Name), n_batches)))
+  }
+  
+  spec <- spec %>% 
+    mutate(n_batches = max(chunk_number))
+
+  spec
+}
