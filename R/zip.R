@@ -14,6 +14,13 @@ get_zip_content <- function(zip_archive) {
     select(-Length, -Date)
 }
 
+#' @export
+jst_preview_zip <- function(zip_archive) {
+  get_zip_content(zip_archive) %>% 
+    group_by(type) %>%
+    count(meta_type)
+}
+
 
 
 
