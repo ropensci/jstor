@@ -37,13 +37,18 @@ walk_spec <- function(spec_df, chunk_number, n_batches, out_path, cores) {
   }
   
   
-  out_paths <- spec_df %>% 
+  fun_spec <- spec_df %>% 
     unnest(fun_names) %>% 
+    distinct(meta_type, type, fun_names)
+    
+  out_paths <- fun_spec %>% 
     mutate(out_paths = paste(out_path, meta_type, fun_names, sep = "_")) %>% 
-    select(fun_names, out_paths) %>% 
     split(.$fun_names) %>% 
-    map(distinct) %>% 
     map(pull, out_paths)
+  
+  # reorder out_paths according to initial order, because split sorts them
+  # alphabetically
+  out_paths <- out_paths[fun_spec$fun_names]
   
   in_paths <- split(spec_df$path, spec_df$chunk_number)
 
