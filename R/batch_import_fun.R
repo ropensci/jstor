@@ -255,13 +255,17 @@ compute_batches <- function(spec, n_batches, files_per_batch) {
   
   if (!is.null(files_per_batch)) {
     spec <- spec %>% 
-      mutate(chunk_number = ceiling(seq_along(Name) / files_per_batch))
+      group_by(meta_type) %>% 
+      mutate(chunk_number = ceiling(seq_along(Name) / files_per_batch)) %>% 
+      ungroup()
   } else if (identical(as.integer(n_batches), 1L)) {
     spec <- spec %>% 
-      mutate_(chunk_number = 1)
+      mutate(chunk_number = 1)
   } else {
     spec <- spec %>% 
-      mutate(chunk_number = as.integer(cut(seq_along(Name), n_batches)))
+      group_by(meta_type) %>% 
+      mutate(chunk_number = as.integer(cut(seq_along(Name), n_batches))) %>% 
+      ungroup()
   }
   
   spec <- spec %>% 
