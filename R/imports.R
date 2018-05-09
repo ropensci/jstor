@@ -3,8 +3,9 @@
 #'                   mutate_all
 #' @importFrom readr read_file write_csv guess_encoding locale
 #' @importFrom xml2 xml_child xml_find_all xml_find_first xml_text xml_children
-#' @importFrom stringr str_detect str_replace
+#' @importFrom stringr str_detect str_replace str_split str_replace_all
 #' @importFrom tibble new_tibble
+#' @importFrom rlang enquos get_expr eval_tidy
 #' @importFrom foreach %dopar%
 NULL
 
@@ -20,4 +21,6 @@ NULL
 
 
 # global variables
-utils::globalVariables(c("references", "footnotes", "encoding", "authors", "i"))
+utils::globalVariables(c("references", "footnotes", "encoding", "authors", "i",
+                         "Name", "Length", "Date", "chunk_number", ".",
+                         "fun_names", "meta_type", "type"))

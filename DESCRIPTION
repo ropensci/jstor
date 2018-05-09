@@ -11,6 +11,7 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     dplyr,
+    tidyr,
     purrr,
     xml2,
     magrittr,
@@ -24,8 +25,7 @@ Imports:
 Suggests: testthat,
     covr,
     knitr,
-    rmarkdown,
-    tidyr
+    rmarkdown
 BugReports: https://github.com/tklebel/jstor/issues
 URL: https://github.com/tklebel/jstor, https://tklebel.github.io/jstor/
 RoxygenNote: 6.0.1

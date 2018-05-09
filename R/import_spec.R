@@ -4,7 +4,9 @@ capture_spec <- function(...) {
   # make some checks regarding what functions are captured
   
   type <- names(import_spec)
-  type <- recode(type, book = "book_chapter", article = "journal_article")
+  type <- dplyr::recode(type, book = "book_chapter",
+                        article = "journal_article")
+  
   fun_names <-  import_spec %>% 
     map(get_expr) %>%
     as.character() %>% 
@@ -12,8 +14,8 @@ capture_spec <- function(...) {
     map(str_replace_all, "^c\\(|\\)$", "")
   evaled_funs <- import_spec %>% map(eval_tidy) 
   
-  tibble(meta_type = type, fun_names = fun_names, evaled_funs = evaled_funs,
-         bare_funs = import_spec)
+  tibble::tibble(meta_type = type, fun_names = fun_names,
+                 evaled_funs = evaled_funs, bare_funs = import_spec)
 }
 
 capture_functions <- function(...) {
@@ -29,22 +31,22 @@ walk_spec <- function(spec_df, chunk_number, n_batches, out_path, cores) {
   
   if (any(lengths(funs) > 1)) {
     funs <- funs %>% 
-      transpose() %>% 
+      purrr::transpose() %>% 
       map(unique) %>% 
-      flatten()
+      purrr::flatten()
   } else {
     funs <- unique(funs)
   }
   
   
   fun_spec <- spec_df %>% 
-    unnest(fun_names) %>% 
-    distinct(meta_type, type, fun_names)
+    tidyr::unnest(fun_names) %>% 
+    dplyr::distinct(meta_type, type, fun_names)
     
   out_paths <- fun_spec %>% 
     mutate(out_paths = paste(out_path, meta_type, fun_names, sep = "_")) %>% 
     split(.$fun_names) %>% 
-    map(pull, out_paths)
+    map(dplyr::pull, out_paths)
   
   # reorder out_paths according to initial order, because split sorts them
   # alphabetically
@@ -70,9 +72,14 @@ walk_spec <- function(spec_df, chunk_number, n_batches, out_path, cores) {
   # due to some quirks in transpose():
   # https://github.com/tidyverse/purrr/issues/474
   
-  pwalk(list(n_batches = n_batches, 
-             out_path = out_paths_recycled, in_paths = in_paths_recycled,
-             chunk_number = chunk_number_recycled,
-             fun = funs_recycled, cores = cores), jstor_convert_to_file)
+  purrr::pwalk(
+    list(
+      n_batches = n_batches, 
+      out_path = out_paths_recycled, in_paths = in_paths_recycled,
+      chunk_number = chunk_number_recycled,
+      fun = funs_recycled, cores = cores
+    ),
+    jstor_convert_to_file
+  )
   
 }

@@ -3,22 +3,22 @@ get_zip_content <- function(zip_archive) {
 
   files %>% 
     tibble::as_tibble() %>% 
-    mutate(type = str_extract(Name, "^.*?(?=\\/)"),
-           meta_type = case_when(
+    mutate(type = stringr::str_extract(Name, "^.*?(?=\\/)"),
+           meta_type = dplyr::case_when(
              type == "metadata" & str_detect(Name, "article") ~ "journal_article",
              type == "metadata" & str_detect(Name, "book") ~ "book_chapter",
              type == "metadata" & str_detect(Name, "report") ~ "research_report",
              type == "metadata" & str_detect(Name, "pamphlet") ~ "pamphlet",
              str_detect(type, "ngram") ~ "ngram",
              TRUE ~ NA_character_)) %>% 
-    select(-Length, -Date)
+    dplyr::select(-Length, -Date)
 }
 
 #' @export
 jst_preview_zip <- function(zip_archive) {
   get_zip_content(zip_archive) %>% 
-    group_by(type) %>%
-    count(meta_type)
+    dplyr::group_by_("type") %>%
+    dplyr::count_("meta_type")
 }
 
 

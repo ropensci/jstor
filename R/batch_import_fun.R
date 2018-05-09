@@ -225,25 +225,23 @@ jstor_import_zip <- function(zip_archive, out_file, out_path = NULL,
   tagged_files <- get_zip_content(zip_archive) 
 
   combined_spec <- import_spec %>% 
-    left_join(tagged_files, by = "meta_type") %>% 
-    slice(rows) %>% # select rows to read by position
-    mutate(path = map2(zip_archive, Name, specify_zip_loc))
+    dplyr::left_join(tagged_files, by = "meta_type") %>% 
+    dplyr::slice(rows) %>% # select rows to read by position
+    mutate(path = purrr::map2(zip_archive, Name, specify_zip_loc))
   
   if (!is.null(out_path)) {
     out_file <- file.path(out_path, out_file)
   }
   
-  enhanced_spec <- compute_batches(combined_spec,
-                                n_batches, files_per_batch)
+  enhanced_spec <- compute_batches(combined_spec, n_batches, files_per_batch)
   
   n_batches <- enhanced_spec$n_batches
   chunk_number <- enhanced_spec$chunk_number
   
   enhanced_spec %>% 
     split(.$meta_type) %>% 
-    walk(walk_spec, n_batches = n_batches, cores = cores,
-         chunk_number = chunk_number,
-         out_path = out_file)
+    purrr::walk(walk_spec, n_batches = n_batches, cores = cores,
+                chunk_number = chunk_number, out_path = out_file)
   
 }
 
@@ -255,17 +253,17 @@ compute_batches <- function(spec, n_batches, files_per_batch) {
   
   if (!is.null(files_per_batch)) {
     spec <- spec %>% 
-      group_by(meta_type) %>% 
+      dplyr::group_by_("meta_type") %>% 
       mutate(chunk_number = ceiling(seq_along(Name) / files_per_batch)) %>% 
-      ungroup()
+      dplyr::ungroup()
   } else if (identical(as.integer(n_batches), 1L)) {
     spec <- spec %>% 
       mutate(chunk_number = 1)
   } else {
     spec <- spec %>% 
-      group_by(meta_type) %>% 
+      dplyr::group_by_("meta_type") %>% 
       mutate(chunk_number = as.integer(cut(seq_along(Name), n_batches))) %>% 
-      ungroup()
+      dplyr::ungroup()
   }
   
   spec <- spec %>% 
