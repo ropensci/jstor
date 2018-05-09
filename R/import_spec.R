@@ -9,7 +9,7 @@
 #' @param ... Named arguments with bare function names.
 #' 
 #' @return A specification of imports which is necessary for
-#'         [jstor_import_zip()].
+#'         [jst_import_zip()].
 #' @examples 
 #' # articles will be imported via `find_article()` and `find_authors()`
 #' jst_define_import(article = c(find_article, find_authors))

@@ -11,7 +11,7 @@ jst_define_import(...)
 }
 \value{
 A specification of imports which is necessary for
-\code{\link[=jstor_import_zip]{jstor_import_zip()}}.
+\code{\link[=jst_import_zip]{jst_import_zip()}}.
 }
 \description{
 Define which parts of a zip file should be converted via which functions.
