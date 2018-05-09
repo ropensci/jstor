@@ -1,4 +1,4 @@
-context("test-test-ngram.R")
+context("test-ngram.R")
 
 ngram1 <- tribble(~ngram, ~n,
                   "Common", 400L,
