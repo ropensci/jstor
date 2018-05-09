@@ -12,7 +12,7 @@
 #'         [jstor_import_zip()].
 #' @examples 
 #' # articles will be imported via `find_article()` and `find_authors()`
-#' jst_define_import(article = c(find_article, find_author))
+#' jst_define_import(article = c(find_article, find_authors))
 #' 
 #' # import all four types with one function each
 #' jst_define_import(article = find_article,
@@ -28,7 +28,7 @@
 #'
 #' \dontrun{
 #' # define imports
-#' imports <- jst_define_import(article = c(find_article, find_author))
+#' imports <- jst_define_import(article = c(find_article, find_authors))
 #' 
 #' # convert the files to .csv
 #' jstor_import_zip("my_archive.zip", out_file = "my_out_file", 

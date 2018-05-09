@@ -101,7 +101,7 @@ jstor_import(meta_files, out_file = "imported_metadata", .f = find_article,
 
 # read from zip archive ------ 
 # define imports
-imports <- jst_define_import(article = c(find_article, find_author))
+imports <- jst_define_import(article = c(find_article, find_authors))
 
 # convert the files to .csv
 jstor_import_zip("my_archive.zip", out_file = "my_out_file", 
