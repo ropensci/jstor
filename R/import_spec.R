@@ -1,3 +1,40 @@
+#' Define an import specification
+#' 
+#' Define which parts of a zip file should be converted via which functions.
+#' 
+#' The function accepts the following names: article, book, report, pamphlet.
+#' The corresponding files from a .zip-archive will be imported via the supplied
+#' functions. 
+#' 
+#' @param ... Named arguments with bare function names.
+#' 
+#' @return A specification of imports which is necessary for
+#'         [jstor_import_zip()].
+#' @examples 
+#' # articles will be imported via `find_article()` and `find_authors()`
+#' jst_define_import(article = c(find_article, find_author))
+#' 
+#' # import all four types with one function each
+#' jst_define_import(article = find_article,
+#'                   book = find_book,
+#'                   report = find_book,
+#'                   pamphlet = find_article)
+#'                   
+#' # import all four types with multiple functions
+#' jst_define_import(article = c(find_article, find_authors, find_references),
+#'                   book = c(find_book, find_chapters),
+#'                   report = find_book,
+#'                   pamphlet = find_article)
+#'
+#' \dontrun{
+#' # define imports
+#' imports <- jst_define_import(article = c(find_article, find_author))
+#' 
+#' # convert the files to .csv
+#' jstor_import_zip("my_archive.zip", out_file = "my_out_file", 
+#'                  import_spec = imports)
+#' }
+#' @export
 jst_define_import <- function(...) {
   import_spec <- capture_functions(...)
   

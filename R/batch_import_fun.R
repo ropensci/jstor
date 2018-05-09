@@ -94,8 +94,9 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 
 #' Wrapper for file import
 #'
-#' This function applies an import function to a list of `xml`-files and saves
-#' them in batches of `.csv`-files to disk.
+#' This function applies an import function to a list of `xml`-files
+#' or a .zip-archive in case of `jstor_import_zip` and saves
+#' the output in batches of `.csv`-files to disk.
 #'
 #' Along the way, we wrap three functions, which make the process of converting 
 #' many files easier:
@@ -146,18 +147,32 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' @param cores Number of cores to use for parallel processing.
 #' @param show_progress Displays a progress bar for each batch, if the session
 #' is interactive.
+#' @param zip_archive A path to a .zip-archive from DfR
+#' @param import_spec A specification from [jst_define_import]
+#' for which parts of a .zip-archive should be imported via which functions. 
+#' @param rows Mainly used for testing, to decrease the number of files which
+#' are imported.
 #'
 #' @return Writes `.csv`-files to disk.
 #'
 #' @export
 #' @examples 
 #' \dontrun{
+#' # read from file list --------
 #' # find all files
 #' meta_files <- list.files(pattern = "xml", full.names = T)
 #' 
 #' # import them via `find_article`
 #' jstor_import(meta_files, out_file = "imported_metadata", .f = find_article,
 #'              files_per_batch = 25000, cores = 4)
+#'
+#' # read from zip archive ------ 
+#' # define imports
+#' imports <- jst_define_import(article = c(find_article, find_author))
+#' 
+#' # convert the files to .csv
+#' jstor_import_zip("my_archive.zip", out_file = "my_out_file", 
+#'                  import_spec = imports)
 #' } 
 jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
                          col_names = TRUE, n_batches = NULL,
@@ -208,6 +223,9 @@ jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
 }
 
 
+
+#' @rdname jstor_import
+#' @export
 jstor_import_zip <- function(zip_archive, out_file, out_path = NULL, 
                              import_spec,
                              col_names = TRUE, n_batches = NULL,

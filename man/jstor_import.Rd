@@ -2,11 +2,16 @@
 % Please edit documentation in R/batch_import_fun.R
 \name{jstor_import}
 \alias{jstor_import}
+\alias{jstor_import_zip}
 \title{Wrapper for file import}
 \usage{
 jstor_import(in_paths, out_file, out_path = NULL, .f, col_names = TRUE,
   n_batches = NULL, files_per_batch = NULL, cores = getOption("mc.cores",
   1L), show_progress = TRUE)
+
+jstor_import_zip(zip_archive, out_file, out_path = NULL, import_spec,
+  col_names = TRUE, n_batches = NULL, files_per_batch = NULL,
+  cores = getOption("mc.cores", 1L), show_progress = TRUE, rows = 1:n())
 }
 \arguments{
 \item{in_paths}{A character vector to the \code{xml}-files which should be
@@ -32,13 +37,22 @@ n_batches, but not in conjunction.}
 
 \item{show_progress}{Displays a progress bar for each batch, if the session
 is interactive.}
+
+\item{zip_archive}{A path to a .zip-archive from DfR}
+
+\item{import_spec}{A specification from \link{jst_define_import}
+for which parts of a .zip-archive should be imported via which functions.}
+
+\item{rows}{Mainly used for testing, to decrease the number of files which
+are imported.}
 }
 \value{
 Writes \code{.csv}-files to disk.
 }
 \description{
-This function applies an import function to a list of \code{xml}-files and saves
-them in batches of \code{.csv}-files to disk.
+This function applies an import function to a list of \code{xml}-files
+or a .zip-archive in case of \code{jstor_import_zip} and saves
+the output in batches of \code{.csv}-files to disk.
 }
 \details{
 Along the way, we wrap three functions, which make the process of converting
@@ -77,11 +91,20 @@ progress bar is displayed for each batch.
 }
 \examples{
 \dontrun{
+# read from file list --------
 # find all files
 meta_files <- list.files(pattern = "xml", full.names = T)
 
 # import them via `find_article`
 jstor_import(meta_files, out_file = "imported_metadata", .f = find_article,
              files_per_batch = 25000, cores = 4)
+
+# read from zip archive ------ 
+# define imports
+imports <- jst_define_import(article = c(find_article, find_author))
+
+# convert the files to .csv
+jstor_import_zip("my_archive.zip", out_file = "my_out_file", 
+                 import_spec = imports)
 } 
 }
