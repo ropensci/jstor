@@ -33,6 +33,9 @@ test_that("Construction of zip location works", {
   zip_loc <- specify_zip_loc("testfiles/standard_case.zip", 
                              "standard_case.xml")
   expect_s3_class(zip_loc, "jstor_zip")
+  
+  expect_identical(zip_loc$zip_archive, "testfiles/standard_case.zip")
+  expect_identical(zip_loc$file_path, "standard_case.xml")
 })
 
 test_that("get_basename works", {
