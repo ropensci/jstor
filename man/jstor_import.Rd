@@ -11,7 +11,7 @@ jstor_import(in_paths, out_file, out_path = NULL, .f, col_names = TRUE,
 
 jstor_import_zip(zip_archive, out_file, out_path = NULL, import_spec,
   col_names = TRUE, n_batches = NULL, files_per_batch = NULL,
-  cores = getOption("mc.cores", 1L), show_progress = TRUE, rows = 1:n())
+  cores = getOption("mc.cores", 1L), show_progress = TRUE, rows = NULL)
 }
 \arguments{
 \item{in_paths}{A character vector to the \code{xml}-files which should be
@@ -44,7 +44,7 @@ is interactive.}
 for which parts of a .zip-archive should be imported via which functions.}
 
 \item{rows}{Mainly used for testing, to decrease the number of files which
-are imported.}
+are imported (i.e. 1:100).}
 }
 \value{
 Writes \code{.csv}-files to disk.

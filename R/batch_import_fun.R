@@ -151,7 +151,7 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' @param import_spec A specification from [jst_define_import]
 #' for which parts of a .zip-archive should be imported via which functions. 
 #' @param rows Mainly used for testing, to decrease the number of files which
-#' are imported.
+#' are imported (i.e. 1:100).
 #'
 #' @return Writes `.csv`-files to disk.
 #'
@@ -232,7 +232,7 @@ jstor_import_zip <- function(zip_archive, out_file, out_path = NULL,
                              files_per_batch = NULL,
                              cores = getOption("mc.cores", 1L),
                              show_progress = TRUE,
-                             rows = 1:n()) {
+                             rows = NULL) {
   
   if (!is.null(n_batches) && !is.null(files_per_batch)) {
     stop("Either n_batches or files_per_batch needs to be specified, ",
@@ -242,6 +242,10 @@ jstor_import_zip <- function(zip_archive, out_file, out_path = NULL,
   
   tagged_files <- get_zip_content(zip_archive) 
 
+  if (is.null(rows)) {
+    rows <- 1:nrow(tagged_files)
+  }
+  
   combined_spec <- import_spec %>% 
     dplyr::left_join(tagged_files, by = "meta_type") %>% 
     dplyr::slice(rows) %>% # select rows to read by position
