@@ -5,7 +5,7 @@
 #' @importFrom xml2 xml_child xml_find_all xml_find_first xml_text xml_children
 #' @importFrom stringr str_detect str_replace str_split str_replace_all
 #' @importFrom tibble new_tibble
-#' @importFrom rlang enquos get_expr eval_tidy
+#' @importFrom rlang enquos get_expr eval_tidy abort
 #' @importFrom foreach %dopar%
 NULL
 
