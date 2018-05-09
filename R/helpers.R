@@ -121,3 +121,23 @@ check_path <- function(path) {
 is_absolute_path <- function(path) {
   grepl("^(/|[A-Za-z]:|\\\\|~)", path)
 }
+
+
+fun_list_depth <- function(x) {
+  if (purrr::is_null(x)) {
+    0L
+  }
+  else if (purrr::is_atomic(x)) {
+    1L
+  }
+  else if (purrr::is_function(x)) {
+    1L
+  }
+  else if (purrr::is_list(x)) {
+    depths <- purrr::map_int(x, fun_list_depth)
+    1L + max(depths, 0L)
+  }
+  else {
+    abort("`x` must be a vector")
+  }
+}

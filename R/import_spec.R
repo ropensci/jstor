@@ -1,21 +1,88 @@
-capture_spec <- function(...) {
+jst_define_import <- function(...) {
   import_spec <- capture_functions(...)
   
-  # make some checks regarding what functions are captured
-  
   type <- names(import_spec)
-  type <- dplyr::recode(type, book = "book_chapter",
-                        article = "journal_article")
   
-  fun_names <-  import_spec %>% 
+  # check input types
+  possible_types <- c("book", "article", "report", "pamphlet")
+  types_checked <- type %in% possible_types
+  
+  if (!all(types_checked)) {
+    stop("Input type must be one of ", paste(possible_types, collapse = ", "),
+         ", `", type[!types_checked], "` is not.")
+  }
+  
+  
+  type <- dplyr::recode(type, book = "book_chapter",
+                        article = "journal_article",
+                        report = "research_report")
+  
+  
+  fun_names <- import_spec %>% 
     map(get_expr) %>%
     as.character() %>% 
     str_split(pattern = ", ") %>% 
     map(str_replace_all, "^c\\(|\\)$", "")
+  
+  
+  # check input functions
+  expressions <- import_spec %>%
+    map(get_expr) %>%
+    as.character()
+
+  not_bare_funs <- expressions %>%
+    str_detect("\\(\\)")
+
+  if (any(not_bare_funs)) {
+    stop("All inputs must be bare functions or a vector of bare functions, `",
+         expressions[not_bare_funs], "` is not.", call. = FALSE)
+  }
+
   evaled_funs <- import_spec %>% map(eval_tidy) 
   
-  tibble::tibble(meta_type = type, fun_names = fun_names,
-                 evaled_funs = evaled_funs, bare_funs = import_spec)
+  if (fun_list_depth(evaled_funs) > 2) {
+    funs_checked <- evaled_funs %>% 
+      purrr::flatten() %>% 
+      map_lgl(purrr::is_function)
+  } else {
+    funs_checked <- evaled_funs %>% 
+      map_lgl(purrr::is_function)
+  }
+  
+  
+  if (!all(funs_checked)) {
+    stop("All inputs must be bare functions or a vector of bare functions, `",
+         fun_names[[1]][!funs_checked], "` is not.", call. = FALSE)
+  }
+  
+  # check namespaces of functions
+  if (fun_list_depth(evaled_funs) > 2) {
+    namespaces <- evaled_funs %>% 
+      purrr::flatten() %>% 
+      map(rlang::get_env)
+  } else {
+    namespaces <- evaled_funs %>% 
+      map(rlang::get_env) 
+  }
+  
+  correct_ns <- rlang::get_env(find_article)
+  
+  matching_namespaces <- namespaces %>% 
+    unname() %>% 
+    map_lgl(identical, correct_ns)
+  
+  if (!all(matching_namespaces)) {
+    stop("All supplied functions must come from the `jstor` package, `",
+         fun_names[[1]][!matching_namespaces], "` does not.",
+         call. = FALSE)
+  }
+  
+
+  out <- tibble::tibble(meta_type = type, fun_names = fun_names,
+                        evaled_funs = evaled_funs, bare_funs = import_spec)
+  
+  class(out) <- c("jstor_import_spec", class(out))
+  out
 }
 
 capture_functions <- function(...) {
