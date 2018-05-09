@@ -226,8 +226,8 @@ jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
 
 #' @rdname jstor_import
 #' @export
-jstor_import_zip <- function(zip_archive, out_file, out_path = NULL, 
-                             import_spec,
+jst_import_zip <- function(zip_archive, import_spec, 
+                             out_file, out_path = NULL,
                              col_names = TRUE, n_batches = NULL,
                              files_per_batch = NULL,
                              cores = getOption("mc.cores", 1L),

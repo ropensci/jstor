@@ -2,14 +2,14 @@
 % Please edit documentation in R/batch_import_fun.R
 \name{jstor_import}
 \alias{jstor_import}
-\alias{jstor_import_zip}
+\alias{jst_import_zip}
 \title{Wrapper for file import}
 \usage{
 jstor_import(in_paths, out_file, out_path = NULL, .f, col_names = TRUE,
   n_batches = NULL, files_per_batch = NULL, cores = getOption("mc.cores",
   1L), show_progress = TRUE)
 
-jstor_import_zip(zip_archive, out_file, out_path = NULL, import_spec,
+jst_import_zip(zip_archive, import_spec, out_file, out_path = NULL,
   col_names = TRUE, n_batches = NULL, files_per_batch = NULL,
   cores = getOption("mc.cores", 1L), show_progress = TRUE, rows = NULL)
 }
