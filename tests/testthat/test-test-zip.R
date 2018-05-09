@@ -6,7 +6,7 @@ test_that("jst_preview_zip works", {
     "metadata", "book_chapter", 1L,
     "metadata", "journal_article", 1L,
     "metadata", "pamphlet", 1L,
-    "ngram1", "ngram", 1L
+    "ngram1", "ngram1", 1L
   )
   
   expect_equal(jst_preview_zip("testfiles/pseudo_dfr.zip"), correct_res)

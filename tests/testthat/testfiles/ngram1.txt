@@ -1,0 +1,2 @@
+Common	400
+Uncommon	5

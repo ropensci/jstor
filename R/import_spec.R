@@ -2,7 +2,8 @@
 #' 
 #' Define which parts of a zip file should be converted via which functions.
 #' 
-#' The function accepts the following names: article, book, report, pamphlet.
+#' The function accepts the following names: article, book, report, pamphlet,
+#' ngram1, ngram2, ngram3.
 #' The corresponding files from a .zip-archive will be imported via the supplied
 #' functions. 
 #' 
@@ -14,6 +15,11 @@
 #' # articles will be imported via `find_article()` and `find_authors()`
 #' jst_define_import(article = c(find_article, find_authors))
 #' 
+#' # define a specification for importing article metadata and unigrams (ngram1)
+#' jst_define_import(article = find_article,
+#'                   ngram1 = jst_read_ngram)
+#'                   
+#'                   
 #' # import all four types with one function each
 #' jst_define_import(article = find_article,
 #'                   book = find_book,
@@ -41,7 +47,8 @@ jst_define_import <- function(...) {
   type <- names(import_spec)
   
   # check input types
-  possible_types <- c("book", "article", "report", "pamphlet")
+  possible_types <- c("book", "article", "report", "pamphlet",
+                      paste0("ngram", 1:3))
   types_checked <- type %in% possible_types
   
   if (!all(types_checked)) {

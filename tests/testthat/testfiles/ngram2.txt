@@ -1,0 +1,2 @@
+Common word	400
+Uncommon word	5

@@ -9,7 +9,7 @@ get_zip_content <- function(zip_archive) {
              type == "metadata" & str_detect(Name, "book") ~ "book_chapter",
              type == "metadata" & str_detect(Name, "report") ~ "research_report",
              type == "metadata" & str_detect(Name, "pamphlet") ~ "pamphlet",
-             str_detect(type, "ngram") ~ "ngram",
+             str_detect(type, "ngram") ~ type,
              TRUE ~ NA_character_)) %>% 
     dplyr::select(-Length, -Date)
 }
