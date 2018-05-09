@@ -14,6 +14,18 @@ get_zip_content <- function(zip_archive) {
     dplyr::select(-Length, -Date)
 }
 
+
+#' Preview contet of zip files
+#' 
+#' This function gives you a quick preview about what a .zip-file from DfR
+#' contains.
+#' 
+#' @param zip_archive A path to a .zip-file from DfR
+#' 
+#' @return The function returns a tibble with three columns:
+#' - *type*: metadata or some form of ngram
+#' - *meta_type*: which type of metadata (book_chapter, journal article, ...)
+#' - *n*: a count for each category
 #' @export
 jst_preview_zip <- function(zip_archive) {
   get_zip_content(zip_archive) %>% 
