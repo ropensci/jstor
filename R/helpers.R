@@ -7,7 +7,9 @@
 #' @export
 get_basename <- function(file_path) {
   if (inherits(file_path, "jstor_zip")) {
-    return(file_path[["file_path"]])
+    file_path[["file_path"]] %>% 
+      basename() %>% 
+      tools::file_path_sans_ext()
   } else {
     basename(file_path) %>%
       tools::file_path_sans_ext()
