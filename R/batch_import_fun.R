@@ -263,7 +263,8 @@ jstor_import_zip <- function(zip_archive, out_file, out_path = NULL,
   enhanced_spec %>% 
     split(.$meta_type) %>% 
     purrr::walk(walk_spec, n_batches = n_batches, cores = cores,
-                chunk_number = chunk_number, out_path = out_file)
+                chunk_number = chunk_number, out_path = out_file,
+                show_progress = show_progress, col_names = col_names)
   
 }
 

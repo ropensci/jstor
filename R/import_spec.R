@@ -128,7 +128,8 @@ capture_functions <- function(...) {
   dots
 }
 
-walk_spec <- function(spec_df, chunk_number, n_batches, out_path, cores) {
+walk_spec <- function(spec_df, chunk_number, n_batches, out_path, cores,
+                      show_progress, col_names) {
   message("Processing files for ", paste(unique(spec_df$meta_type), collapse = " and "),
           " with functions ", unique(spec_df$fun_names))
   
@@ -182,7 +183,8 @@ walk_spec <- function(spec_df, chunk_number, n_batches, out_path, cores) {
       n_batches = n_batches, 
       out_path = out_paths_recycled, in_paths = in_paths_recycled,
       chunk_number = chunk_number_recycled,
-      fun = funs_recycled, cores = cores
+      fun = funs_recycled, cores = cores,
+      show_progress = show_progress, col_names = col_names
     ),
     jstor_convert_to_file
   )
