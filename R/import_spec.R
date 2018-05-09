@@ -78,14 +78,9 @@ jst_define_import <- function(...) {
 
   evaled_funs <- import_spec %>% map(eval_tidy) 
   
-  if (fun_list_depth(evaled_funs) > 2) {
-    funs_checked <- evaled_funs %>% 
-      purrr::flatten() %>% 
-      map_lgl(purrr::is_function)
-  } else {
-    funs_checked <- evaled_funs %>% 
-      map_lgl(purrr::is_function)
-  }
+  funs_checked <- evaled_funs %>% 
+    unlist() %>% 
+    map_lgl(purrr::is_function)
   
   
   if (!all(funs_checked)) {
@@ -94,14 +89,9 @@ jst_define_import <- function(...) {
   }
   
   # check namespaces of functions
-  if (fun_list_depth(evaled_funs) > 2) {
-    namespaces <- evaled_funs %>% 
-      purrr::flatten() %>% 
-      map(rlang::get_env)
-  } else {
-    namespaces <- evaled_funs %>% 
-      map(rlang::get_env) 
-  }
+  namespaces <- evaled_funs %>% 
+    unlist() %>% 
+    map(rlang::get_env)
   
   correct_ns <- rlang::get_env(find_article)
   
