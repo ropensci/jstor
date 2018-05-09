@@ -6,6 +6,9 @@
 .DS_Store
 inst/doc
 dev_scripts
+test_output
+docs/articles/*.csv
+docs/articles/articles/*.csv
+vignettes/*.csv
 
-*.csv
 *.rds
