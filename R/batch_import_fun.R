@@ -242,14 +242,26 @@ jst_import_zip <- function(zip_archive, import_spec,
   
   tagged_files <- get_zip_content(zip_archive) 
 
-  if (is.null(rows)) {
-    rows <- 1:nrow(tagged_files)
-  }
-  
   combined_spec <- import_spec %>% 
-    dplyr::left_join(tagged_files, by = "meta_type") %>% 
-    dplyr::slice(rows) %>% # select rows to read by position
-    mutate(path = purrr::map2(zip_archive, Name, specify_zip_loc))
+    dplyr::left_join(tagged_files, by = "meta_type")
+  
+  if (is.null(rows)) {
+    # all rows are being selected
+    combined_spec <- combined_spec %>% 
+      mutate(path = purrr::map2(zip_archive, Name, specify_zip_loc))
+  } else {
+    if (max(rows) > nrow(combined_spec)) {
+      # if the selection does not fit the rows which are present, raise an error
+      actual_rows <- nrow(combined_spec)
+      stop("The selected rows do not exist within the .zip-file. ",
+           "The highest count for rows with the current specification is ",
+           actual_rows, " rows.", call. = FALSE)
+    } else {
+      combined_spec <- combined_spec %>% 
+        dplyr::slice(rows) %>% # select rows to read by position
+        mutate(path = purrr::map2(zip_archive, Name, specify_zip_loc))
+    }
+  }
   
   
   # warn if specified import is missing in tagged file

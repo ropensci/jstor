@@ -64,4 +64,12 @@ test_that("too many arguments for batches throw error", {
   
 })
 
+test_that("wrong row selection raises an error", {
+  expect_error(jst_import_zip("testfiles/pseudo_dfr.zip",
+                              out_file = "meta_data",
+                              import_spec = jst_define_import(
+                                article = find_article),
+                              rows = 10:20),
+               "The selected rows do not exist within")
+})
 
