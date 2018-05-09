@@ -251,6 +251,20 @@ jstor_import_zip <- function(zip_archive, out_file, out_path = NULL,
     dplyr::slice(rows) %>% # select rows to read by position
     mutate(path = purrr::map2(zip_archive, Name, specify_zip_loc))
   
+  
+  # warn if specified import is missing in tagged file
+  missing_types <- import_spec %>% 
+    dplyr::left_join(tagged_files, by = "meta_type") %>% 
+    dplyr::select(meta_type, Name) %>%
+    dplyr::filter(is.na(Name)) %>% 
+    dplyr::pull(meta_type)
+  
+  if (length(missing_types) > 0) {
+    stop("The following types of documents are not available in the .zip-file:",
+         " ", paste(missing_types, collapse = ", "), call. = FALSE)
+  }
+  
+  
   if (!is.null(out_path)) {
     out_file <- file.path(out_path, out_file)
   }
