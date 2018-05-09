@@ -133,5 +133,13 @@ test_that("too many arguments for batches throw error", {
                             n_batches = 2, files_per_batch = 1),
                "Either n_batches"
   )
+  
+  expect_error(jst_import_zip("testfiles/pseudo_dfr.zip", out_file = "meta_data",
+                            import_spec = jst_define_import(
+                              article = find_article
+                            ),
+                            n_batches = 2, files_per_batch = 1),
+               "Either n_batches"
+  )
 })
 

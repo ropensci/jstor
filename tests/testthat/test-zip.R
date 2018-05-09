@@ -50,6 +50,19 @@ test_that("importing from zip works", {
   }
   expected_files %>% 
     purrr::map(test_expected_zip)
+})
+
+test_that("too many arguments for batches throw error", {
+  expect_error(jst_import_zip("testfiles/pseudo_dfr.zip", out_file = "meta_data",
+                              import_spec = jst_define_import(
+                                article = find_article,
+                                report = find_book
+                              ), out_path = test_dir,
+                              n_batches = 1),
+               "not available in the .zip-file: research_report"
+  )
   
   unlink(test_dir)
 })
+
+
