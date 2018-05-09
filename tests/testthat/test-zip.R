@@ -62,7 +62,6 @@ test_that("too many arguments for batches throw error", {
                "not available in the .zip-file: research_report"
   )
   
-  unlink(test_dir)
 })
 
 
