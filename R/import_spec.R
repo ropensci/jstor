@@ -22,7 +22,8 @@ jst_define_import <- function(...) {
     map(get_expr) %>%
     as.character() %>% 
     str_split(pattern = ", ") %>% 
-    map(str_replace_all, "^c\\(|\\)$", "")
+    map(str_replace_all, "^c\\(|\\)$", "") %>% 
+    map(str_replace_all, "^list\\(|\\)$", "")
   
   
   # check input functions
