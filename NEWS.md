@@ -36,9 +36,14 @@ import_spec <- jst_define_import(article = c(find_article, find_authors),
                                  ngram3 = jst_read_ngram)
 ```
 
+Before importing all files from a zip-archive, you can get a quick overview with
+`jst_preview_zip()`.
 
-## Minor changes
-* improved documentation regarding endnotes (thanks @elinw)
+
+## Other changes
+* New function `jst_get_journal_overview` supplies a tibble with contextual
+information about the journals in JSTOR.
+* Improved documentation regarding endnotes (thanks @elinw)
 * jstor_import has a new argument: `n_batches` which lets you specify the number
 of batches directly
 
