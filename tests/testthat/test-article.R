@@ -99,3 +99,7 @@ test_that("language is correct", {
   expect_identical(result[["language"]], "eng")
   expect_identical(result_multiple_languages[["language"]], "eng fre")
 })
+
+test_that("page_range is correct", {
+  expect_identical(result[["page_range"]], "187-188")
+})

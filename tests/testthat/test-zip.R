@@ -17,7 +17,7 @@ test_that("jst_preview_zip works", {
 # # test converting from zip-file
 # # setup the correct data
 # jst_import_zip("tests/testthat/testfiles/pseudo_dfr.zip",
-#                import_spec = jst_define_import(article = c(find_article, 
+#                import_spec = jst_define_import(article = c(find_article,
 #                                                            find_authors),
 #                                                book = find_book,
 #                                                ngram1 = jst_read_ngram),

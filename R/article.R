@@ -29,6 +29,7 @@
 #' - pub_year *(int)*: Year of publication.
 #' - first_page *(int)*: Page number for the first page of the article.
 #' - last_page *(int)*: Page number for the last page of the article.
+#' - page_range *(chr)*: The range of pages for the article.
 #'
 #' A note about publication dates: always the first entry is being extracted,
 #' which should correspond to the oldest date, in case there is more than one
@@ -66,7 +67,8 @@ find_article <- function(file_path) {
     pub_month = extract_child(article, ".//month"),
     pub_year = extract_child(article, ".//year") %>% as.integer(),
     first_page = first_page,
-    last_page = last_page
+    last_page = last_page,
+    page_range = extract_child(article, "page-range")
   )
 
   dplyr::bind_cols(basename_id, journal_ids, article_ids, out)

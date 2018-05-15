@@ -35,6 +35,7 @@ etc.).
 \item pub_year \emph{(int)}: Year of publication.
 \item first_page \emph{(int)}: Page number for the first page of the article.
 \item last_page \emph{(int)}: Page number for the last page of the article.
+\item page_range \emph{(chr)}: The range of pages for the article.
 }
 
 A note about publication dates: always the first entry is being extracted,
