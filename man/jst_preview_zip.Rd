@@ -21,3 +21,6 @@ The function returns a tibble with three columns:
 This function gives you a quick preview about what a .zip-file from DfR
 contains.
 }
+\examples{
+jst_preview_zip(jstor_example("pseudo_dfr.zip"))
+}

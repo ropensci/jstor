@@ -27,10 +27,13 @@ get_zip_content <- function(zip_archive) {
 #' - *meta_type*: which type of metadata (book_chapter, journal article, ...)
 #' - *n*: a count for each category
 #' @export
+#' @examples 
+#' jst_preview_zip(jstor_example("pseudo_dfr.zip"))
 jst_preview_zip <- function(zip_archive) {
   get_zip_content(zip_archive) %>% 
     dplyr::group_by_("type") %>%
-    dplyr::count_("meta_type")
+    dplyr::count_("meta_type") %>% 
+    dplyr::ungroup()
 }
 
 
