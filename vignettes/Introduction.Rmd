@@ -55,11 +55,13 @@ The following sections showcase the different functions.
 
 
 # Application
-Apart from `jstor` we only need to load `dplyr` for matching records.
+Apart from `jstor` we only need to load `dplyr` for matching records and `knitr`
+for printing nice tables.
 
 ```{r, message=FALSE, warning=FALSE}
 library(jstor)
 library(dplyr)
+library(knitr)
 ```
 
 
@@ -102,7 +104,7 @@ The columns are:
 Since the output from all functions are tibbles, the result is nicely formatted:
 
 ```{r, results='asis'}
-meta_data %>% knitr::kable()
+meta_data %>% kable()
 ```
 
 ## `find_authors`
@@ -110,7 +112,7 @@ Extracting the authors works in similar fashion:
 
 ```{r, results='asis'}
 authors <- find_authors(jstor_example("sample_with_references.xml"))
-knitr::kable(authors)
+kable(authors)
 ```
 
 Here we have the following columns:
@@ -129,6 +131,10 @@ The number of rows matches the number of authors -- each author get its' own row
 ## `find_references`
 ```{r}
 references <- find_references(jstor_example("sample_with_references.xml"))
+
+# we need to remove line breaks for knitr::kable() to work properly for printing
+references <- references %>% 
+  mutate(references = stringr::str_remove_all(references, "\\\n"))
 ```
 
 We have two columns:
@@ -140,7 +146,8 @@ Here I display the first 5 entries for each column:
 
 ```{r}
 references %>% 
-  purrr::map(head, 5)
+  head(5) %>% 
+  kable()
 ```
 
 This example shows several things: `basename_id` is identical among rows, since
@@ -157,8 +164,9 @@ article used endnotes rather than footnotes.
 
 
 ## `find_footnotes`
-```{r}
-find_footnotes(jstor_example("sample_with_references.xml"))
+```{r, results='asis'}
+find_footnotes(jstor_example("sample_with_references.xml")) %>% 
+  kable()
 ```
 
 Very commonly, articles either have footnotes or references. The sample file
@@ -167,9 +175,13 @@ footnotes is returned.
 
 I will use another file to demonstrate footnotes.
 
-```{r}
+```{r, results='asis'}
 footnotes <- find_footnotes(jstor_example("sample_with_footnotes.xml"))
-footnotes
+
+footnotes %>% 
+  mutate(footnotes = stringr::str_remove_all(footnotes, "\\\n")) %>% 
+  kable()
+
 ```
 
 In general, you might need to combine `find_footnotes()` with
@@ -184,11 +196,11 @@ the whole file and returns a `tibble` with `basename_id`, `full_text` and
 
 I created a file that looks similar to files supplied by DfR with sample text:
 
-```{r}
+```{r, results='asis'}
 full_text <- read_full_text(jstor_example("sample_full_text.txt"))
-full_text
-
-full_text[["full_text"]]
+full_text %>% 
+  mutate(full_text = stringr::str_remove_all(full_text, "\\\n")) %>% 
+  kable()
 ```
 
 
@@ -201,16 +213,17 @@ Different parts of meta-data can be combined by using `dplyr::left_join()`.
 meta_data %>% 
   left_join(authors) %>%
   select(basename_id, article_title, pub_year, given_name, surname) %>% 
-  knitr::kable()
+  kable()
 ```
 
 ### Matching with references
 
-```{r}
+```{r, results='asis'}
 meta_data %>% 
   left_join(references) %>%
   select(basename_id, pub_year, references) %>%
-  head(10) 
+  head(7) %>% 
+  kable()
 ```
 
 
@@ -241,7 +254,7 @@ this:
 chapters %>% 
   select(-abstract) %>% 
   head(10) %>% 
-  knitr::kable()
+  kable()
 ```
 
 
@@ -264,7 +277,8 @@ You can expand this list with `tidyr::unnest`:
 author_chap %>% 
   tidyr::unnest() %>% 
   select(part_id, given_name, surname) %>% 
-  head(10)
+  head(10) %>% 
+  kable()
 ```
 
 You can learn more about the concept of list-columns in Hadley Wickham's book
