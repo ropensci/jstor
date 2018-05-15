@@ -18,13 +18,24 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Wrapper for file import — jstor_import" />
+
+<meta property="og:description" content="This function applies an import function to a list of xml-files
+or a .zip-archive in case of jstor_import_zip and saves
+the output in batches of .csv-files to disk." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +58,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">jstor</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">jstor</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.6.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -91,6 +106,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -98,22 +114,31 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Wrapper for file import</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tklebel/jstor/blob/master/R/batch_import_fun.R'><code>R/batch_import_fun.R</code></a></small>
+    <div class="hidden name"><code>jstor_import.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
-    <p>This function applies an import function to a list of <code>xml</code>-files and saves
-them in batches of <code>.csv</code>-files to disk.</p>
+    <p>This function applies an import function to a list of <code>xml</code>-files
+or a .zip-archive in case of <code>jstor_import_zip</code> and saves
+the output in batches of <code>.csv</code>-files to disk.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>jstor_import</span>(<span class='no'>in_paths</span>, <span class='no'>out_file</span>, <span class='kw'>out_path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>.f</span>, <span class='kw'>col_names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>files_per_batch</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"mc.cores"</span>, <span class='fl'>1L</span>),
-  <span class='kw'>show_progress</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>n_batches</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>files_per_batch</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"mc.cores"</span>,
+  <span class='fl'>1L</span>), <span class='kw'>show_progress</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='fu'>jst_import_zip</span>(<span class='no'>zip_archive</span>, <span class='no'>import_spec</span>, <span class='no'>out_file</span>, <span class='kw'>out_path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>col_names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>n_batches</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>files_per_batch</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"mc.cores"</span>, <span class='fl'>1L</span>), <span class='kw'>show_progress</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -141,8 +166,13 @@ increasing number.</p></td>
       <td><p>Should column names be written to file? Defaults to <code>TRUE</code>.</p></td>
     </tr>
     <tr>
+      <th>n_batches</th>
+      <td><p>Number of batches, defaults to 1.</p></td>
+    </tr>
+    <tr>
       <th>files_per_batch</th>
-      <td><p>Number of files for each batch.</p></td>
+      <td><p>Number of files for each batch. Can be used instead of
+n_batches, but not in conjunction.</p></td>
     </tr>
     <tr>
       <th>cores</th>
@@ -152,6 +182,20 @@ increasing number.</p></td>
       <th>show_progress</th>
       <td><p>Displays a progress bar for each batch, if the session
 is interactive.</p></td>
+    </tr>
+    <tr>
+      <th>zip_archive</th>
+      <td><p>A path to a .zip-archive from DfR</p></td>
+    </tr>
+    <tr>
+      <th>import_spec</th>
+      <td><p>A specification from <a href='jst_define_import.html'>jst_define_import</a>
+for which parts of a .zip-archive should be imported via which functions.</p></td>
+    </tr>
+    <tr>
+      <th>rows</th>
+      <td><p>Mainly used for testing, to decrease the number of files which
+are imported (i.e. 1:100).</p></td>
     </tr>
     </table>
     
@@ -191,6 +235,24 @@ machines. If the session is interactive and <code>show_progress</code> is <code>
 progress bar is displayed for each batch.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># read from file list --------</span>
+<span class='co'># find all files</span>
+<span class='no'>meta_files</span> <span class='kw'>&lt;-</span> <span class='fu'>list.files</span>(<span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"xml"</span>, <span class='kw'>full.names</span> <span class='kw'>=</span> <span class='no'>T</span>)
+
+<span class='co'># import them via `find_article`</span>
+<span class='fu'>jstor_import</span>(<span class='no'>meta_files</span>, <span class='kw'>out_file</span> <span class='kw'>=</span> <span class='st'>"imported_metadata"</span>, <span class='kw'>.f</span> <span class='kw'>=</span> <span class='no'>find_article</span>,
+             <span class='kw'>files_per_batch</span> <span class='kw'>=</span> <span class='fl'>25000</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>4</span>)
+
+<span class='co'># read from zip archive ------ </span>
+<span class='co'># define imports</span>
+<span class='no'>imports</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='jst_define_import.html'>jst_define_import</a></span>(<span class='kw'>article</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='no'>find_article</span>, <span class='no'>find_authors</span>))
+
+<span class='co'># convert the files to .csv</span>
+<span class='fu'>jstor_import_zip</span>(<span class='st'>"my_archive.zip"</span>, <span class='kw'>out_file</span> <span class='kw'>=</span> <span class='st'>"my_out_file"</span>,
+                 <span class='kw'>import_spec</span> <span class='kw'>=</span> <span class='no'>imports</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -200,7 +262,9 @@ progress bar is displayed for each batch.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
@@ -217,5 +281,8 @@ progress bar is displayed for each batch.</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

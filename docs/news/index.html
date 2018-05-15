@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>All news • jstor</title>
+<title>Changelog • jstor</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -18,13 +18,19 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Changelog" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +53,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">jstor</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">jstor</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.6.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -91,6 +101,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -98,46 +109,74 @@
       
       </header>
 
-      <div class="row">
-
-  <div class="col-md-9">
+<div class="row">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Change log <small>All releases</small></h1>
+      <h1>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/tklebel/jstor/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="contents">
-    <div class="section level1">
-<h1>jstor 0.2.6.9000</h1>
+    <div id="jstor-0-2-6-9000" class="section level1">
+<h1 class="page-header">
+<a href="#jstor-0-2-6-9000" class="anchor"></a>jstor 0.2.6.9000</h1>
+<div id="major-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h2>
+<p>There is a new set of functions which lets you directly import files from .zip-archives: <code><a href="../reference/jstor_import.html">jst_import_zip()</a></code> and <code><a href="../reference/jst_define_import.html">jst_define_import()</a></code>.</p>
+<p>In the following example, we have a zip-archive from DfR and want to import metadata on books and articles. For all articles we want to apply <code><a href="../reference/find_article.html">find_article()</a></code> and <code><a href="../reference/find_authors.html">find_authors()</a></code>, for books only <code><a href="../reference/find_book.html">find_book()</a></code>, and we want to read unigrams (ngram1).</p>
+<p>First we specify what we want, and then we apply it to our zip-archive.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># specify definition</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">import_spec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_define_import.html">jst_define_import</a></span>(<span class="dt">article =</span> <span class="kw">c</span>(find_article, find_authors),</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">                                 <span class="dt">book =</span> find_book,</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">                                 <span class="dt">ngram1 =</span> jst_read_ngram)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># apply definition to archive</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw"><a href="../reference/jstor_import.html">jst_import_zip</a></span>(<span class="st">"zip_archive.zip"</span>,</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">               <span class="dt">import_spec =</span> import_spec,</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">               <span class="dt">out_file =</span> <span class="st">"out_path"</span>)</a></code></pre></div>
+<p>If the archive contains also research reports, pamphlets or other ngrams, they will not be imported. We could however change our specification, if we wanted to import all kinds of ngrams (given that we originally requested them from DfR):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># import multiple forms of ngrams</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">import_spec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_define_import.html">jst_define_import</a></span>(<span class="dt">article =</span> <span class="kw">c</span>(find_article, find_authors),</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">                                 <span class="dt">book =</span> find_book,</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">                                 <span class="dt">ngram1 =</span> jst_read_ngram,</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">                                 <span class="dt">ngram2 =</span> jst_read_ngram,</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">                                 <span class="dt">ngram3 =</span> jst_read_ngram)</a></code></pre></div>
+</div>
+<div id="minor-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor changes</h2>
 <ul>
-<li>improved documentation regarding endnotes (thanks @elinw)</li>
+<li>improved documentation regarding endnotes (thanks <a href='http://github.com/elinw'>@elinw</a>)</li>
+<li>jstor_import has a new argument: <code>n_batches</code> which lets you specify the number of batches directly</li>
 </ul>
 </div>
-    <div class="section level1">
-<h1>jstor 0.2.6</h1>
+</div>
+    <div id="jstor-0-2-6" class="section level1">
+<h1 class="page-header">
+<a href="#jstor-0-2-6" class="anchor"></a>jstor 0.2.6</h1>
 <ul>
 <li>added lengthy case study at <a href="https://tklebel.github.io/jstor/articles/analysing-n-grams.html" class="uri">https://tklebel.github.io/jstor/articles/analysing-n-grams.html</a>
 </li>
 <li>added a pkgdown site at <a href="https://tklebel.github.io/jstor/" class="uri">https://tklebel.github.io/jstor/</a>
 </li>
 <li>changed implementation of parallel execution in <code>jstor_import</code> from <code><a href="http://www.rdocumentation.org/packages/parallel/topics/mclapply">parallel::mclapply</a></code> to <code><a href="http://www.rdocumentation.org/packages/foreach/topics/foreach">foreach::foreach</a></code> with <code>snow</code> as a backend for <code>%dopar%</code>.</li>
-<li>added support for progress bars #34</li>
+<li>added support for progress bars <a href='https://github.com/tklebel/jstor/issues/34'>#34</a></li>
 <li>
-<code>jstor_import</code> now writes column names by default #29</li>
+<code>jstor_import</code> now writes column names by default <a href='https://github.com/tklebel/jstor/issues/29'>#29</a></li>
 <li>new helper <code>get_basename</code> helps to get the basename of a file without its extension</li>
 <li>
 <code>find_article</code> does not coerce days and months to integer any more, since there might be information stored as text.</li>
 <li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
 </ul>
 </div>
-    </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#NA">0.2.6.9000</a></li>
-        <li><a href="#NA">0.2.6</a></li>
+        <li><a href="#jstor-0-2-6-9000">0.2.6.9000</a></li>
+        <li><a href="#jstor-0-2-6">0.2.6</a></li>
       </ul>
     </div>
   </div>
@@ -156,5 +195,8 @@
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

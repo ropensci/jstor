@@ -8,14 +8,17 @@
 <title>Introduction to <code>jstor</code> • jstor</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to &lt;code&gt;jstor&lt;/code&gt;">
+<meta property="og:description" content="">
+<meta name="twitter:card" content="summary">
+<!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -24,8 +27,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">jstor</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">jstor</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.6.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
@@ -76,18 +83,21 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Introduction to <code>jstor</code>
 </h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-03-12</h4>
-          </div>
+            <h4 class="date">2018-05-15</h4>
+      
+      <small class="dont-index">Source: <a href="https://github.com/tklebel/jstor/blob/master/vignettes/Introduction.Rmd"><code>vignettes/Introduction.Rmd</code></a></small>
+      <div class="hidden name"><code>Introduction.Rmd</code></div>
+
+    </div>
 
     
     
-<div class="contents">
 <p>The tool <a href="http://www.jstor.org/dfr/">Data for Research (DfR)</a> by JSTOR is a valuable source for citation analysis and text mining. <code>jstor</code> provides functions and suggests workflows for importing datasets from DfR.</p>
 <p>When using DfR, requests for datasets can be made for small excerpts (max. 25,000 records) or large ones, which require an agreement between the researcher and JSTOR. <code>jstor</code> was developed to deal with very large datasets which require an agreement, but can be used with smaller ones as well.</p>
 <p>The most important set of functions is a group of <code>find_*</code> functions:</p>
@@ -115,13 +125,13 @@
 <div id="application" class="section level1">
 <h1 class="hasAnchor">
 <a href="#application" class="anchor"></a>Application</h1>
-<p>Apart from <code>jstor</code> we only need to load <code>dplyr</code> for matching records.</p>
+<p>Apart from <code>jstor</code> we only need to load <code>dplyr</code> for matching records and <code>knitr</code> for printing nice tables.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(jstor)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(knitr)</a></code></pre></div>
 <div id="find_article" class="section level2">
 <h2 class="hasAnchor">
-<a href="#find_article" class="anchor"></a><code>find_article</code>
-</h2>
+<a href="#find_article" class="anchor"></a>find_article</h2>
 <p>The basic usage of the <code>find_*</code> functions is very simple. They take only one argument, the path to the file to import:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">meta_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/find_article.html">find_article</a></span>(<span class="dt">file_path =</span> <span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_with_references.xml"</span>))</a></code></pre></div>
 <p>The resulting object is a <code>tibble</code> with one row and 17 columns. The columns correspond to most of the elements documented here: <a href="http://www.jstor.org/dfr/about/technical-specifications" class="uri">http://www.jstor.org/dfr/about/technical-specifications</a>.</p>
@@ -146,7 +156,7 @@
 <li>last_page <em>(int)</em>: Page number for the last page of the article.</li>
 </ul>
 <p>Since the output from all functions are tibbles, the result is nicely formatted:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">meta_data <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">meta_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">basename_id</th>
@@ -190,11 +200,10 @@
 </div>
 <div id="find_authors" class="section level2">
 <h2 class="hasAnchor">
-<a href="#find_authors" class="anchor"></a><code>find_authors</code>
-</h2>
+<a href="#find_authors" class="anchor"></a>find_authors</h2>
 <p>Extracting the authors works in similar fashion:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">authors &lt;-<span class="st"> </span><span class="kw"><a href="../reference/find_authors.html">find_authors</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_with_references.xml"</span>))</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(authors)</a></code></pre></div>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(authors)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">basename_id</th>
@@ -236,9 +245,12 @@
 </div>
 <div id="find_references" class="section level2">
 <h2 class="hasAnchor">
-<a href="#find_references" class="anchor"></a><code>find_references</code>
-</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">references &lt;-<span class="st"> </span><span class="kw"><a href="../reference/find_references.html">find_references</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_with_references.xml"</span>))</a></code></pre></div>
+<a href="#find_references" class="anchor"></a>find_references</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">references &lt;-<span class="st"> </span><span class="kw"><a href="../reference/find_references.html">find_references</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_with_references.xml"</span>))</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># we need to remove line breaks for knitr::kable() to work properly for printing</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">references &lt;-<span class="st"> </span>references <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">references =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(references, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>))</a></code></pre></div>
 <p>We have two columns:</p>
 <ul>
 <li>
@@ -248,62 +260,121 @@
 </ul>
 <p>Here I display the first 5 entries for each column:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">references <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span>purrr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map</a></span>(head, <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt; $basename_id</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt; [1] "sample_with_references" "sample_with_references"</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt; [3] "sample_with_references" "sample_with_references"</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; [5] "sample_with_references"</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt; $references</span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt; [1] "Bibliography: Entamoeba ranarumn"                                                                                                               </span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt; [2] "DOBELL, C.C.\n1909 Researches on the intestinal Protozoa of frogs and toads. Quart. Jour. Micros.\nSc., 53:201-276, 4 pl. and 1 textfig."       </span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt; [3] "1918 Are Entamoeba histolytica and Entamoeba ranarum the same species? An experi-\nmental study. Parasit., 10:294-310."                         </span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt; [4] "References: Leptotheca ohilmacheri"                                                                                                             </span></a>
-<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt; [5] "KUDO, R.\n1920 Studies on Myxosporidia. A Synopsis of Genera and Species of Myxosporidia.\nill. Biol. Monogr., 5:243-503, 25 pl. and 2 textfig."</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">basename_id</th>
+<th align="left">references</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">sample_with_references</td>
+<td align="left">Bibliography: Entamoeba ranarumn</td>
+</tr>
+<tr class="even">
+<td align="left">sample_with_references</td>
+<td align="left">DOBELL, C.C.1909 Researches on the intestinal Protozoa of frogs and toads. Quart. Jour. Micros.Sc., 53:201-276, 4 pl. and 1 textfig.</td>
+</tr>
+<tr class="odd">
+<td align="left">sample_with_references</td>
+<td align="left">1918 Are Entamoeba histolytica and Entamoeba ranarum the same species? An experi-mental study. Parasit., 10:294-310.</td>
+</tr>
+<tr class="even">
+<td align="left">sample_with_references</td>
+<td align="left">References: Leptotheca ohilmacheri</td>
+</tr>
+<tr class="odd">
+<td align="left">sample_with_references</td>
+<td align="left">KUDO, R.1920 Studies on Myxosporidia. A Synopsis of Genera and Species of Myxosporidia.ill. Biol. Monogr., 5:243-503, 25 pl. and 2 textfig.</td>
+</tr>
+</tbody>
+</table>
 <p>This example shows several things: <code>basename_id</code> is identical among rows, since it identifies the article and all references came from one article.</p>
 <p>The content of references (<code>references</code>) is in quite a raw state, quite often the result of digitising scans via OCR. Very often, the first entry in this column is something like “Bibliography” or “References”, which is simply the heading within the article. In the above example there are several headings, because the sample file doesn’t follow a typical convention (it was published in 1922).</p>
 <p>Note, that there might be other content present like endnotes, in case the article used endnotes rather than footnotes.</p>
 </div>
 <div id="find_footnotes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#find_footnotes" class="anchor"></a><code>find_footnotes</code>
-</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="../reference/find_footnotes.html">find_footnotes</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_with_references.xml"</span>))</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt; # A tibble: 1 x 2</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;   basename_id            footnotes</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;   &lt;chr&gt;                  &lt;chr&gt;    </span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; 1 sample_with_references &lt;NA&gt;</span></a></code></pre></div>
+<a href="#find_footnotes" class="anchor"></a>find_footnotes</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="../reference/find_footnotes.html">find_footnotes</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_with_references.xml"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">basename_id</th>
+<th align="left">footnotes</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="left">sample_with_references</td>
+<td align="left">NA</td>
+</tr></tbody>
+</table>
 <p>Very commonly, articles either have footnotes or references. The sample file used here does not have footnotes, therefore a simple <code>tibble</code> with missing footnotes is returned.</p>
 <p>I will use another file to demonstrate footnotes.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">footnotes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/find_footnotes.html">find_footnotes</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_with_footnotes.xml"</span>))</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">footnotes</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; # A tibble: 7 x 2</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt;   basename_id           footnotes                                         </span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt;   &lt;chr&gt;                 &lt;chr&gt;                                             </span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt; 1 sample_with_footnotes [Footnotes]                                       </span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt; 2 sample_with_footnotes "9\nQuarterly, vol. XIII, no. 1,\nentries for Apr…</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; 3 sample_with_footnotes "10\nQuarterly, vol. XIII,\nno. 1, p. 8."         </span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt; 4 sample_with_footnotes "14\nQuarterly, vol. VIII, no. 1.\nOlympia Columb…</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt; 5 sample_with_footnotes "26\nQuarterly, vol. XII,\nno. 2, p. 141."        </span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt; 6 sample_with_footnotes "32\nDr. David S. Maynard, later (March 31, 1852)"</span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; 7 sample_with_footnotes "34\nThomas Linklater, Shepherd, since October 6,…</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">footnotes <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">footnotes =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(footnotes, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">basename_id</th>
+<th align="left">footnotes</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">sample_with_footnotes</td>
+<td align="left">[Footnotes]</td>
+</tr>
+<tr class="even">
+<td align="left">sample_with_footnotes</td>
+<td align="left">9Quarterly, vol. XIII, no. 1,entries for April 19 and 21.</td>
+</tr>
+<tr class="odd">
+<td align="left">sample_with_footnotes</td>
+<td align="left">10Quarterly, vol. XIII,no. 1, p. 8.</td>
+</tr>
+<tr class="even">
+<td align="left">sample_with_footnotes</td>
+<td align="left">14Quarterly, vol. VIII, no. 1.Olympia Columbian, Sept. 11, 1852,</td>
+</tr>
+<tr class="odd">
+<td align="left">sample_with_footnotes</td>
+<td align="left">26Quarterly, vol. XII,no. 2, p. 141.</td>
+</tr>
+<tr class="even">
+<td align="left">sample_with_footnotes</td>
+<td align="left">32Dr. David S. Maynard, later (March 31, 1852)</td>
+</tr>
+<tr class="odd">
+<td align="left">sample_with_footnotes</td>
+<td align="left">34Thomas Linklater, Shepherd, since October 6, 1849,</td>
+</tr>
+</tbody>
+</table>
 <p>In general, you might need to combine <code><a href="../reference/find_footnotes.html">find_footnotes()</a></code> with <code><a href="../reference/find_references.html">find_references()</a></code> to get all available information on citation data.</p>
 </div>
 <div id="find_fulltext" class="section level2">
 <h2 class="hasAnchor">
-<a href="#find_fulltext" class="anchor"></a><code>find_fulltext</code>
-</h2>
+<a href="#find_fulltext" class="anchor"></a>find_fulltext</h2>
 <p>The function to extract full texts can’t be demonstrated with proper data, since the full texts are only supplied upon special request with DfR. The function guesses the encoding of the specified file via <code><a href="http://www.rdocumentation.org/packages/readr/topics/encoding">readr::guess_encoding()</a></code>, reads the whole file and returns a <code>tibble</code> with <code>basename_id</code>, <code>full_text</code> and <code>encoding</code>.</p>
 <p>I created a file that looks similar to files supplied by DfR with sample text:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">full_text &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_full_text.html">read_full_text</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_full_text.txt"</span>))</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">full_text</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt; # A tibble: 1 x 3</span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co">#&gt;   basename_id      full_text                                      encoding</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt;   &lt;chr&gt;            &lt;chr&gt;                                          &lt;chr&gt;   </span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt; 1 sample_full_text "&lt;plain_text&gt; &lt;page sequence=\"1\"&gt;Lorem ipsu… ASCII</span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">full_text[[<span class="st">"full_text"</span>]]</a>
-<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt; [1] "&lt;plain_text&gt; &lt;page sequence=\"1\"&gt;Lorem ipsum dolor sit amet, \nconsectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore \nmagna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris\nnisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in \nvoluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint\nobcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim\nid est laborum.\n&lt;/page&gt;  &lt;/plain_text&gt;\n"</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-2" data-line-number="2">full_text <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">full_text =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(full_text, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">basename_id</th>
+<th align="left">full_text</th>
+<th align="left">encoding</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="left">sample_full_text</td>
+<td align="left"><plain_text><page sequence="1">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laborisnisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sintobcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit animid est laborum.</page></plain_text></td>
+<td align="left">ASCII</td>
+</tr></tbody>
+</table>
 </div>
 <div id="combining-results" class="section level2">
 <h2 class="hasAnchor">
@@ -315,7 +386,7 @@
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">meta_data <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(authors) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(basename_id, article_title, pub_year, given_name, surname) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">  </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a>
 <a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; Joining, by = "basename_id"</span></a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -340,21 +411,53 @@
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">meta_data <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(references) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(basename_id, pub_year, references) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) </a>
-<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="co">#&gt; Joining, by = "basename_id"</span></a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt; # A tibble: 10 x 3</span></a>
-<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co">#&gt;    basename_id            pub_year references                             </span></a>
-<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="co">#&gt;    &lt;chr&gt;                     &lt;int&gt; &lt;chr&gt;                                  </span></a>
-<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="co">#&gt;  1 sample_with_references     1922 Bibliography: Entamoeba ranarumn       </span></a>
-<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="co">#&gt;  2 sample_with_references     1922 "DOBELL, C.C.\n1909 Researches on the …</span></a>
-<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="co">#&gt;  3 sample_with_references     1922 "1918 Are Entamoeba histolytica and En…</span></a>
-<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">#&gt;  4 sample_with_references     1922 References: Leptotheca ohilmacheri     </span></a>
-<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt;  5 sample_with_references     1922 "KUDO, R.\n1920 Studies on Myxosporidi…</span></a>
-<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co">#&gt;  6 sample_with_references     1922 "1921 On the nature of structures char…</span></a>
-<a class="sourceLine" id="cb11-15" data-line-number="15"><span class="co">#&gt;  7 sample_with_references     1922 "1922 On the morphology and life histo…</span></a>
-<a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co">#&gt;  8 sample_with_references     1922 References: Haemogregarines            </span></a>
-<a class="sourceLine" id="cb11-17" data-line-number="17"><span class="co">#&gt;  9 sample_with_references     1922 "DUTTON, J. E., J. L. TODD and E. N. T…</span></a>
-<a class="sourceLine" id="cb11-18" data-line-number="18"><span class="co">#&gt; 10 sample_with_references     1922 "FRANNÇA, C.\n1917 Sur la classificati…</span></a></code></pre></div>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw">head</span>(<span class="dv">7</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt; Joining, by = "basename_id"</span></a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">basename_id</th>
+<th align="right">pub_year</th>
+<th align="left">references</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">sample_with_references</td>
+<td align="right">1922</td>
+<td align="left">Bibliography: Entamoeba ranarumn</td>
+</tr>
+<tr class="even">
+<td align="left">sample_with_references</td>
+<td align="right">1922</td>
+<td align="left">DOBELL, C.C.1909 Researches on the intestinal Protozoa of frogs and toads. Quart. Jour. Micros.Sc., 53:201-276, 4 pl. and 1 textfig.</td>
+</tr>
+<tr class="odd">
+<td align="left">sample_with_references</td>
+<td align="right">1922</td>
+<td align="left">1918 Are Entamoeba histolytica and Entamoeba ranarum the same species? An experi-mental study. Parasit., 10:294-310.</td>
+</tr>
+<tr class="even">
+<td align="left">sample_with_references</td>
+<td align="right">1922</td>
+<td align="left">References: Leptotheca ohilmacheri</td>
+</tr>
+<tr class="odd">
+<td align="left">sample_with_references</td>
+<td align="right">1922</td>
+<td align="left">KUDO, R.1920 Studies on Myxosporidia. A Synopsis of Genera and Species of Myxosporidia.ill. Biol. Monogr., 5:243-503, 25 pl. and 2 textfig.</td>
+</tr>
+<tr class="even">
+<td align="left">sample_with_references</td>
+<td align="right">1922</td>
+<td align="left">1921 On the nature of structures characteristic of Cnidosporidian spores. Trans.Micro. Soc., 40:60-74.</td>
+</tr>
+<tr class="odd">
+<td align="left">sample_with_references</td>
+<td align="right">1922</td>
+<td align="left">1922 On the morphology and life history of a Myxosporidian, Leptotheca ohlmacheri,parasitic in Rana clamitans and Rana pipiens. Parasitology, 14, no. 2.</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -414,7 +517,7 @@
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">chapters <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>abstract) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="st">  </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">book_id</th>
@@ -538,22 +641,68 @@
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">author_chap <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">unnest</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(part_id, given_name, surname) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="co">#&gt; # A tibble: 10 x 3</span></a>
-<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="co">#&gt;    part_id       given_name surname </span></a>
-<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="co">#&gt;    &lt;chr&gt;         &lt;chr&gt;      &lt;chr&gt;   </span></a>
-<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="co">#&gt;  1 j.ctt24hdz7.1 &lt;NA&gt;       &lt;NA&gt;    </span></a>
-<a class="sourceLine" id="cb17-9" data-line-number="9"><span class="co">#&gt;  2 j.ctt24hdz7.2 &lt;NA&gt;       &lt;NA&gt;    </span></a>
-<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="co">#&gt;  3 j.ctt24hdz7.3 &lt;NA&gt;       &lt;NA&gt;    </span></a>
-<a class="sourceLine" id="cb17-11" data-line-number="11"><span class="co">#&gt;  4 j.ctt24hdz7.4 &lt;NA&gt;       &lt;NA&gt;    </span></a>
-<a class="sourceLine" id="cb17-12" data-line-number="12"><span class="co">#&gt;  5 j.ctt24hdz7.5 Jon        Fraenkel</span></a>
-<a class="sourceLine" id="cb17-13" data-line-number="13"><span class="co">#&gt;  6 j.ctt24hdz7.5 Stewart    Firth   </span></a>
-<a class="sourceLine" id="cb17-14" data-line-number="14"><span class="co">#&gt;  7 j.ctt24hdz7.6 Brij V.    Lal     </span></a>
-<a class="sourceLine" id="cb17-15" data-line-number="15"><span class="co">#&gt;  8 j.ctt24hdz7.7 Jon        Fraenkel</span></a>
-<a class="sourceLine" id="cb17-16" data-line-number="16"><span class="co">#&gt;  9 j.ctt24hdz7.8 Brij V.    Lal     </span></a>
-<a class="sourceLine" id="cb17-17" data-line-number="17"><span class="co">#&gt; 10 j.ctt24hdz7.9 Robert     Norton</span></a></code></pre></div>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">part_id</th>
+<th align="left">given_name</th>
+<th align="left">surname</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">j.ctt24hdz7.1</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">j.ctt24hdz7.2</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">j.ctt24hdz7.3</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">j.ctt24hdz7.4</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">j.ctt24hdz7.5</td>
+<td align="left">Jon</td>
+<td align="left">Fraenkel</td>
+</tr>
+<tr class="even">
+<td align="left">j.ctt24hdz7.5</td>
+<td align="left">Stewart</td>
+<td align="left">Firth</td>
+</tr>
+<tr class="odd">
+<td align="left">j.ctt24hdz7.6</td>
+<td align="left">Brij V.</td>
+<td align="left">Lal</td>
+</tr>
+<tr class="even">
+<td align="left">j.ctt24hdz7.7</td>
+<td align="left">Jon</td>
+<td align="left">Fraenkel</td>
+</tr>
+<tr class="odd">
+<td align="left">j.ctt24hdz7.8</td>
+<td align="left">Brij V.</td>
+<td align="left">Lal</td>
+</tr>
+<tr class="even">
+<td align="left">j.ctt24hdz7.9</td>
+<td align="left">Robert</td>
+<td align="left">Norton</td>
+</tr>
+</tbody>
+</table>
 <p>You can learn more about the concept of list-columns in Hadley Wickham’s book <a href="http://r4ds.had.co.nz/many-models.html">R for Data Science</a>.</p>
-</div>
 </div>
   </div>
 
@@ -565,11 +714,11 @@
 <li><a href="#general-concept">General Concept</a></li>
       <li>
 <a href="#application">Application</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#find_article"><code>find_article</code></a></li>
-      <li><a href="#find_authors"><code>find_authors</code></a></li>
-      <li><a href="#find_references"><code>find_references</code></a></li>
-      <li><a href="#find_footnotes"><code>find_footnotes</code></a></li>
-      <li><a href="#find_fulltext"><code>find_fulltext</code></a></li>
+<li><a href="#find_article">find_article</a></li>
+      <li><a href="#find_authors">find_authors</a></li>
+      <li><a href="#find_references">find_references</a></li>
+      <li><a href="#find_footnotes">find_footnotes</a></li>
+      <li><a href="#find_fulltext">find_fulltext</a></li>
       <li><a href="#combining-results">Combining results</a></li>
       </ul>
 </li>
@@ -591,6 +740,8 @@
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>

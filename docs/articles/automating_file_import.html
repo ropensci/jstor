@@ -8,14 +8,17 @@
 <title>Automating File Import • jstor</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="Automating File Import">
+<meta property="og:description" content="">
+<meta name="twitter:card" content="summary">
+<!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -24,8 +27,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">jstor</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">jstor</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.6.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
@@ -76,17 +83,20 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Automating File Import</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-03-12</h4>
-          </div>
+            <h4 class="date">2018-05-15</h4>
+      
+      <small class="dont-index">Source: <a href="https://github.com/tklebel/jstor/blob/master/vignettes/automating_file_import.Rmd"><code>vignettes/automating_file_import.Rmd</code></a></small>
+      <div class="hidden name"><code>automating_file_import.Rmd</code></div>
+
+    </div>
 
     
     
-<div class="contents">
 <div id="intro" class="section level1">
 <h1 class="hasAnchor">
 <a href="#intro" class="anchor"></a>Intro</h1>
@@ -110,9 +120,9 @@
 </h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">file_names_listed &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">path =</span> example_dir, <span class="dt">full.names =</span> T, <span class="dt">pattern =</span> <span class="st">"*.xml"</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">file_names_listed</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; [1] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_book.xml"           </span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; [2] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_footnotes.xml" </span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; [3] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_references.xml"</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; [1] "/Library/Frameworks/R.framework/Versions/3.5/Resources/library/jstor/extdata/sample_book.xml"           </span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; [2] "/Library/Frameworks/R.framework/Versions/3.5/Resources/library/jstor/extdata/sample_with_footnotes.xml" </span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; [3] "/Library/Frameworks/R.framework/Versions/3.5/Resources/library/jstor/extdata/sample_with_references.xml"</span></a></code></pre></div>
 </div>
 <div id="system-and-find" class="section level2">
 <h2 class="hasAnchor">
@@ -245,7 +255,6 @@
 <pre><code>#&gt; [1] "metadata-1.csv" "metadata-2.csv" "metadata-3.csv" "metadata-4.csv"
 #&gt; [5] "metadata-5.csv"</code></pre>
 </div>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -279,6 +288,8 @@
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>

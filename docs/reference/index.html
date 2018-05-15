@@ -18,13 +18,19 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Function reference" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +53,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">jstor</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">jstor</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.6.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -91,6 +101,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -98,132 +109,145 @@
       
       </header>
 
-      <div class="row">
-  <div class="col-md-9">
+<div class="row">
+  <div class="contents col-md-9">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;0.2.6.9000</small>
-      </h1>
+      <h1>Reference</h1>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    <table class="ref-index">
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <colgroup>
+      <col class="alias" />
+      <col class="title" />
+    </colgroup>
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-import-metadata" class="hasAnchor"><a href="#section-import-metadata" class="anchor"></a>Import metadata</h2>
-            <p class="section-desc"><p>All functions in this category are to be applied to a single metadata file</p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="find_article.html">find_article</a></code> </p>
-          </td>
-          <td><p>Extract meta information for articles</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="find_authors.html">find_authors</a></code> </p>
-          </td>
-          <td><p>Extract author information</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="find_book.html">find_book</a></code> </p>
-          </td>
-          <td><p>Extract meta information for books</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="find_chapters.html">find_chapters</a></code> </p>
-          </td>
-          <td><p>Extract information on book chapters</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="find_footnotes.html">find_footnotes</a></code> </p>
-          </td>
-          <td><p>Extract all footnotes</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="find_references.html">find_references</a></code> </p>
-          </td>
-          <td><p>Extract all references</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-batch-import-many-files" class="hasAnchor"><a href="#section-batch-import-many-files" class="anchor"></a>Batch import many files</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="jstor_import.html">jstor_import</a></code> </p>
-          </td>
-          <td><p>Wrapper for file import</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-import-full-text" class="hasAnchor"><a href="#section-import-full-text" class="anchor"></a>Import full-text</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="read_full_text.html">read_full_text</a></code> </p>
-          </td>
-          <td><p>Import full-text</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-helper-functions" class="hasAnchor"><a href="#section-helper-functions" class="anchor"></a>Helper functions</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="get_basename.html">get_basename</a></code> </p>
-          </td>
-          <td><p>Extract the basename of a path</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="jstor_example.html">jstor_example</a></code> </p>
-          </td>
-          <td><p>Get path to jstor example</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-top-level-documentation" class="hasAnchor"><a href="#section-top-level-documentation" class="anchor"></a>Top level documentation</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="jstor.html">jstor</a></code> </p>
-          </td>
-          <td><p>jstor: Read Data from JSTOR/DfR</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+    <tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-import-metadata" class="hasAnchor"><a href="#section-import-metadata" class="anchor"></a>Import metadata</h2>
+          <p class="section-desc"><p>All functions in this category are to be applied to a single metadata file</p></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="find_article.html">find_article()</a></code> </p>
+        </td>
+        <td><p>Extract meta information for articles</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="find_authors.html">find_authors()</a></code> </p>
+        </td>
+        <td><p>Extract author information</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="find_book.html">find_book()</a></code> </p>
+        </td>
+        <td><p>Extract meta information for books</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="find_chapters.html">find_chapters()</a></code> </p>
+        </td>
+        <td><p>Extract information on book chapters</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="find_footnotes.html">find_footnotes()</a></code> </p>
+        </td>
+        <td><p>Extract all footnotes</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="find_references.html">find_references()</a></code> </p>
+        </td>
+        <td><p>Extract all references</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-batch-import-many-files" class="hasAnchor"><a href="#section-batch-import-many-files" class="anchor"></a>Batch import many files</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="jstor_import.html">jstor_import()</a></code> <code><a href="jstor_import.html">jst_import_zip()</a></code> </p>
+        </td>
+        <td><p>Wrapper for file import</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="jst_define_import.html">jst_define_import()</a></code> </p>
+        </td>
+        <td><p>Define an import specification</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-import-full-text-ngram" class="hasAnchor"><a href="#section-import-full-text-ngram" class="anchor"></a>Import full-text/ngram</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="read_full_text.html">read_full_text()</a></code> </p>
+        </td>
+        <td><p>Import full-text</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="jst_read_ngram.html">jst_read_ngram()</a></code> </p>
+        </td>
+        <td><p>Read ngram data</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-helper-functions" class="hasAnchor"><a href="#section-helper-functions" class="anchor"></a>Helper functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="get_basename.html">get_basename()</a></code> </p>
+        </td>
+        <td><p>Extract the basename of a path</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="jstor_example.html">jstor_example()</a></code> </p>
+        </td>
+        <td><p>Get path to jstor example</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="jst_preview_zip.html">jst_preview_zip()</a></code> </p>
+        </td>
+        <td><p>Preview contet of zip files</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-top-level-documentation" class="hasAnchor"><a href="#section-top-level-documentation" class="anchor"></a>Top level documentation</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="jstor.html">jstor</a></code> </p>
+        </td>
+        <td><p>jstor: Read Data from JSTOR/DfR</p></td>
+      </tr>
+    </tbody>
+    </table>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -231,7 +255,7 @@
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#section-import-metadata">Import metadata</a></li>
       <li><a href="#section-batch-import-many-files">Batch import many files</a></li>
-      <li><a href="#section-import-full-text">Import full-text</a></li>
+      <li><a href="#section-import-full-text-ngram">Import full-text/ngram</a></li>
       <li><a href="#section-helper-functions">Helper functions</a></li>
       <li><a href="#section-top-level-documentation">Top level documentation</a></li>
     </ul>
@@ -250,5 +274,8 @@
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+
