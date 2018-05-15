@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract meta information for articles — find_article • jstor</title>
+<title>Get table with information on journals — jst_get_journal_overview • jstor</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,10 +28,9 @@
 
 
 
-<meta property="og:title" content="Extract meta information for articles — find_article" />
+<meta property="og:title" content="Get table with information on journals — jst_get_journal_overview" />
 
-<meta property="og:description" content="find_article() extracts meta-data from JSTOR-XML files for journal
-articles." />
+<meta property="og:description" content="Download most recent or display cached version of data on journals." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,73 +115,77 @@ articles." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract meta information for articles</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tklebel/jstor/blob/master/R/article.R'><code>R/article.R</code></a></small>
-    <div class="hidden name"><code>find_article.Rd</code></div>
+    <h1>Get table with information on journals</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tklebel/jstor/blob/master/R/journal_info.R'><code>R/journal_info.R</code></a></small>
+    <div class="hidden name"><code>jst_get_journal_overview.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>find_article()</code> extracts meta-data from JSTOR-XML files for journal
-articles.</p>
+    <p>Download most recent or display cached version of data on journals.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>find_article</span>(<span class='no'>file_path</span>)</pre>
+    <pre class="usage"><span class='fu'>jst_get_journal_overview</span>(<span class='kw'>most_recent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>file_path</th>
-      <td><p>A <code>.xml</code>-file for a journal-article.</p></td>
+      <th>most_recent</th>
+      <td><p>Should the most recent version be downloaded from DfR?</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>tibble</code> containing the extracted meta-data with the following
-columns:</p><ul>
-<li><p>basename_id <em>(chr)</em>: The filename of the original .xml-file. Can be used
-for joining with other parts (authors, references, footnotes, full-texts).</p></li>
-<li><p>journal_doi <em>(chr)</em>: A registered identifier for the journal.</p></li>
-<li><p>journal_jcode <em>(chr)</em>: A identifier for the journal like "amerjsoci" for
-the "American Journal of Sociology".</p></li>
-<li><p>journal_pub_id <em>(chr)</em>: Similar to journal_jcode. Most of the time either
-one is present.</p></li>
-<li><p>journal_title <em>(chr)</em>: The title of the journal.</p></li>
-<li><p>article_doi <em>(chr)</em>: A registered unique identifier for the article.</p></li>
-<li><p>article_jcode <em>(chr)</em>: A unique identifier for the article (not a DOI).</p></li>
-<li><p>article_pub_id <em>(chr)</em>: Infrequent, either part of the DOI or the
-article_jcode.</p></li>
-<li><p>article_type <em>(chr)</em>: The type of article (research-article, book-review,
-etc.).</p></li>
-<li><p>article_title <em>(chr)</em>: The title of the article.</p></li>
-<li><p>volume <em>(chr)</em>: The volume the article was published in.</p></li>
-<li><p>issue <em>(chr)</em>: The issue the article was published in.</p></li>
-<li><p>language <em>(chr)</em>: The language of the article.</p></li>
-<li><p>pub_day <em>(chr)</em>: Publication day, if specified.</p></li>
-<li><p>pub_month <em>(chr)</em>: Publication month, if specified.</p></li>
-<li><p>pub_year <em>(int)</em>: Year of publication.</p></li>
-<li><p>first_page <em>(int)</em>: Page number for the first page of the article.</p></li>
-<li><p>last_page <em>(int)</em>: Page number for the last page of the article.</p></li>
-<li><p>page_range <em>(chr)</em>: The range of pages for the article.</p></li>
-</ul>
+    <p>A <code>tibble</code> with various information about journals.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-<p>A note about publication dates: always the first entry is being extracted,
-which should correspond to the oldest date, in case there is more than one
-date.</p>
+    <p>When analysing your sample of articles from DfR, it might be helpful to have
+some context about the journals in your sample. This function provides a
+<code>tibble</code> with various information like the full name of the journal, the
+short version of the name (sometimes referred to as <code>JCODE</code>), dates on where
+the first
+and last (available) issues were published, etc.</p>
+<p>The data on journals might change. Therefore this function provides two
+sources of data: a cached version which gets updated with every release, and
+the ability to pull the most recent version directly from DfR.</p>
+<p>The cached version was updated on 2018-05-15.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>find_article</span>(<span class='fu'><a href='jstor_example.html'>jstor_example</a></span>(<span class='st'>"sample_with_references.xml"</span>))</div><div class='output co'>#&gt; # A tibble: 1 x 19
-#&gt;   basename_id    journal_doi journal_jcode  journal_pub_id journal_title       
-#&gt;   &lt;chr&gt;          &lt;chr&gt;       &lt;chr&gt;          &lt;chr&gt;          &lt;chr&gt;               
-#&gt; 1 sample_with_r… &lt;NA&gt;        tranamermicrs… &lt;NA&gt;           Transactions of the…
-#&gt; # ... with 14 more variables: article_doi &lt;chr&gt;, article_pub_id &lt;chr&gt;,
-#&gt; #   article_jcode &lt;chr&gt;, article_type &lt;chr&gt;, article_title &lt;chr&gt;, volume &lt;chr&gt;,
-#&gt; #   issue &lt;chr&gt;, language &lt;chr&gt;, pub_day &lt;chr&gt;, pub_month &lt;chr&gt;,
-#&gt; #   pub_year &lt;int&gt;, first_page &lt;int&gt;, last_page &lt;int&gt;, page_range &lt;chr&gt;</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># use the function without arguments to get a tibble from disk</span>
+<span class='fu'>jst_get_journal_overview</span>()</div><div class='output co'>#&gt; # A tibble: 3,709 x 29
+#&gt;    publication_title        print_identifier online_identifi… date_first_issue…
+#&gt;    &lt;chr&gt;                    &lt;chr&gt;            &lt;chr&gt;            &lt;date&gt;           
+#&gt;  1 Acta Classica            0065-1141        2227-538X        1958-01-01       
+#&gt;  2 Acta Criminologica       0065-1168        1718-3243        1968-01-01       
+#&gt;  3 Acta Historica Academia… 0001-5849        2064-7182        1951-01-01       
+#&gt;  4 Acta Linguistica Academ… 0001-5946        2560-1814        1951-01-01       
+#&gt;  5 Acta Linguistica Hungar… 1216-8076        1588-2624        1988-01-01       
+#&gt;  6 Acta Musicologica        0001-6241        &lt;NA&gt;             1931-01-01       
+#&gt;  7 Acta Oeconomica          0001-6373        1588-2659        1966-01-01       
+#&gt;  8 Acta Orientalia Academi… 0001-6446        1588-2667        1950-01-01       
+#&gt;  9 Acta Sociologica         0001-6993        &lt;NA&gt;             1955-01-01       
+#&gt; 10 Acta Turistica           0353-4316        1848-6061        1989-01-01       
+#&gt; # ... with 3,699 more rows, and 25 more variables: num_first_vol_online &lt;chr&gt;,
+#&gt; #   num_first_issue_online &lt;chr&gt;, date_last_issue_online &lt;date&gt;,
+#&gt; #   num_last_vol_online &lt;chr&gt;, num_last_issue_online &lt;chr&gt;, title_url &lt;chr&gt;,
+#&gt; #   title_id &lt;chr&gt;, embargo_info &lt;chr&gt;, coverage_depth &lt;chr&gt;, notes &lt;chr&gt;,
+#&gt; #   publisher_name &lt;chr&gt;, publication_type &lt;chr&gt;,
+#&gt; #   date_monograph_published_print &lt;date&gt;,
+#&gt; #   date_monograph_published_online &lt;date&gt;, monograph_volume &lt;chr&gt;,
+#&gt; #   monograph_edition &lt;chr&gt;, parent_publication_title_id &lt;chr&gt;,
+#&gt; #   preceding_publication_title_id &lt;chr&gt;, access_type &lt;chr&gt;,
+#&gt; #   full_coverage &lt;chr&gt;, collection &lt;chr&gt;, discipline &lt;chr&gt;,
+#&gt; #   catalog_identifier_oclc &lt;chr&gt;, catalog_identifier_lccn &lt;chr&gt;,
+#&gt; #   archive_release_date &lt;date&gt;</div><div class='input'>
+</div><span class='co'># NOT RUN {</span>
+<span class='co'># download the most recent version from DfR</span>
+<span class='fu'>jst_get_journal_overview</span>(<span class='kw'>most_recent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -190,6 +193,8 @@ date.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

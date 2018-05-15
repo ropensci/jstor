@@ -47,6 +47,7 @@ reference:
   - '`get_basename`'
   - '`jstor_example`'
   - '`jst_preview_zip`'
+  - '`jst_get_journal_overview`'
   
 - title: Top level documentation
   contents:
