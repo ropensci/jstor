@@ -66,7 +66,7 @@ library(knitr)
 
 
 
-## `find_article`
+## find_article
 The basic usage of the `find_*` functions is very simple. They take only one 
 argument, the path to the file to import:
 ```{r}
@@ -107,7 +107,7 @@ Since the output from all functions are tibbles, the result is nicely formatted:
 meta_data %>% kable()
 ```
 
-## `find_authors`
+## find_authors
 Extracting the authors works in similar fashion:
 
 ```{r, results='asis'}
@@ -128,7 +128,7 @@ supplied, i.e.: `Albert Einstein`, or `Einstein, Albert`.
 
 The number of rows matches the number of authors -- each author get its' own row.
 
-## `find_references`
+## find_references
 ```{r}
 references <- find_references(jstor_example("sample_with_references.xml"))
 
@@ -163,7 +163,7 @@ Note, that there might be other content present like endnotes, in case the
 article used endnotes rather than footnotes.
 
 
-## `find_footnotes`
+## find_footnotes
 ```{r, results='asis'}
 find_footnotes(jstor_example("sample_with_references.xml")) %>% 
   kable()
@@ -187,7 +187,7 @@ footnotes %>%
 In general, you might need to combine `find_footnotes()` with
 `find_references()` to get all available information on citation data.
 
-## `find_fulltext`
+## find_fulltext
 The function to extract full texts can't be demonstrated with proper data, since
 the full texts are only supplied upon special request with DfR. The function
 guesses the encoding of the specified file via `readr::guess_encoding()`, reads
