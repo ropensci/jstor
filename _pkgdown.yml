@@ -34,15 +34,19 @@ reference:
 - title: Batch import many files
   contents:
   - '`jstor_import`'
+  - '`jst_import_zip`'
+  - '`jst_define_import`'
   
-- title: Import full-text
+- title: Import full-text/ngram
   contents:
   - '`read_full_text`'
+  - '`jst_read_ngram`'
   
 - title: Helper functions
   contents:
   - '`get_basename`'
   - '`jstor_example`'
+  - '`jst_preview_zip`'
   
 - title: Top level documentation
   contents:
