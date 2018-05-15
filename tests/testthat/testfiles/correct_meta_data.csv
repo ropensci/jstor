@@ -1,2 +1,2 @@
-basename_id,journal_doi,journal_jcode,journal_pub_id,article_doi,article_pub_id,article_jcode,article_type,article_title,volume,issue,language,pub_day,pub_month,pub_year,first_page,last_page,page_range
-standard_case,NA,kewbulletin,NA,10.2307/4117222,NA,NA,research-article,Two New Species of Ischaemum,5,2,eng,1,1,1950,187,188,187-188
+basename_id,journal_doi,journal_jcode,journal_pub_id,journal_title,article_doi,article_pub_id,article_jcode,article_type,article_title,volume,issue,language,pub_day,pub_month,pub_year,first_page,last_page,page_range
+standard_case,NA,kewbulletin,NA,Kew Bulletin,10.2307/4117222,NA,NA,research-article,Two New Species of Ischaemum,5,2,eng,1,1,1950,187,188,187-188

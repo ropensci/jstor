@@ -103,3 +103,8 @@ test_that("language is correct", {
 test_that("page_range is correct", {
   expect_identical(result[["page_range"]], "187-188")
 })
+
+test_that("journal_title is correct", {
+  expect_identical(result[["journal_title"]], "Kew Bulletin")
+  expect_identical(result_empty[["journal_title"]], NA_character_)
+})

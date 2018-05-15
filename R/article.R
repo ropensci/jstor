@@ -14,6 +14,7 @@
 #'   the "American Journal of Sociology".
 #' - journal_pub_id *(chr)*: Similar to journal_jcode. Most of the time either
 #'   one is present.
+#' - journal_title *(chr)*: The title of the journal.
 #' - article_doi *(chr)*: A registered unique identifier for the article.
 #' - article_jcode *(chr)*: A unique identifier for the article (not a DOI).
 #' - article_pub_id *(chr)*: Infrequent, either part of the DOI or the 
@@ -53,6 +54,10 @@ find_article <- function(file_path) {
   basename_id <- list(basename_id = get_basename(file_path))
 
   journal_ids <- extract_jcode(front)
+  journal_title <- list(
+    journal_title = extract_child(front, ".//journal-title")
+  )
+  
   article_ids <- extract_article_id(front)
 
   out <- list(
@@ -71,7 +76,7 @@ find_article <- function(file_path) {
     page_range = extract_child(article, "page-range")
   )
 
-  dplyr::bind_cols(basename_id, journal_ids, article_ids, out)
+  dplyr::bind_cols(basename_id, journal_ids, journal_title, article_ids, out)
 }
 
 

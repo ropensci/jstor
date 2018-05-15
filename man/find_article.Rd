@@ -20,6 +20,7 @@ for joining with other parts (authors, references, footnotes, full-texts).
 the "American Journal of Sociology".
 \item journal_pub_id \emph{(chr)}: Similar to journal_jcode. Most of the time either
 one is present.
+\item journal_title \emph{(chr)}: The title of the journal.
 \item article_doi \emph{(chr)}: A registered unique identifier for the article.
 \item article_jcode \emph{(chr)}: A unique identifier for the article (not a DOI).
 \item article_pub_id \emph{(chr)}: Infrequent, either part of the DOI or the
