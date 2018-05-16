@@ -1,5 +1,56 @@
-jst_combine_outputs <- function(path, out_path = NULL, overwrite = FALSE,
-                        clean_up = FALSE) {
+#' Combine outputs from converted files
+#' 
+#' `jst_combine_outputs()` helps you to manage the multitude of files you might
+#' receive after running [jstor_import()] or [jst_import_zip()] with more than
+#' one batch. 
+#' 
+#' Splitting the output of [jstor_import()] or [jst_import_zip()] might be done
+#' for multiple reasons, but in the end you possibly want to combine all outputs
+#' into one file/data.frame. This function makes a few assumptions in order to
+#' combine files: 
+#' 
+#' - Files with similar names (except for trailing dashes with numbers) will be
+#'   combined into one file.
+#' - The names of the combined files are determined from the original files.
+#'   If you want to combine `foo-1.csv` and `foo-2.csv`, the combined file will
+#'   be `combined_foo.csv`.
+#' 
+#' @param path A path to a directory, containing .csv-files from
+#'  [jstor_import()] or [jst_import_zip()].
+#' @param write_to_file Should to combined data be written to a file?
+#' @param out_path A directory where to write the combined files.
+#' @param overwrite Should files be overwritten?
+#' @param clean_up Do you want to remove the original batch files? Use with
+#' caution.
+#' 
+#' @examples
+#' # set up a temporary directory
+#' tmp <- tempdir()
+#' 
+#' # find multiple files
+#' file_list <- rep(jstor_example("sample_with_references.xml"), 2)
+#'
+#' # convert and write to file
+#' jstor_import(file_list, "article", out_path = tmp, .f = find_article,
+#'              n_batches = 2)
+#'              
+#' # combine outputs
+#' jst_combine_outputs(tmp)
+#' list.files(tmp, "csv")
+#' 
+#' # Trying to combine the files again raises an error.
+#' jst_combine_outputs(tmp)
+#' jst_combine_outputs(tmp, overwrite = T)
+#' 
+#' # we can remove the original files too
+#' jst_combine_outputs(tmp, overwrite = T, clean_up = TRUE)
+#' list.files(tmp, "csv")
+#' 
+#' @seealso [jst_re_import()]
+#' @export
+jst_combine_outputs <- function(path, write_to_file = TRUE,
+                                out_path = NULL, overwrite = FALSE, 
+                                clean_up = FALSE) {
   
   files <- list.files(path, pattern = "-\\d+.csv", full.names = T)
   
@@ -9,32 +60,39 @@ jst_combine_outputs <- function(path, out_path = NULL, overwrite = FALSE,
     purrr::map(~dplyr::pull(.data = ., files))
   
   
-  if (is.null(out_path)) {
-    out_names <- file.path(path, paste0("combined_",
-                                        basename(names(splitted_paths)),
-                                        ".csv"))
-  } else {
-    out_names <- file.path(out_path, paste0("combined_",
-                           basename(names(splitted_paths)), ".csv"))
-  }
-
-  
-  if (any(file.exists(out_names)) && !overwrite) {
-    abort(paste0("The file(s) `", paste0(out_names, collapse = "`, `"),
-                 "`` already exists. Do you want",
-                 " `overwrite = TRUE`?"))
-  }
-  
-  
-  helper_fun <- function(x, path) {
+  reader <- function(x) {
     message("Re-importing ", length(x), " batches.")
-    re_imported <- purrr::map_df(x, jst_re_import)
-    
-    message("Writing combined file `", path, "` to disk.")
-    write_csv(re_imported, path = path)
+    purrr::map_df(x, jst_re_import)
   }
   
-  purrr::walk2(splitted_paths, out_names, helper_fun)
+  writer <- function(x, path) {
+    message("Writing combined file `", path, "` to disk.")
+    write_csv(x, path = path)
+  }
+  
+  re_imported <- purrr::map(splitted_paths, reader)
+  
+  if (write_to_file) {
+    if (is.null(out_path)) {
+      out_path <- file.path(path, paste0("combined_",
+                                          basename(names(splitted_paths)),
+                                          ".csv"))
+    } else {
+      out_path <- file.path(out_path, paste0("combined_",
+                                              basename(names(splitted_paths)), 
+                                              ".csv"))
+    }
+    
+    if (any(file.exists(out_path)) && !overwrite) {
+      abort(paste0("The file(s) `", paste0(out_path, collapse = "`, `"),
+                   "`` already exists. Do you want",
+                   " `overwrite = TRUE`?"))
+    }
+    
+    purrr::walk2(re_imported, out_path, writer)
+  } else {
+    return(re_imported)
+  }
 
   if (clean_up) {
     message("Deleting original batches.")
@@ -43,7 +101,24 @@ jst_combine_outputs <- function(path, out_path = NULL, overwrite = FALSE,
   
 }
 
-
+#' Re-import files 
+#' 
+#' `jst_re_import()` lets you re-import a file which was exported via 
+#' [jstor_import()] or [jst_import_zip()].
+#' 
+#' When attempting to re-import, a heuristic is applied. If the file has column
+#' names which match the names from any of the `find_*` functions, the file
+#' is read with the corresponding specifications. If no column names are
+#' recognized, files are recognized based on the number of columns. Since both
+#' references and footnotes have only two columns, the first line is inspected
+#' for either `"Referenc...|Bilbio..."` or `"Footnote...|Endnote..."`.
+#' In case there is still no match, the file is read with
+#' [readr::read_csv()] with `guess_max = 5000` and a warning is raised.
+#' 
+#' @param file A path to a .csv file.
+#' 
+#' @seealso [jst_combine_outputs()]
+#' @export
 jst_re_import <- function(file) {
   file <- check_path(file)
   
