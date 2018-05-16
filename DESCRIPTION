@@ -21,7 +21,8 @@ Imports:
     rlang,
     foreach,
     doSNOW,
-    snow
+    snow,
+    readxl
 Suggests: testthat,
     covr,
     knitr,

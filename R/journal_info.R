@@ -30,24 +30,25 @@
 #' }
 jst_get_journal_overview <- function(most_recent = FALSE) {
   if (most_recent) {
-    link <- "https://www.jstor.org/kbart/collections/all-archive-titles?fileFormat=txt"
+    link <- "https://www.jstor.org/titlelists/journals/archive?fileFormat=xls"
     
-    message("Downloading files from ", link)
+    journal_list <- tempfile()
+    download.file(link, journal_list)
     
-    # the file and therefore the import is currently quite broken
-    journals <- suppressWarnings(
-      readr::read_tsv(link, col_types = "cccDccDccccccccccDDcccccccccccDD")
-    )
+    journals <- readxl::read_xls(journal_list)
+
+    fix_names <- function(names) {
+      names %>% 
+        tolower() %>%
+        str_remove("\\s\\(.*") %>% #remove (years) after coverage_range
+        str_replace_all("\\s", "_")
+    }
     
-    # remove attributes
-    attr(journals, "problems") <- NULL
-    attr(journals, "spec") <- NULL
     
-    # use this heuristic to get only proper journals and remove some columns
     journals %>% 
-      dplyr::filter(!is.na(full_coverage)) %>% 
-      dplyr::select(-dplyr::one_of("publication_date", "first_author",
-                                   "first_editor"))
+      set_names(fix_names(names(.))) %>% 
+      mutate(journal_id = stringr::str_extract(url, "[^\\/]+$")) %>% 
+      select(title, journal_id, everything())
     
   } else {
     jstor_journals
