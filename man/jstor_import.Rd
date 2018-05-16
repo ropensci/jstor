@@ -108,3 +108,6 @@ jstor_import_zip("my_archive.zip", out_file = "my_out_file",
                  import_spec = imports)
 } 
 }
+\seealso{
+\code{\link[=jst_combine_outputs]{jst_combine_outputs()}}
+}

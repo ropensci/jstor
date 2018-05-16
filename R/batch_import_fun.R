@@ -155,6 +155,7 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #'
 #' @return Writes `.csv`-files to disk.
 #'
+#' @seealso [jst_combine_outputs()]
 #' @export
 #' @examples 
 #' \dontrun{
