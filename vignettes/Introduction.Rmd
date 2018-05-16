@@ -248,9 +248,9 @@ meta_data %>%
 
 ```{r, results='asis'}
 meta_data %>% 
-  left_join(references) %>%
-  select(basename_id, pub_year, references) %>%
-  head(7) %>% 
+  left_join(references) %>% 
+  select(basename_id, article_title, volume, pub_year, references) %>%
+  head(5) %>% 
   kable()
 ```
 
