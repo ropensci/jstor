@@ -150,31 +150,22 @@ the ability to pull the most recent version directly from DfR.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># use the function without arguments to get a tibble from disk</span>
-<span class='fu'>jst_get_journal_overview</span>()</div><div class='output co'>#&gt; # A tibble: 3,709 x 29
-#&gt;    publication_title        print_identifier online_identifi… date_first_issue…
-#&gt;    &lt;chr&gt;                    &lt;chr&gt;            &lt;chr&gt;            &lt;date&gt;           
-#&gt;  1 Acta Classica            0065-1141        2227-538X        1958-01-01       
-#&gt;  2 Acta Criminologica       0065-1168        1718-3243        1968-01-01       
-#&gt;  3 Acta Historica Academia… 0001-5849        2064-7182        1951-01-01       
-#&gt;  4 Acta Linguistica Academ… 0001-5946        2560-1814        1951-01-01       
-#&gt;  5 Acta Linguistica Hungar… 1216-8076        1588-2624        1988-01-01       
-#&gt;  6 Acta Musicologica        0001-6241        &lt;NA&gt;             1931-01-01       
-#&gt;  7 Acta Oeconomica          0001-6373        1588-2659        1966-01-01       
-#&gt;  8 Acta Orientalia Academi… 0001-6446        1588-2667        1950-01-01       
-#&gt;  9 Acta Sociologica         0001-6993        &lt;NA&gt;             1955-01-01       
-#&gt; 10 Acta Turistica           0353-4316        1848-6061        1989-01-01       
-#&gt; # ... with 3,699 more rows, and 25 more variables: num_first_vol_online &lt;chr&gt;,
-#&gt; #   num_first_issue_online &lt;chr&gt;, date_last_issue_online &lt;date&gt;,
-#&gt; #   num_last_vol_online &lt;chr&gt;, num_last_issue_online &lt;chr&gt;, title_url &lt;chr&gt;,
-#&gt; #   title_id &lt;chr&gt;, embargo_info &lt;chr&gt;, coverage_depth &lt;chr&gt;, notes &lt;chr&gt;,
-#&gt; #   publisher_name &lt;chr&gt;, publication_type &lt;chr&gt;,
-#&gt; #   date_monograph_published_print &lt;date&gt;,
-#&gt; #   date_monograph_published_online &lt;date&gt;, monograph_volume &lt;chr&gt;,
-#&gt; #   monograph_edition &lt;chr&gt;, parent_publication_title_id &lt;chr&gt;,
-#&gt; #   preceding_publication_title_id &lt;chr&gt;, access_type &lt;chr&gt;,
-#&gt; #   full_coverage &lt;chr&gt;, collection &lt;chr&gt;, discipline &lt;chr&gt;,
-#&gt; #   catalog_identifier_oclc &lt;chr&gt;, catalog_identifier_lccn &lt;chr&gt;,
-#&gt; #   archive_release_date &lt;date&gt;</div><div class='input'>
+<span class='fu'>jst_get_journal_overview</span>()</div><div class='output co'>#&gt; # A tibble: 4,132 x 12
+#&gt;    title journal_id issn  eissn doi   url   discipline publisher coverage_range
+#&gt;    &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;         
+#&gt;  1 14th… 14centeng… 0737… &lt;NA&gt;  10.2… http… Humanitie… Penn Sta… 1974-1983     
+#&gt;  2 19th… 19thcentu… 0148… 1533… 10.2… http… Arts ; Mu… Universi… 1977-2014     
+#&gt;  3 291   291        1054… &lt;NA&gt;  10.2… http… Art &amp; Art… Thomas J… 1915-1916     
+#&gt;  4 4S R… 4sreview   0738… &lt;NA&gt;  10.2… http… History ;… Sage Pub… 1972-1985     
+#&gt;  5 A.A.… aavnewsle… 2154… &lt;NA&gt;  10.2… http… Biologica… Associat… 1980-1986     
+#&gt;  6 A.I.… aihpnotes  2161… 2329… 10.2… http… History ;… American… 1955-1957     
+#&gt;  7 AA F… aafiles    0261… &lt;NA&gt;  10.2… http… Architect… Architec… 1981-2017     
+#&gt;  8 AAA:… aaaarbean… 0171… &lt;NA&gt;  10.2… http… American … Narr Fra… 1976-2016     
+#&gt;  9 AATS… aatseeljo… 2325… 2379… 10.2… http… Area Stud… American… 1945-1956     
+#&gt; 10 AAUP… aaupbulle… 0001… &lt;NA&gt;  10.2… http… Education… American… 1915-1978     
+#&gt; # ... with 4,122 more rows, and 3 more variables:
+#&gt; #   oclc_catalog_identifier &lt;chr&gt;, lccn_catalog_identifier &lt;chr&gt;,
+#&gt; #   archive_release_date &lt;chr&gt;</div><div class='input'>
 </div><span class='co'># NOT RUN {</span>
 <span class='co'># download the most recent version from DfR</span>
 <span class='fu'>jst_get_journal_overview</span>(<span class='kw'>most_recent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)

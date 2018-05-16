@@ -140,6 +140,8 @@
 <h2 class="hasAnchor">
 <a href="#other-changes" class="anchor"></a>Other changes</h2>
 <ul>
+<li>New function <code>jst_combine_outputs</code> applies <code>jst_re_import</code> to a whole directory and lets you combine all related files in one go. It uses the file structure that <code>jst_import</code> and <code>jst_import_zip</code> provide as a heuristic: a filename with a dash and one or multiple digits at its end (<code>filename-1.csv</code>). All files with identical names (disregarding dash and digits) are combined into one file.</li>
+<li>New function <code>jst_re_import</code> lets you re_import a <code>.csv</code> file that <code>jstor_import</code> or <code>jst_import_zip</code> had exported. It tries to guess the type of content based on the column names or, if column names are not available, from the number of columns, raising a warning if guessing fails and reverting to a generic import.</li>
 <li>New function <code>jst_get_journal_overview</code> supplies a tibble with contextual information about the journals in JSTOR.</li>
 <li>Improved documentation regarding endnotes (thanks <a href='http://github.com/elinw'>@elinw</a>)</li>
 <li>jstor_import has a new argument: <code>n_batches</code> which lets you specify the number of batches directly</li>

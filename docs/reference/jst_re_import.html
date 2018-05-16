@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read ngram data — jst_read_ngram • jstor</title>
+<title>Re-import files — jst_re_import • jstor</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Read ngram data — jst_read_ngram" />
+<meta property="og:title" content="Re-import files — jst_re_import" />
 
-<meta property="og:description" content="Read in data on ngrams via readr::read_tsv." />
+<meta property="og:description" content="jst_re_import() lets you re-import a file which was exported via
+jstor_import() or jst_import_zip()." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -108,41 +109,43 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read ngram data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tklebel/jstor/blob/master/R/ngram.R'><code>R/ngram.R</code></a></small>
-    <div class="hidden name"><code>jst_read_ngram.Rd</code></div>
+    <h1>Re-import files</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tklebel/jstor/blob/master/R/re-import.R'><code>R/re-import.R</code></a></small>
+    <div class="hidden name"><code>jst_re_import.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Read in data on ngrams via <a href='http://www.rdocumentation.org/packages/readr/topics/read_delim'>readr::read_tsv</a>.</p>
+    <p><code>jst_re_import()</code> lets you re-import a file which was exported via
+<code><a href='jstor_import.html'>jstor_import()</a></code> or <code><a href='jstor_import.html'>jst_import_zip()</a></code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>jst_read_ngram</span>(<span class='no'>file</span>)</pre>
+    <pre class="usage"><span class='fu'>jst_re_import</span>(<span class='no'>file</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>file</th>
-      <td><p>A path to a file.</p></td>
+      <td><p>A path to a .csv file.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A <a href='http://www.rdocumentation.org/packages/tibble/topics/tibble'>tibble::tibble</a> with two columns:</p><ul>
-<li><p><em>ngram</em>: the ngram term (unigram, bigram, trigram)</p></li>
-<li><p><em>n</em>: an integer for the number of times the term occurred in the original
-file</p></li>
-</ul>
-
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is mainly useful when it is used in together with
-<a href='jstor_import.html'>jst_import_zip</a>, where you can use it to specify reading in ngram data.</p>
+    <p>When attempting to re-import, a heuristic is applied. If the file has column
+names which match the names from any of the <code>find_*</code> functions, the file
+is read with the corresponding specifications. If no column names are
+recognized, files are recognized based on the number of columns. Since both
+references and footnotes have only two columns, the first line is inspected
+for either <code>"Referenc...|Bilbio..."</code> or <code>"Footnote...|Endnote..."</code>.
+In case there is still no match, the file is read with
+<code><a href='http://www.rdocumentation.org/packages/readr/topics/read_delim'>readr::read_csv()</a></code> with <code>guess_max = 5000</code> and a warning is raised.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='jst_combine_outputs.html'>jst_combine_outputs()</a></code></p></div>
     
 
   </div>
@@ -151,9 +154,9 @@ file</p></li>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#see-also">See also</a></li>
           </ul>
 
   </div>
