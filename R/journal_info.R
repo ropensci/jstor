@@ -46,7 +46,7 @@ jst_get_journal_overview <- function(most_recent = FALSE) {
     
     
     journals %>% 
-      set_names(fix_names(names(.))) %>% 
+      purrr::set_names(fix_names(names(.))) %>% 
       mutate(journal_id = stringr::str_extract(url, "[^\\/]+$")) %>% 
       dplyr::select(title, journal_id, dplyr::everything())
     
