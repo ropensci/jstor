@@ -13,7 +13,9 @@ jst_combine_outputs(path, write_to_file = TRUE, out_path = NULL,
 
 \item{write_to_file}{Should to combined data be written to a file?}
 
-\item{out_path}{A directory where to write the combined files.}
+\item{out_path}{A directory where to write the combined files. If no
+directory is supplied and \code{write_to_file}  is \code{TRUE}, the combined file is
+written to \code{path}.}
 
 \item{overwrite}{Should files be overwritten?}
 

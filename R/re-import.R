@@ -18,7 +18,9 @@
 #' @param path A path to a directory, containing .csv-files from
 #'  [jstor_import()] or [jst_import_zip()].
 #' @param write_to_file Should to combined data be written to a file?
-#' @param out_path A directory where to write the combined files.
+#' @param out_path A directory where to write the combined files. If no
+#' directory is supplied and `write_to_file`  is `TRUE`, the combined file is 
+#' written to `path`.
 #' @param overwrite Should files be overwritten?
 #' @param clean_up Do you want to remove the original batch files? Use with
 #' caution.
