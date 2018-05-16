@@ -8,7 +8,7 @@
 #' @param file A path to a file.
 #' @return A [tibble::tibble] with two columns: 
 #' - *ngram*: the ngram term (unigram, bigram, trigram)
-#' - *n*: an integer for the number of times the term occured in the original 
+#' - *n*: an integer for the number of times the term occurred in the original 
 #' file
 #' @export
 jst_read_ngram <- function(file) {

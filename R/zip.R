@@ -15,7 +15,7 @@ get_zip_content <- function(zip_archive) {
 }
 
 
-#' Preview contet of zip files
+#' Preview content of zip files
 #' 
 #' This function gives you a quick preview about what a .zip-file from DfR
 #' contains.

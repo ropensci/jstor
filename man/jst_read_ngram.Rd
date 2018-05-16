@@ -13,7 +13,7 @@ jst_read_ngram(file)
 A \link[tibble:tibble]{tibble::tibble} with two columns:
 \itemize{
 \item \emph{ngram}: the ngram term (unigram, bigram, trigram)
-\item \emph{n}: an integer for the number of times the term occured in the original
+\item \emph{n}: an integer for the number of times the term occurred in the original
 file
 }
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/zip.R
 \name{jst_preview_zip}
 \alias{jst_preview_zip}
-\title{Preview contet of zip files}
+\title{Preview content of zip files}
 \usage{
 jst_preview_zip(zip_archive)
 }
