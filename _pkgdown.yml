@@ -1,19 +1,21 @@
+template:
+  params:
+    bootswatch: simplex
+
 navbar:
   title: jstor
   type: default
   left:
   - icon: fa-home fa-lg
     href: index.html
+  - text: Introduction
+    href: articles/Introduction.html
+  - text: Automating File Import
+    href: articles/automating_file_import.html
+  - text: Case study -  ngrams
+    href: articles/analysing-n-grams.html
   - text: Reference
     href: reference/index.html
-  - text: Articles
-    menu:
-    - text: Introduction to `jstor`
-      href: articles/Introduction.html
-    - text: Automating File Import
-      href: articles/automating_file_import.html
-    - text: Analysing n-grams with jstor
-      href: articles/analysing-n-grams.html
   - text: News
     href: news/index.html
   right:
