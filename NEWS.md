@@ -41,6 +41,17 @@ Before importing all files from a zip-archive, you can get a quick overview with
 
 
 ## Other changes
+* New function `jst_combine_outputs` applies `jst_re_import` to a whole 
+directory and lets you combine all related files in one go. It uses the file 
+structure that `jst_import` and `jst_import_zip` provide as a heuristic: a
+filename
+with a dash and one or multiple digits at its end (`filename-1.csv`). All files
+with identical names (disregarding dash and digits) are combined into one file.
+* New function `jst_re_import` lets you re_import a `.csv` file that
+`jstor_import` or `jst_import_zip` had exported. It tries to guess the type of
+content based on the column names or, if column names are not available, from
+the number of columns, raising a warning if guessing fails and reverting to a
+generic import.
 * New function `jst_get_journal_overview` supplies a tibble with contextual
 information about the journals in JSTOR.
 * Improved documentation regarding endnotes (thanks @elinw)
