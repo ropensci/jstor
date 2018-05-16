@@ -12,6 +12,7 @@
 ^paper.md$
 ^paper.bib$
 ^docs$
+^pkgdown$
 ^_pkgdown\.yml$
 ^vignettes/analysing-n-grams.Rmd$
 ^vignettes/bigram_paths.rds$
