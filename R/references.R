@@ -33,7 +33,9 @@ find_references <- function(file_path) {
 
   validate_article(xml_file)
 
-  references <- extract_references(xml_file) %>%
+  # the file path is passed down to extract_ref_content to create more
+  # informative error messages
+  references <- extract_references(xml_file, file_path) %>%
     rlang::set_names("references") %>%
     new_tibble()
 
@@ -41,7 +43,7 @@ find_references <- function(file_path) {
 }
 
 
-extract_references <- function(xml_file) {
+extract_references <- function(xml_file, file_path) {
   res <- xml_find_all(xml_file, ".//ref-list")
 
   # if there are no references, exit and return NA
@@ -49,8 +51,7 @@ extract_references <- function(xml_file) {
     return(list(NA_character_))
   }
 
-  full_string <- res %>%
-    map(extract_ref_content) %>%
+  full_string <- purrr::pmap(list(res, file_path), extract_ref_content) %>% 
     flatten_chr()
 
   # empty strings should be NA
@@ -63,7 +64,7 @@ extract_references <- function(xml_file) {
 }
 
 
-extract_ref_content <- function(x) {
+extract_ref_content <- function(x, file_path) {
   if (identical(xml2::xml_attr(x, "content-type"), "parsed-citations")) {
     x %>%
       xml_find_all("title|ref/mixed-citation") %>%
@@ -76,10 +77,17 @@ extract_ref_content <- function(x) {
       purrr::keep(str_detect, "[a-z]") %>%
       str_replace("^\\\n", "") # remove "\n" at beginning of strings
 
-  } else if (identical(xml2::xml_attr(x, "content-type"), "unparsed")) {
+  } else if (identical(xml2::xml_attr(x, "content-type"), "unparsed") ||
+             identical(xml2::xml_attr(x, "content-type"),
+                       "unparsed-citations")) {
     x %>%
       xml_find_all("title|ref/mixed-citation") %>%
       xml_text()
+  } else {
+    abort(paste0("Unknown citation format in file `", file_path, "`.\n",
+                 "Please file an issue at ",
+                 "`https://github.com/tklebel/jstor/issues`."))
+    return(NA_character_)
   }
 }
 

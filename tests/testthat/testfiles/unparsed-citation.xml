@@ -1,0 +1,27 @@
+<article article-type="research-article" dtd-version="1.0" xml:lang="fre">
+   <front>
+      <journal-meta>
+         <journal-id xmlns:xlink="http://www.w3.org/1999/xlink" journal-id-type="publisher-id">geneses</journal-id>
+         <journal-id xmlns:xlink="http://www.w3.org/1999/xlink" journal-id-type="jstor">j50019839</journal-id>
+         <journal-title-group>
+            <journal-title>Genèses</journal-title>
+         </journal-title-group>
+         <publisher>
+            <publisher-name>Belin</publisher-name>
+         </publisher>
+         <issn xmlns:xlink="http://www.w3.org/1999/xlink" pub-type="ppub">11553219</issn>
+         <issn xmlns:xlink="http://www.w3.org/1999/xlink" pub-type="epub">17762944</issn>
+         <custom-meta-group xmlns:xlink="http://www.w3.org/1999/xlink"/>
+      </journal-meta>
+      <article-meta>
+      </article-meta>
+   </front>
+   <back>
+      <ref-list content-type="unparsed-citations">
+         <title>Ouvrages cités</title>
+         <ref id="ref1">
+            <mixed-citation publication-type="other">Becker, Howard. 2010 [1982]. Les mondes de l’art. Paris, Flammarion (éd. orig. Art Worlds. Berkeley, The University of Califoria Press).</mixed-citation>
+         </ref>
+      </ref-list>
+   </back>
+</article>

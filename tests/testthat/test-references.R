@@ -14,8 +14,11 @@ half_empty <- "testfiles/references-half-empty.xml"
 
 unparsed <- "testfiles/unparsed-references.xml"
 
+unparsed_citation <- "testfiles/unparsed-citation.xml"
+
 parsed <- "testfiles/references-parsed.xml"
 
+unknown <- "testfiles/unknown-reference.xml"
 
 # tests -----
 test_that("Input data is checked", {
@@ -78,10 +81,21 @@ parsed_refs <- c(
          "surveillance-raise-red-flags-2013–06–07 (accessed 14 June 2013).")
 )
 
+unparsed_citations <- c(
+  "Ouvrages cités",
+  paste("Becker, Howard. 2010 [1982]. Les mondes de l’art. Paris, Flammarion",
+        "(éd. orig. Art Worlds. Berkeley, The University of Califoria Press).")
+)
+
 
 test_that("extracting references works", {
   skip_on_os("windows")
   expect_identical(result[["references"]], correct_refs)
   expect_identical(find_references(unparsed)[["references"]], unparsed_refs)
+  expect_identical(find_references(unparsed_citation)[["references"]],
+                   unparsed_citations)
   expect_identical(find_references(parsed)[["references"]], parsed_refs)
+  expect_error(find_references(unknown),
+               paste("Unknown citation format in file",
+                     "`testfiles/unknown-reference.xml`"))
 })

@@ -1,0 +1,15 @@
+<article article-type="research-article" dtd-version="1.0" xml:lang="fre">
+   <front>
+      <journal-meta>
+      </journal-meta>
+      <article-meta>
+      </article-meta>
+   </front>
+   <back>
+      <ref-list content-type="weird new reference type">
+         <title>Ouvrages cités</title>
+         <ref id="ref1">
+         </ref>
+      </ref-list>
+   </back>
+</article>
