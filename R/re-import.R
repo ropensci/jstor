@@ -1,4 +1,4 @@
-jst_combine <- function(path, custom_name_part = NULL, overwrite = FALSE,
+jst_combine_outputs <- function(path, out_path = NULL, overwrite = FALSE,
                         clean_up = FALSE) {
   
   files <- list.files(path, pattern = "-\\d+.csv", full.names = T)
@@ -8,13 +8,21 @@ jst_combine <- function(path, custom_name_part = NULL, overwrite = FALSE,
     split(.$group) %>% 
     purrr::map(~dplyr::pull(.data = ., files))
   
-  out_names <- paste0(path, "/", custom_name_part, "combined_", 
-                      basename(names(splitted_paths)), ".csv")
+  
+  if (is.null(out_path)) {
+    out_names <- file.path(path, paste0("combined_",
+                                        basename(names(splitted_paths)),
+                                        ".csv"))
+  } else {
+    out_names <- file.path(out_path, paste0("combined_",
+                           basename(names(splitted_paths)), ".csv"))
+  }
+
   
   if (any(file.exists(out_names)) && !overwrite) {
     abort(paste0("The file(s) `", paste0(out_names, collapse = "`, `"),
                  "`` already exists. Do you want",
-                 " `overwrite = F`?"))
+                 " `overwrite = TRUE`?"))
   }
   
   
@@ -43,20 +51,20 @@ jst_re_import <- function(file) {
   
   # match by name
   matches <- list(
-    names(article_cols$cols),
-    names(author_cols$cols),
-    names(book_cols$cols),
-    names(chapter_cols$cols),
-    names(chapter_w_authors$cols),
-    names(footnote_cols$cols),
-    names(reference_cols$cols),
-    names(ngram_cols$cols)
+    article = names(article_cols$cols),
+    authors = names(author_cols$cols),
+    book = names(book_cols$cols),
+    chapter = names(chapter_cols$cols),
+    chapter_w_authors = names(chapter_w_authors$cols),
+    footnotes = names(footnote_cols$cols),
+    references = names(reference_cols$cols),
+    ngram = names(ngram_cols$cols)
   ) %>% 
     purrr::map_lgl(identical, sample_row)
   
   
   if (any(matches)) {
-    switch(which(matches),
+    switch(names(which(matches)),
            article = read_csv(file, col_types = article_cols),
            authors = read_csv(file, col_types = author_cols),
            book = read_csv(file, col_types = book_cols),
@@ -79,7 +87,7 @@ jst_re_import <- function(file) {
       purrr::map_lgl(identical, length(sample_row))
     
     if (any(matches)) {
-      switch(which(matches),
+      switch(names(which(matches)),
              article = read_csv(file, col_types = article_cols,
                                 col_names = names(article_cols$cols)),
              article_old = read_csv(file, col_types = article_cols_old,
@@ -90,25 +98,30 @@ jst_re_import <- function(file) {
                              col_names = names(book_cols$cols)),
              chapter = read_csv(file, col_types = chapter_cols,
                                 col_names = names(chapter_cols$cols)),
-             chapter_w_authors = read_csv(file, col_types = chapter_w_authors,
-                                          col_names = names(chapter_w_authors$cols)),
+             chapter_w_authors = read_csv(
+               file, col_types = chapter_w_authors,
+               col_names = names(chapter_w_authors$cols)
+             ),
              ngram = read_csv(file, col_types = ngram_cols,
                               col_names = names(ngram_cols$cols)))
     } else {
-      # try to guess which type it is
-      
-      
-      # otherwise
-      warning("Not able to distinguish between footnotes and",
-              "references. Importing as footnotes.")
-      
-      read_csv(file, col_types = reference_cols,
-               col_names = names(reference_cols$cols))
-
+      # try to guess which type our source file is.
+      # only looking at the first row might lead to errors, but there is only so
+      # much we can do to try guessing the type.
+      if (any(str_detect(sample_row, "Referen.*|Biblio.*"))) {
+        read_csv(file, col_types = reference_cols,
+                 col_names = names(reference_cols$cols))
+      } else if (any(str_detect(sample_row, "Footnote.*|Endnote.*"))) {
+        read_csv(file, col_types = footnote_cols,
+                 col_names = names(footnote_cols$cols))
+      } else {
+        warning("Unable to distinguish type of source for file `", file, "`.\n",
+                "Reverting to `read_csv(x, guess_max = 5000)`.", 
+                call. = FALSE)
+        suppressMessages(read_csv(file, guess_max = 5000))
+      }
     }
-
   }
-
 }
 
 
@@ -219,11 +232,8 @@ reference_cols <- cols(
   references = col_character()
 )
 
-
 ngram_cols <- cols(
   basename_id = col_character(),
   ngram = col_character(),
   n = col_integer()
 )
-
-
