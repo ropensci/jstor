@@ -1,5 +1,5 @@
 ---
-title: "Introduction to `jstor`"
+title: Introduction to jstor
 author: "Thomas Klebel"
 date: "`r Sys.Date()`"
 output:
