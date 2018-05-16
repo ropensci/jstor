@@ -1,12 +1,12 @@
 context("test-ngram.R")
 
-ngram1 <- tribble(~ngram, ~n,
-                  "Common", 400L,
-                  "Uncommon", 5L)
+ngram1 <- tribble(~basename_id, ~ngram, ~n,
+                  "ngram1", "Common", 400L,
+                  "ngram1", "Uncommon", 5L)
 
-ngram2 <- tribble(~ngram, ~n,
-                  "Common word", 400L,
-                  "Uncommon word", 5L)
+ngram2 <- tribble(~basename_id, ~ngram, ~n,
+                  "ngram2", "Common word", 400L,
+                  "ngram2", "Uncommon word", 5L)
 
 test_that("reading ngrams works", {
   expect_identical(jst_read_ngram("testfiles/ngram1.txt"), ngram1)
