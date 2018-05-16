@@ -65,9 +65,9 @@ information.
 find_article(jstor_example("sample_with_references.xml")) %>% knitr::kable()
 ```
 
-| basename\_id             | journal\_doi | journal\_jcode   | journal\_pub\_id | article\_doi    | article\_pub\_id | article\_jcode | article\_type    | article\_title                     | volume | issue | language | pub\_day | pub\_month | pub\_year | first\_page | last\_page |
-| :----------------------- | :----------- | :--------------- | :--------------- | :-------------- | :--------------- | :------------- | :--------------- | :--------------------------------- | :----- | :---- | :------- | :------- | :--------- | --------: | ----------: | ---------: |
-| sample\_with\_references | NA           | tranamermicrsoci | NA               | 10.2307/3221896 | NA               | NA             | research-article | On the Protozoa Parasitic in Frogs | 41     | 2     | eng      | 1        | 4          |      1922 |          59 |         76 |
+| basename\_id             | journal\_doi | journal\_jcode   | journal\_pub\_id | journal\_title                                     | article\_doi    | article\_pub\_id | article\_jcode | article\_type    | article\_title                     | volume | issue | language | pub\_day | pub\_month | pub\_year | first\_page | last\_page | page\_range |
+| :----------------------- | :----------- | :--------------- | :--------------- | :------------------------------------------------- | :-------------- | :--------------- | :------------- | :--------------- | :--------------------------------- | :----- | :---- | :------- | :------- | :--------- | --------: | :---------- | :--------- | :---------- |
+| sample\_with\_references | NA           | tranamermicrsoci | NA               | Transactions of the American Microscopical Society | 10.2307/3221896 | NA               | NA             | research-article | On the Protozoa Parasitic in Frogs | 41     | 2     | eng      | 1        | 4          |      1922 | 59          | 76         | 59-76       |
 
 ``` r
 
@@ -109,7 +109,7 @@ The following table gives an overview, which elements are supported by
 | journal-id (type=“publisher-id”) | x                | x                    |
 | journal-id (type=“doi”)          |                  | x                    |
 | issn                             | x                |                      |
-| journal-title                    | x                |                      |
+| journal-title                    | x                | x                    |
 | publisher-name                   | x                |                      |
 | article-id (type=“doi”)          | x                | x                    |
 | article-id (type=“jstor”)        | x                | x                    |
@@ -123,6 +123,7 @@ The following table gives an overview, which elements are supported by
 | pub-date                         | x                | x                    |
 | fpage                            | x                | x                    |
 | lpage                            |                  | x                    |
+| page-range                       |                  | x                    |
 | product                          | x                |                      |
 | self-uri                         | x                |                      |
 | kwd-group                        | x                |                      |
