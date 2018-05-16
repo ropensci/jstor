@@ -38,6 +38,11 @@ reference:
   - '`jstor_import`'
   - '`jst_import_zip`'
   - '`jst_define_import`'
+
+- title: Re-import files after batch conversion
+  contents:
+  - '`jst_re_import`'
+  - '`jst_combine_outputs`'
   
 - title: Import full-text/ngram
   contents:
