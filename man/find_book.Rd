@@ -25,8 +25,8 @@ DOI.
 \item pub_year \emph{(int)}: Year of publication.
 \item isbn \emph{(chr)}: One or more entries for the book's ISBN. If two or more,
 separated by \code{"; "}.
-\item publisher_name \emph{(int)}: The name of the publisher.
-\item publisher_loc \emph{(int)}: The location of the publisher.
+\item publisher_name \emph{(chr)}: The name of the publisher.
+\item publisher_loc \emph{(chr)}: The location of the publisher.
 \item n_pages \emph{(int)}: The number of pages.
 \item language \emph{(chr)}: The language of the book.
 }

@@ -18,8 +18,8 @@
 #' - pub_year *(int)*: Year of publication.
 #' - isbn *(chr)*: One or more entries for the book's ISBN. If two or more, 
 #'   separated by `"; "`.
-#' - publisher_name *(int)*: The name of the publisher.
-#' - publisher_loc *(int)*: The location of the publisher.
+#' - publisher_name *(chr)*: The name of the publisher.
+#' - publisher_loc *(chr)*: The location of the publisher.
 #' - n_pages *(int)*: The number of pages.
 #' - language *(chr)*: The language of the book.
 #'
