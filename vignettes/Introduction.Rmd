@@ -31,28 +31,56 @@ ones as well.
 
 The most important set of functions is a group of `find_*` functions:
 
-- `find_article`
-- `find_authors`
-- `find_references`
-- `find_footnotes`
-- `find_fulltext`
-- `find_book`
-- `find_chapters`
+- `find_article` (for journal documents and pamphlets)
+- `find_authors` (for all sources)
+- `find_references` (for journal documents)
+- `find_footnotes` (for journal documents)
+- `find_book` (for books and research reports)
+- `find_chapters` (for books and possibly reserach reports)
 
 I will demonstrate their usage using the
 [sample dataset](http://www.jstor.org/dfr/about/sample-datasets)
 which is provided by JSTOR on their website.
 
 # General Concept
-All functions which are concerned with meta data (therefore excluding
-`find_fulltext`) operate along the same lines:
+All functions from the `find_*` family which are concerned with meta 
+data operate along the same lines:
 
 1. The file is read with `xml2::read_xml()`.
 2. Content of the file is extracted via XPATH or CSS-expressions.
-3. The resulting data is returned in a `data.frame`.
+3. The resulting data is returned in a tidy `tibble`.
 
-The following sections showcase the different functions.
+The functions are similar in that all operate on single files
+(article, book, research report or pamphlet). Depending on the content of the
+file, the output of the functions might have one or multiple rows.
+`find_article` always returns a `tibble` with one row: the core meta data
+(like title, id, or first page of the article) are single items,
+and only one article is processed at a time. 
+Running `find_authors` for the same article might give you a tibble with one
+or multiple rows, depending on the number of authors the article has. The same
+is true for `find_references` and `find_footnotes`. If a file has no data on
+references (they migth still exist, but JSTOR might not have parsed them), the
+output is only one row, with missing references. If there is data on references,
+each entry gets its own row. Note however, that the number of rows does not
+equal the number of references. References usually start with a title like 
+"References", which is obviously not a reference to another article.
+Be sure to think carefully about your assumptions and to check the content of 
+your data before you make inferences.
 
+Books work a bit differently. Searching for data on
+https://www.jstor.org/dfr/results lets you filter for books, which are acutally
+book chapters. If you receive data from DfR on a book chapter, you always get 
+one xml-file with the whole book, including data on all chapters. Ngram or 
+full-text data for the same entry however is processed only from single
+chapters^[See the
+[technical specifications](https://www.jstor.org/dfr/about/technical-specifications)
+for more detail.]. Thus, the output of `find_book` for a single file is
+similar to the one from `find_article`: it is one row with general data about
+the book. `find_chapters` gives you data on all chapters, and the resulting 
+tibble therefore might have multiple rows.
+
+
+The following sections showcase the different functions separately.
 
 # Application
 Apart from `jstor` we only need to load `dplyr` for matching records and `knitr`
