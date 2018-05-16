@@ -186,7 +186,8 @@ jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
   }
   start_time <- Sys.time()
   
-  message("Starting to import ", length(in_paths), " file(s).")
+  message("Starting to import ", format(length(in_paths), big.mark = ","),
+          " file(s).")
 
   # set n_batches to 1 for default
   if (is.null(n_batches) && is.null(files_per_batch)) {
@@ -218,8 +219,8 @@ jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
   
   end_time <- Sys.time()
   run_time <- end_time - start_time
-  message("Finished importing ", length(in_paths), " file(s) in ",
-          format(round(run_time, 2)), ".")
+  message("Finished importing ", format(length(in_paths), big.mark = ","),
+          " file(s) in ", format(round(run_time, 2)), ".")
 }
 
 
