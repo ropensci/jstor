@@ -1,7 +1,8 @@
 #' @importFrom purrr flatten_chr map map_chr map_if map_lgl is_empty discard
 #' @importFrom dplyr mutate bind_rows data_frame as_data_frame n rename
 #'                   mutate_all
-#' @importFrom readr read_file write_csv guess_encoding locale
+#' @importFrom readr read_file write_csv guess_encoding locale cols read_csv
+#'                   col_character col_integer
 #' @importFrom xml2 xml_child xml_find_all xml_find_first xml_text xml_children
 #' @importFrom stringr str_detect str_replace str_split str_replace_all
 #' @importFrom tibble new_tibble
