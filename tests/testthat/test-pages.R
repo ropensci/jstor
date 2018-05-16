@@ -14,15 +14,15 @@ result_no_pages <- "testfiles/no-pages.xml" %>%
  
 # tests -----
 test_that("pages are extracted correctly", {
-  expect_identical(result[["first_page"]], 187L)
-  expect_identical(result[["last_page"]], 188L)
-  expect_identical(result_weird_pages[["first_page"]], 72L)
-  expect_identical(result_weird_pages[["last_page"]], 77L)
+  expect_identical(result[["first_page"]], "187")
+  expect_identical(result[["last_page"]], "188")
+  expect_identical(result_weird_pages[["first_page"]], "M72") # keep weird stuff
+  expect_identical(result_weird_pages[["last_page"]], "M77")
 })
 
 test_that("no pages are handled", {
-  expect_identical(result_no_pages[["first_page"]], NA_integer_)
-  expect_identical(result_no_pages[["last_page"]], NA_integer_)
+  expect_identical(result_no_pages[["first_page"]], NA_character_)
+  expect_identical(result_no_pages[["last_page"]], NA_character_)
 })
 
 

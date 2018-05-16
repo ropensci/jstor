@@ -48,8 +48,8 @@ find_article <- function(file_path) {
   article <- xml_child(front, "article-meta")
 
   # pages
-  first_page <- extract_page(article, "fpage")
-  last_page <- extract_page(article, "lpage")
+  first_page <- extract_page(article, "fpage", convert = FALSE)
+  last_page <- extract_page(article, "lpage", convert = FALSE)
 
   basename_id <- list(basename_id = get_basename(file_path))
 
@@ -148,9 +148,18 @@ extract_title <- function(article) {
 
 
 # page helpers
-extract_page <- function(article, element) {
+extract_page <- function(article, element, convert = TRUE) {
   x <- extract_child(article, element)
 
+  if (convert) {
+    convert_page(x)
+  } else {
+    # replace empty strings with missing
+    gsub("^$", NA_character_, x)
+  }
+}
+
+convert_page <- function(x) {
   # check if there are any non-digits
   if (grepl("\\D", x)) {
     # if there are non-digits, replace them with a empty space
