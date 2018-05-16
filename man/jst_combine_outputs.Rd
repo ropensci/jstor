@@ -53,12 +53,16 @@ jstor_import(file_list, "article", out_path = tmp, .f = find_article,
 jst_combine_outputs(tmp)
 list.files(tmp, "csv")
 
+\dontrun{
 # Trying to combine the files again raises an error.
 jst_combine_outputs(tmp)
-jst_combine_outputs(tmp, overwrite = T)
+}
+
+# this doesn't
+jst_combine_outputs(tmp, overwrite = TRUE)
 
 # we can remove the original files too
-jst_combine_outputs(tmp, overwrite = T, clean_up = TRUE)
+jst_combine_outputs(tmp, overwrite = TRUE, clean_up = TRUE)
 list.files(tmp, "csv")
 
 }

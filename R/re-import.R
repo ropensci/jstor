@@ -38,12 +38,16 @@
 #' jst_combine_outputs(tmp)
 #' list.files(tmp, "csv")
 #' 
+#' \dontrun{
 #' # Trying to combine the files again raises an error.
 #' jst_combine_outputs(tmp)
-#' jst_combine_outputs(tmp, overwrite = T)
+#' }
+#' 
+#' # this doesn't
+#' jst_combine_outputs(tmp, overwrite = TRUE)
 #' 
 #' # we can remove the original files too
-#' jst_combine_outputs(tmp, overwrite = T, clean_up = TRUE)
+#' jst_combine_outputs(tmp, overwrite = TRUE, clean_up = TRUE)
 #' list.files(tmp, "csv")
 #' 
 #' @seealso [jst_re_import()]
@@ -58,6 +62,10 @@ jst_combine_outputs <- function(path, write_to_file = TRUE,
     mutate(group = stringr::str_remove(files, "-\\d+\\.csv$")) %>% 
     split(.$group) %>% 
     purrr::map(~dplyr::pull(.data = ., files))
+  
+  if (is_empty(splitted_paths)) {
+    stop("There are no files to combine in ", path, ".", call. = FALSE)
+  }
   
   
   reader <- function(x) {
