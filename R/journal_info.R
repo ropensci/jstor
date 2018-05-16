@@ -33,14 +33,14 @@ jst_get_journal_overview <- function(most_recent = FALSE) {
     link <- "https://www.jstor.org/titlelists/journals/archive?fileFormat=xls"
     
     journal_list <- tempfile()
-    download.file(link, journal_list)
+    utils::download.file(link, journal_list)
     
     journals <- readxl::read_xls(journal_list)
 
     fix_names <- function(names) {
       names %>% 
         tolower() %>%
-        str_remove("\\s\\(.*") %>% #remove (years) after coverage_range
+        stringr::str_remove("\\s\\(.*") %>% #remove (years) after coverage_range
         str_replace_all("\\s", "_")
     }
     
@@ -48,7 +48,7 @@ jst_get_journal_overview <- function(most_recent = FALSE) {
     journals %>% 
       set_names(fix_names(names(.))) %>% 
       mutate(journal_id = stringr::str_extract(url, "[^\\/]+$")) %>% 
-      select(title, journal_id, everything())
+      dplyr::select(title, journal_id, dplyr::everything())
     
   } else {
     jstor_journals
