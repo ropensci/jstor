@@ -32,7 +32,7 @@
 #'
 #' # convert and write to file
 #' jstor_import(file_list, "article", out_path = tmp, .f = find_article,
-#'              n_batches = 2)
+#'              n_batches = 2, show_progress = FALSE)
 #'              
 #' # combine outputs
 #' jst_combine_outputs(tmp)
@@ -93,7 +93,7 @@ jst_combine_outputs <- function(path, write_to_file = TRUE,
     
     if (any(file.exists(out_path)) && !overwrite) {
       abort(paste0("The file(s) `", paste0(out_path, collapse = "`, `"),
-                   "`` already exists. Do you want",
+                   "` already exists. Do you want",
                    " `overwrite = TRUE`?"))
     }
     
