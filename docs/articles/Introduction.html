@@ -5,11 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Introduction to <code>jstor</code> • jstor</title>
-<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<title>Introduction to jstor • jstor</title>
+<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to &lt;code&gt;jstor&lt;/code&gt;">
+<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<meta property="og:title" content="Introduction to jstor">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -42,25 +43,16 @@
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../articles/Introduction.html">Introduction</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/Introduction.html">Introduction to `jstor`</a>
-    </li>
-    <li>
-      <a href="../articles/automating_file_import.html">Automating File Import</a>
-    </li>
-    <li>
-      <a href="../articles/analysing-n-grams.html">Analysing n-grams with jstor</a>
-    </li>
-  </ul>
+  <a href="../articles/automating_file_import.html">Automating File Import</a>
+</li>
+<li>
+  <a href="../articles/analysing-n-grams.html">Case study -  ngrams</a>
+</li>
+<li>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -85,11 +77,10 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Introduction to <code>jstor</code>
-</h1>
+      <h1>Introduction to jstor</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-05-15</h4>
+            <h4 class="date">2018-05-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/tklebel/jstor/blob/master/vignettes/Introduction.Rmd"><code>vignettes/Introduction.Rmd</code></a></small>
       <div class="hidden name"><code>Introduction.Rmd</code></div>
@@ -102,25 +93,32 @@
 <p>When using DfR, requests for datasets can be made for small excerpts (max. 25,000 records) or large ones, which require an agreement between the researcher and JSTOR. <code>jstor</code> was developed to deal with very large datasets which require an agreement, but can be used with smaller ones as well.</p>
 <p>The most important set of functions is a group of <code>find_*</code> functions:</p>
 <ul>
-<li><code>find_article</code></li>
-<li><code>find_authors</code></li>
-<li><code>find_references</code></li>
-<li><code>find_footnotes</code></li>
-<li><code>find_fulltext</code></li>
-<li><code>find_book</code></li>
-<li><code>find_chapters</code></li>
+<li>
+<code>find_article</code> (for journal documents and pamphlets)</li>
+<li>
+<code>find_authors</code> (for all sources)</li>
+<li>
+<code>find_references</code> (for journal documents)</li>
+<li>
+<code>find_footnotes</code> (for journal documents)</li>
+<li>
+<code>find_book</code> (for books and research reports)</li>
+<li>
+<code>find_chapters</code> (for books and possibly reserach reports)</li>
 </ul>
 <p>I will demonstrate their usage using the <a href="http://www.jstor.org/dfr/about/sample-datasets">sample dataset</a> which is provided by JSTOR on their website.</p>
 <div id="general-concept" class="section level1">
 <h1 class="hasAnchor">
 <a href="#general-concept" class="anchor"></a>General Concept</h1>
-<p>All functions which are concerned with meta data (therefore excluding <code>find_fulltext</code>) operate along the same lines:</p>
+<p>All functions from the <code>find_*</code> family which are concerned with meta data operate along the same lines:</p>
 <ol style="list-style-type: decimal">
 <li>The file is read with <code><a href="http://www.rdocumentation.org/packages/xml2/topics/read_xml">xml2::read_xml()</a></code>.</li>
 <li>Content of the file is extracted via XPATH or CSS-expressions.</li>
-<li>The resulting data is returned in a <code>data.frame</code>.</li>
+<li>The resulting data is returned in a tidy <code>tibble</code>.</li>
 </ol>
-<p>The following sections showcase the different functions.</p>
+<p>The functions are similar in that all operate on single files (article, book, research report or pamphlet). Depending on the content of the file, the output of the functions might have one or multiple rows. <code>find_article</code> always returns a <code>tibble</code> with one row: the core meta data (like title, id, or first page of the article) are single items, and only one article is processed at a time. Running <code>find_authors</code> for the same article might give you a tibble with one or multiple rows, depending on the number of authors the article has. The same is true for <code>find_references</code> and <code>find_footnotes</code>. If a file has no data on references (they migth still exist, but JSTOR might not have parsed them), the output is only one row, with missing references. If there is data on references, each entry gets its own row. Note however, that the number of rows does not equal the number of references. References usually start with a title like “References”, which is obviously not a reference to another article. Be sure to think carefully about your assumptions and to check the content of your data before you make inferences.</p>
+<p>Books work a bit differently. Searching for data on <a href="https://www.jstor.org/dfr/results" class="uri">https://www.jstor.org/dfr/results</a> lets you filter for books, which are acutally book chapters. If you receive data from DfR on a book chapter, you always get one xml-file with the whole book, including data on all chapters. Ngram or full-text data for the same entry however is processed only from single chapters<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Thus, the output of <code>find_book</code> for a single file is similar to the one from <code>find_article</code>: it is one row with general data about the book. <code>find_chapters</code> gives you data on all chapters, and the resulting tibble therefore might have multiple rows.</p>
+<p>The following sections showcase the different functions separately.</p>
 </div>
 <div id="application" class="section level1">
 <h1 class="hasAnchor">
@@ -413,52 +411,54 @@
 <h3 class="hasAnchor">
 <a href="#matching-with-references" class="anchor"></a>Matching with references</h3>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">meta_data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(references) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(basename_id, pub_year, references) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw">head</span>(<span class="dv">7</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(references) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(basename_id, article_title, volume, pub_year, references) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb11-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a>
 <a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt; Joining, by = "basename_id"</span></a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">basename_id</th>
+<th align="left">article_title</th>
+<th align="left">volume</th>
 <th align="right">pub_year</th>
 <th align="left">references</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">sample_with_references</td>
+<td align="left">On the Protozoa Parasitic in Frogs</td>
+<td align="left">41</td>
 <td align="right">1922</td>
 <td align="left">Bibliography: Entamoeba ranarumn</td>
 </tr>
 <tr class="even">
 <td align="left">sample_with_references</td>
+<td align="left">On the Protozoa Parasitic in Frogs</td>
+<td align="left">41</td>
 <td align="right">1922</td>
 <td align="left">DOBELL, C.C.1909 Researches on the intestinal Protozoa of frogs and toads. Quart. Jour. Micros.Sc., 53:201-276, 4 pl. and 1 textfig.</td>
 </tr>
 <tr class="odd">
 <td align="left">sample_with_references</td>
+<td align="left">On the Protozoa Parasitic in Frogs</td>
+<td align="left">41</td>
 <td align="right">1922</td>
 <td align="left">1918 Are Entamoeba histolytica and Entamoeba ranarum the same species? An experi-mental study. Parasit., 10:294-310.</td>
 </tr>
 <tr class="even">
 <td align="left">sample_with_references</td>
+<td align="left">On the Protozoa Parasitic in Frogs</td>
+<td align="left">41</td>
 <td align="right">1922</td>
 <td align="left">References: Leptotheca ohilmacheri</td>
 </tr>
 <tr class="odd">
 <td align="left">sample_with_references</td>
+<td align="left">On the Protozoa Parasitic in Frogs</td>
+<td align="left">41</td>
 <td align="right">1922</td>
 <td align="left">KUDO, R.1920 Studies on Myxosporidia. A Synopsis of Genera and Species of Myxosporidia.ill. Biol. Monogr., 5:243-503, 25 pl. and 2 textfig.</td>
-</tr>
-<tr class="even">
-<td align="left">sample_with_references</td>
-<td align="right">1922</td>
-<td align="left">1921 On the nature of structures characteristic of Cnidosporidian spores. Trans.Micro. Soc., 40:60-74.</td>
-</tr>
-<tr class="odd">
-<td align="left">sample_with_references</td>
-<td align="right">1922</td>
-<td align="left">1922 On the morphology and life history of a Myxosporidian, Leptotheca ohlmacheri,parasitic in Rana clamitans and Rana pipiens. Parasitology, 14, no. 2.</td>
 </tr>
 </tbody>
 </table>
@@ -707,6 +707,12 @@
 </tbody>
 </table>
 <p>You can learn more about the concept of list-columns in Hadley Wickham’s book <a href="http://r4ds.had.co.nz/many-models.html">R for Data Science</a>.</p>
+</div>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p>See the <a href="https://www.jstor.org/dfr/about/technical-specifications">technical specifications</a> for more detail.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
   </div>
 
