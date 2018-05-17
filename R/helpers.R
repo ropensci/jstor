@@ -79,12 +79,21 @@ extract_all <- function(doc, element) {
 }
 
 
-expand_and_bind <- function(file_path, individual_part) {
-  list(
-    basename_id = get_basename(file_path) %>%
-      rep(times = NROW(individual_part))
-  ) %>%
-    dplyr::bind_cols(individual_part)
+expand_and_bind <- function(file_path, individual_part, ngram = FALSE) {
+  if (ngram) {
+    list(
+      basename_id = get_basename(file_path) %>%
+        stringr::str_remove("-ngram\\d") %>% 
+        rep(times = NROW(individual_part))
+    ) %>%
+      dplyr::bind_cols(individual_part)
+  } else {
+    list(
+      basename_id = get_basename(file_path) %>%
+        rep(times = NROW(individual_part))
+    ) %>%
+      dplyr::bind_cols(individual_part)
+  }
 }
 
 #' simple helper to suppress warnings from invalid URIs. see issue #33

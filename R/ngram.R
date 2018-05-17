@@ -24,7 +24,7 @@ jst_read_ngram <- function(file) {
                            col_types = c("ci"))
     attr(out, "spec") <- NULL
     
-    expand_and_bind(file, out)
+    expand_and_bind(file, out, ngram = TRUE)
     
   } else if (inherits(file, "jstor_zip")) {
     
@@ -37,7 +37,7 @@ jst_read_ngram <- function(file) {
                            col_types = c("ci"))    
     attr(out, "spec") <- NULL
     
-    expand_and_bind(file, out)
+    expand_and_bind(file, out, ngram = TRUE)
   } else {
     abort("Unknown input file. Must be a `txt`-file.")
   }
