@@ -16,6 +16,18 @@ context("test-re-import.R")
 # new_names <- str_replace_all(files, "-1", "-2")
 # file.copy(files, new_names)
 
+# # # create two separate files with references and footnotes in them
+# read_csv("tests/testthat/testfiles/re-import/wo_col_journal_article_find_footnotes-1.csv",
+#          col_names = F) %>%
+#   mutate(X2 = "Footnotes") %>%
+#   write_csv("tests/testthat/testfiles/re-import/wo_col_journal_article_find_footnotes_with_content-1.csv",
+#             col_names = F)
+# 
+# read_csv("tests/testthat/testfiles/re-import/wo_col_journal_article_find_references-1.csv",
+#          col_names = F) %>%
+#   mutate(X2 = "References") %>%
+#   write_csv("tests/testthat/testfiles/re-import/wo_col_journal_article_find_references_with_content-1.csv",
+#             col_names = F)
 
 ### jst_re-import ------
 # set up correct objects
@@ -140,10 +152,16 @@ authors <- structure(list(basename_id = "journal-article-standard_case", prefix 
 # footnotes ----
 footnotes <- structure(list(basename_id = "journal-article-standard_case", footnotes = NA_character_), 
     row.names = c(NA, -1L), class = c("tbl_df", "tbl", "data.frame"))
+footnotes_with_content <- structure(list(basename_id = "journal-article-standard_case", footnotes = "Footnotes"), 
+                       row.names = c(NA, -1L), class = c("tbl_df", "tbl", "data.frame"))
 # references ----
 references <- structure(list(basename_id = "journal-article-standard_case", 
     references = NA_character_), row.names = c(NA, -1L), class = c("tbl_df", 
     "tbl", "data.frame"))
+
+references_with_content <- structure(list(basename_id = "journal-article-standard_case", 
+                             references = "References"), row.names = c(NA, -1L), class = c("tbl_df", 
+                                                                                           "tbl", "data.frame"))
 
 # ngrams -----
 ngram <- structure(list(basename_id = c("book-chapter-standard_book", "book-chapter-standard_book"), 
@@ -202,32 +220,61 @@ test_that("files without column names can be re-read", {
       authors
     )
     expect_equal(
-      jst_re_import("testfiles/re-import/wo_col_journal_article_find_footnotes-1.csv"), 
-      footnotes
-    )
-    expect_equal(
-      jst_re_import("testfiles/re-import/wo_col_journal_article_find_references-1.csv"), 
-      references
-    )
-    expect_equal(
       jst_re_import("testfiles/re-import/wo_col_ngram1_jst_read_ngram-1.csv"), 
       ngram
     )
+    expect_equal(
+      jst_re_import("testfiles/re-import/wo_col_journal_article_find_footnotes_with_content-1.csv"),
+      footnotes_with_content
+    )
+    expect_equal(
+      jst_re_import("testfiles/re-import/wo_col_journal_article_find_references_with_content-1.csv"),
+      references_with_content
+    )
+    
+})
+
+test_that("warnings are emitted, if no file is recognized", {
+  expect_warning(
+    jst_re_import("testfiles/re-import/wo_col_journal_article_find_footnotes-1.csv"), 
+    "Unable to distinguish"
+  )
+  expect_warning(
+    jst_re_import("testfiles/re-import/wo_col_journal_article_find_references-1.csv"), 
+    "Unable to distinguish"
+  )
+  
+  footnotes_unrecognized <- suppressWarnings(
+    jst_re_import("testfiles/re-import/wo_col_journal_article_find_footnotes-1.csv")
+  )
+  references_unrecognized <- suppressWarnings(
+    jst_re_import("testfiles/re-import/wo_col_journal_article_find_references-1.csv")
+  )
+  
+  expect_named(footnotes_unrecognized, c("X1", "X2"))
+  expect_named(references_unrecognized, c("X1", "X2"))
 })
 
 
-# jst_re_import('tests/testthat/testfiles/re-import/with_col_ngram1_jst_read_ngram-1.csv') %>% dput
-
-
-
 # # jst_combine_outputs
-# 
-# combined_book <- book %>% slice(c(1, 1))
-# 
-# test_that("files with column names can be combined", {
-#     expect_identical({
-#         jst_combine_outputs("testfiles/re-import", write_to_file = FALSE) %>% 
-#             purrr::pluck(1)
-#     }, combined_book)
-# })
-# # 
+# only test this for two parts, since the above tests cover all types
+combined_book <- book %>% dplyr::slice(c(1, 1))
+combined_chapter <- chapter %>% dplyr::slice(rep(1:n(), times = 2))
+
+test_that("files with column names can be combined", {
+  combined <- jst_combine_outputs("testfiles/re-import", write_to_file = FALSE,
+                      warn = FALSE)
+
+  expect_identical(purrr::pluck(combined, 1), combined_book)
+  expect_identical(purrr::pluck(combined, 2), combined_chapter)
+})
+
+test_that("files can be written to dir", {
+  
+  # check for warning if overwriting
+  
+})
+
+test_that("files are removed", {
+  
+})
