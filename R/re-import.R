@@ -172,7 +172,7 @@ jst_re_import <- function(file) {
     matches <- c(
       article = 19L,
       article_old = 17L,
-      authors = 6L,
+      authors = 7L,
       book = 13L,
       chapter = 9L,
       chapter_w_authors = 15L,
