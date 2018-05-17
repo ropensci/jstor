@@ -139,7 +139,7 @@ names which match the names from any of the <code>find_*</code> functions, the f
 is read with the corresponding specifications. If no column names are
 recognized, files are recognized based on the number of columns. Since both
 references and footnotes have only two columns, the first line is inspected
-for either <code>"Referenc...|Bilbio..."</code> or <code>"Footnote...|Endnote..."</code>.
+for either <code>"Referenc...|Bilbio...|Endnote..."</code> or <code>"Footnote..."</code>.
 In case there is still no match, the file is read with
 <code><a href='http://www.rdocumentation.org/packages/readr/topics/read_delim'>readr::read_csv()</a></code> with <code>guess_max = 5000</code> and a warning is raised.</p>
     

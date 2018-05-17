@@ -315,7 +315,7 @@ top_bigrams <- imported_bigrams %>%
 
 
 ## Cleaning up bigrams
-When constructing n-grams, DfR uses a stop-word list, which is quite narrow 
+When constructing n-grams, DfR uses a stop-word list, which is quite limited 
 ^[for more information see the 
 [technical specifications](http://www.jstor.org/dfr/about/technical-specifications)
 on their page]. If we would like to restrict the terms a bit further, we could
