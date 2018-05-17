@@ -121,7 +121,7 @@ jst_combine_outputs <- function(path, write_to_file = TRUE,
 #' is read with the corresponding specifications. If no column names are
 #' recognized, files are recognized based on the number of columns. Since both
 #' references and footnotes have only two columns, the first line is inspected
-#' for either `"Referenc...|Bilbio..."` or `"Footnote...|Endnote..."`.
+#' for either `"Referenc...|Bilbio...|Endnote..."` or `"Footnote..."`.
 #' In case there is still no match, the file is read with
 #' [readr::read_csv()] with `guess_max = 5000` and a warning is raised.
 #' 
@@ -200,10 +200,10 @@ jst_re_import <- function(file) {
       # try to guess which type our source file is.
       # only looking at the first row might lead to errors, but there is only so
       # much we can do to try guessing the type.
-      if (any(str_detect(sample_row, "Referen.*|Biblio.*"))) {
+      if (any(str_detect(sample_row, "Referen.*|Biblio.*|Endnote.*"))) {
         read_csv(file, col_types = reference_cols,
                  col_names = names(reference_cols$cols))
-      } else if (any(str_detect(sample_row, "Footnote.*|Endnote.*"))) {
+      } else if (any(str_detect(sample_row, "Footnote.*"))) {
         read_csv(file, col_types = footnote_cols,
                  col_names = names(footnote_cols$cols))
       } else {
