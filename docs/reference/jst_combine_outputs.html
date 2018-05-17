@@ -124,7 +124,7 @@ one batch.</p>
     </div>
 
     <pre class="usage"><span class='fu'>jst_combine_outputs</span>(<span class='no'>path</span>, <span class='kw'>write_to_file</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>out_path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clean_up</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clean_up</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -132,16 +132,17 @@ one batch.</p>
     <tr>
       <th>path</th>
       <td><p>A path to a directory, containing .csv-files from
-<code><a href='jstor_import.html'>jstor_import()</a></code> or <code><a href='jstor_import.html'>jst_import_zip()</a></code>.</p></td>
+<code><a href='jstor_import.html'>jstor_import()</a></code> or <code><a href='jstor_import.html'>jst_import_zip()</a></code>, or a vector of files which are to be
+imported.</p></td>
     </tr>
     <tr>
       <th>write_to_file</th>
-      <td><p>Should to combined data be written to a file?</p></td>
+      <td><p>Should combined data be written to a file?</p></td>
     </tr>
     <tr>
       <th>out_path</th>
       <td><p>A directory where to write the combined files. If no
-directory is supplied and <code>write_to_file</code>  is <code>TRUE</code>, the combined file is
+directory is supplied and <code>write_to_file</code> is <code>TRUE</code>, the combined files are
 written to <code>path</code>.</p></td>
     </tr>
     <tr>
@@ -153,7 +154,15 @@ written to <code>path</code>.</p></td>
       <td><p>Do you want to remove the original batch files? Use with
 caution.</p></td>
     </tr>
+    <tr>
+      <th>warn</th>
+      <td><p>Should warnings be raised, if the filetype cannot be determined?</p></td>
+    </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Either writes to disk, or returns a list with all combined files.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -161,11 +170,15 @@ caution.</p></td>
 for multiple reasons, but in the end you possibly want to combine all outputs
 into one file/data.frame. This function makes a few assumptions in order to
 combine files:</p><ul>
-<li><p>Files with similar names (except for trailing dashes with numbers) will be
-combined into one file.</p></li>
-<li><p>The names of the combined files are determined from the original files.
+<li><p>Files with similar names (except for trailing dashes with numbers) belong
+together and will be combined into one file.</p></li>
+<li><p>The names of the combined files can be determined from the original files.
 If you want to combine <code>foo-1.csv</code> and <code>foo-2.csv</code>, the combined file will
 be <code>combined_foo.csv</code>.</p></li>
+<li><p>The directory only contains files which were imported via
+<code><a href='jstor_import.html'>jstor_import()</a></code> or <code><a href='jstor_import.html'>jst_import_zip()</a></code>. If the directory contains other
+<code>.csv</code> files, you should supply a character vector with paths to only those
+files, which you want to import.</p></li>
 </ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -182,17 +195,17 @@ be <code>combined_foo.csv</code>.</p></li>
 
 <span class='co'># convert and write to file</span>
 <span class='fu'><a href='jstor_import.html'>jstor_import</a></span>(<span class='no'>file_list</span>, <span class='st'>"article"</span>, <span class='kw'>out_path</span> <span class='kw'>=</span> <span class='no'>tmp</span>, <span class='kw'>.f</span> <span class='kw'>=</span> <span class='no'>find_article</span>,
-             <span class='kw'>n_batches</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>show_progress</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Starting to import 2 file(s).</span></div><div class='output co'>#&gt; <span class='message'>Processing chunk 1/2</span></div><div class='output co'>#&gt; <span class='message'>Processing chunk 2/2</span></div><div class='output co'>#&gt; <span class='message'>Finished importing 2 file(s) in 1.66 secs.</span></div><div class='input'>
+             <span class='kw'>n_batches</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>show_progress</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Starting to import 2 file(s).</span></div><div class='output co'>#&gt; <span class='message'>Processing chunk 1/2</span></div><div class='output co'>#&gt; <span class='message'>Processing chunk 2/2</span></div><div class='output co'>#&gt; <span class='message'>Finished importing 2 file(s) in 1.36 secs.</span></div><div class='input'>
 <span class='co'># combine outputs</span>
-<span class='fu'>jst_combine_outputs</span>(<span class='no'>tmp</span>)</div><div class='output co'>#&gt; <span class='message'>Re-importing 2 batches.</span></div><div class='output co'>#&gt; <span class='message'>Writing combined file `/var/folders/kq/q5brchkd1vsbvt2ykdl5qcvc0000gn/T//RtmpKmbU5C/combined_article.csv` to disk.</span></div><div class='input'><span class='fu'>list.files</span>(<span class='no'>tmp</span>, <span class='st'>"csv"</span>)</div><div class='output co'>#&gt; [1] "article-1.csv"        "article-2.csv"        "combined_article.csv"</div><div class='input'>
+<span class='fu'>jst_combine_outputs</span>(<span class='no'>tmp</span>)</div><div class='output co'>#&gt; <span class='message'>Re-importing 2 batches.</span></div><div class='output co'>#&gt; <span class='message'>Writing combined file `/private/var/folders/kq/q5brchkd1vsbvt2ykdl5qcvc0000gn/T/RtmpThxw38/combined_article.csv` to disk.</span></div><div class='input'><span class='fu'>list.files</span>(<span class='no'>tmp</span>, <span class='st'>"csv"</span>)</div><div class='output co'>#&gt; [1] "article-1.csv"        "article-2.csv"        "combined_article.csv"</div><div class='input'>
 </div><span class='co'># NOT RUN {</span>
 <span class='co'># Trying to combine the files again raises an error.</span>
 <span class='fu'>jst_combine_outputs</span>(<span class='no'>tmp</span>)
 <span class='co'># }</span><div class='input'>
 <span class='co'># this doesn't</span>
-<span class='fu'>jst_combine_outputs</span>(<span class='no'>tmp</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Re-importing 2 batches.</span></div><div class='output co'>#&gt; <span class='message'>Writing combined file `/var/folders/kq/q5brchkd1vsbvt2ykdl5qcvc0000gn/T//RtmpKmbU5C/combined_article.csv` to disk.</span></div><div class='input'>
+<span class='fu'>jst_combine_outputs</span>(<span class='no'>tmp</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Re-importing 2 batches.</span></div><div class='output co'>#&gt; <span class='message'>Writing combined file `/private/var/folders/kq/q5brchkd1vsbvt2ykdl5qcvc0000gn/T/RtmpThxw38/combined_article.csv` to disk.</span></div><div class='input'>
 <span class='co'># we can remove the original files too</span>
-<span class='fu'>jst_combine_outputs</span>(<span class='no'>tmp</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>clean_up</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Re-importing 2 batches.</span></div><div class='output co'>#&gt; <span class='message'>Writing combined file `/var/folders/kq/q5brchkd1vsbvt2ykdl5qcvc0000gn/T//RtmpKmbU5C/combined_article.csv` to disk.</span></div><div class='output co'>#&gt; <span class='message'>Deleting original batches.</span></div><div class='input'><span class='fu'>list.files</span>(<span class='no'>tmp</span>, <span class='st'>"csv"</span>)</div><div class='output co'>#&gt; [1] "combined_article.csv"</div><div class='input'>
+<span class='fu'>jst_combine_outputs</span>(<span class='no'>tmp</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>clean_up</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Re-importing 2 batches.</span></div><div class='output co'>#&gt; <span class='message'>Writing combined file `/private/var/folders/kq/q5brchkd1vsbvt2ykdl5qcvc0000gn/T/RtmpThxw38/combined_article.csv` to disk.</span></div><div class='output co'>#&gt; <span class='message'>Deleting original batches.</span></div><div class='input'><span class='fu'>list.files</span>(<span class='no'>tmp</span>, <span class='st'>"csv"</span>)</div><div class='output co'>#&gt; [1] "combined_article.csv"</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -200,6 +213,8 @@ be <code>combined_foo.csv</code>.</p></li>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
