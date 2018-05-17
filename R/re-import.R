@@ -58,6 +58,8 @@ jst_combine_outputs <- function(path, write_to_file = TRUE,
                                 out_path = NULL, overwrite = FALSE, 
                                 clean_up = FALSE) {
   
+  path <- check_path(path)
+  
   files <- list.files(path, pattern = "-\\d+.csv", full.names = T)
   
   splitted_paths <- tibble::tibble(files = files) %>% 
