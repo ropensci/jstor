@@ -9,22 +9,29 @@
 #' into one file/data.frame. This function makes a few assumptions in order to
 #' combine files: 
 #' 
-#' - Files with similar names (except for trailing dashes with numbers) will be
-#'   combined into one file.
-#' - The names of the combined files are determined from the original files.
+#' - Files with similar names (except for trailing dashes with numbers) belong
+#'   together and will be combined into one file.
+#' - The names of the combined files can be determined from the original files.
 #'   If you want to combine `foo-1.csv` and `foo-2.csv`, the combined file will
 #'   be `combined_foo.csv`.
+#' - The directory only contains files which were imported via 
+#'   [jstor_import()] or [jst_import_zip()]. If the directory contains other
+#'   .csv files, you should supply a character vector with paths to only those
+#'   files, which you want to import.
 #' 
 #' @param path A path to a directory, containing .csv-files from
-#'  [jstor_import()] or [jst_import_zip()].
+#'  [jstor_import()] or [jst_import_zip()], or a vector of files which are to be
+#'  imported.
 #' @param write_to_file Should to combined data be written to a file?
 #' @param out_path A directory where to write the combined files. If no
-#' directory is supplied and `write_to_file`  is `TRUE`, the combined file is 
+#' directory is supplied and `write_to_file` is `TRUE`, the combined file is 
 #' written to `path`.
 #' @param overwrite Should files be overwritten?
 #' @param clean_up Do you want to remove the original batch files? Use with
 #' caution.
 #' @param warn Should warnings be raised, if the filetype cannot be determined?
+#' 
+#' @return Either writes to disk, or a list with all combined files.
 #' 
 #' @examples
 #' # set up a temporary directory
@@ -59,9 +66,22 @@ jst_combine_outputs <- function(path, write_to_file = TRUE,
                                 out_path = NULL, overwrite = FALSE, 
                                 clean_up = FALSE, warn = TRUE) {
   
-  path <- check_path(path)
+  if (length(path) < 2 && dir.exists(path)) {
+    # if it is a directory, list all files
+    path <- check_path(path)
+    
+    files <- list.files(path, pattern = "-\\d+.csv", full.names = T)
+  } else {
+    path %>% 
+      purrr::walk(check_path)
+    
+    files <- path
+    
+    if (is.null(out_path)) {
+      abort("You must specify `out_path` when importing files from a vector.")
+    }
+  }
   
-  files <- list.files(path, pattern = "-\\d+.csv", full.names = T)
   
   splitted_paths <- tibble::tibble(files = files) %>% 
     mutate(group = stringr::str_remove(files, "-\\d+\\.csv$")) %>% 

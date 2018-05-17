@@ -9,12 +9,13 @@ jst_combine_outputs(path, write_to_file = TRUE, out_path = NULL,
 }
 \arguments{
 \item{path}{A path to a directory, containing .csv-files from
-\code{\link[=jstor_import]{jstor_import()}} or \code{\link[=jst_import_zip]{jst_import_zip()}}.}
+\code{\link[=jstor_import]{jstor_import()}} or \code{\link[=jst_import_zip]{jst_import_zip()}}, or a vector of files which are to be
+imported.}
 
 \item{write_to_file}{Should to combined data be written to a file?}
 
 \item{out_path}{A directory where to write the combined files. If no
-directory is supplied and \code{write_to_file}  is \code{TRUE}, the combined file is
+directory is supplied and \code{write_to_file} is \code{TRUE}, the combined file is
 written to \code{path}.}
 
 \item{overwrite}{Should files be overwritten?}
@@ -23,6 +24,9 @@ written to \code{path}.}
 caution.}
 
 \item{warn}{Should warnings be raised, if the filetype cannot be determined?}
+}
+\value{
+Either writes to disk, or a list with all combined files.
 }
 \description{
 \code{jst_combine_outputs()} helps you to manage the multitude of files you might
@@ -35,11 +39,15 @@ for multiple reasons, but in the end you possibly want to combine all outputs
 into one file/data.frame. This function makes a few assumptions in order to
 combine files:
 \itemize{
-\item Files with similar names (except for trailing dashes with numbers) will be
-combined into one file.
-\item The names of the combined files are determined from the original files.
+\item Files with similar names (except for trailing dashes with numbers) belong
+together and will be combined into one file.
+\item The names of the combined files can be determined from the original files.
 If you want to combine \code{foo-1.csv} and \code{foo-2.csv}, the combined file will
 be \code{combined_foo.csv}.
+\item The directory only contains files which were imported via
+\code{\link[=jstor_import]{jstor_import()}} or \code{\link[=jst_import_zip]{jst_import_zip()}}. If the directory contains other
+.csv files, you should supply a character vector with paths to only those
+files, which you want to import.
 }
 }
 \examples{
