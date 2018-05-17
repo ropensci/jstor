@@ -22,7 +22,8 @@ Imports:
     foreach,
     doSNOW,
     snow,
-    readxl
+    readxl,
+    curl
 Suggests: testthat,
     covr,
     knitr,

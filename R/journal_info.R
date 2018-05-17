@@ -30,6 +30,10 @@
 #' }
 jst_get_journal_overview <- function(most_recent = FALSE) {
   if (most_recent) {
+    if (!curl::has_internet()) {
+      abort("You don't seem to have a connection to the internet.")
+    }
+    
     link <- "https://www.jstor.org/titlelists/journals/archive?fileFormat=xls"
     
     journal_list <- tempfile()
