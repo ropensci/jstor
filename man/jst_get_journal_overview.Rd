@@ -4,10 +4,12 @@
 \alias{jst_get_journal_overview}
 \title{Get table with information on journals}
 \usage{
-jst_get_journal_overview(most_recent = FALSE)
+jst_get_journal_overview(most_recent = FALSE, quiet = FALSE)
 }
 \arguments{
 \item{most_recent}{Should the most recent version be downloaded from DfR?}
+
+\item{quiet}{Should status messages about the download be printed?}
 }
 \value{
 A \code{tibble} with various information about journals.

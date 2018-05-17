@@ -16,6 +16,7 @@
 #' The cached version was updated on 2018-05-15.
 #' 
 #' @param most_recent Should the most recent version be downloaded from DfR?
+#' @param quiet Should status messages about the download be printed?
 #' 
 #' @return A `tibble` with various information about journals.
 #' 
@@ -28,7 +29,7 @@
 #' # download the most recent version from DfR
 #' jst_get_journal_overview(most_recent = TRUE)
 #' }
-jst_get_journal_overview <- function(most_recent = FALSE) {
+jst_get_journal_overview <- function(most_recent = FALSE, quiet = FALSE) {
   if (most_recent) {
     if (!curl::has_internet()) {
       abort("You don't seem to have a connection to the internet.")
@@ -37,7 +38,7 @@ jst_get_journal_overview <- function(most_recent = FALSE) {
     link <- "https://www.jstor.org/titlelists/journals/archive?fileFormat=xls"
     
     journal_list <- tempfile()
-    utils::download.file(link, journal_list)
+    utils::download.file(link, journal_list, quiet = quiet)
     
     journals <- readxl::read_xls(journal_list)
 
