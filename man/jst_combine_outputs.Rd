@@ -5,7 +5,7 @@
 \title{Combine outputs from converted files}
 \usage{
 jst_combine_outputs(path, write_to_file = TRUE, out_path = NULL,
-  overwrite = FALSE, clean_up = FALSE)
+  overwrite = FALSE, clean_up = FALSE, warn = TRUE)
 }
 \arguments{
 \item{path}{A path to a directory, containing .csv-files from
@@ -21,6 +21,8 @@ written to \code{path}.}
 
 \item{clean_up}{Do you want to remove the original batch files? Use with
 caution.}
+
+\item{warn}{Should warnings be raised, if the filetype cannot be determined?}
 }
 \description{
 \code{jst_combine_outputs()} helps you to manage the multitude of files you might

@@ -4,10 +4,13 @@
 \alias{jst_re_import}
 \title{Re-import files}
 \usage{
-jst_re_import(file)
+jst_re_import(file, warn = TRUE)
 }
 \arguments{
 \item{file}{A path to a .csv file.}
+
+\item{warn}{Should warnings be emitted, if the type of file cannot be
+determined?}
 }
 \description{
 \code{jst_re_import()} lets you re-import a file which was exported via

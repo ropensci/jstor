@@ -24,6 +24,7 @@
 #' @param overwrite Should files be overwritten?
 #' @param clean_up Do you want to remove the original batch files? Use with
 #' caution.
+#' @param warn Should warnings be raised, if the filetype cannot be determined?
 #' 
 #' @examples
 #' # set up a temporary directory
@@ -56,7 +57,7 @@
 #' @export
 jst_combine_outputs <- function(path, write_to_file = TRUE,
                                 out_path = NULL, overwrite = FALSE, 
-                                clean_up = FALSE) {
+                                clean_up = FALSE, warn = TRUE) {
   
   path <- check_path(path)
   
@@ -74,7 +75,7 @@ jst_combine_outputs <- function(path, write_to_file = TRUE,
   
   reader <- function(x) {
     message("Re-importing ", length(x), " batches.")
-    purrr::map_df(x, jst_re_import)
+    purrr::map_df(x, jst_re_import, warn)
   }
   
   writer <- function(x, path) {
@@ -128,10 +129,12 @@ jst_combine_outputs <- function(path, write_to_file = TRUE,
 #' [readr::read_csv()] with `guess_max = 5000` and a warning is raised.
 #' 
 #' @param file A path to a .csv file.
+#' @param warn Should warnings be emitted, if the type of file cannot be
+#' determined?
 #' 
 #' @seealso [jst_combine_outputs()]
 #' @export
-jst_re_import <- function(file) {
+jst_re_import <- function(file, warn = TRUE) {
   file <- check_path(file)
   
   if (!identical(tools::file_ext(file), "csv")) {
@@ -209,10 +212,12 @@ jst_re_import <- function(file) {
         read_csv(file, col_types = footnote_cols,
                  col_names = names(footnote_cols$cols))
       } else {
-        warning("Unable to distinguish type of source for file `", file, "`.\n",
-                "Reverting to `read_csv(x, guess_max = 5000)`.", 
-                call. = FALSE)
-        suppressMessages(read_csv(file, guess_max = 5000))
+        if (warn) {
+          warning("Unable to distinguish type of source for file `", file, "`.\n",
+                  "Reverting to `read_csv(x, guess_max = 5000)`.", 
+                  call. = FALSE)
+        }
+        suppressMessages(read_csv(file, guess_max = 5000, col_names = F))
       }
     }
   }
