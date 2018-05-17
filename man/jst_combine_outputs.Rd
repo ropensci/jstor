@@ -12,10 +12,10 @@ jst_combine_outputs(path, write_to_file = TRUE, out_path = NULL,
 \code{\link[=jstor_import]{jstor_import()}} or \code{\link[=jst_import_zip]{jst_import_zip()}}, or a vector of files which are to be
 imported.}
 
-\item{write_to_file}{Should to combined data be written to a file?}
+\item{write_to_file}{Should combined data be written to a file?}
 
 \item{out_path}{A directory where to write the combined files. If no
-directory is supplied and \code{write_to_file} is \code{TRUE}, the combined file is
+directory is supplied and \code{write_to_file} is \code{TRUE}, the combined files are
 written to \code{path}.}
 
 \item{overwrite}{Should files be overwritten?}
@@ -26,7 +26,7 @@ caution.}
 \item{warn}{Should warnings be raised, if the filetype cannot be determined?}
 }
 \value{
-Either writes to disk, or a list with all combined files.
+Either writes to disk, or returns a list with all combined files.
 }
 \description{
 \code{jst_combine_outputs()} helps you to manage the multitude of files you might
@@ -46,7 +46,7 @@ If you want to combine \code{foo-1.csv} and \code{foo-2.csv}, the combined file 
 be \code{combined_foo.csv}.
 \item The directory only contains files which were imported via
 \code{\link[=jstor_import]{jstor_import()}} or \code{\link[=jst_import_zip]{jst_import_zip()}}. If the directory contains other
-.csv files, you should supply a character vector with paths to only those
+\code{.csv} files, you should supply a character vector with paths to only those
 files, which you want to import.
 }
 }

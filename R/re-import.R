@@ -16,22 +16,22 @@
 #'   be `combined_foo.csv`.
 #' - The directory only contains files which were imported via 
 #'   [jstor_import()] or [jst_import_zip()]. If the directory contains other
-#'   .csv files, you should supply a character vector with paths to only those
+#'   `.csv` files, you should supply a character vector with paths to only those
 #'   files, which you want to import.
 #' 
 #' @param path A path to a directory, containing .csv-files from
 #'  [jstor_import()] or [jst_import_zip()], or a vector of files which are to be
 #'  imported.
-#' @param write_to_file Should to combined data be written to a file?
+#' @param write_to_file Should combined data be written to a file?
 #' @param out_path A directory where to write the combined files. If no
-#' directory is supplied and `write_to_file` is `TRUE`, the combined file is 
+#' directory is supplied and `write_to_file` is `TRUE`, the combined files are
 #' written to `path`.
 #' @param overwrite Should files be overwritten?
 #' @param clean_up Do you want to remove the original batch files? Use with
 #' caution.
 #' @param warn Should warnings be raised, if the filetype cannot be determined?
 #' 
-#' @return Either writes to disk, or a list with all combined files.
+#' @return Either writes to disk, or returns a list with all combined files.
 #' 
 #' @examples
 #' # set up a temporary directory
