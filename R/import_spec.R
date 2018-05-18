@@ -73,8 +73,9 @@ jst_define_import <- function(...) {
     map(get_expr) %>%
     as.character() %>% 
     str_split(pattern = ", ") %>% 
-    map(str_replace_all, "^c\\(|\\)$", "") %>% 
-    map(str_replace_all, "^list\\(|\\)$", "")
+    map(stringr::str_remove_all, "^c\\(|\\)$") %>% 
+    map(stringr::str_remove_all, "^list\\(|\\)$") %>% 
+    map(stringr::str_remove_all, "^[:alpha:]*?\\:{2,3}")
   
   
   # check input functions

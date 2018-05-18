@@ -42,7 +42,13 @@ test_that("jst_define_imports gives correct results", {
   expect_identical(spec$meta_type, "book_chapter")
   expect_identical(spec$fun_names, list("chapters_w_authors"))
   expect_identical(spec$evaled_funs, list(book = chapters_w_authors))
-  expect_identical(spec$bare_funs[[1]], jstor:::capture_functions(chapters_w_authors)[[1]])
+  expect_identical(spec$bare_funs[[1]],
+                   jstor:::capture_functions(chapters_w_authors)[[1]])
+  
+  
+  spec2 <- jst_define_import(article = jstor::find_article)
+  
+  expect_identical(spec2$fun_names, list("find_article"))
   
 })
 
