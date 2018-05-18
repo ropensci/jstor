@@ -43,6 +43,13 @@ jst_define_import(article = c(find_article, find_authors, find_references),
                   report = find_book,
                   pamphlet = find_article)
 
+# if you want to import chapters with authors, you can use an anonymous
+# function
+
+chapters_w_authors <- function(x) find_chapters(x, authors = TRUE)
+jst_define_import(book = chapters_w_authors)
+
+
 \dontrun{
 # define imports
 imports <- jst_define_import(article = c(find_article, find_authors))

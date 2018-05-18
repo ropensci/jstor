@@ -21,4 +21,31 @@ test_that("jst_define_import validates input", {
                "All inputs must be bare functions")
   expect_error(jst_define_import(article = mean),
                "All supplied functions must come from")
+  
+  chapters_w_authors <- function(x) find_chapters(x, authors = TRUE)
+  expect_silent(jst_define_import(book = chapters_w_authors))
 })
+
+test_that("functions from jstor can be detected", {
+  chapters_w_authors <- function(x) find_chapters(x, authors = TRUE)
+  
+  expect_identical(is_jstor(find_article), TRUE)
+  expect_identical(is_jstor(chapters_w_authors), TRUE)
+  expect_identical(is_jstor(mean), FALSE)
+})
+
+test_that("jst_define_imports gives correct results", {
+  chapters_w_authors <- function(x) find_chapters(x, authors = TRUE)
+  
+  spec <- jst_define_import(book = chapters_w_authors)
+
+  expect_identical(spec$meta_type, "book_chapter")
+  expect_identical(spec$fun_names, list("chapters_w_authors"))
+  expect_identical(spec$evaled_funs, list(book = chapters_w_authors))
+  expect_identical(spec$bare_funs[[1]], jstor:::capture_functions(chapters_w_authors)[[1]])
+  
+})
+
+
+
+

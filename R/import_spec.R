@@ -32,6 +32,13 @@
 #'                   report = find_book,
 #'                   pamphlet = find_article)
 #'
+#' # if you want to import chapters with authors, you can use an anonymous
+#' # function
+#' 
+#' chapters_w_authors <- function(x) find_chapters(x, authors = TRUE)
+#' jst_define_import(book = chapters_w_authors)
+#' 
+#'
 #' \dontrun{
 #' # define imports
 #' imports <- jst_define_import(article = c(find_article, find_authors))
@@ -96,15 +103,10 @@ jst_define_import <- function(...) {
   }
   
   # check namespaces of functions
-  namespaces <- evaled_funs %>% 
+  matching_namespaces <- evaled_funs %>% 
     unlist() %>% 
-    map(rlang::get_env)
+    map_lgl(is_jstor)
   
-  correct_ns <- rlang::get_env(find_article)
-  
-  matching_namespaces <- namespaces %>% 
-    unname() %>% 
-    map_lgl(identical, correct_ns)
   
   if (!all(matching_namespaces)) {
     stop("All supplied functions must come from the `jstor` package, `",
@@ -124,6 +126,30 @@ capture_functions <- function(...) {
   dots <- enquos(..., .named = T)
   dots
 }
+
+
+is_jstor <- function(fun) {
+  if (identical(environment(fun), environment(find_article))) {
+    TRUE
+  } else {
+    fun %>% 
+      check_env() %>% 
+      identical(environment(find_article))
+  }
+}
+
+
+# the code for the following function came from 
+# https://stackoverflow.com/users/3063910/rich-scriven
+# from SO:
+# https://stackoverflow.com/questions/50410811/determine-the-namespace-of-a-function-within-an-anonymous-function/
+check_env <- function(fun) {
+  fun %>% 
+    pryr::fun_calls() %>% 
+    pryr::fget() %>% 
+    environment()
+}
+
 
 walk_spec <- function(spec_df, chunk_number, n_batches, out_path, cores,
                       show_progress, col_names) {

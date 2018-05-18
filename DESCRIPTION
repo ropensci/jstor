@@ -23,7 +23,8 @@ Imports:
     doSNOW,
     snow,
     readxl,
-    curl
+    curl,
+    pryr
 Suggests: testthat,
     covr,
     knitr,
