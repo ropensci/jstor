@@ -61,6 +61,13 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
     res_ok <- res[is_ok] %>%
       dplyr::bind_rows()
     
+    # check for list columns and unnest
+    col_types <- res_ok %>% map_chr(class)
+    
+    if (any(col_types %in% "list")) {
+      res_ok <- tidyr::unnest(res_ok)
+    }
+    
     write_csv(res_ok, path = paste0(out_path, "-", chunk_number, ".csv"),
               na = "", col_names = col_names)
   }
