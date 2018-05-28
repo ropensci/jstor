@@ -12,36 +12,36 @@
 #' @return A specification of imports which is necessary for
 #'         [jst_import_zip()].
 #' @examples 
-#' # articles will be imported via `find_article()` and `find_authors()`
-#' jst_define_import(article = c(find_article, find_authors))
+#' # articles will be imported via `jst_get_article()` and `jst_get_authors()`
+#' jst_define_import(article = c(jst_get_article, jst_get_authors))
 #' 
 #' # define a specification for importing article metadata and unigrams (ngram1)
-#' jst_define_import(article = find_article,
+#' jst_define_import(article = jst_get_article,
 #'                   ngram1 = jst_read_ngram)
 #'                   
 #'                   
 #' # import all four types with one function each
-#' jst_define_import(article = find_article,
-#'                   book = find_book,
-#'                   report = find_book,
-#'                   pamphlet = find_article)
+#' jst_define_import(article = jst_get_article,
+#'                   book = jst_get_book,
+#'                   report = jst_get_book,
+#'                   pamphlet = jst_get_article)
 #'                   
 #' # import all four types with multiple functions
-#' jst_define_import(article = c(find_article, find_authors, find_references),
-#'                   book = c(find_book, find_chapters),
-#'                   report = find_book,
-#'                   pamphlet = find_article)
+#' jst_define_import(article = c(jst_get_article, jst_get_authors, jst_get_references),
+#'                   book = c(jst_get_book, jst_get_chapters),
+#'                   report = jst_get_book,
+#'                   pamphlet = jst_get_article)
 #'
 #' # if you want to import chapters with authors, you can use an anonymous
 #' # function
 #' 
-#' chapters_w_authors <- function(x) find_chapters(x, authors = TRUE)
+#' chapters_w_authors <- function(x) jst_get_chapters(x, authors = TRUE)
 #' jst_define_import(book = chapters_w_authors)
 #' 
 #'
 #' \dontrun{
 #' # define imports
-#' imports <- jst_define_import(article = c(find_article, find_authors))
+#' imports <- jst_define_import(article = c(jst_get_article, jst_get_authors))
 #' 
 #' # convert the files to .csv
 #' jstor_import_zip("my_archive.zip", out_file = "my_out_file", 

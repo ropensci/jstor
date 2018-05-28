@@ -1,6 +1,6 @@
 #' Extract author information
 #'
-#' `find_authors()` extracts information about authors from JSTOR-XML files.
+#' `jst_get_authors()` extracts information about authors from JSTOR-XML files.
 #'
 #' The function returns a `tibble` with the following six columns:
 #' - *prefix*: in case there was a prefix to the name, like `"Dr."`.
@@ -19,21 +19,19 @@
 #'
 #' @export
 #' @examples 
-#' find_authors(jstor_example("sample_with_references.xml"))
-find_authors <- function(file_path) {
-  base::.Deprecated(msg = paste("`find_authors` has been deprecated.",
-                                "Please use `jst_get_authors` instead."))
+#' jst_get_authors(jst_example("sample_with_references.xml"))
+jst_get_authors <- function(file_path) {
   xml_file <- read_jstor(file_path)
-
+  
   if (identical(xml2::xml_name(xml_file), "article")) {
     front <- xml_find_all(xml_file, "front")
     meta <- xml_child(front, "article-meta")
   } else if (identical(xml2::xml_name(xml_file), "book")) {
     meta <- xml_find_all(xml_file, "book-meta")
   }
-
+  
   authors <- extract_authors(meta)
-
+  
   expand_and_bind(file_path, authors)
 }
 

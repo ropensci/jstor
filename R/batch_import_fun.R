@@ -99,10 +99,11 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 }
 
 
+
 #' Wrapper for file import
 #'
 #' This function applies an import function to a list of `xml`-files
-#' or a .zip-archive in case of `jstor_import_zip` and saves
+#' or a .zip-archive in case of `jst_import_zip` and saves
 #' the output in batches of `.csv`-files to disk.
 #'
 #' Along the way, we wrap three functions, which make the process of converting 
@@ -144,9 +145,9 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' @param out_file Name of files to export to. Each batch gets appended by an
 #' increasing number.
 #' @param out_path Path to export files to (combined with filename).
-#' @param .f Function to use for import. Can be one of `find_article`,
-#' `find_authors`, `find_references`, `find_footnotes`, `find_book` or
-#' `find_chapter`.
+#' @param .f Function to use for import. Can be one of `jst_get_article`,
+#' `jst_get_authors`, `jst_get_references`, `jst_get_footnotes`, `jst_get_book` 
+#' or `jst_get_chapter`.
 #' @param col_names Should column names be written to file? Defaults to `TRUE`.
 #' @param n_batches Number of batches, defaults to 1.
 #' @param files_per_batch Number of files for each batch. Can be used instead of
@@ -170,26 +171,24 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' # find all files
 #' meta_files <- list.files(pattern = "xml", full.names = T)
 #' 
-#' # import them via `find_article`
-#' jstor_import(meta_files, out_file = "imported_metadata", .f = find_article,
-#'              files_per_batch = 25000, cores = 4)
+#' # import them via `jst_get_article`
+#' jst_import(meta_files, out_file = "imported_metadata", .f = jst_get_article,
+#'            files_per_batch = 25000, cores = 4)
 #'
 #' # read from zip archive ------ 
 #' # define imports
-#' imports <- jst_define_import(article = c(find_article, find_authors))
+#' imports <- jst_define_import(article = c(jst_get_article, jst_get_authors))
 #' 
 #' # convert the files to .csv
 #' jstor_import_zip("my_archive.zip", out_file = "my_out_file", 
 #'                  import_spec = imports)
 #' } 
-jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
-                         col_names = TRUE, n_batches = NULL,
-                         files_per_batch = NULL,
-                         cores = getOption("mc.cores", 1L),
-                         show_progress = TRUE) {
-  base::.Deprecated(msg = paste("`jstor_import` has been deprecated.",
-                                "Please use `jst_import` instead."))
-  
+jst_import <- function(in_paths, out_file, out_path = NULL, .f,
+                       col_names = TRUE, n_batches = NULL,
+                       files_per_batch = NULL,
+                       cores = getOption("mc.cores", 1L),
+                       show_progress = TRUE) {
+
   if (!is.null(n_batches) && !is.null(files_per_batch)) {
     stop("Either n_batches or files_per_batch needs to be specified, ",
          "not both.", call. = FALSE)
@@ -198,7 +197,7 @@ jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
   
   message("Starting to import ", format(length(in_paths), big.mark = ","),
           " file(s).")
-
+  
   # set n_batches to 1 for default
   if (is.null(n_batches) && is.null(files_per_batch)) {
     n_batches <- 1
@@ -213,13 +212,13 @@ jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
   }
   
   chunk_numbers <- unique(names(file_list)) %>% as.list()
-
+  
   if (!is.null(out_path)) {
     out_file <- file.path(out_path, out_file)
   }
   
   n_batches <- length(chunk_numbers)
-
+  
   purrr::pwalk(
     list(file_list, chunk_numbers, out_file, list(.f), cores = cores,
          col_names = col_names, n_batches = n_batches,

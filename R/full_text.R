@@ -18,9 +18,7 @@ get_encoding <- function(filename) {
 #' the file, and the encoding which was used to read it.
 #'
 #' @export
-read_full_text <- function(filename) {
-  base::.Deprecated(msg = paste("`read_full_text` has been deprecated.",
-                                "Please use `jst_get_fulltext` instead."))
+jst_read_fulltext <- function(filename) {
   validate_file_path(filename, "txt")
 
   id <- get_basename(filename)
