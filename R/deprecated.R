@@ -1,3 +1,5 @@
+# nocov start
+
 #' Extract meta information for articles
 #'
 #' `find_article()` extracts meta-data from JSTOR-XML files for journal
@@ -541,3 +543,5 @@ find_references <- function(file_path) {
   
   expand_and_bind(file_path, references)
 }
+
+# nocov start
