@@ -234,7 +234,7 @@ jst_import <- function(in_paths, out_file, out_path = NULL, .f,
 
 
 
-#' @rdname jstor_import
+#' @rdname jst_import
 #' @export
 jst_import_zip <- function(zip_archive, import_spec, 
                              out_file, out_path = NULL,
