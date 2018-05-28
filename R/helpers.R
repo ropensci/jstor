@@ -6,6 +6,8 @@
 #' @param file_path A path to a file
 #' @export
 get_basename <- function(file_path) {
+  base::.Deprecated(msg = paste("`get_basename` has been deprecated.",
+                                "Please use `jst_get_filename` instead."))
   if (inherits(file_path, "jstor_zip")) {
     file_path[["file_path"]] %>% 
       basename() %>% 

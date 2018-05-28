@@ -22,6 +22,8 @@
 #' @examples 
 #' find_footnotes(jstor_example("sample_with_footnotes.xml"))
 find_footnotes <- function(file_path) {
+  base::.Deprecated(msg = paste("`find_footnotes` has been deprecated.",
+                                "Please use `jst_get_footnotes` instead."))
   xml_file <- read_jstor(file_path)
 
   validate_article(xml_file)

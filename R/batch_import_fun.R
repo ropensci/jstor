@@ -187,6 +187,8 @@ jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
                          files_per_batch = NULL,
                          cores = getOption("mc.cores", 1L),
                          show_progress = TRUE) {
+  base::.Deprecated(msg = paste("`jstor_import` has been deprecated.",
+                                "Please use `jst_import` instead."))
   
   if (!is.null(n_batches) && !is.null(files_per_batch)) {
     stop("Either n_batches or files_per_batch needs to be specified, ",

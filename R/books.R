@@ -31,6 +31,8 @@
 #' @examples 
 #' find_book(jstor_example("sample_book.xml"))
 find_book <- function(file_path) {
+  base::.Deprecated(msg = paste("`find_book` has been deprecated.",
+                                "Please use `jst_get_book` instead."))
   xml_file <- read_jstor(file_path)
 
   validate_book(xml_file)
@@ -107,6 +109,8 @@ extract_book_pages <- function(book) {
 #' 
 #' tidyr::unnest(parts)
 find_chapters <- function(file_path, authors = FALSE) {
+  base::.Deprecated(msg = paste("`find_chapters` has been deprecated.",
+                                "Please use `jst_get_chapters` instead."))
   xml_file <- read_jstor(file_path)
 
   validate_book(xml_file)

@@ -21,6 +21,8 @@
 #' @examples 
 #' find_authors(jstor_example("sample_with_references.xml"))
 find_authors <- function(file_path) {
+  base::.Deprecated(msg = paste("`find_authors` has been deprecated.",
+                                "Please use `jst_get_authors` instead."))
   xml_file <- read_jstor(file_path)
 
   if (identical(xml2::xml_name(xml_file), "article")) {
