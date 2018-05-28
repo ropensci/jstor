@@ -5,7 +5,7 @@
 #' 
 #' @param file_path A path to a file
 #' @export
-get_basename <- function(file_path) {
+jst_get_file_name <- function(file_path) {
   if (inherits(file_path, "jstor_zip")) {
     file_path[["file_path"]] %>% 
       basename() %>% 
@@ -82,14 +82,14 @@ extract_all <- function(doc, element) {
 expand_and_bind <- function(file_path, individual_part, ngram = FALSE) {
   if (ngram) {
     list(
-      basename_id = get_basename(file_path) %>%
+      file_name = jst_get_file_name(file_path) %>%
         stringr::str_remove("-ngram\\d") %>% 
         rep(times = NROW(individual_part))
     ) %>%
       dplyr::bind_cols(individual_part)
   } else {
     list(
-      basename_id = get_basename(file_path) %>%
+      file_name = jst_get_file_name(file_path) %>%
         rep(times = NROW(individual_part))
     ) %>%
       dplyr::bind_cols(individual_part)

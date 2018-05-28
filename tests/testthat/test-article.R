@@ -5,33 +5,33 @@ context("meta-information")
 
 # import files -----
 result <- "testfiles/standard_case.xml" %>%
-  find_article()
+  jst_get_article()
 
 result_empty <- "testfiles/empty_file.xml" %>%
-  find_article()
+  jst_get_article()
 
 result_multiple_dates <- "testfiles/multiple-dates.xml" %>%
-  find_article()
+  jst_get_article()
  
 result_weird_title <- "testfiles/weird-title.xml" %>%
-  find_article()
+  jst_get_article()
 
 result_weird_title2 <- "testfiles/weird-title-2.xml" %>%
-  find_article()
+  jst_get_article()
 
 result_multiple_languages <- "testfiles/multiple-languages.xml" %>%
-  find_article()
+  jst_get_article()
 
 result_new_nov_17 <- "testfiles/article_complex_meta.xml" %>%
-  find_article()
+  jst_get_article()
 
 article_jcode_stable <- "testfiles/article-jcode-stable.xml" %>%
-  find_article()
+  jst_get_article()
 
 # tests -----
 test_that("Input data is checked", {
-  expect_error(find_article("my_path.txt"))
-  expect_error(find_article("testfiles/standard_book.xml"), "You are using")
+  expect_error(jst_get_article("my_path.txt"))
+  expect_error(jst_get_article("testfiles/standard_book.xml"), "You are using")
 })
 
 
@@ -61,8 +61,8 @@ test_that("article_id is correct", {
   expect_identical(article_jcode_stable[["article_jcode"]], "4122385")
 })
 
-test_that("basename_id is correct", {
-  expect_equal(result[["basename_id"]], "standard_case")
+test_that("file_name is correct", {
+  expect_equal(result[["file_name"]], "standard_case")
 })
 
 test_that("article_type is correct", {

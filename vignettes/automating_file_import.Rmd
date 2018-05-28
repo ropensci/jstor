@@ -78,9 +78,9 @@ whereas `find` does not. For a large amour of files (200,000) this makes
 impact.
 
 # Batch import
-Once the file list is generated, we can apply any of the `find_*`-functions to
-the list. A good and simple way for small to moderate amounts of files is to use
-`map_df` from purrr:
+Once the file list is generated, we can apply any of the `jst_get_*`-functions 
+to the list. A good and simple way for small to moderate amounts of files is to
+use `map_df` from purrr:
 
 ```{r, results='asis'}
 library(jstor)
@@ -89,7 +89,7 @@ library(stringr)
 
 result <- file_names_listed %>% 
   keep(str_detect, "with") %>% # only operate on articles, remove book sample
-  map_df(find_article)
+  map_df(jst_get_article)
 
 result %>% knitr::kable()
 ```
@@ -99,7 +99,7 @@ size of files. If you try to import many files, you could either run into
 problems regarding RAM, or it would take a long time and would benefit from
 executing the process in parallel.
 
-The function `jstor_import()` takes care of errors and uses
+The function `jst_import()` takes care of errors and uses
 `foreach::foreach()` and `snow::makeCluster()` to speed up the process.
 
 The whole approach about importing many files is implemented like this:
@@ -111,15 +111,15 @@ The whole approach about importing many files is implemented like this:
     + write the result into a single .csv-file
     + write any errors in a separate .csv-file
     
-`jstor_import()` takes up to seven arguments:
+`jst_import()` takes up to seven arguments:
 
 - *in_paths*: this should be a character vector of all `xml-`files you want to
 import
 - *out_file*: the file name for the resulting `.csv-`files. 
 - *out_path*: in case you want to export the files to a specific directory, 
 specify it here.
-- *.f*: the function to use (one of `find_article`, `find_authors`, `find_references`,
-or `find_footnotes`)
+- *.f*: the function to use (one of `jst_get_article`, `jst_get_authors`,
+`jst_get_references`, `jst_get_footnotes`, `jst_get_book` or `jst_get_chapters`).
 - *files_per_batch*: how many files should be converted per batch? For my system,
 20,000 files per batch worked well.
 - *cores* number of cores to use for parallel processing (`1` on windows).
@@ -128,9 +128,9 @@ will be displayed for each batch.
 
 You can specify all parameters like this:
 ```{r, eval=FALSE}
-jstor_import(in_paths = vector_of_all_my_files, out_file = "metadata",
-             out_path = "path/to/out/dir", .f = find_article,
-             files_per_batch = 20000, cores = 4)
+jst_import(in_paths = vector_of_all_my_files, out_file = "metadata",
+           out_path = "path/to/out/dir", .f = jst_get_article,
+           files_per_batch = 20000, cores = 4)
 ```
 
 Suppose you had 100,000 files to convert, and no errors happened, then you should

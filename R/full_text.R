@@ -18,10 +18,10 @@ get_encoding <- function(filename) {
 #' the file, and the encoding which was used to read it.
 #'
 #' @export
-read_full_text <- function(filename) {
+jst_get_full_text <- function(filename) {
   validate_file_path(filename, "txt")
 
-  id <- get_basename(filename)
+  id <- jst_get_file_name(filename)
 
   encoding <- get_encoding(filename)
 
@@ -29,7 +29,7 @@ read_full_text <- function(filename) {
 
   new_tibble(
     list(
-      basename_id = id, full_text = text, encoding = encoding
+      file_name = id, full_text = text, encoding = encoding
     )
   )
 }

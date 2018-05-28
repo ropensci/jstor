@@ -29,21 +29,21 @@ agreement between the researcher and JSTOR. `jstor` was developed to deal with
 very large datasets which require an agreement, but can be used with smaller
 ones as well.
 
-The most important set of functions is a group of `find_*` functions:
+The most important set of functions is a group of `jst_get_*` functions:
 
-- `find_article` (for journal documents and pamphlets)
-- `find_authors` (for all sources)
-- `find_references` (for journal documents)
-- `find_footnotes` (for journal documents)
-- `find_book` (for books and research reports)
-- `find_chapters` (for books and possibly reserach reports)
+- `jst_get_article` (for journal documents and pamphlets)
+- `jst_get_authors` (for all sources)
+- `jst_get_references` (for journal documents)
+- `jst_get_footnotes` (for journal documents)
+- `jst_get_book` (for books and research reports)
+- `jst_get_chapters` (for books and possibly reserach reports)
 
 I will demonstrate their usage using the
 [sample dataset](http://www.jstor.org/dfr/about/sample-datasets)
 which is provided by JSTOR on their website.
 
 # General Concept
-All functions from the `find_*` family which are concerned with meta 
+All functions from the `jst_get_*` family which are concerned with meta 
 data operate along the same lines:
 
 1. The file is read with `xml2::read_xml()`.
@@ -53,12 +53,12 @@ data operate along the same lines:
 The functions are similar in that all operate on single files
 (article, book, research report or pamphlet). Depending on the content of the
 file, the output of the functions might have one or multiple rows.
-`find_article` always returns a `tibble` with one row: the core meta data
+`jst_get_article` always returns a `tibble` with one row: the core meta data
 (like title, id, or first page of the article) are single items,
 and only one article is processed at a time. 
-Running `find_authors` for the same article might give you a tibble with one
+Running `jst_get_authors` for the same article might give you a tibble with one
 or multiple rows, depending on the number of authors the article has. The same
-is true for `find_references` and `find_footnotes`. If a file has no data on
+is true for `jst_get_references` and `jst_get_footnotes`. If a file has no data on
 references (they migth still exist, but JSTOR might not have parsed them), the
 output is only one row, with missing references. If there is data on references,
 each entry gets its own row. Note however, that the number of rows does not
@@ -74,9 +74,9 @@ one xml-file with the whole book, including data on all chapters. Ngram or
 full-text data for the same entry however is processed only from single
 chapters^[See the
 [technical specifications](https://www.jstor.org/dfr/about/technical-specifications)
-for more detail.]. Thus, the output of `find_book` for a single file is
-similar to the one from `find_article`: it is one row with general data about
-the book. `find_chapters` gives you data on all chapters, and the resulting 
+for more detail.]. Thus, the output of `jst_get_book` for a single file is
+similar to the one from `jst_get_article`: it is one row with general data about
+the book. `jst_get_chapters` gives you data on all chapters, and the resulting 
 tibble therefore might have multiple rows.
 
 
@@ -94,11 +94,11 @@ library(knitr)
 
 
 
-## find_article
-The basic usage of the `find_*` functions is very simple. They take only one 
+## jst_get_article
+The basic usage of the `jst_get_*` functions is very simple. They take only one 
 argument, the path to the file to import:
 ```{r}
-meta_data <- find_article(file_path = jstor_example("sample_with_references.xml"))
+meta_data <- jst_get_article(file_path = jstor_example("sample_with_references.xml"))
 ```
 
 The resulting object is a `tibble` with one row and 17 columns. The columns
@@ -106,7 +106,7 @@ correspond to most of the elements documented here: http://www.jstor.org/dfr/abo
 
 The columns are:
 
-- basename_id *(chr)*: The file name of the original .xml-file. Can be used 
+- file_name *(chr)*: The file name of the original .xml-file. Can be used 
  for joining with other parts (authors, references, footnotes, full-texts).
 - journal_doi *(chr)*: A registered identifier for the journal.
 - journal_jcode *(chr)*: A identifier for the journal like "amerjsoci" for
@@ -135,17 +135,17 @@ Since the output from all functions are tibbles, the result is nicely formatted:
 meta_data %>% kable()
 ```
 
-## find_authors
+## jst_get_authors
 Extracting the authors works in similar fashion:
 
 ```{r, results='asis'}
-authors <- find_authors(jstor_example("sample_with_references.xml"))
+authors <- jst_get_authors(jstor_example("sample_with_references.xml"))
 kable(authors)
 ```
 
 Here we have the following columns:
 
-- *basename_id*: The same as above, used for matching articles.
+- *file_name*: The same as above, used for matching articles.
 - *prefix*: A prefix to the name.
 - *given_name*: The given name of the author (i.e. `Albert` or `A.`).
 - *surname*: The surname of the author (i.e. `Einstein`).
@@ -156,9 +156,9 @@ supplied, i.e.: `Albert Einstein`, or `Einstein, Albert`.
 
 The number of rows matches the number of authors -- each author get its' own row.
 
-## find_references
+## jst_get_references
 ```{r}
-references <- find_references(jstor_example("sample_with_references.xml"))
+references <- jst_get_references(jstor_example("sample_with_references.xml"))
 
 # we need to remove line breaks for knitr::kable() to work properly for printing
 references <- references %>% 
@@ -167,7 +167,7 @@ references <- references %>%
 
 We have two columns:
 
-- *basename_id*: Identifier, can be used for matching.
+- *file_name*: Identifier, can be used for matching.
 - *references*: The content of each entry for reference.
 
 Here I display the first 5 entries for each column:
@@ -178,7 +178,7 @@ references %>%
   kable()
 ```
 
-This example shows several things: `basename_id` is identical among rows, since
+This example shows several things: `file_name` is identical among rows, since
 it identifies the article and all references came from one article.
 
 The content of references (`references`) is in quite a raw state, quite often
@@ -191,9 +191,9 @@ Note, that there might be other content present like endnotes, in case the
 article used endnotes rather than footnotes.
 
 
-## find_footnotes
+## jst_get_footnotes
 ```{r, results='asis'}
-find_footnotes(jstor_example("sample_with_references.xml")) %>% 
+jst_get_footnotes(jstor_example("sample_with_references.xml")) %>% 
   kable()
 ```
 
@@ -204,7 +204,7 @@ footnotes is returned.
 I will use another file to demonstrate footnotes.
 
 ```{r, results='asis'}
-footnotes <- find_footnotes(jstor_example("sample_with_footnotes.xml"))
+footnotes <- jst_get_footnotes(jstor_example("sample_with_footnotes.xml"))
 
 footnotes %>% 
   mutate(footnotes = stringr::str_remove_all(footnotes, "\\\n")) %>% 
@@ -212,20 +212,20 @@ footnotes %>%
 
 ```
 
-In general, you might need to combine `find_footnotes()` with
-`find_references()` to get all available information on citation data.
+In general, you might need to combine `jst_get_footnotes()` with
+`jst_get_references()` to get all available information on citation data.
 
-## find_fulltext
+## jst_get_full_text
 The function to extract full texts can't be demonstrated with proper data, since
 the full texts are only supplied upon special request with DfR. The function
 guesses the encoding of the specified file via `readr::guess_encoding()`, reads
-the whole file and returns a `tibble` with `basename_id`, `full_text` and
+the whole file and returns a `tibble` with `file_name`, `full_text` and
 `encoding`.
 
 I created a file that looks similar to files supplied by DfR with sample text:
 
 ```{r, results='asis'}
-full_text <- read_full_text(jstor_example("sample_full_text.txt"))
+full_text <- jst_get_full_text(jstor_example("sample_full_text.txt"))
 full_text %>% 
   mutate(full_text = stringr::str_remove_all(full_text, "\\\n")) %>% 
   kable()
@@ -240,7 +240,7 @@ Different parts of meta-data can be combined by using `dplyr::left_join()`.
 ```{r, results='asis'}
 meta_data %>% 
   left_join(authors) %>%
-  select(basename_id, article_title, pub_year, given_name, surname) %>% 
+  select(file_name, article_title, pub_year, given_name, surname) %>% 
   kable()
 ```
 
@@ -249,7 +249,7 @@ meta_data %>%
 ```{r, results='asis'}
 meta_data %>% 
   left_join(references) %>% 
-  select(basename_id, article_title, volume, pub_year, references) %>%
+  select(file_name, article_title, volume, pub_year, references) %>%
   head(5) %>% 
   kable()
 ```
@@ -257,20 +257,20 @@ meta_data %>%
 
 # Books
 Quite recently DfR added book chapters to their stack. To import metadata about
-the books and chapters, jstor supplies `find_book` and `find_chapters`.
+the books and chapters, jstor supplies `jst_get_book` and `jst_get_chapters`.
 
-`find_book` is very similar to `find_article`. We obtain general information
+`jst_get_book` is very similar to `jst_get_article`. We obtain general information
 about the complete book:
 
 ```{r, results='asis'}
-find_book(jstor_example("sample_book.xml")) %>% knitr::kable()
+jst_get_book(jstor_example("sample_book.xml")) %>% knitr::kable()
 ```
 
-A single book might contain many chapters. `find_chapters` extracts all of them.
+A single book might contain many chapters. `jst_get_chapters` extracts all of them.
 Due to this, the function is a bit slower than most of jstor's other functions.
 
 ```{r}
-chapters <- find_chapters(jstor_example("sample_book.xml"))
+chapters <- jst_get_chapters(jstor_example("sample_book.xml"))
 
 str(chapters)
 ```
@@ -291,7 +291,7 @@ Since extracting all authors for all chapters needs considerably
 more time, by default authors are not extracted. You can import them like so:
 
 ```{r}
-author_chap <- find_chapters(jstor_example("sample_book.xml"), authors = TRUE) 
+author_chap <- jst_get_chapters(jstor_example("sample_book.xml"), authors = TRUE) 
 ```
 
 The authors are supplied in a list column:

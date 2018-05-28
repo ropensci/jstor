@@ -11,7 +11,7 @@
 #' - *n*: an integer for the number of times the term occurred in the original 
 #' file
 #' @export
-jst_read_ngram <- function(file) {
+jst_get_ngram <- function(file) {
   if (!inherits(file, "jstor_zip") && length(file) > 1) {
     stop("file_path should be length 1, not ", length(file))
   }

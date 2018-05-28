@@ -1,12 +1,12 @@
 #' Extract meta information for books
 #'
-#' `find_book()` extracts meta-data from JSTOR-XML files for book chapters.
+#' `jst_get_book()` extracts meta-data from JSTOR-XML files for book chapters.
 #'
 #' @param file_path A `.xml`-file for a book or research report.
 #' 
 #' @return A `tibble` containing the extracted meta-data with the following
 #' columns:
-#' - basename_id *(chr)*: The filename of the original .xml-file. Can be used 
+#' - file_name *(chr)*: The filename of the original .xml-file. Can be used 
 #'   for joining with other data for the same file.
 #' - discipline *(chr)*: The discipline from the discipline names used on JSTOR.
 #' - book_id *(chr)*: The book id of type "jstor", which is not a registered 
@@ -29,17 +29,17 @@
 #' 
 #' @export
 #' @examples 
-#' find_book(jstor_example("sample_book.xml"))
-find_book <- function(file_path) {
+#' jst_get_book(jst_example("sample_book.xml"))
+jst_get_book <- function(file_path) {
   xml_file <- read_jstor(file_path)
-
+  
   validate_book(xml_file)
-
+  
   book <- xml_find_all(xml_file, "book-meta")
-
+  
   out <- list(
     book_id = extract_child(book, ".//book-id"),
-    basename_id = get_basename(file_path),
+    file_name = jst_get_file_name(file_path),
     discipline = extract_all(
       book, ".//subj-group[@subj-group-type='discipline']"
     ),
@@ -54,7 +54,7 @@ find_book <- function(file_path) {
     n_pages = extract_book_pages(book),
     language = extract_child(book, ".//meta-value")
   )
-
+  
   tibble::new_tibble(out)
 }
 
@@ -69,11 +69,12 @@ extract_book_pages <- function(book) {
 
 #' Extract information on book chapters
 #'
-#' `find_chapters()` extracts meta-data from JSTOR-XML files for book chapters.
+#' `jst_get_chapters()` extracts meta-data from JSTOR-XML files for book 
+#' chapters.
 #' 
-#' Currently, `find_chapters()` is quite a lot slower than most of the other 
-#' functions. It is roughly 10 times slower than `find_book`, depending on the
-#' number of chapters to extract.
+#' Currently, `jst_get_chapters()` is quite a lot slower than most of the other 
+#' functions. It is roughly 10 times slower than `jst_get_book`, depending on
+#' the number of chapters to extract.
 #'
 #' @param file_path The path to a `.xml`-file for a book or research report.
 #' @param authors Extracting the authors is an expensive operation which makes
@@ -85,7 +86,7 @@ extract_book_pages <- function(book) {
 #' columns:
 #' - book_id *(chr)*: The book id of type "jstor", which is not a registered 
 #'   DOI.
-#' - basename_id *(chr)*: The filename of the original .xml-file. Can be used 
+#' - file_name *(chr)*: The filename of the original .xml-file. Can be used 
 #'   for joining with other data for the same file.
 #' - part_id *(chr)*: The id of the part.
 #' - part_label *(chr)*: A label for the part, if specified.
@@ -99,14 +100,14 @@ extract_book_pages <- function(book) {
 #' @export
 #' @examples 
 #' # extract parts without authors
-#' find_chapters(jstor_example("sample_book.xml"))
+#' jst_get_chapters(jst_example("sample_book.xml"))
 #' 
 #' # import authors too
-#' parts <- find_chapters(jstor_example("sample_book.xml"), authors = TRUE)
+#' parts <- jst_get_chapters(jst_example("sample_book.xml"), authors = TRUE)
 #' parts
 #' 
 #' tidyr::unnest(parts)
-find_chapters <- function(file_path, authors = FALSE) {
+jst_get_chapters <- function(file_path, authors = FALSE) {
   xml_file <- read_jstor(file_path)
 
   validate_book(xml_file)
@@ -132,7 +133,7 @@ find_chapters <- function(file_path, authors = FALSE) {
   base <- list(
     book_id = extract_child(xml_file, ".//book-id") %>%
       rep(times = nrow(parts_out)),
-    basename_id = get_basename(file_path) %>%
+    file_name = jst_get_file_name(file_path) %>%
       rep(times = nrow(parts_out))
   )
 

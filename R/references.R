@@ -9,13 +9,13 @@
 #' data. Because of this, there might be other content present than references.
 #' 
 #' In order to get all available information on citation data, you might need to
-#' combine `find_references()` with `find_footnotes()`.
+#' combine `jst_get_references()` with `jst_get_footnotes()`.
 #' 
 #' For newer `xml`-files, there would be the option to extract single elements
 #' like authors, title or date of the source, but this is not yet implemented.
 #' 
-#' In general, the implementation is not as fast as `find_article()` - articles
-#' with many references slow the process down.
+#' In general, the implementation is not as fast as `jst_get_article()` -
+#' articles with many references slow the process down.
 #' 
 #' @param file_path The path to the `.xml`-file from which references should be
 #'   extracted.
@@ -27,8 +27,8 @@
 #'
 #' @export
 #' @examples 
-#' find_references(jstor_example("sample_with_references.xml"))
-find_references <- function(file_path) {
+#' jst_get_references(jst_example("sample_with_references.xml"))
+jst_get_references <- function(file_path) {
   xml_file <- read_jstor(file_path)
 
   validate_article(xml_file)

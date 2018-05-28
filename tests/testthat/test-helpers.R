@@ -38,14 +38,14 @@ test_that("Construction of zip location works", {
   expect_identical(zip_loc$file_path, "standard_case.xml")
 })
 
-test_that("get_basename works", {
+test_that("jst_get_file_name works", {
   standard_xml_file <- "testfiles/standard_case.xml"
-  expect_identical(get_basename(standard_xml_file), "standard_case")
+  expect_identical(jst_get_file_name(standard_xml_file), "standard_case")
   
   zip_loc <- specify_zip_loc("testfiles/standard_case.zip", 
                              "standard_case.xml")
   
-  expect_identical(get_basename(zip_loc), "standard_case")
+  expect_identical(jst_get_file_name(zip_loc), "standard_case")
   
 })
 

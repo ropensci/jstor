@@ -9,9 +9,9 @@
 #' listed.
 #' @export
 #' @examples
-#' jstor_example()
-#' jstor_example("sample_with_references.xml") 
-jstor_example <- function(path = NULL) {
+#' jst_example()
+#' jst_example("sample_with_references.xml") 
+jst_example <- function(path = NULL) {
   if (is.null(path)) {
     dir(system.file("extdata", package = "jstor"))
   } else {

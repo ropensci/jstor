@@ -5,8 +5,9 @@ crazy_path <- "../Entpackt//soc_a-j/jpalestud/2012/41/2/10.1525%2Fjps.2012.xli.i
 standard_path <- "../Entpackt//soc_k-z/sozialewelt/1952/3/4/i40039236/40874627/40874627.txt" # nolint
 
 test_that("getting base name of file works", {
-  expect_identical(get_basename(crazy_path), "10.1525%2Fjps.2012.xli.2.204")
-  expect_identical(get_basename(standard_path), "40874627")
+  expect_identical(jst_get_file_name(crazy_path),
+                   "10.1525%2Fjps.2012.xli.2.204")
+  expect_identical(jst_get_file_name(standard_path), "40874627")
 })
 
 # encoding -----
@@ -29,7 +30,7 @@ id est laborum.
 # nolint end
 
 test_that("full-text is read correctly", {
-  text <- read_full_text(file_path)
+  text <- jst_get_full_text(file_path)
 
   expect_identical(lorem, text[["full_text"]])
 })

@@ -5,10 +5,10 @@ library(magrittr)
 
 # import files -----
 result <- "testfiles/references.xml" %>%
-  find_references()
+  jst_get_references()
 
 result_empty <- "testfiles/empty_file.xml" %>%
-  find_references()
+  jst_get_references()
 
 half_empty <- "testfiles/references-half-empty.xml"
 
@@ -22,8 +22,8 @@ unknown <- "testfiles/unknown-reference.xml"
 
 # tests -----
 test_that("Input data is checked", {
-  expect_error(find_references("my_path.txt"))
-  expect_error(find_references("testfiles/standard_book.xml"), "You are using")
+  expect_error(jst_get_references("my_path.txt"))
+  expect_error(jst_get_references("testfiles/standard_book.xml"), "You are using")
 })
 
 test_that("class is correct", {
@@ -31,14 +31,14 @@ test_that("class is correct", {
 })
 
 test_that("catching errors works", {
-  expect_silent(find_references(unparsed))
+  expect_silent(jst_get_references(unparsed))
 })
 
 test_that("null results work", {
   expect_identical(result_empty[["references"]], NA_character_)
-  expect_identical(find_references(unparsed)[["references"]][2],
+  expect_identical(jst_get_references(unparsed)[["references"]][2],
                    NA_character_)
-  expect_identical(find_references(half_empty)[["references"]],
+  expect_identical(jst_get_references(half_empty)[["references"]],
                    NA_character_)
 })
 
@@ -91,11 +91,11 @@ unparsed_citations <- c(
 test_that("extracting references works", {
   skip_on_os("windows")
   expect_identical(result[["references"]], correct_refs)
-  expect_identical(find_references(unparsed)[["references"]], unparsed_refs)
-  expect_identical(find_references(unparsed_citation)[["references"]],
+  expect_identical(jst_get_references(unparsed)[["references"]], unparsed_refs)
+  expect_identical(jst_get_references(unparsed_citation)[["references"]],
                    unparsed_citations)
-  expect_identical(find_references(parsed)[["references"]], parsed_refs)
-  expect_error(find_references(unknown),
+  expect_identical(jst_get_references(parsed)[["references"]], parsed_refs)
+  expect_error(jst_get_references(unknown),
                paste("Unknown citation format in file",
                      "`testfiles/unknown-reference.xml`"))
 })
