@@ -17,7 +17,7 @@
 #' 
 #' # define a specification for importing article metadata and unigrams (ngram1)
 #' jst_define_import(article = jst_get_article,
-#'                   ngram1 = jst_read_ngram)
+#'                   ngram1 = jst_get_ngram)
 #'                   
 #'                   
 #' # import all four types with one function each
