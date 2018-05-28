@@ -462,7 +462,7 @@ find_footnotes <- function(file_path) {
 #' @export
 read_full_text <- function(filename) {
   base::.Deprecated(msg = paste("`read_full_text` has been deprecated.",
-                                "Please use `jst_get_fulltext` instead."))
+                                "Please use `jst_get_full_text` instead."))
   validate_file_path(filename, "txt")
   
   id <- get_basename(filename)

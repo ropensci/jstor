@@ -18,7 +18,7 @@ get_encoding <- function(filename) {
 #' the file, and the encoding which was used to read it.
 #'
 #' @export
-jst_read_fulltext <- function(filename) {
+jst_get_full_text <- function(filename) {
   validate_file_path(filename, "txt")
 
   id <- jst_get_file_name(filename)

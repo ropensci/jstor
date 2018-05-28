@@ -30,7 +30,7 @@ id est laborum.
 # nolint end
 
 test_that("full-text is read correctly", {
-  text <- jst_read_fulltext(file_path)
+  text <- jst_get_full_text(file_path)
 
   expect_identical(lorem, text[["full_text"]])
 })
