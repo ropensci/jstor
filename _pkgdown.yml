@@ -26,16 +26,16 @@ reference:
 - title: Import metadata
   desc: All functions in this category are to be applied to a single metadata file
   contents:
-  - '`find_article`'
-  - '`find_authors`'
-  - '`find_book`'
-  - '`find_chapters`'
-  - '`find_footnotes`'
-  - '`find_references`'
+  - '`jst_get_article`'
+  - '`jst_get_authors`'
+  - '`jst_get_book`'
+  - '`jst_get_chapters`'
+  - '`jst_get_footnotes`'
+  - '`jst_get_references`'
   
 - title: Batch import many files
   contents:
-  - '`jstor_import`'
+  - '`jst_import`'
   - '`jst_import_zip`'
   - '`jst_define_import`'
 
@@ -46,15 +46,16 @@ reference:
   
 - title: Import full-text/ngram
   contents:
-  - '`read_full_text`'
-  - '`jst_read_ngram`'
+  - '`jst_get_full_text`'
+  - '`jst_get_ngram`'
   
 - title: Helper functions
   contents:
-  - '`get_basename`'
-  - '`jstor_example`'
+  - '`jst_get_file_name`'
+  - '`jst_example`'
   - '`jst_preview_zip`'
   - '`jst_get_journal_overview`'
+  - '`jst_get_total_pages`'
   
 - title: Top level documentation
   contents:
