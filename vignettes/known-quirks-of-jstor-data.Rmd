@@ -1,0 +1,96 @@
+---
+title: "Known Quirks of JSTOR Data"
+author: "Thomas Klebel"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Known Quirks of JSTOR Dat}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Collecting all the quirks
+Data from JSTOR/DfR is unlike most other data you encounter when doing text 
+analysis. First and foremost, the data about the articles and books come from a
+wide variety of journals or publishers. The level of detail and certain formats
+vary because of this. `jstor` tries to deal with this situation with two
+strategies:
+
+- try to recognise the format and read data accordingly
+- if this is not possible, read data as "raw" as possible, i.e. without any 
+conversions
+
+An example for the latter case are page numbers. Most of the time, the entries
+for page numbers are simply `42`, or `61`. This is as expected, and could be
+parsed as integers. Sometimes, there are characters present, like `M77`. This
+would pose no problem either, we could simply extract all digits via regex and
+parse as character. Unfortunately, sometimes the page is specified like this:
+`v75i2p84`. Extracting all digits would result in `75284`, which is wrong by
+a long shot. Since there might be other ways of specifying pages, `jstor` does
+not attempt to parse the pages to integers when importing.
+
+There are many other problems or pecularities like this. This vignette tries to
+list as many as possible, and offer solutions for dealing with them.
+Unfortunately I have neither the time nor the interest to wade through all the
+data which you could get from DfR in order to find all possible quirks. The
+following list is thus inevitably incomplete. If you encounter new 
+quirks/pecularities, you are thus welcome to share them by sending me an email,
+or [opening an issue at GitHub](https://github.com/tklebel/jstor/issues), and 
+I will include them in future version of this vignette, so this vignette can
+be a starting point for everybody who conducts text analysis with data from
+JSTOR/DfR.
+
+
+# Known quirks
+
+```{r}
+library(jstor)
+```
+
+
+## Page numbers
+### Clean pages
+
+### Total pages
+As outlined above, page numbers come in very different forms. Besides this
+problem, there is actually another issue. Imagine you would like to quantify 
+the lenghts of articles. Obviously you will need information on the first
+and the last page of the articles. Furthermore, the pages need to be
+parsed properly: you will run into troubles if you calculate page numbers like
+`75284 - 42 + 1`, in case the number was parsed badly. Parsing correctly is
+unfortunately not enough. Things like "Errata" could come to haunt you.
+
+There might be an article with `first_page = 42` and `last_page = 362`, which
+would leave you puzzled as to if this can be true^[Although it sounds absurd,
+this can acutally be true. There are some articles which are 200 pages long.
+Obviously, they are not standard research articles. You will need to decide
+if they fall into your sample or not]. There could be a simple explanation:
+the article might start on page 42, and end on page 65, and there is furthermore
+an erratum on page 362. Technically, `last_page = 362` is true then, but it
+will cause problems for calculating the total number of pages. Quite often,
+there is information in another column which could resolve this: `page_range`, 
+which in this case would look like `42 - 65, 362`. 
+
+A small helper to deal with those situations is `jst_get_total_pages()`. It
+works for page ranges, but also for first and last pages:
+
+```{r}
+jst_get_total_pages(page_range = "42 - 65, 362")
+
+jst_get_total_pages(first_page = 20, last_page = 39)
+
+jst_get_total_pages(first_page = 20, last_page = NA)
+```
+
+
+## Unify journal id
+
+
+## jst_augment
