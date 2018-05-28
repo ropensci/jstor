@@ -1,4 +1,4 @@
-book_id,basename_id,part_id,part_label,part_title,part_subtitle,authors,abstract,part_first_page
+book_id,file_name,part_id,part_label,part_title,part_subtitle,authors,abstract,part_first_page
 j.ctt24hdz7,book-chapter-standard_book,j.ctt24hdz7.1,,Front Matter,,,,i
 j.ctt24hdz7,book-chapter-standard_book,j.ctt24hdz7.2,,Table of Contents,,,,v
 j.ctt24hdz7,book-chapter-standard_book,j.ctt24hdz7.3,,Acronyms and abbreviations,,,,vii
