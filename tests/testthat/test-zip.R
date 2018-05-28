@@ -20,7 +20,7 @@ test_that("jst_preview_zip works", {
 #                import_spec = jst_define_import(article = c(jst_get_article,
 #                                                            jst_get_authors),
 #                                                book = jst_get_book,
-#                                                ngram1 = jst_read_ngram),
+#                                                ngram1 = jst_get_ngram),
 #                out_file = "correct", out_path = "tests/testthat/testfiles/")
 
 test_that("importing from zip works", {
@@ -30,14 +30,14 @@ test_that("importing from zip works", {
                  import_spec = jst_define_import(article = c(jst_get_article, 
                                                              jst_get_authors),
                                                  book = jst_get_book,
-                                                 ngram1 = jst_read_ngram),
+                                                 ngram1 = jst_get_ngram),
                  out_file = "correct", out_path = test_dir)
   
   
   expected_files <- c("correct_book_chapter_jst_get_book-1.csv",
                       "correct_journal_article_jst_get_article-1.csv",
                       "correct_journal_article_jst_get_authors-1.csv",
-                      "correct_ngram1_jst_read_ngram-1.csv")
+                      "correct_ngram1_jst_get_ngram-1.csv")
   files <- list.files(test_dir)
   
   # test that we have the right files
