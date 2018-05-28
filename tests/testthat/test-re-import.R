@@ -3,12 +3,12 @@ context("test-re-import.R")
 # # prepare data
 # jst_import_zip("inst/extdata/pseudo_dfr.zip", import_spec = jst_define_import(article = c(jst_get_article,
 #     jst_get_authors, jst_get_references, jst_get_footnotes), book = c(jst_get_book, jst_get_chapters),
-#     ngram1 = jst_read_ngram), out_path = "tests/testthat/testfiles/re-import/",
-#     out_file = "with_col", col_names = T)
+#     ngram1 = jst_get_ngram), out_path = "tests/testthat/testfiles/re-import/",
+#     out_file = "wi_col", col_names = T)
 # 
 # jst_import_zip("inst/extdata/pseudo_dfr.zip", import_spec = jst_define_import(article = c(jst_get_article,
 #     jst_get_authors, jst_get_references, jst_get_footnotes), book = c(jst_get_book, jst_get_chapters),
-#     ngram1 = jst_read_ngram), out_path = "tests/testthat/testfiles/re-import/",
+#     ngram1 = jst_get_ngram), out_path = "tests/testthat/testfiles/re-import/",
 #     out_file = "wo_col", col_names = F)
 # 
 # # create two batches by simply copying.
@@ -20,13 +20,13 @@ context("test-re-import.R")
 # read_csv("tests/testthat/testfiles/re-import/wo_col_journal_article_jst_get_footnotes-1.csv",
 #          col_names = F) %>%
 #   mutate(X2 = "Footnotes") %>%
-#   write_csv("tests/testthat/testfiles/re-import/wo_col_journal_article_jst_get_footnotes_with_content-1.csv",
+#   write_csv("tests/testthat/testfiles/re-import/wo_col_journal_article_jst_get_footnotes_wi_cont-1.csv",
 #             col_names = F)
 # 
 # read_csv("tests/testthat/testfiles/re-import/wo_col_journal_article_jst_get_references-1.csv",
 #          col_names = F) %>%
 #   mutate(X2 = "References") %>%
-#   write_csv("tests/testthat/testfiles/re-import/wo_col_journal_article_jst_get_references_with_content-1.csv",
+#   write_csv("tests/testthat/testfiles/re-import/wo_col_journal_article_jst_get_references_wi_cont-1.csv",
 #             col_names = F)
 
 ### jst_re-import ------
@@ -152,14 +152,14 @@ authors <- structure(list(file_name = "journal-article-standard_case", prefix = 
 # footnotes ----
 footnotes <- structure(list(file_name = "journal-article-standard_case", footnotes = NA_character_), 
     row.names = c(NA, -1L), class = c("tbl_df", "tbl", "data.frame"))
-footnotes_with_content <- structure(list(file_name = "journal-article-standard_case", footnotes = "Footnotes"), 
+footnotes_wi_cont <- structure(list(file_name = "journal-article-standard_case", footnotes = "Footnotes"), 
                        row.names = c(NA, -1L), class = c("tbl_df", "tbl", "data.frame"))
 # references ----
 references <- structure(list(file_name = "journal-article-standard_case", 
     references = NA_character_), row.names = c(NA, -1L), class = c("tbl_df", 
     "tbl", "data.frame"))
 
-references_with_content <- structure(list(file_name = "journal-article-standard_case", 
+references_wi_cont <- structure(list(file_name = "journal-article-standard_case", 
                              references = "References"), row.names = c(NA, -1L), class = c("tbl_df", 
                                                                                            "tbl", "data.frame"))
 
@@ -172,31 +172,31 @@ ngram <- structure(list(file_name = c("book-chapter-standard_book", "book-chapte
 # tests ----
 test_that("files with column names can be re-read", {
     expect_equal(
-      jst_re_import("testfiles/re-import/with_col_book_chapter_jst_get_book-1.csv"), 
+      jst_re_import("testfiles/re-import/wi_col_book_chapter_jst_get_book-1.csv"), 
       book
     )
     expect_equal(
-      jst_re_import("testfiles/re-import/with_col_book_chapter_jst_get_chapters-1.csv"), 
+      jst_re_import("testfiles/re-import/wi_col_book_chapter_jst_get_chapters-1.csv"), 
       chapter
     )
     expect_equal(
-      jst_re_import("testfiles/re-import/with_col_journal_article_jst_get_article-1.csv"), 
+      jst_re_import("testfiles/re-import/wi_col_journal_article_jst_get_article-1.csv"), 
       article
     )
     expect_equal(
-      jst_re_import("testfiles/re-import/with_col_journal_article_jst_get_authors-1.csv"), 
+      jst_re_import("testfiles/re-import/wi_col_journal_article_jst_get_authors-1.csv"), 
       authors
     )
     expect_equal(
-      jst_re_import("testfiles/re-import/with_col_journal_article_jst_get_footnotes-1.csv"), 
+      jst_re_import("testfiles/re-import/wi_col_journal_article_jst_get_footnotes-1.csv"), 
       footnotes
     )
     expect_equal(
-      jst_re_import("testfiles/re-import/with_col_journal_article_jst_get_references-1.csv"), 
+      jst_re_import("testfiles/re-import/wi_col_journal_article_jst_get_references-1.csv"), 
       references
     )
     expect_equal(
-      jst_re_import("testfiles/re-import/with_col_ngram1_jst_read_ngram-1.csv"), 
+      jst_re_import("testfiles/re-import/wi_col_ngram1_jst_get_ngram-1.csv"), 
       ngram
     )
 })
@@ -220,16 +220,16 @@ test_that("files without column names can be re-read", {
       authors
     )
     expect_equal(
-      jst_re_import("testfiles/re-import/wo_col_ngram1_jst_read_ngram-1.csv"), 
+      jst_re_import("testfiles/re-import/wo_col_ngram1_jst_get_ngram-1.csv"), 
       ngram
     )
     expect_equal(
-      jst_re_import("testfiles/re-import/wo_col_journal_article_jst_get_footnotes_with_content-1.csv"),
-      footnotes_with_content
+      jst_re_import("testfiles/re-import/wo_col_journal_article_jst_get_footnotes_wi_cont-1.csv"),
+      footnotes_wi_cont
     )
     expect_equal(
-      jst_re_import("testfiles/re-import/wo_col_journal_article_jst_get_references_with_content-1.csv"),
-      references_with_content
+      jst_re_import("testfiles/re-import/wo_col_journal_article_jst_get_references_wi_cont-1.csv"),
+      references_wi_cont
     )
     
 })
