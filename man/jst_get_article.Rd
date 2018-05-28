@@ -13,7 +13,7 @@ jst_get_article(file_path)
 A \code{tibble} containing the extracted meta-data with the following
 columns:
 \itemize{
-\item basename_id \emph{(chr)}: The filename of the original .xml-file. Can be used
+\item file_name \emph{(chr)}: The file_name of the original .xml-file. Can be used
 for joining with other parts (authors, references, footnotes, full-texts).
 \item journal_doi \emph{(chr)}: A registered identifier for the journal.
 \item journal_jcode \emph{(chr)}: A identifier for the journal like "amerjsoci" for

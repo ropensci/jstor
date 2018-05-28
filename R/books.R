@@ -6,7 +6,7 @@
 #' 
 #' @return A `tibble` containing the extracted meta-data with the following
 #' columns:
-#' - basename_id *(chr)*: The filename of the original .xml-file. Can be used 
+#' - file_name *(chr)*: The filename of the original .xml-file. Can be used 
 #'   for joining with other data for the same file.
 #' - discipline *(chr)*: The discipline from the discipline names used on JSTOR.
 #' - book_id *(chr)*: The book id of type "jstor", which is not a registered 
@@ -39,7 +39,7 @@ jst_get_book <- function(file_path) {
   
   out <- list(
     book_id = extract_child(book, ".//book-id"),
-    basename_id = get_basename(file_path),
+    file_name = jst_get_file_name(file_path),
     discipline = extract_all(
       book, ".//subj-group[@subj-group-type='discipline']"
     ),
@@ -86,7 +86,7 @@ extract_book_pages <- function(book) {
 #' columns:
 #' - book_id *(chr)*: The book id of type "jstor", which is not a registered 
 #'   DOI.
-#' - basename_id *(chr)*: The filename of the original .xml-file. Can be used 
+#' - file_name *(chr)*: The filename of the original .xml-file. Can be used 
 #'   for joining with other data for the same file.
 #' - part_id *(chr)*: The id of the part.
 #' - part_label *(chr)*: A label for the part, if specified.
@@ -133,7 +133,7 @@ jst_get_chapters <- function(file_path, authors = FALSE) {
   base <- list(
     book_id = extract_child(xml_file, ".//book-id") %>%
       rep(times = nrow(parts_out)),
-    basename_id = get_basename(file_path) %>%
+    file_name = jst_get_file_name(file_path) %>%
       rep(times = nrow(parts_out))
   )
 

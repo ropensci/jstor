@@ -13,7 +13,7 @@ jst_get_book(file_path)
 A \code{tibble} containing the extracted meta-data with the following
 columns:
 \itemize{
-\item basename_id \emph{(chr)}: The filename of the original .xml-file. Can be used
+\item file_name \emph{(chr)}: The filename of the original .xml-file. Can be used
 for joining with other data for the same file.
 \item discipline \emph{(chr)}: The discipline from the discipline names used on JSTOR.
 \item book_id \emph{(chr)}: The book id of type "jstor", which is not a registered

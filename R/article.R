@@ -7,7 +7,7 @@
 #'
 #' @return A `tibble` containing the extracted meta-data with the following
 #' columns:
-#' - basename_id *(chr)*: The filename of the original .xml-file. Can be used 
+#' - file_name *(chr)*: The file_name of the original .xml-file. Can be used 
 #'   for joining with other parts (authors, references, footnotes, full-texts).
 #' - journal_doi *(chr)*: A registered identifier for the journal.
 #' - journal_jcode *(chr)*: A identifier for the journal like "amerjsoci" for
@@ -51,7 +51,7 @@ jst_get_article <- function(file_path) {
   first_page <- extract_page(article, "fpage", convert = FALSE)
   last_page <- extract_page(article, "lpage", convert = FALSE)
   
-  basename_id <- list(basename_id = get_basename(file_path))
+  file_name <- list(file_name = jst_get_file_name(file_path))
   
   journal_ids <- extract_jcode(front)
   journal_title <- list(
@@ -76,7 +76,7 @@ jst_get_article <- function(file_path) {
     page_range = extract_child(article, "page-range")
   )
   
-  dplyr::bind_cols(basename_id, journal_ids, journal_title, article_ids, out)
+  dplyr::bind_cols(file_name, journal_ids, journal_title, article_ids, out)
 }
 
 

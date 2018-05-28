@@ -21,7 +21,7 @@ get_encoding <- function(filename) {
 jst_read_fulltext <- function(filename) {
   validate_file_path(filename, "txt")
 
-  id <- get_basename(filename)
+  id <- jst_get_file_name(filename)
 
   encoding <- get_encoding(filename)
 
@@ -29,7 +29,7 @@ jst_read_fulltext <- function(filename) {
 
   new_tibble(
     list(
-      basename_id = id, full_text = text, encoding = encoding
+      file_name = id, full_text = text, encoding = encoding
     )
   )
 }

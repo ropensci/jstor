@@ -245,7 +245,7 @@ jst_re_import <- function(file, warn = TRUE) {
 
 
 article_cols <- cols(
-  basename_id = col_character(),
+  file_name = col_character(),
   journal_doi = col_character(),
   journal_jcode = col_character(),
   journal_pub_id = col_character(),
@@ -266,7 +266,7 @@ article_cols <- cols(
   page_range = col_character()
 )
 article_cols_old <- cols(
-  basename_id = col_character(),
+  file_name = col_character(),
   journal_doi = col_character(),
   journal_jcode = col_character(),
   journal_pub_id = col_character(),
@@ -286,7 +286,7 @@ article_cols_old <- cols(
 )
 
 author_cols <- cols(
-  basename_id = col_character(),
+  file_name = col_character(),
   prefix = col_character(),
   given_name = col_character(),
   surname = col_character(),
@@ -297,7 +297,7 @@ author_cols <- cols(
 
 book_cols <- cols(
   book_id = col_character(),
-  basename_id = col_character(),
+  file_name = col_character(),
   discipline = col_character(),
   book_title = col_character(),
   book_subtitle = col_character(),
@@ -314,7 +314,7 @@ book_cols <- cols(
 
 chapter_cols <- cols(
   book_id = col_character(),
-  basename_id = col_character(),
+  file_name = col_character(),
   part_id = col_character(),
   part_label = col_character(),
   part_title = col_character(),
@@ -326,14 +326,14 @@ chapter_cols <- cols(
 
 chapter_w_authors <- cols(
   book_id = col_character(),
-  basename_id = col_character(),
+  file_name = col_character(),
   part_id = col_character(),
   part_label = col_character(),
   part_title = col_character(),
   part_subtitle = col_character(),
   abstract = col_character(),
   part_first_page = col_character(),
-  basename_id = col_character(),
+  file_name = col_character(),
   prefix = col_character(),
   given_name = col_character(),
   surname = col_character(),
@@ -343,16 +343,16 @@ chapter_w_authors <- cols(
 )
 
 footnote_cols <- cols(
-  basename_id = col_character(),
+  file_name = col_character(),
   footnotes = col_character()
 )
 reference_cols <- cols(
-  basename_id = col_character(),
+  file_name = col_character(),
   references = col_character()
 )
 
 ngram_cols <- cols(
-  basename_id = col_character(),
+  file_name = col_character(),
   ngram = col_character(),
   n = col_integer()
 )
