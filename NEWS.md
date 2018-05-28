@@ -41,6 +41,11 @@ Before importing all files from a zip-archive, you can get a quick overview with
 
 
 ## Other changes
+* The unique identifier for matching across files has been renamed to 
+`file_name`, and the corresponding helper to get this file name from
+`get_basename` to `jst_get_file_name`.
+* Functions have been renamed: All `find_*` functions are now called
+`jst_get_*`. 
 * New function `jst_combine_outputs` applies `jst_re_import` to a whole 
 directory and lets you combine all related files in one go. It uses the file 
 structure that `jst_import` and `jst_import_zip` provide as a heuristic: a
