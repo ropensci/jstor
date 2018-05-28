@@ -178,11 +178,6 @@ find_authors <- function(file_path) {
 #' @param cores Number of cores to use for parallel processing.
 #' @param show_progress Displays a progress bar for each batch, if the session
 #' is interactive.
-#' @param zip_archive A path to a .zip-archive from DfR
-#' @param import_spec A specification from [jst_define_import]
-#' for which parts of a .zip-archive should be imported via which functions. 
-#' @param rows Mainly used for testing, to decrease the number of files which
-#' are imported (i.e. 1:100).
 #'
 #' @return Writes `.csv`-files to disk.
 #'

@@ -32,14 +32,6 @@ n_batches, but not in conjunction.}
 
 \item{show_progress}{Displays a progress bar for each batch, if the session
 is interactive.}
-
-\item{zip_archive}{A path to a .zip-archive from DfR}
-
-\item{import_spec}{A specification from \link{jst_define_import}
-for which parts of a .zip-archive should be imported via which functions.}
-
-\item{rows}{Mainly used for testing, to decrease the number of files which
-are imported (i.e. 1:100).}
 }
 \value{
 Writes \code{.csv}-files to disk.
