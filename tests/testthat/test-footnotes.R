@@ -5,21 +5,21 @@ library(magrittr)
 
 # import files -----
 result_erratum <- "testfiles/erratum.xml" %>%
-  find_footnotes()
+  jst_get_footnotes()
 
 result <- "testfiles/footnotes.xml" %>%
-  find_footnotes()
+  jst_get_footnotes()
 
 single_and_multiple_footnotes <- "testfiles/footnotes_mangled.xml" %>%
- find_footnotes()
+ jst_get_footnotes()
 
 footnotes_in_body <- "testfiles/footnotes-in-body.xml" %>%
-  find_footnotes()
+  jst_get_footnotes()
 
 # tests -----
 test_that("Input data is checked", {
-  expect_error(find_footnotes("my_path.txt"))
-  expect_error(find_footnotes("testfiles/standard_book.xml"), "You are using")
+  expect_error(jst_get_footnotes("my_path.txt"))
+  expect_error(jst_get_footnotes("testfiles/standard_book.xml"), "You are using")
 })
 
 test_that("class is correct", {

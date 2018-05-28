@@ -5,11 +5,11 @@ context("exceptional-files")
 
 # import files
 result <- "testfiles/standard_case.xml" %>%
-  find_article() %>%
+  jst_get_article() %>%
   flag_special_articles()
 
 result_erratum <- "testfiles/erratum.xml" %>%
-  find_article() %>%
+  jst_get_article() %>%
   flag_special_articles()
 
 

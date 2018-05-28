@@ -5,29 +5,29 @@ library(stringr)
 
 # import files -----
 result <- "testfiles/standard_book.xml" %>%
-  find_book()
+  jst_get_book()
 
 alternative <- "testfiles/book-alternative-case.xml" %>%
-  find_book()
+  jst_get_book()
 
 empty <- "testfiles/book-empty.xml" %>%
-  find_book()
+  jst_get_book()
 
 empty_chapters <- "testfiles/book-empty.xml" %>%
-  find_chapters()
+  jst_get_chapters()
 
 chapters <- "testfiles/standard_book.xml" %>%
-  find_chapters()
+  jst_get_chapters()
 
 chap_auth <- "testfiles/standard_book.xml" %>%
-  find_chapters(authors = T)
+  jst_get_chapters(authors = T)
 
 # tests -----
 test_that("Input data is checked", {
-  expect_error(find_book("my_path.txt"))
-  expect_error(find_chapters("my_path.txt"))
-  expect_error(find_book("testfiles/standard_case.xml"), "You are using")
-  expect_error(find_chapters("testfiles/standard_case.xml"), "You are using")
+  expect_error(jst_get_book("my_path.txt"))
+  expect_error(jst_get_chapters("my_path.txt"))
+  expect_error(jst_get_book("testfiles/standard_case.xml"), "You are using")
+  expect_error(jst_get_chapters("testfiles/standard_case.xml"), "You are using")
 })
 
 test_that("class is correct", {
@@ -38,10 +38,10 @@ test_that("class is correct", {
 
 test_that("book-meta fields are correct", {
   expect_identical(result[["book_id"]], "j.ctt24hdz7")
-  expect_identical(result[["basename_id"]], "standard_book")
+  expect_identical(result[["file_name"]], "standard_book")
   expect_identical(result[["discipline"]], "Political Science")
   expect_identical(
-    find_book("testfiles/book-alternative-case.xml")[["discipline"]],
+    jst_get_book("testfiles/book-alternative-case.xml")[["discipline"]],
     "Political Science; Sociology"
   )
   expect_identical(result[["book_title"]], "The 2006 Military Takeover in Fiji")
@@ -85,7 +85,7 @@ test_that("missing fields are of correct type", {
 test_that("chapters are correct", {
   expect_equal(dim(chapters), c(36, 9))
   expect_identical(chapters[[1, "book_id"]], "j.ctt24hdz7")
-  expect_identical(chapters[[1, "basename_id"]], "standard_book")
+  expect_identical(chapters[[1, "file_name"]], "standard_book")
   expect_identical(chapters[[1, "part_id"]], "j.ctt24hdz7.1")
   expect_identical(chapters[[1, "part_label"]], NA_character_)
   expect_identical(chapters[[5, "part_label"]], "1.")

@@ -1,10 +1,10 @@
 context("test-ngram.R")
 
-ngram1 <- tribble(~basename_id, ~ngram, ~n,
+ngram1 <- tribble(~file_name, ~ngram, ~n,
                   "ngram1", "Common", 400L,
                   "ngram1", "Uncommon", 5L)
 
-ngram2 <- tribble(~basename_id, ~ngram, ~n,
+ngram2 <- tribble(~file_name, ~ngram, ~n,
                   "ngram2", "Common word", 400L,
                   "ngram2", "Uncommon word", 5L)
 

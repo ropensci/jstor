@@ -1,38 +1,38 @@
 context("test-re-import.R")
 
 # # prepare data
-# jst_import_zip("inst/extdata/pseudo_dfr.zip", import_spec = jst_define_import(article = c(find_article, 
-#     find_authors, find_references, find_footnotes), book = c(find_book, find_chapters), 
-#     ngram1 = jst_read_ngram), out_path = "tests/testthat/testfiles/re-import/", 
+# jst_import_zip("inst/extdata/pseudo_dfr.zip", import_spec = jst_define_import(article = c(jst_get_article,
+#     jst_get_authors, jst_get_references, jst_get_footnotes), book = c(jst_get_book, jst_get_chapters),
+#     ngram1 = jst_read_ngram), out_path = "tests/testthat/testfiles/re-import/",
 #     out_file = "with_col", col_names = T)
 # 
-# jst_import_zip("inst/extdata/pseudo_dfr.zip", import_spec = jst_define_import(article = c(find_article, 
-#     find_authors, find_references, find_footnotes), book = c(find_book, find_chapters), 
-#     ngram1 = jst_read_ngram), out_path = "tests/testthat/testfiles/re-import/", 
+# jst_import_zip("inst/extdata/pseudo_dfr.zip", import_spec = jst_define_import(article = c(jst_get_article,
+#     jst_get_authors, jst_get_references, jst_get_footnotes), book = c(jst_get_book, jst_get_chapters),
+#     ngram1 = jst_read_ngram), out_path = "tests/testthat/testfiles/re-import/",
 #     out_file = "wo_col", col_names = F)
 # 
 # # create two batches by simply copying.
 # files <- list.files("tests/testthat/testfiles/re-import", full.names = T)
-# new_names <- str_replace_all(files, "-1", "-2")
+# new_names <- stringr::str_replace_all(files, "-1", "-2")
 # file.copy(files, new_names)
-
+# 
 # # # create two separate files with references and footnotes in them
-# read_csv("tests/testthat/testfiles/re-import/wo_col_journal_article_find_footnotes-1.csv",
+# read_csv("tests/testthat/testfiles/re-import/wo_col_journal_article_jst_get_footnotes-1.csv",
 #          col_names = F) %>%
 #   mutate(X2 = "Footnotes") %>%
-#   write_csv("tests/testthat/testfiles/re-import/wo_col_journal_article_find_footnotes_with_content-1.csv",
+#   write_csv("tests/testthat/testfiles/re-import/wo_col_journal_article_jst_get_footnotes_with_content-1.csv",
 #             col_names = F)
 # 
-# read_csv("tests/testthat/testfiles/re-import/wo_col_journal_article_find_references-1.csv",
+# read_csv("tests/testthat/testfiles/re-import/wo_col_journal_article_jst_get_references-1.csv",
 #          col_names = F) %>%
 #   mutate(X2 = "References") %>%
-#   write_csv("tests/testthat/testfiles/re-import/wo_col_journal_article_find_references_with_content-1.csv",
+#   write_csv("tests/testthat/testfiles/re-import/wo_col_journal_article_jst_get_references_with_content-1.csv",
 #             col_names = F)
 
 ### jst_re-import ------
 # set up correct objects
 # book ----
-book <- structure(list(book_id = "j.ctt24hdz7", basename_id = "book-chapter-standard_book", 
+book <- structure(list(book_id = "j.ctt24hdz7", file_name = "book-chapter-standard_book", 
     discipline = "Political Science", book_title = "The 2006 Military Takeover in Fiji", 
     book_subtitle = "A Coup to End All Coups?", pub_day = 30L, pub_month = 4L, 
     pub_year = 2009L, isbn = "9781921536502; 9781921536519", publisher_name = "ANU E Press", 
@@ -47,7 +47,7 @@ chapter <- structure(list(book_id = c("j.ctt24hdz7", "j.ctt24hdz7", "j.ctt24hdz7
     "j.ctt24hdz7", "j.ctt24hdz7", "j.ctt24hdz7", "j.ctt24hdz7", "j.ctt24hdz7", 
     "j.ctt24hdz7", "j.ctt24hdz7", "j.ctt24hdz7", "j.ctt24hdz7", "j.ctt24hdz7", 
     "j.ctt24hdz7", "j.ctt24hdz7", "j.ctt24hdz7", "j.ctt24hdz7", "j.ctt24hdz7", 
-    "j.ctt24hdz7", "j.ctt24hdz7", "j.ctt24hdz7"), basename_id = c("book-chapter-standard_book", 
+    "j.ctt24hdz7", "j.ctt24hdz7", "j.ctt24hdz7"), file_name = c("book-chapter-standard_book", 
     "book-chapter-standard_book", "book-chapter-standard_book", "book-chapter-standard_book", 
     "book-chapter-standard_book", "book-chapter-standard_book", "book-chapter-standard_book", 
     "book-chapter-standard_book", "book-chapter-standard_book", "book-chapter-standard_book", 
@@ -137,7 +137,7 @@ chapter <- structure(list(book_id = c("j.ctt24hdz7", "j.ctt24hdz7", "j.ctt24hdz7
     "415", "419", "425", "449", "459")), row.names = c(NA, -36L), class = c("tbl_df", 
     "tbl", "data.frame"))
 # article -----
-article <- structure(list(basename_id = "journal-article-standard_case", journal_doi = NA_character_, 
+article <- structure(list(file_name = "journal-article-standard_case", journal_doi = NA_character_, 
     journal_jcode = "kewbulletin", journal_pub_id = NA_character_, journal_title = "Kew Bulletin", 
     article_doi = "10.2307/4117222", article_pub_id = NA_character_, article_jcode = NA_character_, 
     article_type = "research-article", article_title = "Two New Species of Ischaemum", 
@@ -145,26 +145,26 @@ article <- structure(list(basename_id = "journal-article-standard_case", journal
     pub_year = "1950", first_page = "187", last_page = "188", page_range = "187-188"), 
     row.names = c(NA, -1L), class = c("tbl_df", "tbl", "data.frame"))
 # authors -----
-authors <- structure(list(basename_id = "journal-article-standard_case", prefix = NA_character_, 
+authors <- structure(list(file_name = "journal-article-standard_case", prefix = NA_character_, 
     given_name = "N. L.", surname = "Bor", string_name = NA_character_, suffix = NA_character_, 
     author_number = 1L), row.names = c(NA, -1L), class = c("tbl_df", "tbl", 
     "data.frame"))
 # footnotes ----
-footnotes <- structure(list(basename_id = "journal-article-standard_case", footnotes = NA_character_), 
+footnotes <- structure(list(file_name = "journal-article-standard_case", footnotes = NA_character_), 
     row.names = c(NA, -1L), class = c("tbl_df", "tbl", "data.frame"))
-footnotes_with_content <- structure(list(basename_id = "journal-article-standard_case", footnotes = "Footnotes"), 
+footnotes_with_content <- structure(list(file_name = "journal-article-standard_case", footnotes = "Footnotes"), 
                        row.names = c(NA, -1L), class = c("tbl_df", "tbl", "data.frame"))
 # references ----
-references <- structure(list(basename_id = "journal-article-standard_case", 
+references <- structure(list(file_name = "journal-article-standard_case", 
     references = NA_character_), row.names = c(NA, -1L), class = c("tbl_df", 
     "tbl", "data.frame"))
 
-references_with_content <- structure(list(basename_id = "journal-article-standard_case", 
+references_with_content <- structure(list(file_name = "journal-article-standard_case", 
                              references = "References"), row.names = c(NA, -1L), class = c("tbl_df", 
                                                                                            "tbl", "data.frame"))
 
 # ngrams -----
-ngram <- structure(list(basename_id = c("book-chapter-standard_book", "book-chapter-standard_book"), 
+ngram <- structure(list(file_name = c("book-chapter-standard_book", "book-chapter-standard_book"), 
     ngram = c("Common", "Uncommon"), n = c(400L, 5L)), row.names = c(NA, -2L), 
     class = c("tbl_df", "tbl", "data.frame"))
 
@@ -172,27 +172,27 @@ ngram <- structure(list(basename_id = c("book-chapter-standard_book", "book-chap
 # tests ----
 test_that("files with column names can be re-read", {
     expect_equal(
-      jst_re_import("testfiles/re-import/with_col_book_chapter_find_book-1.csv"), 
+      jst_re_import("testfiles/re-import/with_col_book_chapter_jst_get_book-1.csv"), 
       book
     )
     expect_equal(
-      jst_re_import("testfiles/re-import/with_col_book_chapter_find_chapters-1.csv"), 
+      jst_re_import("testfiles/re-import/with_col_book_chapter_jst_get_chapters-1.csv"), 
       chapter
     )
     expect_equal(
-      jst_re_import("testfiles/re-import/with_col_journal_article_find_article-1.csv"), 
+      jst_re_import("testfiles/re-import/with_col_journal_article_jst_get_article-1.csv"), 
       article
     )
     expect_equal(
-      jst_re_import("testfiles/re-import/with_col_journal_article_find_authors-1.csv"), 
+      jst_re_import("testfiles/re-import/with_col_journal_article_jst_get_authors-1.csv"), 
       authors
     )
     expect_equal(
-      jst_re_import("testfiles/re-import/with_col_journal_article_find_footnotes-1.csv"), 
+      jst_re_import("testfiles/re-import/with_col_journal_article_jst_get_footnotes-1.csv"), 
       footnotes
     )
     expect_equal(
-      jst_re_import("testfiles/re-import/with_col_journal_article_find_references-1.csv"), 
+      jst_re_import("testfiles/re-import/with_col_journal_article_jst_get_references-1.csv"), 
       references
     )
     expect_equal(
@@ -204,19 +204,19 @@ test_that("files with column names can be re-read", {
 
 test_that("files without column names can be re-read", {
     expect_equal(
-      jst_re_import("testfiles/re-import/wo_col_book_chapter_find_book-1.csv"), 
+      jst_re_import("testfiles/re-import/wo_col_book_chapter_jst_get_book-1.csv"), 
       book
     )
     expect_equal(
-      jst_re_import("testfiles/re-import/wo_col_book_chapter_find_chapters-1.csv"), 
+      jst_re_import("testfiles/re-import/wo_col_book_chapter_jst_get_chapters-1.csv"), 
       chapter
     )
     expect_equal(
-      jst_re_import("testfiles/re-import/wo_col_journal_article_find_article-1.csv"), 
+      jst_re_import("testfiles/re-import/wo_col_journal_article_jst_get_article-1.csv"), 
       article
     )
     expect_equal(
-      jst_re_import("testfiles/re-import/wo_col_journal_article_find_authors-1.csv"), 
+      jst_re_import("testfiles/re-import/wo_col_journal_article_jst_get_authors-1.csv"), 
       authors
     )
     expect_equal(
@@ -224,11 +224,11 @@ test_that("files without column names can be re-read", {
       ngram
     )
     expect_equal(
-      jst_re_import("testfiles/re-import/wo_col_journal_article_find_footnotes_with_content-1.csv"),
+      jst_re_import("testfiles/re-import/wo_col_journal_article_jst_get_footnotes_with_content-1.csv"),
       footnotes_with_content
     )
     expect_equal(
-      jst_re_import("testfiles/re-import/wo_col_journal_article_find_references_with_content-1.csv"),
+      jst_re_import("testfiles/re-import/wo_col_journal_article_jst_get_references_with_content-1.csv"),
       references_with_content
     )
     
@@ -236,19 +236,19 @@ test_that("files without column names can be re-read", {
 
 test_that("warnings are emitted, if no file is recognized", {
   expect_warning(
-    jst_re_import("testfiles/re-import/wo_col_journal_article_find_footnotes-1.csv"), 
+    jst_re_import("testfiles/re-import/wo_col_journal_article_jst_get_footnotes-1.csv"), 
     "Unable to distinguish"
   )
   expect_warning(
-    jst_re_import("testfiles/re-import/wo_col_journal_article_find_references-1.csv"), 
+    jst_re_import("testfiles/re-import/wo_col_journal_article_jst_get_references-1.csv"), 
     "Unable to distinguish"
   )
   
   footnotes_unrecognized <- suppressWarnings(
-    jst_re_import("testfiles/re-import/wo_col_journal_article_find_footnotes-1.csv")
+    jst_re_import("testfiles/re-import/wo_col_journal_article_jst_get_footnotes-1.csv")
   )
   references_unrecognized <- suppressWarnings(
-    jst_re_import("testfiles/re-import/wo_col_journal_article_find_references-1.csv")
+    jst_re_import("testfiles/re-import/wo_col_journal_article_jst_get_references-1.csv")
   )
   
   expect_named(footnotes_unrecognized, c("X1", "X2"))

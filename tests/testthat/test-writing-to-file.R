@@ -6,11 +6,11 @@ paths <- c("testfiles/standard_case.xml", "broken_path.txt")
 # # nolint start
 # # prepare correct result -----
 # "tests/testthat/testfiles/standard_case.xml" %>%
-#   find_article() %>%
+#   jst_get_article() %>%
 #   write_csv("tests/testthat/testfiles/correct_meta_data.csv", col_names = T)
 # 
 # "tests/testthat/testfiles/standard_case.xml" %>%
-#   find_article() %>%
+#   jst_get_article() %>%
 #   write_csv("tests/testthat/testfiles/correct_meta_data_wo_cols.csv",
 #             col_names = FALSE)
 # # nolint end
@@ -18,7 +18,7 @@ paths <- c("testfiles/standard_case.xml", "broken_path.txt")
 # tests ------
 test_that("writing correct results to file works", {
   temp_dir <- tempdir()
-  jstor_convert_to_file(paths, 1, paste0(temp_dir, "/meta_data"), find_article,
+  jstor_convert_to_file(paths, 1, paste0(temp_dir, "/meta_data"), jst_get_article,
                         col_names = TRUE, n_batches = 1)
 
   expect_identical(read_csv("testfiles/correct_meta_data.csv",
@@ -31,7 +31,7 @@ test_that("writing correct results to file works", {
 
 test_that("not writing column names works", {
   temp_dir <- tempdir()
-  jstor_convert_to_file(paths, 1, paste0(temp_dir, "/meta_data"), find_article,
+  jstor_convert_to_file(paths, 1, paste0(temp_dir, "/meta_data"), jst_get_article,
                         col_names = FALSE, n_batches = 1)
   
   expect_identical(read_csv("testfiles/correct_meta_data_wo_cols.csv",
@@ -46,7 +46,7 @@ test_that("not writing column names works", {
 test_that("writing error messages to file works", {
   temp_dir <- tempdir()
 
-  jstor_convert_to_file(paths, 1, paste0(temp_dir, "meta_data"), find_article,
+  jstor_convert_to_file(paths, 1, paste0(temp_dir, "meta_data"), jst_get_article,
                         n_batches = 1)
 
   res <- read_csv(paste0(temp_dir, "meta_data_broken-1.csv"),
@@ -68,8 +68,8 @@ test_that("writing error messages to file works", {
 
 test_that("import wrapper works with column names", {
   temp_dir <- tempdir()
-  jstor_import(paths, out_file = "meta_data", out_path = temp_dir,
-               .f = find_article, col_names = T)
+  jst_import(paths, out_file = "meta_data", out_path = temp_dir,
+             .f = jst_get_article, col_names = T)
 
   expect_identical(read_csv("testfiles/correct_meta_data.csv",
                             col_names = TRUE),
@@ -81,8 +81,8 @@ test_that("import wrapper works with column names", {
 
 test_that("import wrapper works without column names", {
   temp_dir <- tempdir()
-  jstor_import(paths, out_file = "meta_data", out_path = temp_dir,
-               .f = find_article, col_names = FALSE)
+  jst_import(paths, out_file = "meta_data", out_path = temp_dir,
+             .f = jst_get_article, col_names = FALSE)
   
   expect_identical(read_csv("testfiles/correct_meta_data_wo_cols.csv",
                             col_names = FALSE),
@@ -94,8 +94,8 @@ test_that("import wrapper works without column names", {
 
 test_that("files_per_batch works", {
   temp_dir <- tempdir()
-  jstor_import(paths, out_file = "meta_data", out_path = temp_dir,
-               .f = find_article, col_names = FALSE, files_per_batch = 2)
+  jst_import(paths, out_file = "meta_data", out_path = temp_dir,
+             .f = jst_get_article, col_names = FALSE, files_per_batch = 2)
   
   expect_identical(read_csv("testfiles/correct_meta_data_wo_cols.csv",
                             col_names = FALSE),
@@ -110,8 +110,8 @@ test_that("n_batches works for n > 1", {
   
   paths <- c(paths, paths[1])
   
-  jstor_import(paths, out_file = "meta_data", out_path = temp_dir,
-               .f = find_article, col_names = FALSE, n_batches = 2)
+  jst_import(paths, out_file = "meta_data", out_path = temp_dir,
+             .f = jst_get_article, col_names = FALSE, n_batches = 2)
   
   written_files <- list.files(temp_dir, full.names = T, pattern = "meta_data-")
   
@@ -128,15 +128,15 @@ test_that("n_batches works for n > 1", {
 })
 
 test_that("too many arguments for batches throw error", {
-  expect_error(jstor_import(paths, out_file = "meta_data",
-                            out_path = temp_dir, .f = find_article,
-                            n_batches = 2, files_per_batch = 1),
+  expect_error(jst_import(paths, out_file = "meta_data",
+                          out_path = temp_dir, .f = jst_get_article,
+                          n_batches = 2, files_per_batch = 1),
                "Either n_batches"
   )
   
   expect_error(jst_import_zip("testfiles/pseudo_dfr.zip", out_file = "meta_data",
                             import_spec = jst_define_import(
-                              article = find_article
+                              article = jst_get_article
                             ),
                             n_batches = 2, files_per_batch = 1),
                "Either n_batches"
