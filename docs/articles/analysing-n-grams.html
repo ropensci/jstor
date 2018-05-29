@@ -80,7 +80,7 @@
       <h1>Analysing n-grams with <code>jstor</code> for R</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-05-17</h4>
+            <h4 class="date">2018-05-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/tklebel/jstor/blob/master/vignettes/analysing-n-grams.Rmd"><code>vignettes/analysing-n-grams.Rmd</code></a></small>
       <div class="hidden name"><code>analysing-n-grams.Rmd</code></div>
@@ -91,7 +91,7 @@
     
 <p>The service <a href="http://www.jstor.org/dfr/">DfR</a> by JSTOR offers several ways for text analysis of scientific articles. In this vignette I will demonstrate how to analyse n-grams which DfR delivers.</p>
 <p>Let’s suppose, we are interested in the topic of “inequality” within the discipline of sociology. Social inequality can be considered a prime subject of sociological inquiry. In order to gain some context on the subject, we might be interested to analyse frequently occurring terms. DfR offers different grades of tokenization: n-grams for 1-3 words, e.g. unigrams, bigrams and trigrams. In case you are unfamiliar with the analysis of tokenized text, you could read the first few paragraphs of chapters 1 and 4 in <a href="https://www.tidytextmining.com" class="uri">https://www.tidytextmining.com</a> as an introduction.</p>
-<p>Our analysis starts at the main page of <a href="http://www.jstor.org/dfr/">DfR</a>. We create a dataset<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> by searching for “inequality” and selecting “sociology” as our subject. To trim down the number of articles, we only select articles from 1997 to 2017. After logging in/creating an account, we select unigrams and bigrams. After unzipping the archives to a convenient location, we start our analysis.</p>
+<p>Our analysis starts at the main page of <a href="http://www.jstor.org/dfr/">DfR</a>. We create a dataset<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> by searching for “inequality” and selecting “sociology” as our subject. To trim down the number of articles, we only select articles from 1997 to 2017. After logging in/creating an account, we select unigrams and bigrams. The resulting <code>.zip</code>-file can be downloaded from the email which DfR sends.</p>
 <p>Up-front, we need to load some packages. <code>jstor</code> is currently not available from CRAN, but can be installed via <code>devtools</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># devtools::install_github("tklebel/jstor")</span></a>
@@ -102,36 +102,51 @@
 <a class="sourceLine" id="cb1-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co"># set a lighter theme for plots</span></a>
 <a class="sourceLine" id="cb1-9" data-line-number="9"><span class="kw">theme_set</span>(<span class="kw">theme_bw</span>())</a></code></pre></div>
-<p>To import the files, we first need to locate them and generate an object with their corresponding paths. The following code assumes that you follow a workflow organised around projects within RStudio (refer to <a href="http://r4ds.had.co.nz/workflow-projects.html" class="uri">http://r4ds.had.co.nz/workflow-projects.html</a> for further information).</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># list files</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">meta_files &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">pattern =</span> <span class="st">"xml"</span>, <span class="dt">full.names =</span> T, <span class="dt">recursive =</span> T)</a></code></pre></div>
-<p>Since we have a decent amount of articles, let’s speed up the process of importing the metadata via parallel processing. <code>jstor_import</code> is a nice wrapper which takes care of setting up the processes and deals with any errors that might occur along the way.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../reference/jstor_import.html">jstor_import</a></span>(meta_files, <span class="dt">out_file =</span> <span class="st">"imported_metadata"</span>, <span class="dt">.f =</span> find_article,</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">             <span class="dt">files_per_batch =</span> <span class="dv">25000</span>, <span class="dt">cores =</span> <span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; Starting to import 23909 file(s).</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; Processing chunk 1/1</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt;   |===================================================================| 100%</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; Finished importing 23909 file(s) in 2.54 mins.</span></a></code></pre></div>
-<p>Since <code>jstor_import</code> writes the results to disk, we need to read the metadata from the newly created file.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">imported_metadata &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">"imported_metadata-1.csv"</span>, <span class="dt">guess_max =</span> <span class="dv">2000</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">imported_metadata</a></code></pre></div>
-<pre><code>## # A tibble: 23,909 x 17
-##    basename_id        journal_doi journal_jcode journal_pub_id article_doi
-##    &lt;chr&gt;                    &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;          &lt;chr&gt;      
-##  1 journal-article-1…          NA &lt;NA&gt;          amerjsoci      10.1086/21…
-##  2 journal-article-1…          NA &lt;NA&gt;          amerjsoci      10.1086/21…
-##  3 journal-article-1…          NA &lt;NA&gt;          amerjsoci      10.1086/21…
-##  4 journal-article-1…          NA &lt;NA&gt;          amerjsoci      10.1086/21…
-##  5 journal-article-1…          NA &lt;NA&gt;          amerjsoci      10.1086/21…
-##  6 journal-article-1…          NA &lt;NA&gt;          amerjsoci      10.1086/21…
-##  7 journal-article-1…          NA &lt;NA&gt;          amerjsoci      10.1086/21…
-##  8 journal-article-1…          NA &lt;NA&gt;          amerjsoci      10.1086/21…
-##  9 journal-article-1…          NA &lt;NA&gt;          amerjsoci      10.1086/21…
-## 10 journal-article-1…          NA &lt;NA&gt;          amerjsoci      10.1086/21…
-## # ... with 23,899 more rows, and 12 more variables: article_pub_id &lt;chr&gt;,
-## #   article_jcode &lt;chr&gt;, article_type &lt;chr&gt;, article_title &lt;chr&gt;,
-## #   volume &lt;chr&gt;, issue &lt;chr&gt;, language &lt;chr&gt;, pub_day &lt;chr&gt;,
-## #   pub_month &lt;chr&gt;, pub_year &lt;int&gt;, first_page &lt;int&gt;, last_page &lt;int&gt;</code></pre>
+<p>With the latest version of <code>jstor</code> we can now directly import files from a zip archive. We only need to specify, where the zip archive is located, which parts we want to extract, and where the resulting files should be saved.</p>
+<p>Although we could import all ngrams at this point, this would be extremely inefficient. It is thus best first to decide, which articles we want to analyze, and import the corresponding ngram-files afterwards.</p>
+<p>The following code assumes that you follow a workflow organised around projects within RStudio (refer to <a href="http://r4ds.had.co.nz/workflow-projects.html" class="uri">http://r4ds.had.co.nz/workflow-projects.html</a> for further information).</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">import_spec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_define_import.html">jst_define_import</a></span>(<span class="dt">article =</span> jst_get_article)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="../reference/jst_import.html">jst_import_zip</a></span>(<span class="st">"part1.zip"</span>, <span class="dt">import_spec =</span> import_spec, <span class="dt">out_file =</span> <span class="st">"part1"</span>,</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">               <span class="dt">cores =</span> <span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw"><a href="../reference/jst_import.html">jst_import_zip</a></span>(<span class="st">"part2.zip"</span>, <span class="dt">import_spec =</span> import_spec, <span class="dt">out_file =</span> <span class="st">"part2"</span>,</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">               <span class="dt">cores =</span> <span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; Processing files for journal_article with functions jst_get_article</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; Processing chunk 1/1</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt;   |===================================================================| 100%</span></a></code></pre></div>
+<p>Since <code>jst_import_zip</code> writes the results to disk, we need to read the metadata from the newly created file. This is made easy by <code>jst_re_import</code> which ensures, that the data are read with the right column types.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">imported_metadata &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"part1_journal_article_jst_get_article-1.csv"</span>,</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">                       <span class="st">"part2_journal_article_jst_get_article-1.csv"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">  </span><span class="kw">map_df</span>(jst_re_import)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">imported_metadata</a></code></pre></div>
+<pre><code>## # A tibble: 23,909 x 19
+##    file_name     journal_doi journal_jcode journal_pub_id journal_title   
+##    &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt;          &lt;chr&gt;           
+##  1 journal-arti… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Journa…
+##  2 journal-arti… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Journa…
+##  3 journal-arti… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Journa…
+##  4 journal-arti… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Journa…
+##  5 journal-arti… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Journa…
+##  6 journal-arti… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Journa…
+##  7 journal-arti… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Journa…
+##  8 journal-arti… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Journa…
+##  9 journal-arti… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Journa…
+## 10 journal-arti… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Journa…
+## # ... with 23,899 more rows, and 14 more variables: article_doi &lt;chr&gt;,
+## #   article_pub_id &lt;chr&gt;, article_jcode &lt;chr&gt;, article_type &lt;chr&gt;,
+## #   article_title &lt;chr&gt;, volume &lt;chr&gt;, issue &lt;chr&gt;, language &lt;chr&gt;,
+## #   pub_day &lt;chr&gt;, pub_month &lt;chr&gt;, pub_year &lt;chr&gt;, first_page &lt;chr&gt;,
+## #   last_page &lt;chr&gt;, page_range &lt;chr&gt;</code></pre>
+<div id="cleaning-the-data" class="section level1">
+<h1 class="hasAnchor">
+<a href="#cleaning-the-data" class="anchor"></a>Cleaning the data</h1>
+<ul>
+<li>convert years to integers</li>
+<li>do other things from augment (unify journal id)</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">imported_metadata &lt;-<span class="st"> </span>imported_metadata <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pub_year =</span> <span class="kw">as.integer</span>(pub_year))</a></code></pre></div>
+</div>
 <div id="exploration" class="section level1">
 <h1 class="hasAnchor">
 <a href="#exploration" class="anchor"></a>Exploration</h1>
@@ -164,9 +179,9 @@
 <p>We must be cautious, however, when using this variable to distinguish articles into categories. In this instance, we have “research-articles” which are actually book-reviews:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">imported_metadata <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(article_type <span class="op">==</span><span class="st"> "research-article"</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">str_detect</span>(article_title, <span class="st">"Book"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(basename_id, article_title, pub_year)</a></code></pre></div>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(file_name, article_title, pub_year)</a></code></pre></div>
 <pre><code>## # A tibble: 190 x 3
-##    basename_id                    article_title pub_year
+##    file_name                      article_title pub_year
 ##    &lt;chr&gt;                          &lt;chr&gt;            &lt;int&gt;
 ##  1 journal-article-10.1086_210272 Book Reviews      1999
 ##  2 journal-article-10.1086_210273 Book Reviews      1999
@@ -208,23 +223,24 @@
 <p>There are, however, some cases, where there is information in both variables:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">without_wall <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(journal_jcode) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(journal_pub_id))</a></code></pre></div>
-<pre><code>## # A tibble: 33 x 17
-##    basename_id        journal_doi journal_jcode journal_pub_id article_doi
-##    &lt;chr&gt;                    &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;          &lt;chr&gt;      
-##  1 journal-article-1…          NA j50018924     weatclimsoci   &lt;NA&gt;       
-##  2 journal-article-1…          NA j50018924     weatclimsoci   &lt;NA&gt;       
-##  3 journal-article-1…          NA j50018924     weatclimsoci   &lt;NA&gt;       
-##  4 journal-article-1…          NA j50018924     weatclimsoci   &lt;NA&gt;       
-##  5 journal-article-1…          NA j50018924     weatclimsoci   &lt;NA&gt;       
-##  6 journal-article-1…          NA j50018924     weatclimsoci   &lt;NA&gt;       
-##  7 journal-article-1…          NA j50019839     geneses        &lt;NA&gt;       
-##  8 journal-article-1…          NA j50019839     geneses        &lt;NA&gt;       
-##  9 journal-article-1…          NA j50019839     geneses        &lt;NA&gt;       
-## 10 journal-article-1…          NA j50019839     geneses        &lt;NA&gt;       
-## # ... with 23 more rows, and 12 more variables: article_pub_id &lt;chr&gt;,
-## #   article_jcode &lt;chr&gt;, article_type &lt;chr&gt;, article_title &lt;chr&gt;,
-## #   volume &lt;chr&gt;, issue &lt;chr&gt;, language &lt;chr&gt;, pub_day &lt;chr&gt;,
-## #   pub_month &lt;chr&gt;, pub_year &lt;int&gt;, first_page &lt;int&gt;, last_page &lt;int&gt;</code></pre>
+<pre><code>## # A tibble: 33 x 19
+##    file_name      journal_doi journal_jcode journal_pub_id journal_title  
+##    &lt;chr&gt;          &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt;          &lt;chr&gt;          
+##  1 journal-artic… &lt;NA&gt;        j50018924     weatclimsoci   Weather, Clima…
+##  2 journal-artic… &lt;NA&gt;        j50018924     weatclimsoci   Weather, Clima…
+##  3 journal-artic… &lt;NA&gt;        j50018924     weatclimsoci   Weather, Clima…
+##  4 journal-artic… &lt;NA&gt;        j50018924     weatclimsoci   Weather, Clima…
+##  5 journal-artic… &lt;NA&gt;        j50018924     weatclimsoci   Weather, Clima…
+##  6 journal-artic… &lt;NA&gt;        j50018924     weatclimsoci   Weather, Clima…
+##  7 journal-artic… &lt;NA&gt;        j50019839     geneses        Genèses        
+##  8 journal-artic… &lt;NA&gt;        j50019839     geneses        Genèses        
+##  9 journal-artic… &lt;NA&gt;        j50019839     geneses        Genèses        
+## 10 journal-artic… &lt;NA&gt;        j50019839     geneses        Genèses        
+## # ... with 23 more rows, and 14 more variables: article_doi &lt;chr&gt;,
+## #   article_pub_id &lt;chr&gt;, article_jcode &lt;chr&gt;, article_type &lt;chr&gt;,
+## #   article_title &lt;chr&gt;, volume &lt;chr&gt;, issue &lt;chr&gt;, language &lt;chr&gt;,
+## #   pub_day &lt;chr&gt;, pub_month &lt;chr&gt;, pub_year &lt;int&gt;, first_page &lt;chr&gt;,
+## #   last_page &lt;chr&gt;, page_range &lt;chr&gt;</code></pre>
 <p>Since for those cases, the form without digits (for example “geneses”) is similar to the usual format in “journal_jcode”, we will take the information from “journal_jcode” when it is missing in “journal_pub_id” (which is the most frequent case), and from “journal_pub_id” otherwise.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">without_wall &lt;-<span class="st"> </span>without_wall <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">journal_id =</span> <span class="kw">case_when</span>(<span class="kw">is.na</span>(journal_pub_id) <span class="op">~</span><span class="st"> </span>journal_jcode,</a>
@@ -270,23 +286,40 @@
 <a class="sourceLine" id="cb21-21" data-line-number="21">       .</a>
 <a class="sourceLine" id="cb21-22" data-line-number="22">       .</a></code></pre></div>
 <p>From this structure we can see, that the file name can serve as an identifier to match articles and n-grams, since it is similar between metadata and n-grams.</p>
-<p>First, we list all relevant files on disk.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">bigram_files &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">path =</span> <span class="kw">c</span>(<span class="st">"receipt-id-624621-part-001/ngram2/"</span>,</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2">                                    <span class="st">"receipt-id-624621-part-002/ngram2/"</span>),</a>
-<a class="sourceLine" id="cb22-3" data-line-number="3">                           <span class="dt">full.names =</span> T)</a></code></pre></div>
-<p>Next, we select all relevant files from our trimmed down dataset by creating a subset of the files.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="co"># create a search pattern by simply pasting together the ids we want to keep</span></a>
-<a class="sourceLine" id="cb23-2" data-line-number="2">search_pattern &lt;-<span class="st"> </span><span class="kw">paste</span>(flagship_journals<span class="op">$</span>basename_id, <span class="dt">collapse =</span> <span class="st">"|"</span>)</a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb23-4" data-line-number="4">reduced_bigrams &lt;-<span class="st"> </span><span class="kw">str_subset</span>(bigram_files, search_pattern)</a></code></pre></div>
-<p>Equipped with the paths to all files of interest, we import all relevant bigrams to a <code>data.frame</code>.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">imported_bigrams &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">file_paths =</span> reduced_bigrams) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">content =</span> <span class="kw">map</span>(file_paths, read_tsv, <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">"bigrams"</span>, <span class="st">"n"</span>),</a>
-<a class="sourceLine" id="cb24-3" data-line-number="3">                       <span class="dt">col_types =</span> <span class="kw">list</span>(<span class="kw">col_character</span>(), <span class="kw">col_integer</span>())),</a>
-<a class="sourceLine" id="cb24-4" data-line-number="4">         <span class="dt">basename_id =</span> <span class="kw"><a href="../reference/get_basename.html">get_basename</a></span>(file_paths),</a>
-<a class="sourceLine" id="cb24-5" data-line-number="5">         <span class="dt">basename_id =</span> <span class="kw">str_replace</span>(basename_id, <span class="st">"-ngram2"</span>, <span class="st">""</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>file_paths) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-7" data-line-number="7"><span class="st">  </span><span class="kw">unnest</span>()</a></code></pre></div>
+<p>To make importing a subset of ngrams more convenient, we can use <code>jst_subset_ngrams</code>. This function returns a list of “zip-locations”, which <code>jst_get_ngram</code> can read.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">ngram_selection &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_subset_ngrams.html">jst_subset_ngrams</a></span>(<span class="kw">c</span>(<span class="st">"part1.zip"</span>, <span class="st">"part2.zip"</span>), <span class="st">"ngram2"</span>,</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2">                                    flagship_journals)</a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="kw">head</span>(ngram_selection, <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>## [[1]]
+## $zip_archive
+## [1] part1.zip
+## Levels: part1.zip part2.zip
+## 
+## $file_path
+## [1] "ngram2/journal-article-10.1086_210001-ngram2.txt"
+## 
+## attr(,"class")
+## [1] "jstor_zip"
+## 
+## [[2]]
+## $zip_archive
+## [1] part1.zip
+## Levels: part1.zip part2.zip
+## 
+## $file_path
+## [1] "ngram2/journal-article-10.1086_210004-ngram2.txt"
+## 
+## attr(,"class")
+## [1] "jstor_zip"</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="co"># speed up import in parallel</span></a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="kw">library</span>(furrr)</a>
+<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="kw">plan</span>(multiprocess)</a>
+<a class="sourceLine" id="cb24-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb24-5" data-line-number="5">ngram_selection &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_subset_ngrams.html">jst_subset_ngrams</a></span>(<span class="kw">c</span>(<span class="st">"part1.zip"</span>, <span class="st">"part2.zip"</span>), <span class="st">"ngram2"</span>,</a>
+<a class="sourceLine" id="cb24-6" data-line-number="6">                                    flagship_journals)</a>
+<a class="sourceLine" id="cb24-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb24-8" data-line-number="8">imported_bigrams &lt;-<span class="st"> </span>ngram_selection <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/furrr/topics/future_map">future_map_dfr</a></span>(jst_get_ngram)</a></code></pre></div>
 <p>From the 872 articles in our two flagship journals we now have 6,729,813 bigrams. The bigrams are calculated by JSTOR for each article independently. In order to reduce the sample to the most common bigrams, we have two choices: either to include only terms which occur <em>within each</em> article a given amount of times, or to include terms which occur <em>within all</em> articles a given amount of times. By only including terms which occur more than 5 times in each article, we can drastically reduce the number of terms. However, we might miss some important ones: there might be terms which do not occur repeatedly within articles, but are present in all of them.</p>
 <p>For demonstration purposes we are a bit restrictive and include only those terms, which occur at least three times per article.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">top_bigrams &lt;-<span class="st"> </span>imported_bigrams <span class="op">%&gt;%</span></a>
@@ -294,7 +327,7 @@
 <div id="cleaning-up-bigrams" class="section level2">
 <h2 class="hasAnchor">
 <a href="#cleaning-up-bigrams" class="anchor"></a>Cleaning up bigrams</h2>
-<p>When constructing n-grams, DfR uses a stop-word list, which is quite limited <a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>. If we would like to restrict the terms a bit further, we could use stopwords from <code>tidytext</code>:</p>
+<p>When constructing n-grams, DfR uses a stop-word list, which is quite limited <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. If we would like to restrict the terms a bit further, we could use stopwords from <code>tidytext</code>:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw">library</span>(tidytext)</a>
 <a class="sourceLine" id="cb26-2" data-line-number="2">bigrams_separated &lt;-<span class="st"> </span>top_bigrams <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb26-3" data-line-number="3"><span class="st">  </span><span class="kw">separate</span>(bigrams, <span class="kw">c</span>(<span class="st">"word1"</span>, <span class="st">"word2"</span>), <span class="dt">sep =</span> <span class="st">" "</span>)</a>
@@ -337,18 +370,18 @@
 <div id="visualize-relationships" class="section level1">
 <h1 class="hasAnchor">
 <a href="#visualize-relationships" class="anchor"></a>Visualize relationships</h1>
-<p>When analyzing bigrams, we might want to look at the relationships between common terms. For this we can leverage the power of <a href="http://igraph.org/r/">igraph</a> and <a href="https://cran.r-project.org/web/packages/ggraph/index.html">ggraph</a>. (#6)</p>
+<p>When analyzing bigrams, we might want to look at the relationships between common terms. For this we can leverage the power of <a href="http://igraph.org/r/">igraph</a> and <a href="https://cran.r-project.org/web/packages/ggraph/index.html">ggraph</a>.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">library</span>(igraph)</a>
 <a class="sourceLine" id="cb30-2" data-line-number="2"><span class="kw">library</span>(ggraph)</a></code></pre></div>
-<p>First, we only keep the most common terms and then convert our <code>data.frame</code> to an <code>igraph</code>-object. <a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+<p>First, we only keep the most common terms and then convert our <code>data.frame</code> to an <code>igraph</code>-object. <a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">bigram_graph &lt;-<span class="st"> </span>bigram_counts_clean <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb31-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(n <span class="op">&gt;</span><span class="st"> </span><span class="dv">500</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb31-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/graph_from_data_frame">graph_from_data_frame</a></span>()</a>
 <a class="sourceLine" id="cb31-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb31-5" data-line-number="5">bigram_graph</a></code></pre></div>
-<pre><code>## IGRAPH 96e43a8 DN-- 170 161 -- 
+<pre><code>## IGRAPH c1029b0 DN-- 170 161 -- 
 ## + attr: name (v/c), n (e/n)
-## + edges from 96e43a8 (vertex names):
+## + edges from c1029b0 (vertex names):
 ##  [1] labor                 -&gt;market   9                     -&gt;7       
 ##  [3] 7                     -&gt;6        10                    -&gt;9       
 ##  [5] amsmath               -&gt;amsxtra  begin                 -&gt;document
@@ -372,9 +405,9 @@
 <a class="sourceLine" id="cb33-11" data-line-number="11"><span class="st">    </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggraph/topics/theme_graph">theme_graph</a></span>()</a>
 <a class="sourceLine" id="cb33-12" data-line-number="12">}</a></code></pre></div>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">plot_bigrams</span>(bigram_graph)</a></code></pre></div>
-<p><img src="analysing-n-grams_files/figure-html/unnamed-chunk-28-1.png" width="1152"> Very obvious is a group of nodes which are not relevant to the topic of inequality. They come from LaTeX documents and somehow made their way into the original dataset. However, since they are more common than most of the other terms, they are quite easy to remove. We can look at the nodes/vertices of our graph with <code><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V(bigram_graph)</a></code>.</p>
+<p><img src="analysing-n-grams_files/figure-html/unnamed-chunk-26-1.png" width="1152"> Very obvious is a group of nodes which are not relevant to the topic of inequality. They come from LaTeX documents and somehow made their way into the original dataset. However, since they are more common than most of the other terms, they are quite easy to remove. We can look at the nodes/vertices of our graph with <code><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V(bigram_graph)</a></code>.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(bigram_graph)</a></code></pre></div>
-<pre><code>## + 170/170 vertices, named, from 96e43a8:
+<pre><code>## + 170/170 vertices, named, from c1029b0:
 ##   [1] labor                  9                      7                     
 ##   [4] 10                     amsmath                begin                 
 ##   [7] declaremathsizes       declaretextfontcommand documentclass         
@@ -389,9 +422,9 @@
 <p>The first node, “labor”, is relevant to us, but all other nodes from 2 to at least 40 are clearly irrelevant. We can remove them by simple subtraction:</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">bigram_graph_clean &lt;-<span class="st"> </span>bigram_graph <span class="op">-</span><span class="st"> </span><span class="dv">2</span><span class="op">:</span><span class="dv">40</span></a>
 <a class="sourceLine" id="cb37-2" data-line-number="2">bigram_graph_clean</a></code></pre></div>
-<pre><code>## IGRAPH 7d64191 DN-- 131 105 -- 
+<pre><code>## IGRAPH 6538af5 DN-- 131 105 -- 
 ## + attr: name (v/c), n (e/n)
-## + edges from 7d64191 (vertex names):
+## + edges from 6538af5 (vertex names):
 ##  [1] labor     -&gt;market     labor     -&gt;force      0         -&gt;0         
 ##  [4] table     -&gt;2          1         -&gt;1          income    -&gt;inequality
 ##  [7] black     -&gt;white      table     -&gt;1          table     -&gt;3         
@@ -409,7 +442,7 @@
 <a class="sourceLine" id="cb39-5" data-line-number="5">                                             <span class="st">"http"</span>, <span class="st">"www"</span>, <span class="st">"000"</span>, <span class="st">"01"</span>)</a></code></pre></div>
 <p>After cleaning up a bit, we can take a fresh look at our bigrams.</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">plot_bigrams</span>(bigram_graph_clean, <span class="dv">234</span>)</a></code></pre></div>
-<p><img src="analysing-n-grams_files/figure-html/unnamed-chunk-32-1.png" width="1152"></p>
+<p><img src="analysing-n-grams_files/figure-html/unnamed-chunk-30-1.png" width="1152"></p>
 <p>The figure is still far from perfect (“eco” -&gt; “nomic” should clearly be one term), but we can begin to analyse our network.</p>
 <p>The most frequent bigrams are now “labor market”, “labor force”, and “income inequality”, which are not very surprising given that most individuals in capitalist societies need to supply their work in exchange for income. For this reason, the labor market and its stratification is a prime subject of the sociological inquiry into inequality. A few further key dimensions of sociological analysis are apparent from the graph: gender, race/ethnicity, occupational and socioeconomic status. That we find many terms to be associated with the term “social” seems quite likely given the discipline’s subject.</p>
 <p>At least two surprising results should be pointed out. First, it is not evident how the terms “ethnic” and “racial” are connected. They do not form a typical term like “social capital”, “middle class” or similar, nor could they be considered a dichotomy like “black” and “white” which are often included in tables from regressions. From a theoretical point of view, they have slightly different meanings but are frequently being used as synonyms. Second, there is a group of nodes around the term “university”: university -&gt; chicago, university -&gt; california, harvard -&gt; university, etc. At least two explanations seem plausible: either, many books are being cited which are in some way associated with those universities (“The University of Chicago Press” is the largest university press in the United States), or many researchers who publish in the two flagship-journals we selected are affiliated with those four universities: Harvard, Chicago, Cambridge and California. At least partly the prominence of university -&gt; chicago -&gt; press might be due to the fact, that it is the publisher of the American Journal of Sociology, and therefore included in each article by this journal.</p>
@@ -425,7 +458,7 @@
 <p>Besides looking at the overall relationship of bigrams, we could be interested in the development over time of specific terms. Here, we want to look at how often “labor market” and “income inequality” appear from year to year.</p>
 <p>For this, we need to join our bigrams with the metadata.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">time_bigrams &lt;-<span class="st"> </span>top_bigrams <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(flagship_journals, <span class="dt">by =</span> <span class="st">"basename_id"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(flagship_journals, <span class="dt">by =</span> <span class="st">"file_name"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb41-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(bigrams, n, pub_year)</a>
 <a class="sourceLine" id="cb41-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb41-5" data-line-number="5"><span class="kw">head</span>(time_bigrams)</a></code></pre></div>
@@ -467,16 +500,15 @@
 <a class="sourceLine" id="cb45-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb45-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb45-8" data-line-number="8"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> scales<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/pretty_breaks">pretty_breaks</a></span>(<span class="dv">7</span>))</a></code></pre></div>
-<p><img src="analysing-n-grams_files/figure-html/unnamed-chunk-35-1.png" width="960"></p>
+<p><img src="analysing-n-grams_files/figure-html/unnamed-chunk-33-1.png" width="960"></p>
 <p>In this instance, the plot does not reveal trends over time-the frequency of the terms is fluctuating a lot but staying on a similar level. Single spikes of term frequency for specific years (for example income inequality in 2011) could stem from special issues being explicitly concerned with income inequality, although a quick glance at the corresponding issues invalidates this hypothesis.</p>
 </div>
 <div class="footnotes">
 <hr>
 <ol>
 <li id="fn1"><p>An introduction on how to create datasets can be found on the page of DfR: <a href="http://www.jstor.org/dfr/about/creating-datasets" class="uri">http://www.jstor.org/dfr/about/creating-datasets</a><a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>When reading this data without <code>guess_max = 2000</code>, a warning is raised because the column type is not being recognized properly for one column. Setting <code>guess_max</code> to <code>2000</code> helps to read the data correctly in this case.<a href="#fnref2" class="footnote-back">↩</a></p></li>
-<li id="fn3"><p>for more information see the <a href="http://www.jstor.org/dfr/about/technical-specifications">technical specifications</a> on their page<a href="#fnref3" class="footnote-back">↩</a></p></li>
-<li id="fn4"><p>If you are unfamiliar with graph theory, just take a look at Wikipedia: <a href="https://en.wikipedia.org/wiki/Graph_theory">Graph Theory</a>.<a href="#fnref4" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>for more information see the <a href="http://www.jstor.org/dfr/about/technical-specifications">technical specifications</a> on their page<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>If you are unfamiliar with graph theory, just take a look at Wikipedia: <a href="https://en.wikipedia.org/wiki/Graph_theory">Graph Theory</a>.<a href="#fnref3" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
   </div>
@@ -486,7 +518,8 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li>
+<li><a href="#cleaning-the-data">Cleaning the data</a></li>
+      <li>
 <a href="#exploration">Exploration</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#the-moving-wall---filtering-articles-by-time">The moving wall - filtering articles by time</a></li>
       <li><a href="#flagship-journals---filtering-articles-by-journal">Flagship journals - filtering articles by journal</a></li>

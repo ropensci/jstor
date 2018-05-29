@@ -133,7 +133,7 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A specification of imports which is necessary for
-<code><a href='jstor_import.html'>jst_import_zip()</a></code>.</p>
+<code><a href='jst_import.html'>jst_import_zip()</a></code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -144,44 +144,53 @@ functions.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># articles will be imported via `find_article()` and `find_authors()`</span>
-<span class='fu'>jst_define_import</span>(<span class='kw'>article</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='no'>find_article</span>, <span class='no'>find_authors</span>))</div><div class='output co'>#&gt; # A tibble: 1 x 4
-#&gt;   meta_type       fun_names evaled_funs bare_funs                     
-#&gt;   &lt;chr&gt;           &lt;list&gt;    &lt;list&gt;      &lt;S3: quosures&gt;                
-#&gt; 1 journal_article &lt;chr [2]&gt; &lt;list [2]&gt;  ~c(find_article, find_authors)</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='co'># articles will be imported via `jst_get_article()` and `jst_get_authors()`</span>
+<span class='fu'>jst_define_import</span>(<span class='kw'>article</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='no'>jst_get_article</span>, <span class='no'>jst_get_authors</span>))</div><div class='output co'>#&gt; # A tibble: 1 x 4
+#&gt;   meta_type       fun_names evaled_funs bare_funs                           
+#&gt;   &lt;chr&gt;           &lt;list&gt;    &lt;list&gt;      &lt;S3: quosures&gt;                      
+#&gt; 1 journal_article &lt;chr [2]&gt; &lt;list [2]&gt;  ~c(jst_get_article, jst_get_authors)</div><div class='input'>
 <span class='co'># define a specification for importing article metadata and unigrams (ngram1)</span>
-<span class='fu'>jst_define_import</span>(<span class='kw'>article</span> <span class='kw'>=</span> <span class='no'>find_article</span>,
-                  <span class='kw'>ngram1</span> <span class='kw'>=</span> <span class='no'>jst_read_ngram</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 4
-#&gt;   meta_type       fun_names evaled_funs bare_funs      
-#&gt;   &lt;chr&gt;           &lt;list&gt;    &lt;list&gt;      &lt;S3: quosures&gt; 
-#&gt; 1 journal_article &lt;chr [1]&gt; &lt;fn&gt;        ~find_article  
-#&gt; 2 ngram1          &lt;chr [1]&gt; &lt;fn&gt;        ~jst_read_ngram</div><div class='input'>
+<span class='fu'>jst_define_import</span>(<span class='kw'>article</span> <span class='kw'>=</span> <span class='no'>jst_get_article</span>,
+                  <span class='kw'>ngram1</span> <span class='kw'>=</span> <span class='no'>jst_get_ngram</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 4
+#&gt;   meta_type       fun_names evaled_funs bare_funs       
+#&gt;   &lt;chr&gt;           &lt;list&gt;    &lt;list&gt;      &lt;S3: quosures&gt;  
+#&gt; 1 journal_article &lt;chr [1]&gt; &lt;fn&gt;        ~jst_get_article
+#&gt; 2 ngram1          &lt;chr [1]&gt; &lt;fn&gt;        ~jst_get_ngram  </div><div class='input'>
 
 <span class='co'># import all four types with one function each</span>
-<span class='fu'>jst_define_import</span>(<span class='kw'>article</span> <span class='kw'>=</span> <span class='no'>find_article</span>,
-                  <span class='kw'>book</span> <span class='kw'>=</span> <span class='no'>find_book</span>,
-                  <span class='kw'>report</span> <span class='kw'>=</span> <span class='no'>find_book</span>,
-                  <span class='kw'>pamphlet</span> <span class='kw'>=</span> <span class='no'>find_article</span>)</div><div class='output co'>#&gt; # A tibble: 4 x 4
-#&gt;   meta_type       fun_names evaled_funs bare_funs     
-#&gt;   &lt;chr&gt;           &lt;list&gt;    &lt;list&gt;      &lt;S3: quosures&gt;
-#&gt; 1 journal_article &lt;chr [1]&gt; &lt;fn&gt;        ~find_article 
-#&gt; 2 book_chapter    &lt;chr [1]&gt; &lt;fn&gt;        ~find_book    
-#&gt; 3 research_report &lt;chr [1]&gt; &lt;fn&gt;        ~find_book    
-#&gt; 4 pamphlet        &lt;chr [1]&gt; &lt;fn&gt;        ~find_article </div><div class='input'>
+<span class='fu'>jst_define_import</span>(<span class='kw'>article</span> <span class='kw'>=</span> <span class='no'>jst_get_article</span>,
+                  <span class='kw'>book</span> <span class='kw'>=</span> <span class='no'>jst_get_book</span>,
+                  <span class='kw'>report</span> <span class='kw'>=</span> <span class='no'>jst_get_book</span>,
+                  <span class='kw'>pamphlet</span> <span class='kw'>=</span> <span class='no'>jst_get_article</span>)</div><div class='output co'>#&gt; # A tibble: 4 x 4
+#&gt;   meta_type       fun_names evaled_funs bare_funs       
+#&gt;   &lt;chr&gt;           &lt;list&gt;    &lt;list&gt;      &lt;S3: quosures&gt;  
+#&gt; 1 journal_article &lt;chr [1]&gt; &lt;fn&gt;        ~jst_get_article
+#&gt; 2 book_chapter    &lt;chr [1]&gt; &lt;fn&gt;        ~jst_get_book   
+#&gt; 3 research_report &lt;chr [1]&gt; &lt;fn&gt;        ~jst_get_book   
+#&gt; 4 pamphlet        &lt;chr [1]&gt; &lt;fn&gt;        ~jst_get_article</div><div class='input'>
 <span class='co'># import all four types with multiple functions</span>
-<span class='fu'>jst_define_import</span>(<span class='kw'>article</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='no'>find_article</span>, <span class='no'>find_authors</span>, <span class='no'>find_references</span>),
-                  <span class='kw'>book</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='no'>find_book</span>, <span class='no'>find_chapters</span>),
-                  <span class='kw'>report</span> <span class='kw'>=</span> <span class='no'>find_book</span>,
-                  <span class='kw'>pamphlet</span> <span class='kw'>=</span> <span class='no'>find_article</span>)</div><div class='output co'>#&gt; # A tibble: 4 x 4
+<span class='fu'>jst_define_import</span>(<span class='kw'>article</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='no'>jst_get_article</span>, <span class='no'>jst_get_authors</span>, <span class='no'>jst_get_references</span>),
+                  <span class='kw'>book</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='no'>jst_get_book</span>, <span class='no'>jst_get_chapters</span>),
+                  <span class='kw'>report</span> <span class='kw'>=</span> <span class='no'>jst_get_book</span>,
+                  <span class='kw'>pamphlet</span> <span class='kw'>=</span> <span class='no'>jst_get_article</span>)</div><div class='output co'>#&gt; # A tibble: 4 x 4
 #&gt;   meta_type       fun_names evaled_funs bare_funs                              
 #&gt;   &lt;chr&gt;           &lt;list&gt;    &lt;list&gt;      &lt;S3: quosures&gt;                         
-#&gt; 1 journal_article &lt;chr [3]&gt; &lt;list [3]&gt;  ~c(find_article, find_authors, find_re…
-#&gt; 2 book_chapter    &lt;chr [2]&gt; &lt;list [2]&gt;  ~c(find_book, find_chapters)           
-#&gt; 3 research_report &lt;chr [1]&gt; &lt;fn&gt;        ~find_book                             
-#&gt; 4 pamphlet        &lt;chr [1]&gt; &lt;fn&gt;        ~find_article                          </div><div class='input'>
+#&gt; 1 journal_article &lt;chr [3]&gt; &lt;list [3]&gt;  ~c(jst_get_article, jst_get_authors, j…
+#&gt; 2 book_chapter    &lt;chr [2]&gt; &lt;list [2]&gt;  ~c(jst_get_book, jst_get_chapters)     
+#&gt; 3 research_report &lt;chr [1]&gt; &lt;fn&gt;        ~jst_get_book                          
+#&gt; 4 pamphlet        &lt;chr [1]&gt; &lt;fn&gt;        ~jst_get_article                       </div><div class='input'>
+<span class='co'># if you want to import chapters with authors, you can use an anonymous</span>
+<span class='co'># function</span>
+
+<span class='no'>chapters_w_authors</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='jst_get_chapters.html'>jst_get_chapters</a></span>(<span class='no'>x</span>, <span class='kw'>authors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>jst_define_import</span>(<span class='kw'>book</span> <span class='kw'>=</span> <span class='no'>chapters_w_authors</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 4
+#&gt;   meta_type    fun_names evaled_funs bare_funs          
+#&gt;   &lt;chr&gt;        &lt;list&gt;    &lt;list&gt;      &lt;S3: quosures&gt;     
+#&gt; 1 book_chapter &lt;chr [1]&gt; &lt;fn&gt;        ~chapters_w_authors</div><div class='input'>
+
 </div><span class='co'># NOT RUN {</span>
 <span class='co'># define imports</span>
-<span class='no'>imports</span> <span class='kw'>&lt;-</span> <span class='fu'>jst_define_import</span>(<span class='kw'>article</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='no'>find_article</span>, <span class='no'>find_authors</span>))
+<span class='no'>imports</span> <span class='kw'>&lt;-</span> <span class='fu'>jst_define_import</span>(<span class='kw'>article</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='no'>jst_get_article</span>, <span class='no'>jst_get_authors</span>))
 
 <span class='co'># convert the files to .csv</span>
 <span class='fu'>jstor_import_zip</span>(<span class='st'>"my_archive.zip"</span>, <span class='kw'>out_file</span> <span class='kw'>=</span> <span class='st'>"my_out_file"</span>,

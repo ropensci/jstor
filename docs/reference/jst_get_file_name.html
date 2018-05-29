@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • jstor</title>
+<title>Extract the basename of a path — jst_get_file_name • jstor</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,11 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Extract the basename of a path — jst_get_file_name" />
+
+<meta property="og:description" content="This helper simply extracts the basename of a path and removes the extension,
+e.g. foo/bar.txt is shortened to bar." />
+<meta name="twitter:card" content="summary" />
 
 
 <!-- mathjax -->
@@ -45,7 +49,7 @@
   </head>
 
   <body>
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -105,20 +109,37 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Extract the basename of a path</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tklebel/jstor/blob/master/R/helpers.R'><code>R/helpers.R</code></a></small>
+    <div class="hidden name"><code>jst_get_file_name.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <ul>
-        <li><a href="Introduction.html">Introduction to jstor</a></li>
-        <li><a href="analysing-n-grams.html">Analysing n-grams with `jstor` for R</a></li>
-        <li><a href="automating_file_import.html">Automating File Import</a></li>
-        <li><a href="known-quirks-of-jstor-data.html">Known Quirks of JSTOR Data</a></li>
-      </ul>
+    <div class="ref-description">
+    
+    <p>This helper simply extracts the basename of a path and removes the extension,
+e.g. <code>foo/bar.txt</code> is shortened to <code>bar</code>.</p>
+    
     </div>
+
+    <pre class="usage"><span class='fu'>jst_get_file_name</span>(<span class='no'>file_path</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>file_path</th>
+      <td><p>A path to a file</p></td>
+    </tr>
+    </table>
+    
+
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+                </ul>
+
   </div>
 </div>
 

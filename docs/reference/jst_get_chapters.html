@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract information on book chapters — find_chapters • jstor</title>
+<title>Extract information on book chapters — jst_get_chapters • jstor</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Extract information on book chapters — find_chapters" />
+<meta property="og:title" content="Extract information on book chapters — jst_get_chapters" />
 
-<meta property="og:description" content="find_chapters() extracts meta-data from JSTOR-XML files for book chapters." />
+<meta property="og:description" content="jst_get_chapters() extracts meta-data from JSTOR-XML files for book
+chapters." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -109,17 +110,18 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Extract information on book chapters</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tklebel/jstor/blob/master/R/deprecated.R'><code>R/deprecated.R</code></a></small>
-    <div class="hidden name"><code>find_chapters.Rd</code></div>
+    <small class="dont-index">Source: <a href='https://github.com/tklebel/jstor/blob/master/R/books.R'><code>R/books.R</code></a></small>
+    <div class="hidden name"><code>jst_get_chapters.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>find_chapters()</code> extracts meta-data from JSTOR-XML files for book chapters.</p>
+    <p><code>jst_get_chapters()</code> extracts meta-data from JSTOR-XML files for book
+chapters.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>find_chapters</span>(<span class='no'>file_path</span>, <span class='kw'>authors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>jst_get_chapters</span>(<span class='no'>file_path</span>, <span class='kw'>authors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,7 +145,7 @@ import the authors too.</p></td>
 columns:</p><ul>
 <li><p>book_id <em>(chr)</em>: The book id of type "jstor", which is not a registered
 DOI.</p></li>
-<li><p>basename_id <em>(chr)</em>: The filename of the original .xml-file. Can be used
+<li><p>file_name <em>(chr)</em>: The filename of the original .xml-file. Can be used
 for joining with other data for the same file.</p></li>
 <li><p>part_id <em>(chr)</em>: The id of the part.</p></li>
 <li><p>part_label <em>(chr)</em>: A label for the part, if specified.</p></li>
@@ -158,57 +160,58 @@ unnested with <code><a href='http://www.rdocumentation.org/packages/tidyr/topics
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Currently, <code>find_chapters()</code> is quite a lot slower than most of the other
-functions. It is roughly 10 times slower than <code>find_book</code>, depending on the
-number of chapters to extract.</p>
+    <p>Currently, <code>jst_get_chapters()</code> is quite a lot slower than most of the other
+functions. It is roughly 10 times slower than <code>jst_get_book</code>, depending on
+the number of chapters to extract.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># extract parts without authors</span>
-<span class='fu'>find_chapters</span>(<span class='fu'><a href='jstor_example.html'>jstor_example</a></span>(<span class='st'>"sample_book.xml"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: `find_chapters` has been deprecated. Please use `jst_get_chapters` instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `jstor_example` has been deprecated. Please use `jst_example` instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `get_basename` has been deprecated. Please use `jst_get_file_name` instead.</span></div><div class='output co'>#&gt; # A tibble: 36 x 9
-#&gt;    book_id  basename_id part_id  part_label part_title   part_subtitle  authors
-#&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;          &lt;chr&gt;  
-#&gt;  1 j.ctt24… sample_book j.ctt24… &lt;NA&gt;       Front Matter &lt;NA&gt;           &lt;NA&gt;   
-#&gt;  2 j.ctt24… sample_book j.ctt24… &lt;NA&gt;       Table of Co… &lt;NA&gt;           &lt;NA&gt;   
-#&gt;  3 j.ctt24… sample_book j.ctt24… &lt;NA&gt;       Acronyms an… &lt;NA&gt;           &lt;NA&gt;   
-#&gt;  4 j.ctt24… sample_book j.ctt24… &lt;NA&gt;       Authors’ bi… &lt;NA&gt;           &lt;NA&gt;   
-#&gt;  5 j.ctt24… sample_book j.ctt24… 1.         The enigmas… &lt;NA&gt;           &lt;NA&gt;   
-#&gt;  6 j.ctt24… sample_book j.ctt24… 2.         ‘Anxiety, u… Fiji’s road t… &lt;NA&gt;   
-#&gt;  7 j.ctt24… sample_book j.ctt24… 3.         Fiji’s Dece… Who, what, wh… &lt;NA&gt;   
-#&gt;  8 j.ctt24… sample_book j.ctt24… 4.         ‘This proce… The aftermath… &lt;NA&gt;   
-#&gt;  9 j.ctt24… sample_book j.ctt24… 5.         The changin… &lt;NA&gt;           &lt;NA&gt;   
-#&gt; 10 j.ctt24… sample_book j.ctt24… 6.         The Fiji mi… Analyzing the… &lt;NA&gt;   
+<span class='fu'>jst_get_chapters</span>(<span class='fu'><a href='jst_example.html'>jst_example</a></span>(<span class='st'>"sample_book.xml"</span>))</div><div class='output co'>#&gt; # A tibble: 36 x 9
+#&gt;    book_id  file_name  part_id part_label part_title    part_subtitle   authors
+#&gt;    &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt;           &lt;chr&gt;  
+#&gt;  1 j.ctt24… sample_bo… j.ctt2… &lt;NA&gt;       Front Matter  &lt;NA&gt;            &lt;NA&gt;   
+#&gt;  2 j.ctt24… sample_bo… j.ctt2… &lt;NA&gt;       Table of Con… &lt;NA&gt;            &lt;NA&gt;   
+#&gt;  3 j.ctt24… sample_bo… j.ctt2… &lt;NA&gt;       Acronyms and… &lt;NA&gt;            &lt;NA&gt;   
+#&gt;  4 j.ctt24… sample_bo… j.ctt2… &lt;NA&gt;       Authors’ bio… &lt;NA&gt;            &lt;NA&gt;   
+#&gt;  5 j.ctt24… sample_bo… j.ctt2… 1.         The enigmas … &lt;NA&gt;            &lt;NA&gt;   
+#&gt;  6 j.ctt24… sample_bo… j.ctt2… 2.         ‘Anxiety, un… Fiji’s road to… &lt;NA&gt;   
+#&gt;  7 j.ctt24… sample_bo… j.ctt2… 3.         Fiji’s Decem… Who, what, whe… &lt;NA&gt;   
+#&gt;  8 j.ctt24… sample_bo… j.ctt2… 4.         ‘This proces… The aftermath … &lt;NA&gt;   
+#&gt;  9 j.ctt24… sample_bo… j.ctt2… 5.         The changing… &lt;NA&gt;            &lt;NA&gt;   
+#&gt; 10 j.ctt24… sample_bo… j.ctt2… 6.         The Fiji mil… Analyzing the … &lt;NA&gt;   
 #&gt; # ... with 26 more rows, and 2 more variables: abstract &lt;chr&gt;,
 #&gt; #   part_first_page &lt;chr&gt;</div><div class='input'>
 <span class='co'># import authors too</span>
-<span class='no'>parts</span> <span class='kw'>&lt;-</span> <span class='fu'>find_chapters</span>(<span class='fu'><a href='jstor_example.html'>jstor_example</a></span>(<span class='st'>"sample_book.xml"</span>), <span class='kw'>authors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `find_chapters` has been deprecated. Please use `jst_get_chapters` instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `jstor_example` has been deprecated. Please use `jst_example` instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `get_basename` has been deprecated. Please use `jst_get_file_name` instead.</span></div><div class='input'><span class='no'>parts</span></div><div class='output co'>#&gt; # A tibble: 36 x 9
-#&gt;    book_id  basename_id part_id  part_label part_title   part_subtitle  authors
-#&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;          &lt;list&gt; 
-#&gt;  1 j.ctt24… sample_book j.ctt24… &lt;NA&gt;       Front Matter &lt;NA&gt;           &lt;tibbl…
-#&gt;  2 j.ctt24… sample_book j.ctt24… &lt;NA&gt;       Table of Co… &lt;NA&gt;           &lt;tibbl…
-#&gt;  3 j.ctt24… sample_book j.ctt24… &lt;NA&gt;       Acronyms an… &lt;NA&gt;           &lt;tibbl…
-#&gt;  4 j.ctt24… sample_book j.ctt24… &lt;NA&gt;       Authors’ bi… &lt;NA&gt;           &lt;tibbl…
-#&gt;  5 j.ctt24… sample_book j.ctt24… 1.         The enigmas… &lt;NA&gt;           &lt;tibbl…
-#&gt;  6 j.ctt24… sample_book j.ctt24… 2.         ‘Anxiety, u… Fiji’s road t… &lt;tibbl…
-#&gt;  7 j.ctt24… sample_book j.ctt24… 3.         Fiji’s Dece… Who, what, wh… &lt;tibbl…
-#&gt;  8 j.ctt24… sample_book j.ctt24… 4.         ‘This proce… The aftermath… &lt;tibbl…
-#&gt;  9 j.ctt24… sample_book j.ctt24… 5.         The changin… &lt;NA&gt;           &lt;tibbl…
-#&gt; 10 j.ctt24… sample_book j.ctt24… 6.         The Fiji mi… Analyzing the… &lt;tibbl…
+<span class='no'>parts</span> <span class='kw'>&lt;-</span> <span class='fu'>jst_get_chapters</span>(<span class='fu'><a href='jst_example.html'>jst_example</a></span>(<span class='st'>"sample_book.xml"</span>), <span class='kw'>authors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>parts</span></div><div class='output co'>#&gt; # A tibble: 36 x 9
+#&gt;    book_id  file_name  part_id  part_label part_title    part_subtitle  authors
+#&gt;    &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt;          &lt;list&gt; 
+#&gt;  1 j.ctt24… sample_bo… j.ctt24… &lt;NA&gt;       Front Matter  &lt;NA&gt;           &lt;tibbl…
+#&gt;  2 j.ctt24… sample_bo… j.ctt24… &lt;NA&gt;       Table of Con… &lt;NA&gt;           &lt;tibbl…
+#&gt;  3 j.ctt24… sample_bo… j.ctt24… &lt;NA&gt;       Acronyms and… &lt;NA&gt;           &lt;tibbl…
+#&gt;  4 j.ctt24… sample_bo… j.ctt24… &lt;NA&gt;       Authors’ bio… &lt;NA&gt;           &lt;tibbl…
+#&gt;  5 j.ctt24… sample_bo… j.ctt24… 1.         The enigmas … &lt;NA&gt;           &lt;tibbl…
+#&gt;  6 j.ctt24… sample_bo… j.ctt24… 2.         ‘Anxiety, un… Fiji’s road t… &lt;tibbl…
+#&gt;  7 j.ctt24… sample_bo… j.ctt24… 3.         Fiji’s Decem… Who, what, wh… &lt;tibbl…
+#&gt;  8 j.ctt24… sample_bo… j.ctt24… 4.         ‘This proces… The aftermath… &lt;tibbl…
+#&gt;  9 j.ctt24… sample_bo… j.ctt24… 5.         The changing… &lt;NA&gt;           &lt;tibbl…
+#&gt; 10 j.ctt24… sample_bo… j.ctt24… 6.         The Fiji mil… Analyzing the… &lt;tibbl…
 #&gt; # ... with 26 more rows, and 2 more variables: abstract &lt;chr&gt;,
 #&gt; #   part_first_page &lt;chr&gt;</div><div class='input'>
 <span class='kw pkg'>tidyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/tidyr/topics/unnest'>unnest</a></span>(<span class='no'>parts</span>)</div><div class='output co'>#&gt; # A tibble: 39 x 14
-#&gt;    book_id  basename_id part_id part_label part_title part_subtitle abstract   
-#&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt;      
-#&gt;  1 j.ctt24… sample_book j.ctt2… &lt;NA&gt;       Front Mat… &lt;NA&gt;          &lt;NA&gt;       
-#&gt;  2 j.ctt24… sample_book j.ctt2… &lt;NA&gt;       Table of … &lt;NA&gt;          &lt;NA&gt;       
-#&gt;  3 j.ctt24… sample_book j.ctt2… &lt;NA&gt;       Acronyms … &lt;NA&gt;          &lt;NA&gt;       
-#&gt;  4 j.ctt24… sample_book j.ctt2… &lt;NA&gt;       Authors’ … &lt;NA&gt;          &lt;NA&gt;       
-#&gt;  5 j.ctt24… sample_book j.ctt2… 1.         The enigm… &lt;NA&gt;          Fiji’s Dec…
-#&gt;  6 j.ctt24… sample_book j.ctt2… 1.         The enigm… &lt;NA&gt;          Fiji’s Dec…
-#&gt;  7 j.ctt24… sample_book j.ctt2… 2.         ‘Anxiety,… Fiji’s road … Fiji exper…
-#&gt;  8 j.ctt24… sample_book j.ctt2… 3.         Fiji’s De… Who, what, w… The Fiji m…
-#&gt;  9 j.ctt24… sample_book j.ctt2… 4.         ‘This pro… The aftermat… ‘We consid…
-#&gt; 10 j.ctt24… sample_book j.ctt2… 5.         The chang… &lt;NA&gt;          The centra…
+#&gt;    book_id  file_name part_id part_label part_title part_subtitle abstract     
+#&gt;    &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt;        
+#&gt;  1 j.ctt24… sample_b… j.ctt2… &lt;NA&gt;       Front Mat… &lt;NA&gt;          &lt;NA&gt;         
+#&gt;  2 j.ctt24… sample_b… j.ctt2… &lt;NA&gt;       Table of … &lt;NA&gt;          &lt;NA&gt;         
+#&gt;  3 j.ctt24… sample_b… j.ctt2… &lt;NA&gt;       Acronyms … &lt;NA&gt;          &lt;NA&gt;         
+#&gt;  4 j.ctt24… sample_b… j.ctt2… &lt;NA&gt;       Authors’ … &lt;NA&gt;          &lt;NA&gt;         
+#&gt;  5 j.ctt24… sample_b… j.ctt2… 1.         The enigm… &lt;NA&gt;          Fiji’s Decem…
+#&gt;  6 j.ctt24… sample_b… j.ctt2… 1.         The enigm… &lt;NA&gt;          Fiji’s Decem…
+#&gt;  7 j.ctt24… sample_b… j.ctt2… 2.         ‘Anxiety,… Fiji’s road … Fiji experie…
+#&gt;  8 j.ctt24… sample_b… j.ctt2… 3.         Fiji’s De… Who, what, w… The Fiji mil…
+#&gt;  9 j.ctt24… sample_b… j.ctt2… 4.         ‘This pro… The aftermat… ‘We consider…
+#&gt; 10 j.ctt24… sample_b… j.ctt2… 5.         The chang… &lt;NA&gt;          The central …
 #&gt; # ... with 29 more rows, and 7 more variables: part_first_page &lt;chr&gt;,
 #&gt; #   prefix &lt;chr&gt;, given_name &lt;chr&gt;, surname &lt;chr&gt;, string_name &lt;chr&gt;,
 #&gt; #   suffix &lt;chr&gt;, author_number &lt;dbl&gt;</div></pre>

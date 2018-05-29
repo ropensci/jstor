@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • jstor</title>
+<title>Read ngram data — jst_get_ngram • jstor</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Read ngram data — jst_get_ngram" />
+
+<meta property="og:description" content="Read in data on ngrams via readr::read_tsv." />
+<meta name="twitter:card" content="summary" />
 
 
 <!-- mathjax -->
@@ -45,7 +48,7 @@
   </head>
 
   <body>
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -105,20 +108,54 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Read ngram data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tklebel/jstor/blob/master/R/ngram.R'><code>R/ngram.R</code></a></small>
+    <div class="hidden name"><code>jst_get_ngram.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <ul>
-        <li><a href="Introduction.html">Introduction to jstor</a></li>
-        <li><a href="analysing-n-grams.html">Analysing n-grams with `jstor` for R</a></li>
-        <li><a href="automating_file_import.html">Automating File Import</a></li>
-        <li><a href="known-quirks-of-jstor-data.html">Known Quirks of JSTOR Data</a></li>
-      </ul>
+    <div class="ref-description">
+    
+    <p>Read in data on ngrams via <a href='http://www.rdocumentation.org/packages/readr/topics/read_delim'>readr::read_tsv</a>.</p>
+    
     </div>
+
+    <pre class="usage"><span class='fu'>jst_get_ngram</span>(<span class='no'>file</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>file</th>
+      <td><p>A path to a file or a zip location from <code><a href='jst_subset_ngrams.html'>jst_subset_ngrams()</a></code>.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A <a href='http://www.rdocumentation.org/packages/tibble/topics/tibble'>tibble::tibble</a> with two columns:</p><ul>
+<li><p><em>ngram</em>: the ngram term (unigram, bigram, trigram)</p></li>
+<li><p><em>n</em>: an integer for the number of times the term occurred in the original
+file</p></li>
+</ul>
+
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This function is mainly useful when it is used in together with
+<a href='jst_import.html'>jst_import_zip</a>, where you can use it to specify reading in ngram data.</p>
+    
+
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+          </ul>
+
   </div>
 </div>
 

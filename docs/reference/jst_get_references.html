@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract meta information for articles — find_article • jstor</title>
+<title>Extract all references — jst_get_references • jstor</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Extract meta information for articles — find_article" />
+<meta property="og:title" content="Extract all references — jst_get_references" />
 
-<meta property="og:description" content="find_article() extracts meta-data from JSTOR-XML files for journal
-articles." />
+<meta property="og:description" content="This function extracts the content of ref-list from the xml-file." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -109,73 +108,67 @@ articles." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract meta information for articles</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tklebel/jstor/blob/master/R/deprecated.R'><code>R/deprecated.R</code></a></small>
-    <div class="hidden name"><code>find_article.Rd</code></div>
+    <h1>Extract all references</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tklebel/jstor/blob/master/R/references.R'><code>R/references.R</code></a></small>
+    <div class="hidden name"><code>jst_get_references.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>find_article()</code> extracts meta-data from JSTOR-XML files for journal
-articles.</p>
+    <p>This function extracts the content of <code>ref-list</code> from the <code>xml</code>-file.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>find_article</span>(<span class='no'>file_path</span>)</pre>
+    <pre class="usage"><span class='fu'>jst_get_references</span>(<span class='no'>file_path</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>file_path</th>
-      <td><p>A <code>.xml</code>-file for a journal-article.</p></td>
+      <td><p>The path to the <code>.xml</code>-file from which references should be
+extracted.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>tibble</code> containing the extracted meta-data with the following
-columns:</p><ul>
-<li><p>basename_id <em>(chr)</em>: The filename of the original .xml-file. Can be used
-for joining with other parts (authors, references, footnotes, full-texts).</p></li>
-<li><p>journal_doi <em>(chr)</em>: A registered identifier for the journal.</p></li>
-<li><p>journal_jcode <em>(chr)</em>: A identifier for the journal like "amerjsoci" for
-the "American Journal of Sociology".</p></li>
-<li><p>journal_pub_id <em>(chr)</em>: Similar to journal_jcode. Most of the time either
-one is present.</p></li>
-<li><p>journal_title <em>(chr)</em>: The title of the journal.</p></li>
-<li><p>article_doi <em>(chr)</em>: A registered unique identifier for the article.</p></li>
-<li><p>article_jcode <em>(chr)</em>: A unique identifier for the article (not a DOI).</p></li>
-<li><p>article_pub_id <em>(chr)</em>: Infrequent, either part of the DOI or the
-article_jcode.</p></li>
-<li><p>article_type <em>(chr)</em>: The type of article (research-article, book-review,
-etc.).</p></li>
-<li><p>article_title <em>(chr)</em>: The title of the article.</p></li>
-<li><p>volume <em>(chr)</em>: The volume the article was published in.</p></li>
-<li><p>issue <em>(chr)</em>: The issue the article was published in.</p></li>
-<li><p>language <em>(chr)</em>: The language of the article.</p></li>
-<li><p>pub_day <em>(chr)</em>: Publication day, if specified.</p></li>
-<li><p>pub_month <em>(chr)</em>: Publication month, if specified.</p></li>
-<li><p>pub_year <em>(int)</em>: Year of publication.</p></li>
-<li><p>first_page <em>(int)</em>: Page number for the first page of the article.</p></li>
-<li><p>last_page <em>(int)</em>: Page number for the last page of the article.</p></li>
-<li><p>page_range <em>(chr)</em>: The range of pages for the article.</p></li>
+    <p>A <code>tibble</code> with three two containing the references:</p><ul>
+<li><p><code>basename_id</code>: the identifier for the article the references come from.</p></li>
+<li><p><code>references</code>: the text of the references.</p></li>
 </ul>
 
-<p>A note about publication dates: always the first entry is being extracted,
-which should correspond to the oldest date, in case there is more than one
-date.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This content may contain references or endnotes, depending on how the article
+used citations. Since references are currently not fully supported by DfR,
+there is no comprehensive documentation on the different variants. <code>jstor</code>
+therefore extracts the content of <code>ref-list</code> exactly as it appears in the
+data. Because of this, there might be other content present than references.</p>
+<p>In order to get all available information on citation data, you might need to
+combine <code>jst_get_references()</code> with <code><a href='jst_get_footnotes.html'>jst_get_footnotes()</a></code>.</p>
+<p>For newer <code>xml</code>-files, there would be the option to extract single elements
+like authors, title or date of the source, but this is not yet implemented.</p>
+<p>In general, the implementation is not as fast as <code><a href='jst_get_article.html'>jst_get_article()</a></code> -
+articles with many references slow the process down.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>find_article</span>(<span class='fu'><a href='jstor_example.html'>jstor_example</a></span>(<span class='st'>"sample_with_references.xml"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: `find_article` has been deprecated. Please use `jst_get_article` instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `jstor_example` has been deprecated. Please use `jst_example` instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `get_basename` has been deprecated. Please use `jst_get_file_name` instead.</span></div><div class='output co'>#&gt; # A tibble: 1 x 19
-#&gt;   basename_id    journal_doi journal_jcode  journal_pub_id journal_title       
-#&gt;   &lt;chr&gt;          &lt;chr&gt;       &lt;chr&gt;          &lt;chr&gt;          &lt;chr&gt;               
-#&gt; 1 sample_with_r… &lt;NA&gt;        tranamermicrs… &lt;NA&gt;           Transactions of the…
-#&gt; # ... with 14 more variables: article_doi &lt;chr&gt;, article_pub_id &lt;chr&gt;,
-#&gt; #   article_jcode &lt;chr&gt;, article_type &lt;chr&gt;, article_title &lt;chr&gt;, volume &lt;chr&gt;,
-#&gt; #   issue &lt;chr&gt;, language &lt;chr&gt;, pub_day &lt;chr&gt;, pub_month &lt;chr&gt;,
-#&gt; #   pub_year &lt;int&gt;, first_page &lt;chr&gt;, last_page &lt;chr&gt;, page_range &lt;chr&gt;</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>jst_get_references</span>(<span class='fu'><a href='jst_example.html'>jst_example</a></span>(<span class='st'>"sample_with_references.xml"</span>))</div><div class='output co'>#&gt; # A tibble: 29 x 2
+#&gt;    file_name              references                                           
+#&gt;    &lt;chr&gt;                  &lt;chr&gt;                                                
+#&gt;  1 sample_with_references Bibliography: Entamoeba ranarumn                     
+#&gt;  2 sample_with_references "DOBELL, C.C.\n1909 Researches on the intestinal Pro…
+#&gt;  3 sample_with_references "1918 Are Entamoeba histolytica and Entamoeba ranaru…
+#&gt;  4 sample_with_references References: Leptotheca ohilmacheri                   
+#&gt;  5 sample_with_references "KUDO, R.\n1920 Studies on Myxosporidia. A Synopsis …
+#&gt;  6 sample_with_references "1921 On the nature of structures characteristic of …
+#&gt;  7 sample_with_references "1922 On the morphology and life history of a Myxosp…
+#&gt;  8 sample_with_references References: Haemogregarines                          
+#&gt;  9 sample_with_references "DUTTON, J. E., J. L. TODD and E. N. TOBEY.\n1907 Co…
+#&gt; 10 sample_with_references "FRANNÇA, C.\n1917 Sur la classification des hémospo…
+#&gt; # ... with 19 more rows</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -183,6 +176,8 @@ date.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

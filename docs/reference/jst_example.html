@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • jstor</title>
+<title>Get path to jstor example — jst_example • jstor</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,11 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Get path to jstor example — jst_example" />
+
+<meta property="og:description" content="jstor includes several sample files for demonstration purposes. This helper
+makes them easy to access." />
+<meta name="twitter:card" content="summary" />
 
 
 <!-- mathjax -->
@@ -45,7 +49,7 @@
   </head>
 
   <body>
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -105,20 +109,50 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Get path to jstor example</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tklebel/jstor/blob/master/R/example.R'><code>R/example.R</code></a></small>
+    <div class="hidden name"><code>jst_example.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <ul>
-        <li><a href="Introduction.html">Introduction to jstor</a></li>
-        <li><a href="analysing-n-grams.html">Analysing n-grams with `jstor` for R</a></li>
-        <li><a href="automating_file_import.html">Automating File Import</a></li>
-        <li><a href="known-quirks-of-jstor-data.html">Known Quirks of JSTOR Data</a></li>
-      </ul>
+    <div class="ref-description">
+    
+    <p>jstor includes several sample files for demonstration purposes. This helper
+makes them easy to access.</p>
+    
     </div>
+
+    <pre class="usage"><span class='fu'>jst_example</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>path</th>
+      <td><p>Name of the example file. If <code>NULL</code>, the example files will be
+listed.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The code for this function was adapted from the package <code>readr</code>.</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>jst_example</span>()</div><div class='output co'>#&gt; [1] "pseudo_dfr.zip"             "sample_book.xml"           
+#&gt; [3] "sample_full_text.txt"       "sample_with_footnotes.xml" 
+#&gt; [5] "sample_with_references.xml"</div><div class='input'><span class='fu'>jst_example</span>(<span class='st'>"sample_with_references.xml"</span>)</div><div class='output co'>#&gt; [1] "/Users/tklebel/Documents/Software/R/jstor/inst/extdata/sample_with_references.xml"</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#details">Details</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
+
   </div>
 </div>
 

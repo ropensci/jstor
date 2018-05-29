@@ -80,7 +80,7 @@
       <h1>Introduction to jstor</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-05-17</h4>
+            <h4 class="date">2018-05-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/tklebel/jstor/blob/master/vignettes/Introduction.Rmd"><code>vignettes/Introduction.Rmd</code></a></small>
       <div class="hidden name"><code>Introduction.Rmd</code></div>
@@ -91,33 +91,33 @@
     
 <p>The tool <a href="http://www.jstor.org/dfr/">Data for Research (DfR)</a> by JSTOR is a valuable source for citation analysis and text mining. <code>jstor</code> provides functions and suggests workflows for importing datasets from DfR.</p>
 <p>When using DfR, requests for datasets can be made for small excerpts (max. 25,000 records) or large ones, which require an agreement between the researcher and JSTOR. <code>jstor</code> was developed to deal with very large datasets which require an agreement, but can be used with smaller ones as well.</p>
-<p>The most important set of functions is a group of <code>find_*</code> functions:</p>
+<p>The most important set of functions is a group of <code>jst_get_*</code> functions:</p>
 <ul>
 <li>
-<code>find_article</code> (for journal documents and pamphlets)</li>
+<code>jst_get_article</code> (for journal documents and pamphlets)</li>
 <li>
-<code>find_authors</code> (for all sources)</li>
+<code>jst_get_authors</code> (for all sources)</li>
 <li>
-<code>find_references</code> (for journal documents)</li>
+<code>jst_get_references</code> (for journal documents)</li>
 <li>
-<code>find_footnotes</code> (for journal documents)</li>
+<code>jst_get_footnotes</code> (for journal documents)</li>
 <li>
-<code>find_book</code> (for books and research reports)</li>
+<code>jst_get_book</code> (for books and research reports)</li>
 <li>
-<code>find_chapters</code> (for books and possibly reserach reports)</li>
+<code>jst_get_chapters</code> (for books and possibly reserach reports)</li>
 </ul>
 <p>I will demonstrate their usage using the <a href="http://www.jstor.org/dfr/about/sample-datasets">sample dataset</a> which is provided by JSTOR on their website.</p>
 <div id="general-concept" class="section level1">
 <h1 class="hasAnchor">
 <a href="#general-concept" class="anchor"></a>General Concept</h1>
-<p>All functions from the <code>find_*</code> family which are concerned with meta data operate along the same lines:</p>
+<p>All functions from the <code>jst_get_*</code> family which are concerned with meta data operate along the same lines:</p>
 <ol style="list-style-type: decimal">
 <li>The file is read with <code><a href="http://www.rdocumentation.org/packages/xml2/topics/read_xml">xml2::read_xml()</a></code>.</li>
 <li>Content of the file is extracted via XPATH or CSS-expressions.</li>
 <li>The resulting data is returned in a tidy <code>tibble</code>.</li>
 </ol>
-<p>The functions are similar in that all operate on single files (article, book, research report or pamphlet). Depending on the content of the file, the output of the functions might have one or multiple rows. <code>find_article</code> always returns a <code>tibble</code> with one row: the core meta data (like title, id, or first page of the article) are single items, and only one article is processed at a time. Running <code>find_authors</code> for the same article might give you a tibble with one or multiple rows, depending on the number of authors the article has. The same is true for <code>find_references</code> and <code>find_footnotes</code>. If a file has no data on references (they migth still exist, but JSTOR might not have parsed them), the output is only one row, with missing references. If there is data on references, each entry gets its own row. Note however, that the number of rows does not equal the number of references. References usually start with a title like “References”, which is obviously not a reference to another article. Be sure to think carefully about your assumptions and to check the content of your data before you make inferences.</p>
-<p>Books work a bit differently. Searching for data on <a href="https://www.jstor.org/dfr/results" class="uri">https://www.jstor.org/dfr/results</a> lets you filter for books, which are acutally book chapters. If you receive data from DfR on a book chapter, you always get one xml-file with the whole book, including data on all chapters. Ngram or full-text data for the same entry however is processed only from single chapters<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Thus, the output of <code>find_book</code> for a single file is similar to the one from <code>find_article</code>: it is one row with general data about the book. <code>find_chapters</code> gives you data on all chapters, and the resulting tibble therefore might have multiple rows.</p>
+<p>The functions are similar in that all operate on single files (article, book, research report or pamphlet). Depending on the content of the file, the output of the functions might have one or multiple rows. <code>jst_get_article</code> always returns a <code>tibble</code> with one row: the core meta data (like title, id, or first page of the article) are single items, and only one article is processed at a time. Running <code>jst_get_authors</code> for the same article might give you a tibble with one or multiple rows, depending on the number of authors the article has. The same is true for <code>jst_get_references</code> and <code>jst_get_footnotes</code>. If a file has no data on references (they migth still exist, but JSTOR might not have parsed them), the output is only one row, with missing references. If there is data on references, each entry gets its own row. Note however, that the number of rows does not equal the number of references. References usually start with a title like “References”, which is obviously not a reference to another article. Be sure to think carefully about your assumptions and to check the content of your data before you make inferences.</p>
+<p>Books work a bit differently. Searching for data on <a href="https://www.jstor.org/dfr/results" class="uri">https://www.jstor.org/dfr/results</a> lets you filter for books, which are acutally book chapters. If you receive data from DfR on a book chapter, you always get one xml-file with the whole book, including data on all chapters. Ngram or full-text data for the same entry however is processed only from single chapters<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Thus, the output of <code>jst_get_book</code> for a single file is similar to the one from <code>jst_get_article</code>: it is one row with general data about the book. <code>jst_get_chapters</code> gives you data on all chapters, and the resulting tibble therefore might have multiple rows.</p>
 <p>The following sections showcase the different functions separately.</p>
 </div>
 <div id="application" class="section level1">
@@ -127,15 +127,17 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(jstor)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(knitr)</a></code></pre></div>
-<div id="find_article" class="section level2">
+<div id="jst_get_article" class="section level2">
 <h2 class="hasAnchor">
-<a href="#find_article" class="anchor"></a>find_article</h2>
-<p>The basic usage of the <code>find_*</code> functions is very simple. They take only one argument, the path to the file to import:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">meta_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/find_article.html">find_article</a></span>(<span class="dt">file_path =</span> <span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_with_references.xml"</span>))</a></code></pre></div>
+<a href="#jst_get_article" class="anchor"></a>jst_get_article</h2>
+<p>The basic usage of the <code>jst_get_*</code> functions is very simple. They take only one argument, the path to the file to import:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">meta_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_article.html">jst_get_article</a></span>(<span class="dt">file_path =</span> <span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_with_references.xml"</span>))</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt; Warning: `jstor_example` has been deprecated. Please use `jst_example`</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; instead.</span></a></code></pre></div>
 <p>The resulting object is a <code>tibble</code> with one row and 17 columns. The columns correspond to most of the elements documented here: <a href="http://www.jstor.org/dfr/about/technical-specifications" class="uri">http://www.jstor.org/dfr/about/technical-specifications</a>.</p>
 <p>The columns are:</p>
 <ul>
-<li>basename_id <em>(chr)</em>: The file name of the original .xml-file. Can be used for joining with other parts (authors, references, footnotes, full-texts).</li>
+<li>file_name <em>(chr)</em>: The file name of the original .xml-file. Can be used for joining with other parts (authors, references, footnotes, full-texts).</li>
 <li>journal_doi <em>(chr)</em>: A registered identifier for the journal.</li>
 <li>journal_jcode <em>(chr)</em>: A identifier for the journal like “amerjsoci” for the “American Journal of Sociology”.</li>
 <li>journal_pub_id <em>(chr)</em>: Similar to journal_jcode. Most of the time either one is present.</li>
@@ -157,7 +159,7 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">meta_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
-<th align="left">basename_id</th>
+<th align="left">file_name</th>
 <th align="left">journal_doi</th>
 <th align="left">journal_jcode</th>
 <th align="left">journal_pub_id</th>
@@ -200,15 +202,17 @@
 </tr></tbody>
 </table>
 </div>
-<div id="find_authors" class="section level2">
+<div id="jst_get_authors" class="section level2">
 <h2 class="hasAnchor">
-<a href="#find_authors" class="anchor"></a>find_authors</h2>
+<a href="#jst_get_authors" class="anchor"></a>jst_get_authors</h2>
 <p>Extracting the authors works in similar fashion:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">authors &lt;-<span class="st"> </span><span class="kw"><a href="../reference/find_authors.html">find_authors</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_with_references.xml"</span>))</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(authors)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">authors &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_authors.html">jst_get_authors</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_with_references.xml"</span>))</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; Warning: `jstor_example` has been deprecated. Please use `jst_example`</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; instead.</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(authors)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
-<th align="left">basename_id</th>
+<th align="left">file_name</th>
 <th align="left">prefix</th>
 <th align="left">given_name</th>
 <th align="left">surname</th>
@@ -229,7 +233,7 @@
 <p>Here we have the following columns:</p>
 <ul>
 <li>
-<em>basename_id</em>: The same as above, used for matching articles.</li>
+<em>file_name</em>: The same as above, used for matching articles.</li>
 <li>
 <em>prefix</em>: A prefix to the name.</li>
 <li>
@@ -245,18 +249,20 @@
 </ul>
 <p>The number of rows matches the number of authors – each author get its’ own row.</p>
 </div>
-<div id="find_references" class="section level2">
+<div id="jst_get_references" class="section level2">
 <h2 class="hasAnchor">
-<a href="#find_references" class="anchor"></a>find_references</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">references &lt;-<span class="st"> </span><span class="kw"><a href="../reference/find_references.html">find_references</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_with_references.xml"</span>))</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># we need to remove line breaks for knitr::kable() to work properly for printing</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">references &lt;-<span class="st"> </span>references <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">references =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(references, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>))</a></code></pre></div>
+<a href="#jst_get_references" class="anchor"></a>jst_get_references</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">references &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_references.html">jst_get_references</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_with_references.xml"</span>))</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; Warning: `jstor_example` has been deprecated. Please use `jst_example`</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; instead.</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co"># we need to remove line breaks for knitr::kable() to work properly for printing</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">references &lt;-<span class="st"> </span>references <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">references =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(references, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>))</a></code></pre></div>
 <p>We have two columns:</p>
 <ul>
 <li>
-<em>basename_id</em>: Identifier, can be used for matching.</li>
+<em>file_name</em>: Identifier, can be used for matching.</li>
 <li>
 <em>references</em>: The content of each entry for reference.</li>
 </ul>
@@ -266,7 +272,7 @@
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
-<th align="left">basename_id</th>
+<th align="left">file_name</th>
 <th align="left">references</th>
 </tr></thead>
 <tbody>
@@ -292,18 +298,20 @@
 </tr>
 </tbody>
 </table>
-<p>This example shows several things: <code>basename_id</code> is identical among rows, since it identifies the article and all references came from one article.</p>
+<p>This example shows several things: <code>file_name</code> is identical among rows, since it identifies the article and all references came from one article.</p>
 <p>The content of references (<code>references</code>) is in quite a raw state, quite often the result of digitising scans via OCR. Very often, the first entry in this column is something like “Bibliography” or “References”, which is simply the heading within the article. In the above example there are several headings, because the sample file doesn’t follow a typical convention (it was published in 1922).</p>
 <p>Note, that there might be other content present like endnotes, in case the article used endnotes rather than footnotes.</p>
 </div>
-<div id="find_footnotes" class="section level2">
+<div id="jst_get_footnotes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#find_footnotes" class="anchor"></a>find_footnotes</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="../reference/find_footnotes.html">find_footnotes</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_with_references.xml"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<a href="#jst_get_footnotes" class="anchor"></a>jst_get_footnotes</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="../reference/jst_get_footnotes.html">jst_get_footnotes</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_with_references.xml"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt; Warning: `jstor_example` has been deprecated. Please use `jst_example`</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt; instead.</span></a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
-<th align="left">basename_id</th>
+<th align="left">file_name</th>
 <th align="left">footnotes</th>
 </tr></thead>
 <tbody><tr class="odd">
@@ -313,14 +321,16 @@
 </table>
 <p>Very commonly, articles either have footnotes or references. The sample file used here does not have footnotes, therefore a simple <code>tibble</code> with missing footnotes is returned.</p>
 <p>I will use another file to demonstrate footnotes.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">footnotes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/find_footnotes.html">find_footnotes</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_with_footnotes.xml"</span>))</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">footnotes <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">footnotes =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(footnotes, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">footnotes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_footnotes.html">jst_get_footnotes</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_with_footnotes.xml"</span>))</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; Warning: `jstor_example` has been deprecated. Please use `jst_example`</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; instead.</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">footnotes <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">footnotes =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(footnotes, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
-<th align="left">basename_id</th>
+<th align="left">file_name</th>
 <th align="left">footnotes</th>
 </tr></thead>
 <tbody>
@@ -354,20 +364,22 @@
 </tr>
 </tbody>
 </table>
-<p>In general, you might need to combine <code><a href="../reference/find_footnotes.html">find_footnotes()</a></code> with <code><a href="../reference/find_references.html">find_references()</a></code> to get all available information on citation data.</p>
+<p>In general, you might need to combine <code><a href="../reference/jst_get_footnotes.html">jst_get_footnotes()</a></code> with <code><a href="../reference/jst_get_references.html">jst_get_references()</a></code> to get all available information on citation data.</p>
 </div>
-<div id="find_fulltext" class="section level2">
+<div id="jst_get_full_text" class="section level2">
 <h2 class="hasAnchor">
-<a href="#find_fulltext" class="anchor"></a>find_fulltext</h2>
-<p>The function to extract full texts can’t be demonstrated with proper data, since the full texts are only supplied upon special request with DfR. The function guesses the encoding of the specified file via <code><a href="http://www.rdocumentation.org/packages/readr/topics/encoding">readr::guess_encoding()</a></code>, reads the whole file and returns a <code>tibble</code> with <code>basename_id</code>, <code>full_text</code> and <code>encoding</code>.</p>
+<a href="#jst_get_full_text" class="anchor"></a>jst_get_full_text</h2>
+<p>The function to extract full texts can’t be demonstrated with proper data, since the full texts are only supplied upon special request with DfR. The function guesses the encoding of the specified file via <code><a href="http://www.rdocumentation.org/packages/readr/topics/encoding">readr::guess_encoding()</a></code>, reads the whole file and returns a <code>tibble</code> with <code>file_name</code>, <code>full_text</code> and <code>encoding</code>.</p>
 <p>I created a file that looks similar to files supplied by DfR with sample text:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">full_text &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_full_text.html">read_full_text</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_full_text.txt"</span>))</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">full_text <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">full_text =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(full_text, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">full_text &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_full_text.html">jst_get_full_text</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_full_text.txt"</span>))</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt; Warning: `jstor_example` has been deprecated. Please use `jst_example`</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt; instead.</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">full_text <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">full_text =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(full_text, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
-<th align="left">basename_id</th>
+<th align="left">file_name</th>
 <th align="left">full_text</th>
 <th align="left">encoding</th>
 </tr></thead>
@@ -387,12 +399,12 @@
 <a href="#matching-with-authors" class="anchor"></a>Matching with authors</h3>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">meta_data <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(authors) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(basename_id, article_title, pub_year, given_name, surname) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(file_name, article_title, pub_year, given_name, surname) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; Joining, by = "basename_id"</span></a></code></pre></div>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; Joining, by = "file_name"</span></a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
-<th align="left">basename_id</th>
+<th align="left">file_name</th>
 <th align="left">article_title</th>
 <th align="right">pub_year</th>
 <th align="left">given_name</th>
@@ -412,13 +424,13 @@
 <a href="#matching-with-references" class="anchor"></a>Matching with references</h3>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">meta_data <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(references) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(basename_id, article_title, volume, pub_year, references) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(file_name, article_title, volume, pub_year, references) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb11-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt; Joining, by = "basename_id"</span></a></code></pre></div>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt; Joining, by = "file_name"</span></a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
-<th align="left">basename_id</th>
+<th align="left">file_name</th>
 <th align="left">article_title</th>
 <th align="left">volume</th>
 <th align="right">pub_year</th>
@@ -468,13 +480,15 @@
 <div id="books" class="section level1">
 <h1 class="hasAnchor">
 <a href="#books" class="anchor"></a>Books</h1>
-<p>Quite recently DfR added book chapters to their stack. To import metadata about the books and chapters, jstor supplies <code>find_book</code> and <code>find_chapters</code>.</p>
-<p><code>find_book</code> is very similar to <code>find_article</code>. We obtain general information about the complete book:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="../reference/find_book.html">find_book</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_book.xml"</span>)) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<p>Quite recently DfR added book chapters to their stack. To import metadata about the books and chapters, jstor supplies <code>jst_get_book</code> and <code>jst_get_chapters</code>.</p>
+<p><code>jst_get_book</code> is very similar to <code>jst_get_article</code>. We obtain general information about the complete book:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="../reference/jst_get_book.html">jst_get_book</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_book.xml"</span>)) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">#&gt; Warning: `jstor_example` has been deprecated. Please use `jst_example`</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">#&gt; instead.</span></a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">book_id</th>
-<th align="left">basename_id</th>
+<th align="left">file_name</th>
 <th align="left">discipline</th>
 <th align="left">book_title</th>
 <th align="left">book_subtitle</th>
@@ -503,20 +517,22 @@
 <td align="left">eng</td>
 </tr></tbody>
 </table>
-<p>A single book might contain many chapters. <code>find_chapters</code> extracts all of them. Due to this, the function is a bit slower than most of jstor’s other functions.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">chapters &lt;-<span class="st"> </span><span class="kw"><a href="../reference/find_chapters.html">find_chapters</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_book.xml"</span>))</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="kw">str</span>(chapters)</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="co">#&gt; Classes 'tbl_df', 'tbl' and 'data.frame':    36 obs. of  9 variables:</span></a>
-<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="co">#&gt;  $ book_id        : chr  "j.ctt24hdz7" "j.ctt24hdz7" "j.ctt24hdz7" "j.ctt24hdz7" ...</span></a>
-<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="co">#&gt;  $ basename_id    : chr  "sample_book" "sample_book" "sample_book" "sample_book" ...</span></a>
-<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="co">#&gt;  $ part_id        : chr  "j.ctt24hdz7.1" "j.ctt24hdz7.2" "j.ctt24hdz7.3" "j.ctt24hdz7.4" ...</span></a>
-<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co">#&gt;  $ part_label     : chr  NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co">#&gt;  $ part_title     : chr  "Front Matter" "Table of Contents" "Acronyms and abbreviations" "Authors’ biographies" ...</span></a>
-<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">#&gt;  $ part_subtitle  : chr  NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb13-11" data-line-number="11"><span class="co">#&gt;  $ authors        : chr  NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb13-12" data-line-number="12"><span class="co">#&gt;  $ abstract       : chr  NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb13-13" data-line-number="13"><span class="co">#&gt;  $ part_first_page: chr  "i" "v" "vii" "xi" ...</span></a></code></pre></div>
+<p>A single book might contain many chapters. <code>jst_get_chapters</code> extracts all of them. Due to this, the function is a bit slower than most of jstor’s other functions.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">chapters &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_chapters.html">jst_get_chapters</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_book.xml"</span>))</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co">#&gt; Warning: `jstor_example` has been deprecated. Please use `jst_example`</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="co">#&gt; instead.</span></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="kw">str</span>(chapters)</a>
+<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="co">#&gt; Classes 'tbl_df', 'tbl' and 'data.frame':    36 obs. of  9 variables:</span></a>
+<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="co">#&gt;  $ book_id        : chr  "j.ctt24hdz7" "j.ctt24hdz7" "j.ctt24hdz7" "j.ctt24hdz7" ...</span></a>
+<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co">#&gt;  $ file_name      : chr  "sample_book" "sample_book" "sample_book" "sample_book" ...</span></a>
+<a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co">#&gt;  $ part_id        : chr  "j.ctt24hdz7.1" "j.ctt24hdz7.2" "j.ctt24hdz7.3" "j.ctt24hdz7.4" ...</span></a>
+<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">#&gt;  $ part_label     : chr  NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb13-11" data-line-number="11"><span class="co">#&gt;  $ part_title     : chr  "Front Matter" "Table of Contents" "Acronyms and abbreviations" "Authors’ biographies" ...</span></a>
+<a class="sourceLine" id="cb13-12" data-line-number="12"><span class="co">#&gt;  $ part_subtitle  : chr  NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb13-13" data-line-number="13"><span class="co">#&gt;  $ authors        : chr  NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb13-14" data-line-number="14"><span class="co">#&gt;  $ abstract       : chr  NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co">#&gt;  $ part_first_page: chr  "i" "v" "vii" "xi" ...</span></a></code></pre></div>
 <p>Without the abstracts (they are rather long) the first 10 chapters look like this:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">chapters <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>abstract) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -525,7 +541,7 @@
 <table class="table">
 <thead><tr class="header">
 <th align="left">book_id</th>
-<th align="left">basename_id</th>
+<th align="left">file_name</th>
 <th align="left">part_id</th>
 <th align="left">part_label</th>
 <th align="left">part_title</th>
@@ -637,7 +653,9 @@
 </tbody>
 </table>
 <p>Since extracting all authors for all chapters needs considerably more time, by default authors are not extracted. You can import them like so:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">author_chap &lt;-<span class="st"> </span><span class="kw"><a href="../reference/find_chapters.html">find_chapters</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_book.xml"</span>), <span class="dt">authors =</span> <span class="ot">TRUE</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">author_chap &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_chapters.html">jst_get_chapters</a></span>(<span class="kw"><a href="../reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_book.xml"</span>), <span class="dt">authors =</span> <span class="ot">TRUE</span>) </a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt; Warning: `jstor_example` has been deprecated. Please use `jst_example`</span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#&gt; instead.</span></a></code></pre></div>
 <p>The authors are supplied in a list column:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">class</span>(author_chap<span class="op">$</span>authors)</a>
 <a class="sourceLine" id="cb16-2" data-line-number="2"><span class="co">#&gt; [1] "list"</span></a></code></pre></div>
@@ -724,11 +742,11 @@
 <li><a href="#general-concept">General Concept</a></li>
       <li>
 <a href="#application">Application</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#find_article">find_article</a></li>
-      <li><a href="#find_authors">find_authors</a></li>
-      <li><a href="#find_references">find_references</a></li>
-      <li><a href="#find_footnotes">find_footnotes</a></li>
-      <li><a href="#find_fulltext">find_fulltext</a></li>
+<li><a href="#jst_get_article">jst_get_article</a></li>
+      <li><a href="#jst_get_authors">jst_get_authors</a></li>
+      <li><a href="#jst_get_references">jst_get_references</a></li>
+      <li><a href="#jst_get_footnotes">jst_get_footnotes</a></li>
+      <li><a href="#jst_get_full_text">jst_get_full_text</a></li>
       <li><a href="#combining-results">Combining results</a></li>
       </ul>
 </li>

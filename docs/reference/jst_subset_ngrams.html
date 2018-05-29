@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract meta information for articles — find_article • jstor</title>
+<title>Define a subset of ngrams — jst_subset_ngrams • jstor</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,11 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Extract meta information for articles — find_article" />
+<meta property="og:title" content="Define a subset of ngrams — jst_subset_ngrams" />
 
-<meta property="og:description" content="find_article() extracts meta-data from JSTOR-XML files for journal
-articles." />
+<meta property="og:description" content="This function helps in defining a subset of ngram files which should be
+imported, since importing all ngrams at once can be very expensive (in
+terms of cpu and memory)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -109,73 +110,68 @@ articles." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract meta information for articles</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tklebel/jstor/blob/master/R/deprecated.R'><code>R/deprecated.R</code></a></small>
-    <div class="hidden name"><code>find_article.Rd</code></div>
+    <h1>Define a subset of ngrams</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tklebel/jstor/blob/master/R/ngram.R'><code>R/ngram.R</code></a></small>
+    <div class="hidden name"><code>jst_subset_ngrams.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>find_article()</code> extracts meta-data from JSTOR-XML files for journal
-articles.</p>
+    <p>This function helps in defining a subset of ngram files which should be
+imported, since importing all ngrams at once can be very expensive (in
+terms of cpu and memory).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>find_article</span>(<span class='no'>file_path</span>)</pre>
+    <pre class="usage"><span class='fu'>jst_subset_ngrams</span>(<span class='no'>zip_archives</span>, <span class='no'>ngram_type</span>, <span class='no'>selection</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>file_name</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>file_path</th>
-      <td><p>A <code>.xml</code>-file for a journal-article.</p></td>
+      <th>zip_archives</th>
+      <td><p>A character vector of one or multiple zip-files.</p></td>
+    </tr>
+    <tr>
+      <th>ngram_type</th>
+      <td><p>One of <code>"ngram1"</code>, <code>"ngram2"</code> or <code>"ngram3"</code></p></td>
+    </tr>
+    <tr>
+      <th>selection</th>
+      <td><p>A data.frame with the articles/books which are to be
+selected.</p></td>
+    </tr>
+    <tr>
+      <th>by</th>
+      <td><p>A column name for matching.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>tibble</code> containing the extracted meta-data with the following
-columns:</p><ul>
-<li><p>basename_id <em>(chr)</em>: The filename of the original .xml-file. Can be used
-for joining with other parts (authors, references, footnotes, full-texts).</p></li>
-<li><p>journal_doi <em>(chr)</em>: A registered identifier for the journal.</p></li>
-<li><p>journal_jcode <em>(chr)</em>: A identifier for the journal like "amerjsoci" for
-the "American Journal of Sociology".</p></li>
-<li><p>journal_pub_id <em>(chr)</em>: Similar to journal_jcode. Most of the time either
-one is present.</p></li>
-<li><p>journal_title <em>(chr)</em>: The title of the journal.</p></li>
-<li><p>article_doi <em>(chr)</em>: A registered unique identifier for the article.</p></li>
-<li><p>article_jcode <em>(chr)</em>: A unique identifier for the article (not a DOI).</p></li>
-<li><p>article_pub_id <em>(chr)</em>: Infrequent, either part of the DOI or the
-article_jcode.</p></li>
-<li><p>article_type <em>(chr)</em>: The type of article (research-article, book-review,
-etc.).</p></li>
-<li><p>article_title <em>(chr)</em>: The title of the article.</p></li>
-<li><p>volume <em>(chr)</em>: The volume the article was published in.</p></li>
-<li><p>issue <em>(chr)</em>: The issue the article was published in.</p></li>
-<li><p>language <em>(chr)</em>: The language of the article.</p></li>
-<li><p>pub_day <em>(chr)</em>: Publication day, if specified.</p></li>
-<li><p>pub_month <em>(chr)</em>: Publication month, if specified.</p></li>
-<li><p>pub_year <em>(int)</em>: Year of publication.</p></li>
-<li><p>first_page <em>(int)</em>: Page number for the first page of the article.</p></li>
-<li><p>last_page <em>(int)</em>: Page number for the last page of the article.</p></li>
-<li><p>page_range <em>(chr)</em>: The range of pages for the article.</p></li>
-</ul>
-
-<p>A note about publication dates: always the first entry is being extracted,
-which should correspond to the oldest date, in case there is more than one
-date.</p>
+    <p>A list of zip-locations which can be read via <code><a href='jst_get_ngram.html'>jst_get_ngram()</a></code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>find_article</span>(<span class='fu'><a href='jstor_example.html'>jstor_example</a></span>(<span class='st'>"sample_with_references.xml"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: `find_article` has been deprecated. Please use `jst_get_article` instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `jstor_example` has been deprecated. Please use `jst_example` instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `get_basename` has been deprecated. Please use `jst_get_file_name` instead.</span></div><div class='output co'>#&gt; # A tibble: 1 x 19
-#&gt;   basename_id    journal_doi journal_jcode  journal_pub_id journal_title       
-#&gt;   &lt;chr&gt;          &lt;chr&gt;       &lt;chr&gt;          &lt;chr&gt;          &lt;chr&gt;               
-#&gt; 1 sample_with_r… &lt;NA&gt;        tranamermicrs… &lt;NA&gt;           Transactions of the…
-#&gt; # ... with 14 more variables: article_doi &lt;chr&gt;, article_pub_id &lt;chr&gt;,
-#&gt; #   article_jcode &lt;chr&gt;, article_type &lt;chr&gt;, article_title &lt;chr&gt;, volume &lt;chr&gt;,
-#&gt; #   issue &lt;chr&gt;, language &lt;chr&gt;, pub_day &lt;chr&gt;, pub_month &lt;chr&gt;,
-#&gt; #   pub_year &lt;int&gt;, first_page &lt;chr&gt;, last_page &lt;chr&gt;, page_range &lt;chr&gt;</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># create sample output</span>
+<span class='no'>tmp</span> <span class='kw'>&lt;-</span> <span class='fu'>tempdir</span>()
+<span class='fu'><a href='jst_import.html'>jst_import_zip</a></span>(<span class='fu'><a href='jst_example.html'>jst_example</a></span>(<span class='st'>"pseudo_dfr.zip"</span>),
+               <span class='kw'>import_spec</span> <span class='kw'>=</span> <span class='fu'><a href='jst_define_import.html'>jst_define_import</a></span>(<span class='kw'>book</span> <span class='kw'>=</span> <span class='no'>jst_get_book</span>),
+               <span class='kw'>out_file</span> <span class='kw'>=</span> <span class='st'>"test"</span>, <span class='kw'>out_path</span> <span class='kw'>=</span> <span class='no'>tmp</span>)</div><div class='output co'>#&gt; <span class='message'>Processing files for book_chapter with functions jst_get_book</span></div><div class='output co'>#&gt; <span class='message'>Processing chunk 1/1</span></div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</div><div class='input'>
+<span class='co'># re-import as our selection for which we would like to import ngrams</span>
+<span class='no'>selection</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='jst_re_import.html'>jst_re_import</a></span>(<span class='fu'>paste0</span>(<span class='no'>tmp</span>,
+                                  <span class='st'>"/test_book_chapter_jst_get_book-1.csv"</span>))
+
+<span class='co'># get location of file</span>
+<span class='no'>zip_loc</span> <span class='kw'>&lt;-</span> <span class='fu'>jst_subset_ngrams</span>(<span class='fu'><a href='jst_example.html'>jst_example</a></span>(<span class='st'>"pseudo_dfr.zip"</span>), <span class='st'>"ngram1"</span>,
+                             <span class='no'>selection</span>)
+
+<span class='co'># import ngram</span>
+<span class='fu'><a href='jst_get_ngram.html'>jst_get_ngram</a></span>(<span class='no'>zip_loc</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='output co'>#&gt; # A tibble: 2 x 3
+#&gt;   file_name                  ngram        n
+#&gt;   &lt;chr&gt;                      &lt;chr&gt;    &lt;int&gt;
+#&gt; 1 book-chapter-standard_book Common     400
+#&gt; 2 book-chapter-standard_book Uncommon     5</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

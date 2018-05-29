@@ -115,7 +115,7 @@
 <div id="major-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>Major changes</h2>
-<p>There is a new set of functions which lets you directly import files from .zip-archives: <code><a href="../reference/jstor_import.html">jst_import_zip()</a></code> and <code><a href="../reference/jst_define_import.html">jst_define_import()</a></code>.</p>
+<p>There is a new set of functions which lets you directly import files from .zip-archives: <code><a href="../reference/jst_import.html">jst_import_zip()</a></code> and <code><a href="../reference/jst_define_import.html">jst_define_import()</a></code>.</p>
 <p>In the following example, we have a zip-archive from DfR and want to import metadata on books and articles. For all articles we want to apply <code><a href="../reference/find_article.html">find_article()</a></code> and <code><a href="../reference/find_authors.html">find_authors()</a></code>, for books only <code><a href="../reference/find_book.html">find_book()</a></code>, and we want to read unigrams (ngram1).</p>
 <p>First we specify what we want, and then we apply it to our zip-archive.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># specify definition</span></a>
@@ -124,7 +124,7 @@
 <a class="sourceLine" id="cb1-4" data-line-number="4">                                 <span class="dt">ngram1 =</span> jst_read_ngram)</a>
 <a class="sourceLine" id="cb1-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># apply definition to archive</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw"><a href="../reference/jstor_import.html">jst_import_zip</a></span>(<span class="st">"zip_archive.zip"</span>,</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw"><a href="../reference/jst_import.html">jst_import_zip</a></span>(<span class="st">"zip_archive.zip"</span>,</a>
 <a class="sourceLine" id="cb1-8" data-line-number="8">               <span class="dt">import_spec =</span> import_spec,</a>
 <a class="sourceLine" id="cb1-9" data-line-number="9">               <span class="dt">out_file =</span> <span class="st">"out_path"</span>)</a></code></pre></div>
 <p>If the archive contains also research reports, pamphlets or other ngrams, they will not be imported. We could however change our specification, if we wanted to import all kinds of ngrams (given that we originally requested them from DfR):</p>
@@ -140,6 +140,9 @@
 <h2 class="hasAnchor">
 <a href="#other-changes" class="anchor"></a>Other changes</h2>
 <ul>
+<li>A new function <code>jst_subset_ngrams</code> lets you create a subset of ngram files within a zip-file which you can import with <code>jst_get_ngram</code>.</li>
+<li>The unique identifier for matching across files has been renamed to <code>file_name</code>, and the corresponding helper to get this file name from <code>get_basename</code> to <code>jst_get_file_name</code>.</li>
+<li>Functions have been renamed: All <code>find_*</code> functions are now called <code>jst_get_*</code>.</li>
 <li>New function <code>jst_combine_outputs</code> applies <code>jst_re_import</code> to a whole directory and lets you combine all related files in one go. It uses the file structure that <code>jst_import</code> and <code>jst_import_zip</code> provide as a heuristic: a filename with a dash and one or multiple digits at its end (<code>filename-1.csv</code>). All files with identical names (disregarding dash and digits) are combined into one file.</li>
 <li>New function <code>jst_re_import</code> lets you re_import a <code>.csv</code> file that <code>jstor_import</code> or <code>jst_import_zip</code> had exported. It tries to guess the type of content based on the column names or, if column names are not available, from the number of columns, raising a warning if guessing fails and reverting to a generic import.</li>
 <li>New function <code>jst_get_journal_overview</code> supplies a tibble with contextual information about the journals in JSTOR.</li>

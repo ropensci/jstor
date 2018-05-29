@@ -87,17 +87,18 @@
 <a href="#jstor" class="anchor"></a>jstor</h1></div>
 
 <p>The tool <a href="http://www.jstor.org/dfr/">Data for Research (DfR)</a> by JSTOR is a valuable source for citation analysis and text mining. <code>jstor</code> provides functions and suggests workflows for importing datasets from DfR. It was developed to deal with very large datasets which require an agreement, but can be used with smaller ones as well.</p>
-<p>The most important set of functions is a group of <code>find_*</code> functions:</p>
+<p>The most important set of functions is a group of <code>jst_get*</code> functions:</p>
 <ul>
-<li><code>find_article</code></li>
-<li><code>find_authors</code></li>
-<li><code>find_references</code></li>
-<li><code>find_footnotes</code></li>
-<li><code>find_fulltext</code></li>
-<li><code>find_book</code></li>
-<li><code>find_chapters</code></li>
+<li><code>jst_get_article</code></li>
+<li><code>jst_get_authors</code></li>
+<li><code>jst_get_references</code></li>
+<li><code>jst_get_footnotes</code></li>
+<li><code>jst_get_book</code></li>
+<li><code>jst_get_chapters</code></li>
+<li><code>jst_get_full_text</code></li>
+<li><code>jst_get_ngram</code></li>
 </ul>
-<p>All functions which are concerned with meta data (therefore excluding <code>find_fulltext</code>) operate along the same lines:</p>
+<p>All functions which are concerned with meta data (therefore excluding <code>jst_get_full_text</code> and <code>jst_get_ngram</code>) operate along the same lines:</p>
 <ol style="list-style-type: decimal">
 <li>The file is read with <code><a href="http://www.rdocumentation.org/packages/xml2/topics/read_xml">xml2::read_xml()</a></code>.</li>
 <li>Content of the file is extracted via XPATH or CSS-expressions.</li>
@@ -114,12 +115,13 @@
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
 <p>In order to use <code>jstor</code>, you first need to load it:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(jstor)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(jstor)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">library</span>(magrittr)</a></code></pre></div>
 <p>The basic usage is simple: supply one of the <code>find_*</code>-functions with a path and it will return a tibble with the extracted information.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="reference/find_article.html">find_article</a></span>(<span class="kw"><a href="reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_with_references.xml"</span>)) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="reference/jst_get_article.html">jst_get_article</a></span>(<span class="kw"><a href="reference/jst_example.html">jst_example</a></span>(<span class="st">"sample_with_references.xml"</span>)) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
-<th align="left">basename_id</th>
+<th align="left">file_name</th>
 <th align="left">journal_doi</th>
 <th align="left">journal_jcode</th>
 <th align="left">journal_pub_id</th>
@@ -162,10 +164,10 @@
 </tr></tbody>
 </table>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="reference/find_authors.html">find_authors</a></span>(<span class="kw"><a href="reference/jstor_example.html">jstor_example</a></span>(<span class="st">"sample_with_references.xml"</span>)) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="reference/jst_get_authors.html">jst_get_authors</a></span>(<span class="kw"><a href="reference/jst_example.html">jst_example</a></span>(<span class="st">"sample_with_references.xml"</span>)) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
-<th align="left">basename_id</th>
+<th align="left">file_name</th>
 <th align="left">prefix</th>
 <th align="left">given_name</th>
 <th align="left">surname</th>
@@ -534,7 +536,6 @@
 <li><a href="https://codecov.io/github/tklebel/jstor?branch=master"><img src="https://codecov.io/gh/tklebel/jstor/branch/master/graph/badge.svg" alt="Coverage status"></a></li>
 <li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a></li>
 <li><a href="https://cran.r-project.org/package=jstor"><img src="http://www.r-pkg.org/badges/version/jstor" alt="CRAN status"></a></li>
-<li><a href="https://CRAN.R-project.org/package=jstor"><img src="http://cranlogs.r-pkg.org/badges/jstor" alt="CRAN_Download_Badge"></a></li>
 <li><a href="https://github.com/ropensci/onboarding/issues/189"><img src="https://badges.ropensci.org/189_status.svg" alt="rOpenSci badge"></a></li>
 <li><a href="https://doi.org/10.5281/zenodo.1169862"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.1169862.svg" alt="DOI"></a></li>
 </ul>

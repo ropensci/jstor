@@ -109,7 +109,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Extract all references</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tklebel/jstor/blob/master/R/references.R'><code>R/references.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/tklebel/jstor/blob/master/R/deprecated.R'><code>R/deprecated.R</code></a></small>
     <div class="hidden name"><code>find_references.Rd</code></div>
     </div>
 
@@ -155,8 +155,8 @@ with many references slow the process down.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>find_references</span>(<span class='fu'><a href='jstor_example.html'>jstor_example</a></span>(<span class='st'>"sample_with_references.xml"</span>))</div><div class='output co'>#&gt; # A tibble: 29 x 2
-#&gt;    basename_id            references                                           
+    <pre class="examples"><div class='input'><span class='fu'>find_references</span>(<span class='fu'><a href='jstor_example.html'>jstor_example</a></span>(<span class='st'>"sample_with_references.xml"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: `find_references` has been deprecated. Please use `jst_get_references` instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `jstor_example` has been deprecated. Please use `jst_example` instead.</span></div><div class='output co'>#&gt; # A tibble: 29 x 2
+#&gt;    file_name              references                                           
 #&gt;    &lt;chr&gt;                  &lt;chr&gt;                                                
 #&gt;  1 sample_with_references Bibliography: Entamoeba ranarumn                     
 #&gt;  2 sample_with_references "DOBELL, C.C.\n1909 Researches on the intestinal Pro…

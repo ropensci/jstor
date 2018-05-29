@@ -80,7 +80,7 @@
       <h1>Automating File Import</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-05-17</h4>
+            <h4 class="date">2018-05-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/tklebel/jstor/blob/master/vignettes/automating_file_import.Rmd"><code>vignettes/automating_file_import.Rmd</code></a></small>
       <div class="hidden name"><code>automating_file_import.Rmd</code></div>
@@ -137,19 +137,19 @@
 <div id="batch-import" class="section level1">
 <h1 class="hasAnchor">
 <a href="#batch-import" class="anchor"></a>Batch import</h1>
-<p>Once the file list is generated, we can apply any of the <code>find_*</code>-functions to the list. A good and simple way for small to moderate amounts of files is to use <code>map_df</code> from purrr:</p>
+<p>Once the file list is generated, we can apply any of the <code>jst_get_*</code>-functions to the list. A good and simple way for small to moderate amounts of files is to use <code>map_df</code> from purrr:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(jstor)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">library</span>(purrr)</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw">library</span>(stringr)</a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb5-5" data-line-number="5">result &lt;-<span class="st"> </span>file_names_listed <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb5-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/keep">keep</a></span>(str_detect, <span class="st">"with"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># only operate on articles, remove book sample</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map_df</a></span>(find_article)</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map_df</a></span>(jst_get_article)</a>
 <a class="sourceLine" id="cb5-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb5-9" data-line-number="9">result <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
-<th align="left">basename_id</th>
+<th align="left">file_name</th>
 <th align="left">journal_doi</th>
 <th align="left">journal_jcode</th>
 <th align="left">journal_pub_id</th>
@@ -215,7 +215,7 @@
 </tbody>
 </table>
 <p>This works well if 1) there are no errors and 2) if there is only a moderate size of files. If you try to import many files, you could either run into problems regarding RAM, or it would take a long time and would benefit from executing the process in parallel.</p>
-<p>The function <code><a href="../reference/jstor_import.html">jstor_import()</a></code> takes care of errors and uses <code><a href="http://www.rdocumentation.org/packages/foreach/topics/foreach">foreach::foreach()</a></code> and <code><a href="http://www.rdocumentation.org/packages/snow/topics/snow-startstop">snow::makeCluster()</a></code> to speed up the process.</p>
+<p>The function <code><a href="../reference/jst_import.html">jst_import()</a></code> takes care of errors and uses <code><a href="http://www.rdocumentation.org/packages/foreach/topics/foreach">foreach::foreach()</a></code> and <code><a href="http://www.rdocumentation.org/packages/snow/topics/snow-startstop">snow::makeCluster()</a></code> to speed up the process.</p>
 <p>The whole approach about importing many files is implemented like this:</p>
 <ul>
 <li>list all files which are to be converted</li>
@@ -228,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p><code><a href="../reference/jstor_import.html">jstor_import()</a></code> takes up to seven arguments:</p>
+<p><code><a href="../reference/jst_import.html">jst_import()</a></code> takes up to seven arguments:</p>
 <ul>
 <li>
 <em>in_paths</em>: this should be a character vector of all <code>xml-</code>files you want to import</li>
@@ -237,7 +237,7 @@
 <li>
 <em>out_path</em>: in case you want to export the files to a specific directory, specify it here.</li>
 <li>
-<em>.f</em>: the function to use (one of <code>find_article</code>, <code>find_authors</code>, <code>find_references</code>, or <code>find_footnotes</code>)</li>
+<em>.f</em>: the function to use (one of <code>jst_get_article</code>, <code>jst_get_authors</code>, <code>jst_get_references</code>, <code>jst_get_footnotes</code>, <code>jst_get_book</code> or <code>jst_get_chapters</code>).</li>
 <li>
 <em>files_per_batch</em>: how many files should be converted per batch? For my system, 20,000 files per batch worked well.</li>
 <li>
@@ -246,9 +246,9 @@
 <em>show_progress</em>: if <code>TRUE</code> and run from an interactive session, a progress bar will be displayed for each batch.</li>
 </ul>
 <p>You can specify all parameters like this:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../reference/jstor_import.html">jstor_import</a></span>(<span class="dt">in_paths =</span> vector_of_all_my_files, <span class="dt">out_file =</span> <span class="st">"metadata"</span>,</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">             <span class="dt">out_path =</span> <span class="st">"path/to/out/dir"</span>, <span class="dt">.f =</span> find_article,</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">             <span class="dt">files_per_batch =</span> <span class="dv">20000</span>, <span class="dt">cores =</span> <span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../reference/jst_import.html">jst_import</a></span>(<span class="dt">in_paths =</span> vector_of_all_my_files, <span class="dt">out_file =</span> <span class="st">"metadata"</span>,</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">           <span class="dt">out_path =</span> <span class="st">"path/to/out/dir"</span>, <span class="dt">.f =</span> jst_get_article,</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">           <span class="dt">files_per_batch =</span> <span class="dv">20000</span>, <span class="dt">cores =</span> <span class="dv">4</span>)</a></code></pre></div>
 <p>Suppose you had 100,000 files to convert, and no errors happened, then you should have in your <code>"path/to/out/dir"</code> the following five files:</p>
 <pre><code>#&gt; [1] "metadata-1.csv" "metadata-2.csv" "metadata-3.csv" "metadata-4.csv"
 #&gt; [5] "metadata-5.csv"</code></pre>
