@@ -25,4 +25,4 @@ NULL
 utils::globalVariables(c("references", "footnotes", "encoding", "authors", "i",
                          "Name", "Length", "Date", "chunk_number", ".",
                          "fun_names", "meta_type", "type", "full_coverage",
-                         "title", "journal_id"))
+                         "title", "journal_id", "file_name", "id", "zip_loc"))

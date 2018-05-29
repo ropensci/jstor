@@ -41,6 +41,8 @@ Before importing all files from a zip-archive, you can get a quick overview with
 
 
 ## Other changes
+* A new function `jst_subset_ngrams` lets you create a subset of ngram files
+within a zip-file which you can import with `jst_get_ngram`.
 * The unique identifier for matching across files has been renamed to 
 `file_name`, and the corresponding helper to get this file name from
 `get_basename` to `jst_get_file_name`.

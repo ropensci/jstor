@@ -48,6 +48,7 @@ reference:
   contents:
   - '`jst_get_full_text`'
   - '`jst_get_ngram`'
+  - '`jst_subset_ngrams`'
   
 - title: Helper functions
   contents:

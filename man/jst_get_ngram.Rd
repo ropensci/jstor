@@ -7,7 +7,7 @@
 jst_get_ngram(file)
 }
 \arguments{
-\item{file}{A path to a file.}
+\item{file}{A path to a file or a zip location from \code{\link[=jst_subset_ngrams]{jst_subset_ngrams()}}.}
 }
 \value{
 A \link[tibble:tibble]{tibble::tibble} with two columns:
