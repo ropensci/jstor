@@ -368,7 +368,6 @@ When analyzing bigrams, we might want to look at the relationships between
 common terms. For this we can leverage the power of
 [igraph](http://igraph.org/r/) and
 [ggraph](https://cran.r-project.org/web/packages/ggraph/index.html).
-(#6)
 
 ```{r, message=FALSE}
 library(igraph)
