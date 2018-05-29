@@ -99,21 +99,24 @@
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">library</span>(jstor)</a>
 <a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">library</span>(tidyverse)</a>
 <a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">library</span>(visdat)</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co"># set a lighter theme for plots</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="kw">theme_set</span>(<span class="kw">theme_bw</span>())</a></code></pre></div>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw">library</span>(future)</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co"># set a lighter theme for plots</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw">theme_set</span>(<span class="kw">theme_bw</span>())</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co"># import files in parallel</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="kw"><a href="http://www.rdocumentation.org/packages/future/topics/plan">plan</a></span>(multiprocess)</a></code></pre></div>
 <p>With the latest version of <code>jstor</code> we can now directly import files from a zip archive. We only need to specify, where the zip archive is located, which parts we want to extract, and where the resulting files should be saved.</p>
 <p>Although we could import all ngrams at this point, this would be extremely inefficient. It is thus best first to decide, which articles we want to analyze, and import the corresponding ngram-files afterwards.</p>
 <p>The following code assumes that you follow a workflow organised around projects within RStudio (refer to <a href="http://r4ds.had.co.nz/workflow-projects.html" class="uri">http://r4ds.had.co.nz/workflow-projects.html</a> for further information).</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">import_spec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_define_import.html">jst_define_import</a></span>(<span class="dt">article =</span> jst_get_article)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="../reference/jst_import.html">jst_import_zip</a></span>(<span class="st">"part1.zip"</span>, <span class="dt">import_spec =</span> import_spec, <span class="dt">out_file =</span> <span class="st">"part1"</span>,</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">               <span class="dt">cores =</span> <span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw"><a href="../reference/jst_import.html">jst_import_zip</a></span>(<span class="st">"part2.zip"</span>, <span class="dt">import_spec =</span> import_spec, <span class="dt">out_file =</span> <span class="st">"part2"</span>,</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">               <span class="dt">cores =</span> <span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; Processing files for journal_article with functions jst_get_article</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; Processing chunk 1/1</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt;   |===================================================================| 100%</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="../reference/jst_import.html">jst_import_zip</a></span>(<span class="st">"part1.zip"</span>, <span class="dt">import_spec =</span> import_spec, <span class="dt">out_file =</span> <span class="st">"part1"</span>)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw"><a href="../reference/jst_import.html">jst_import_zip</a></span>(<span class="st">"part2.zip"</span>, <span class="dt">import_spec =</span> import_spec, <span class="dt">out_file =</span> <span class="st">"part2"</span>)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt; Processing files for journal_article with functions jst_get_article</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; Processing chunk 1/1</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt;  Progress: ───────────────────────────────────────────────────────────── 100%</span></a></code></pre></div>
 <p>Since <code>jst_import_zip</code> writes the results to disk, we need to read the metadata from the newly created file. This is made easy by <code>jst_re_import</code> which ensures, that the data are read with the right column types.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">imported_metadata &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"part1_journal_article_jst_get_article-1.csv"</span>,</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">                       <span class="st">"part2_journal_article_jst_get_article-1.csv"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -311,15 +314,11 @@
 ## 
 ## attr(,"class")
 ## [1] "jstor_zip"</code></pre>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="co"># speed up import in parallel</span></a>
-<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="kw">library</span>(furrr)</a>
-<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="kw">plan</span>(multiprocess)</a>
-<a class="sourceLine" id="cb24-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb24-5" data-line-number="5">ngram_selection &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_subset_ngrams.html">jst_subset_ngrams</a></span>(<span class="kw">c</span>(<span class="st">"part1.zip"</span>, <span class="st">"part2.zip"</span>), <span class="st">"ngram2"</span>,</a>
-<a class="sourceLine" id="cb24-6" data-line-number="6">                                    flagship_journals)</a>
-<a class="sourceLine" id="cb24-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb24-8" data-line-number="8">imported_bigrams &lt;-<span class="st"> </span>ngram_selection <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb24-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/furrr/topics/future_map">future_map_dfr</a></span>(jst_get_ngram)</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">ngram_selection &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_subset_ngrams.html">jst_subset_ngrams</a></span>(<span class="kw">c</span>(<span class="st">"part1.zip"</span>, <span class="st">"part2.zip"</span>), <span class="st">"ngram2"</span>,</a>
+<a class="sourceLine" id="cb24-2" data-line-number="2">                                    flagship_journals)</a>
+<a class="sourceLine" id="cb24-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb24-4" data-line-number="4">imported_bigrams &lt;-<span class="st"> </span>ngram_selection <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-5" data-line-number="5"><span class="st">  </span>furrr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/furrr/topics/future_map">future_map_dfr</a></span>(jst_get_ngram)</a></code></pre></div>
 <p>From the 872 articles in our two flagship journals we now have 6,729,813 bigrams. The bigrams are calculated by JSTOR for each article independently. In order to reduce the sample to the most common bigrams, we have two choices: either to include only terms which occur <em>within each</em> article a given amount of times, or to include terms which occur <em>within all</em> articles a given amount of times. By only including terms which occur more than 5 times in each article, we can drastically reduce the number of terms. However, we might miss some important ones: there might be terms which do not occur repeatedly within articles, but are present in all of them.</p>
 <p>For demonstration purposes we are a bit restrictive and include only those terms, which occur at least three times per article.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">top_bigrams &lt;-<span class="st"> </span>imported_bigrams <span class="op">%&gt;%</span></a>
@@ -379,9 +378,9 @@
 <a class="sourceLine" id="cb31-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/graph_from_data_frame">graph_from_data_frame</a></span>()</a>
 <a class="sourceLine" id="cb31-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb31-5" data-line-number="5">bigram_graph</a></code></pre></div>
-<pre><code>## IGRAPH c1029b0 DN-- 170 161 -- 
+<pre><code>## IGRAPH 140b147 DN-- 170 161 -- 
 ## + attr: name (v/c), n (e/n)
-## + edges from c1029b0 (vertex names):
+## + edges from 140b147 (vertex names):
 ##  [1] labor                 -&gt;market   9                     -&gt;7       
 ##  [3] 7                     -&gt;6        10                    -&gt;9       
 ##  [5] amsmath               -&gt;amsxtra  begin                 -&gt;document
@@ -407,7 +406,7 @@
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">plot_bigrams</span>(bigram_graph)</a></code></pre></div>
 <p><img src="analysing-n-grams_files/figure-html/unnamed-chunk-26-1.png" width="1152"> Very obvious is a group of nodes which are not relevant to the topic of inequality. They come from LaTeX documents and somehow made their way into the original dataset. However, since they are more common than most of the other terms, they are quite easy to remove. We can look at the nodes/vertices of our graph with <code><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V(bigram_graph)</a></code>.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(bigram_graph)</a></code></pre></div>
-<pre><code>## + 170/170 vertices, named, from c1029b0:
+<pre><code>## + 170/170 vertices, named, from 140b147:
 ##   [1] labor                  9                      7                     
 ##   [4] 10                     amsmath                begin                 
 ##   [7] declaremathsizes       declaretextfontcommand documentclass         
@@ -422,9 +421,9 @@
 <p>The first node, “labor”, is relevant to us, but all other nodes from 2 to at least 40 are clearly irrelevant. We can remove them by simple subtraction:</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">bigram_graph_clean &lt;-<span class="st"> </span>bigram_graph <span class="op">-</span><span class="st"> </span><span class="dv">2</span><span class="op">:</span><span class="dv">40</span></a>
 <a class="sourceLine" id="cb37-2" data-line-number="2">bigram_graph_clean</a></code></pre></div>
-<pre><code>## IGRAPH 6538af5 DN-- 131 105 -- 
+<pre><code>## IGRAPH 29e556f DN-- 131 105 -- 
 ## + attr: name (v/c), n (e/n)
-## + edges from 6538af5 (vertex names):
+## + edges from 29e556f (vertex names):
 ##  [1] labor     -&gt;market     labor     -&gt;force      0         -&gt;0         
 ##  [4] table     -&gt;2          1         -&gt;1          income    -&gt;inequality
 ##  [7] black     -&gt;white      table     -&gt;1          table     -&gt;3         

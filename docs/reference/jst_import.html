@@ -124,12 +124,11 @@ the output in batches of <code>.csv</code>-files to disk.</p>
     </div>
 
     <pre class="usage"><span class='fu'>jst_import</span>(<span class='no'>in_paths</span>, <span class='no'>out_file</span>, <span class='kw'>out_path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>.f</span>, <span class='kw'>col_names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>n_batches</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>files_per_batch</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"mc.cores"</span>,
-  <span class='fl'>1L</span>), <span class='kw'>show_progress</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='kw'>n_batches</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>files_per_batch</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>show_progress</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>jst_import_zip</span>(<span class='no'>zip_archive</span>, <span class='no'>import_spec</span>, <span class='no'>out_file</span>, <span class='kw'>out_path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>col_names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>n_batches</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>files_per_batch</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"mc.cores"</span>, <span class='fl'>1L</span>), <span class='kw'>show_progress</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>show_progress</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,10 +167,6 @@ or <code>jst_get_chapter</code>.</p></td>
 n_batches, but not in conjunction.</p></td>
     </tr>
     <tr>
-      <th>cores</th>
-      <td><p>Number of cores to use for parallel processing.</p></td>
-    </tr>
-    <tr>
       <th>show_progress</th>
       <td><p>Displays a progress bar for each batch, if the session
 is interactive.</p></td>
@@ -201,7 +196,7 @@ are imported (i.e. 1:100).</p></td>
     <p>Along the way, we wrap three functions, which make the process of converting
 many files easier:</p><ul>
 <li><p><code><a href='http://www.rdocumentation.org/packages/purrr/topics/safely'>purrr::safely()</a></code></p></li>
-<li><p><code><a href='http://www.rdocumentation.org/packages/foreach/topics/foreach'>foreach::foreach()</a></code></p></li>
+<li><p><code><a href='http://www.rdocumentation.org/packages/furrr/topics/future_map'>furrr::future_map()</a></code></p></li>
 <li><p><code><a href='http://www.rdocumentation.org/packages/readr/topics/write_delim'>readr::write_csv()</a></code></p></li>
 </ul>
     <p>When using one of the <code>find_*</code> functions, there should usually be no errors.
@@ -209,18 +204,18 @@ To avoid the whole computation to fail in the unlikely event that an error
 occurs, we use <code>safely()</code> which let's us
 continue the process, and catch the error along the way.</p>
 <p>If you have many files to import, you might benefit from executing the
-function in parallel. We use
-<code>snow::createCluster()</code> to setup a cluster
-and
-then compute the results via <code>foreach</code> and <code>%dopar%</code>. The type of
-cluster is determined by <code>getClusterOption("type")</code>.</p>
+function in parallel. We use futures for this to give you maximum
+flexibility. By default the code is executed sequentially. If you want to
+run it in parallel, simply call <code><a href='http://www.rdocumentation.org/packages/future/topics/plan'>future::plan()</a></code> with
+<code><a href='http://www.rdocumentation.org/packages/future/topics/multiprocess'>future::multiprocess()</a></code> as an argument before
+running <code>jst_import</code> or <code>jst_import_zip</code>.</p>
 <p>After importing all files, they are written to disk with
 <code><a href='http://www.rdocumentation.org/packages/readr/topics/write_delim'>readr::write_csv()</a></code>.</p>
 <p>Since you might run out of memory when importing a large quantity of files,
-the files to import are split up into batches. Each batch is being treated
-separately, therefore for each batch multiple processes from
-<code>snow::createCluster()</code> are
-spawned. For this reason, it is not recommended to have very small batches,
+you can split up the files to import  into batches. Each batch is being
+treated separately, therefore for each batch multiple processes from
+<code><a href='http://www.rdocumentation.org/packages/future/topics/multiprocess'>future::multiprocess()</a></code> are spawned, if you added this plan.
+For this reason, it is not recommended to have very small batches,
 as there is an overhead for starting and ending the processes. On the other
 hand, the batches should not be too large, to not exceed memory limitations.
 A value of 10000 to 20000 for <code>files_per_batch</code> should work fine on most
@@ -240,7 +235,13 @@ progress bar is displayed for each batch.</p>
 
 <span class='co'># import them via `jst_get_article`</span>
 <span class='fu'>jst_import</span>(<span class='no'>meta_files</span>, <span class='kw'>out_file</span> <span class='kw'>=</span> <span class='st'>"imported_metadata"</span>, <span class='kw'>.f</span> <span class='kw'>=</span> <span class='no'>jst_get_article</span>,
-           <span class='kw'>files_per_batch</span> <span class='kw'>=</span> <span class='fl'>25000</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>4</span>)
+           <span class='kw'>files_per_batch</span> <span class='kw'>=</span> <span class='fl'>25000</span>)
+
+<span class='co'># do the same, but in parallel</span>
+<span class='fu'>library</span>(<span class='no'>future</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/future/topics/plan'>plan</a></span>(<span class='no'>multiprocess</span>)
+<span class='fu'>jst_import</span>(<span class='no'>meta_files</span>, <span class='kw'>out_file</span> <span class='kw'>=</span> <span class='st'>"imported_metadata"</span>, <span class='kw'>.f</span> <span class='kw'>=</span> <span class='no'>jst_get_article</span>,
+           <span class='kw'>files_per_batch</span> <span class='kw'>=</span> <span class='fl'>25000</span>)
 
 <span class='co'># read from zip archive ------ </span>
 <span class='co'># define imports</span>
