@@ -29,6 +29,20 @@ test_that("writing correct results to file works", {
   unlink(temp_dir)
 })
 
+test_that("writing to file in parallel works", {
+  future::plan(future::multiprocess)
+  temp_dir <- tempdir()
+  jstor_convert_to_file(paths, 1, paste0(temp_dir, "/meta_data"), jst_get_article,
+                        col_names = TRUE, n_batches = 1)
+  
+  expect_identical(read_csv("testfiles/correct_meta_data.csv",
+                            col_names = TRUE),
+                   read_csv(paste0(temp_dir, "/meta_data-1.csv"),
+                            col_names = TRUE))
+  
+  unlink(temp_dir)
+})
+
 test_that("not writing column names works", {
   temp_dir <- tempdir()
   jstor_convert_to_file(paths, 1, paste0(temp_dir, "/meta_data"), jst_get_article,

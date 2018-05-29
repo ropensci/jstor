@@ -46,9 +46,13 @@ CRAN, but can be installed via `devtools`.
 library(jstor)
 library(tidyverse)
 library(visdat)
+library(future)
 
 # set a lighter theme for plots
 theme_set(theme_bw())
+
+# import files in parallel
+plan(multiprocess)
 ```
 
 
@@ -67,13 +71,12 @@ http://r4ds.had.co.nz/workflow-projects.html for further information).
 ```{r, eval=FALSE}
 import_spec <- jst_define_import(article = jst_get_article)
 
-jst_import_zip("part1.zip", import_spec = import_spec, out_file = "part1",
-               cores = 4)
-jst_import_zip("part2.zip", import_spec = import_spec, out_file = "part2",
-               cores = 4)
+jst_import_zip("part1.zip", import_spec = import_spec, out_file = "part1")
+jst_import_zip("part2.zip", import_spec = import_spec, out_file = "part2")
+
 #> Processing files for journal_article with functions jst_get_article
 #> Processing chunk 1/1
-#>   |===================================================================| 100%
+#>  Progress: ───────────────────────────────────────────────────────────── 100%
 ```
 
 Since `jst_import_zip` writes the results to disk, we need to read the metadata
@@ -274,15 +277,11 @@ head(ngram_selection, 2)
 
 
 ```{r, eval=FALSE}
-# speed up import in parallel
-library(furrr)
-plan(multiprocess)
-
 ngram_selection <- jst_subset_ngrams(c("part1.zip", "part2.zip"), "ngram2",
                                     flagship_journals)
 
 imported_bigrams <- ngram_selection %>% 
-  future_map_dfr(jst_get_ngram)
+  furrr::future_map_dfr(jst_get_ngram)
 ```
 
 

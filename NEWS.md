@@ -41,6 +41,21 @@ Before importing all files from a zip-archive, you can get a quick overview with
 
 
 ## Other changes
+* `jst_import` and `jst_import_zip` now use futures as a backend for parallel 
+processing. This makes internals more compact and reduces dependencies. 
+Furthermore this reduces the number of arguments, since the argument `cores` 
+has been removed. By default, the functions run sequentially. If you want them
+to execute in parallel, use futures:
+```
+library(future)
+plan(multiprocess)
+
+jst_import_zip("zip-archive.zip",
+               import_spec = jst_define_import(article = jst_get_article),
+               out_file = "outfile")
+```
+If you want to terminate the proceses, at least on *nix-systems you need to kill
+them manually (once again).
 * A new function `jst_subset_ngrams` lets you create a subset of ngram files
 within a zip-file which you can import with `jst_get_ngram`.
 * The unique identifier for matching across files has been renamed to 

@@ -19,9 +19,7 @@ Imports:
     readr (>= 1.0.0),
     tibble (>= 1.4.1),
     rlang (>= 0.2.0),
-    foreach,
-    doSNOW,
-    snow,
+    furrr (>= 0.1.0),
     readxl (>= 1.0.0),
     curl,
     pryr

@@ -13,40 +13,19 @@
 #' @param col_names Should `col_names` be printed when exporting results? For
 #'   errors, col_names are always written to file.
 #' @param n_batches Total number of batches (for progress bar).
-#' @param cores Number of cores to use for parallel processing.
 #' @noRd
 jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
                                   col_names = FALSE, n_batches,
-                                  cores = getOption("mc.cores", 1L),
                                   show_progress = TRUE) {
   message("Processing chunk ", chunk_number, "/", n_batches)
 
   safe_fun <- purrr::safely(fun)
   
-  
-  # start cluster
-  cl <- snow::makeCluster(cores)
-  doSNOW::registerDoSNOW(cl)
-  
   # create progress bar if we are in console
-  if (interactive() && show_progress) {
-    pb <- utils::txtProgressBar(min = 0, max = length(in_paths), style = 3)
-    progress <- function(n) utils::setTxtProgressBar(pb, n)
-    opts <- list(progress = progress)
-  } else {
-    opts <- list()
-  }
-
+  progress <- ifelse(interactive() && show_progress, TRUE, FALSE)
   
   # compute results in parallel
-  parallel_result <- foreach::foreach(i = in_paths, .packages = "jstor",
-                                 .options.snow = opts) %dopar%
-    safe_fun(i)
-  
-  # stop cluster and progress bar
-  snow::stopCluster(cl)
-  
-  if (interactive() && show_progress) close(pb)
+  parallel_result <- furrr::future_map(in_paths, safe_fun, .progress = progress)
   
   
   res_transposed <- purrr::transpose(parallel_result)
@@ -110,7 +89,7 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' many files easier:
 #' 
 #' - [purrr::safely()]
-#' - [foreach::foreach()]
+#' - [furrr::future_map()]
 #' - [readr::write_csv()]
 #' 
 #' When using one of the `find_*` functions, there should usually be no errors.
@@ -119,20 +98,20 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' continue the process, and catch the error along the way.
 #' 
 #' If you have many files to import, you might benefit from executing the
-#' function in parallel. We use
-#' \code{\link[snow:snow-startstop]{snow::createCluster()}} to setup a cluster
-#' and
-#' then compute the results via `foreach` and \code{\%dopar\%}. The type of
-#' cluster is determined by `getClusterOption("type")`.
+#' function in parallel. We use futures for this to give you maximum 
+#' flexibility. By default the code is executed sequentially. If you want to
+#' run it in parallel, simply call [future::plan()] with
+#' [future::multiprocess()] as an argument before
+#' running `jst_import` or `jst_import_zip`. 
 #' 
 #' After importing all files, they are written to disk with
 #' [readr::write_csv()].
 #' 
 #' Since you might run out of memory when importing a large quantity of files,
-#' the files to import are split up into batches. Each batch is being treated
-#' separately, therefore for each batch multiple processes from
-#' \code{\link[snow:snow-startstop]{snow::createCluster()}} are
-#' spawned. For this reason, it is not recommended to have very small batches,
+#' you can split up the files to import  into batches. Each batch is being 
+#' treated separately, therefore for each batch multiple processes from
+#' [future::multiprocess()] are spawned, if you added this plan.
+#' For this reason, it is not recommended to have very small batches,
 #' as there is an overhead for starting and ending the processes. On the other
 #' hand, the batches should not be too large, to not exceed memory limitations.
 #' A value of 10000 to 20000 for `files_per_batch` should work fine on most
@@ -152,7 +131,6 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' @param n_batches Number of batches, defaults to 1.
 #' @param files_per_batch Number of files for each batch. Can be used instead of
 #' n_batches, but not in conjunction.
-#' @param cores Number of cores to use for parallel processing.
 #' @param show_progress Displays a progress bar for each batch, if the session
 #' is interactive.
 #' @param zip_archive A path to a .zip-archive from DfR
@@ -163,7 +141,7 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #'
 #' @return Writes `.csv`-files to disk.
 #'
-#' @seealso [jst_combine_outputs()]
+#' @seealso [jst_combine_outputs()] 
 #' @export
 #' @examples 
 #' \dontrun{
@@ -173,7 +151,13 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' 
 #' # import them via `jst_get_article`
 #' jst_import(meta_files, out_file = "imported_metadata", .f = jst_get_article,
-#'            files_per_batch = 25000, cores = 4)
+#'            files_per_batch = 25000)
+#'            
+#' # do the same, but in parallel
+#' library(future)
+#' plan(multiprocess)
+#' jst_import(meta_files, out_file = "imported_metadata", .f = jst_get_article,
+#'            files_per_batch = 25000)
 #'
 #' # read from zip archive ------ 
 #' # define imports
@@ -186,7 +170,6 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 jst_import <- function(in_paths, out_file, out_path = NULL, .f,
                        col_names = TRUE, n_batches = NULL,
                        files_per_batch = NULL,
-                       cores = getOption("mc.cores", 1L),
                        show_progress = TRUE) {
 
   if (!is.null(n_batches) && !is.null(files_per_batch)) {
@@ -220,7 +203,7 @@ jst_import <- function(in_paths, out_file, out_path = NULL, .f,
   n_batches <- length(chunk_numbers)
   
   purrr::pwalk(
-    list(file_list, chunk_numbers, out_file, list(.f), cores = cores,
+    list(file_list, chunk_numbers, out_file, list(.f),
          col_names = col_names, n_batches = n_batches,
          show_progress = show_progress),
     jstor_convert_to_file
@@ -240,7 +223,6 @@ jst_import_zip <- function(zip_archive, import_spec,
                              out_file, out_path = NULL,
                              col_names = TRUE, n_batches = NULL,
                              files_per_batch = NULL,
-                             cores = getOption("mc.cores", 1L),
                              show_progress = TRUE,
                              rows = NULL) {
   
@@ -298,7 +280,7 @@ jst_import_zip <- function(zip_archive, import_spec,
   
   enhanced_spec %>% 
     split(.$meta_type) %>% 
-    purrr::walk(walk_spec, n_batches = n_batches, cores = cores,
+    purrr::walk(walk_spec, n_batches = n_batches,
                 chunk_number = chunk_number, out_path = out_file,
                 show_progress = show_progress, col_names = col_names)
   

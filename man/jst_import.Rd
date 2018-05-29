@@ -6,12 +6,11 @@
 \title{Wrapper for file import}
 \usage{
 jst_import(in_paths, out_file, out_path = NULL, .f, col_names = TRUE,
-  n_batches = NULL, files_per_batch = NULL, cores = getOption("mc.cores",
-  1L), show_progress = TRUE)
+  n_batches = NULL, files_per_batch = NULL, show_progress = TRUE)
 
 jst_import_zip(zip_archive, import_spec, out_file, out_path = NULL,
   col_names = TRUE, n_batches = NULL, files_per_batch = NULL,
-  cores = getOption("mc.cores", 1L), show_progress = TRUE, rows = NULL)
+  show_progress = TRUE, rows = NULL)
 }
 \arguments{
 \item{in_paths}{A character vector to the \code{xml}-files which should be
@@ -32,8 +31,6 @@ or \code{jst_get_chapter}.}
 
 \item{files_per_batch}{Number of files for each batch. Can be used instead of
 n_batches, but not in conjunction.}
-
-\item{cores}{Number of cores to use for parallel processing.}
 
 \item{show_progress}{Displays a progress bar for each batch, if the session
 is interactive.}
@@ -59,7 +56,7 @@ Along the way, we wrap three functions, which make the process of converting
 many files easier:
 \itemize{
 \item \code{\link[purrr:safely]{purrr::safely()}}
-\item \code{\link[foreach:foreach]{foreach::foreach()}}
+\item \code{\link[furrr:future_map]{furrr::future_map()}}
 \item \code{\link[readr:write_csv]{readr::write_csv()}}
 }
 
@@ -69,20 +66,20 @@ occurs, we use \code{safely()} which let's us
 continue the process, and catch the error along the way.
 
 If you have many files to import, you might benefit from executing the
-function in parallel. We use
-\code{\link[snow:snow-startstop]{snow::createCluster()}} to setup a cluster
-and
-then compute the results via \code{foreach} and \code{\%dopar\%}. The type of
-cluster is determined by \code{getClusterOption("type")}.
+function in parallel. We use futures for this to give you maximum
+flexibility. By default the code is executed sequentially. If you want to
+run it in parallel, simply call \code{\link[future:plan]{future::plan()}} with
+\code{\link[future:multiprocess]{future::multiprocess()}} as an argument before
+running \code{jst_import} or \code{jst_import_zip}.
 
 After importing all files, they are written to disk with
 \code{\link[readr:write_csv]{readr::write_csv()}}.
 
 Since you might run out of memory when importing a large quantity of files,
-the files to import are split up into batches. Each batch is being treated
-separately, therefore for each batch multiple processes from
-\code{\link[snow:snow-startstop]{snow::createCluster()}} are
-spawned. For this reason, it is not recommended to have very small batches,
+you can split up the files to import  into batches. Each batch is being
+treated separately, therefore for each batch multiple processes from
+\code{\link[future:multiprocess]{future::multiprocess()}} are spawned, if you added this plan.
+For this reason, it is not recommended to have very small batches,
 as there is an overhead for starting and ending the processes. On the other
 hand, the batches should not be too large, to not exceed memory limitations.
 A value of 10000 to 20000 for \code{files_per_batch} should work fine on most
@@ -97,7 +94,13 @@ meta_files <- list.files(pattern = "xml", full.names = T)
 
 # import them via `jst_get_article`
 jst_import(meta_files, out_file = "imported_metadata", .f = jst_get_article,
-           files_per_batch = 25000, cores = 4)
+           files_per_batch = 25000)
+           
+# do the same, but in parallel
+library(future)
+plan(multiprocess)
+jst_import(meta_files, out_file = "imported_metadata", .f = jst_get_article,
+           files_per_batch = 25000)
 
 # read from zip archive ------ 
 # define imports
