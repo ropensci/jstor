@@ -23,10 +23,12 @@ Imports:
     readxl (>= 1.0.0),
     curl,
     pryr
-Suggests: testthat,
+Suggests: 
+    testthat,
     covr,
     knitr,
-    rmarkdown
+    rmarkdown,
+    future
 BugReports: https://github.com/tklebel/jstor/issues
 URL: https://github.com/tklebel/jstor, https://tklebel.github.io/jstor/
 RoxygenNote: 6.0.1
