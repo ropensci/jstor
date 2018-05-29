@@ -539,4 +539,4 @@ find_references <- function(file_path) {
   expand_and_bind(file_path, references)
 }
 
-# nocov start
+# nocov end
