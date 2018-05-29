@@ -31,8 +31,8 @@ on the page of DfR: http://www.jstor.org/dfr/about/creating-datasets]
 by searching for
 "inequality" and selecting "sociology" as our subject. To trim down the number
 of articles, we only select articles from 1997 to 2017. After
-logging in/creating an account, we select unigrams and bigrams. After unzipping
-the archives to a convenient location, we start our analysis.
+logging in/creating an account, we select unigrams and bigrams. The resulting 
+`.zip`-file can be downloaded from the email which DfR sends.
 
 
 Up-front, we need to load some packages. `jstor` is currently not available from
@@ -51,41 +51,51 @@ library(visdat)
 theme_set(theme_bw())
 ```
 
-To import the files, we first need to locate them and generate an object with
-their corresponding paths. The following code assumes that you follow a workflow
+
+With the latest version of `jstor` we can now directly import files from a zip
+archive. We only need to specify, where the zip archive is located, which
+parts we want to extract, and where the resulting files should be saved. 
+
+Although we could import all ngrams at this point, this would be extremely 
+inefficient. It is thus best first to decide, which articles we want to analyze,
+and import the corresponding ngram-files afterwards.
+
+The following code assumes that you follow a workflow
 organised around projects within RStudio (refer to
 http://r4ds.had.co.nz/workflow-projects.html for further information). 
 
-```{r}
-# list files
-meta_files <- list.files(pattern = "xml", full.names = T, recursive = T)
-```
-
-Since we have a decent amount of articles, let's speed up the process of
-importing the metadata via parallel processing. `jstor_import` is a nice wrapper
-which takes care of setting up the processes and deals with any errors that
-might occur along the way.
-
 ```{r, eval=FALSE}
-jstor_import(meta_files, out_file = "imported_metadata", .f = find_article,
-             files_per_batch = 25000, cores = 4)
-#> Starting to import 23909 file(s).
+import_spec <- jst_define_import(article = jst_get_article)
+
+jst_import_zip("part1.zip", import_spec = import_spec, out_file = "part1",
+               cores = 4)
+jst_import_zip("part2.zip", import_spec = import_spec, out_file = "part2",
+               cores = 4)
+#> Processing files for journal_article with functions jst_get_article
 #> Processing chunk 1/1
 #>   |===================================================================| 100%
-#> Finished importing 23909 file(s) in 2.54 mins.
 ```
 
-Since `jstor_import` writes the results to disk, we need to read the metadata
-from the newly created file.^[When reading this data without `guess_max = 2000`,
-a warning is raised because the column type is not being recognized properly for
-one column. Setting `guess_max` to `2000` helps to read the data correctly in
-this case.]
+Since `jst_import_zip` writes the results to disk, we need to read the metadata
+from the newly created file. This is made easy by `jst_re_import` which ensures,
+that the data are read with the right column types.
 
-```{r, message=FALSE}
-imported_metadata <- read_csv("imported_metadata-1.csv", guess_max = 2000)
+```{r}
+imported_metadata <- c("part1_journal_article_jst_get_article-1.csv",
+                       "part2_journal_article_jst_get_article-1.csv") %>% 
+  map_df(jst_re_import)
 imported_metadata
 ```
 
+# Cleaning the data
+
+- convert years to integers
+- do other things from augment (unify journal id)
+
+```{r}
+imported_metadata <- imported_metadata %>% 
+  mutate(pub_year = as.integer(pub_year))
+```
 
 
 # Exploration
@@ -114,7 +124,7 @@ actually book-reviews:
 ```{r}
 imported_metadata %>% 
   filter(article_type == "research-article" & str_detect(article_title, "Book")) %>% 
-  select(basename_id, article_title, pub_year)
+  select(file_name, article_title, pub_year)
 ```
 
 For the current demonstration, we want to restrict the type of articles to
@@ -250,42 +260,31 @@ From this structure we can see, that the file name can serve as an identifier to
 match articles and n-grams, since it is similar between metadata and
 n-grams. 
 
-First, we list all relevant files on disk.
 
-```{r, eval=FALSE}
-bigram_files <- list.files(path = c("receipt-id-624621-part-001/ngram2/",
-                                    "receipt-id-624621-part-002/ngram2/"),
-                           full.names = T)
-```
-
-```{r, echo=FALSE}
-bigram_files <- readr::read_rds("bigram_paths.rds")
-```
-
-
-Next, we select all relevant files from our trimmed down dataset by creating
-a subset of the files. 
+To make importing a subset of ngrams more convenient, we can use
+`jst_subset_ngrams`. This function returns a list of "zip-locations", which
+`jst_get_ngram` can read.
 
 ```{r}
-# create a search pattern by simply pasting together the ids we want to keep
-search_pattern <- paste(flagship_journals$basename_id, collapse = "|")
-
-reduced_bigrams <- str_subset(bigram_files, search_pattern)
+ngram_selection <- jst_subset_ngrams(c("part1.zip", "part2.zip"), "ngram2",
+                                    flagship_journals)
+head(ngram_selection, 2)
 ```
 
 
-Equipped with the paths to all files of interest, we import all relevant bigrams
-to a `data.frame`.
 
 ```{r, eval=FALSE}
-imported_bigrams <- data_frame(file_paths = reduced_bigrams) %>%
-  mutate(content = map(file_paths, read_tsv, col_names = c("bigrams", "n"),
-                       col_types = list(col_character(), col_integer())),
-         basename_id = get_basename(file_paths),
-         basename_id = str_replace(basename_id, "-ngram2", "")) %>%
-  select(-file_paths) %>%
-  unnest()
+# speed up import in parallel
+library(furrr)
+plan(multiprocess)
+
+ngram_selection <- jst_subset_ngrams(c("part1.zip", "part2.zip"), "ngram2",
+                                    flagship_journals)
+
+imported_bigrams <- ngram_selection %>% 
+  future_map_dfr(jst_get_ngram)
 ```
+
 
 ```{r, echo=FALSE, include=TRUE, eval=TRUE}
 # write_csv(imported_bigrams, "imported_bigrams.csv")
@@ -506,7 +505,7 @@ For this, we need to join our bigrams with the metadata.
 
 ```{r}
 time_bigrams <- top_bigrams %>% 
-  left_join(flagship_journals, by = "basename_id") %>% 
+  left_join(flagship_journals, by = "file_name") %>% 
   select(bigrams, n, pub_year)
 
 head(time_bigrams)
