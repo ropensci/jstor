@@ -10,5 +10,6 @@ test_output
 docs/articles/*.csv
 docs/articles/articles/*.csv
 vignettes/*.csv
+vignettes/*.zip
 
 *.rds
