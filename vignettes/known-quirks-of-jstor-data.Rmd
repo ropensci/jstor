@@ -94,3 +94,14 @@ jst_get_total_pages(first_page = 20, last_page = NA)
 
 
 ## jst_augment
+
+
+## Duplicated ngrams
+|Source                            |timespan          |Part              |
+|:---------------------------------|-----------------:|-----------------:|
+|American Journal of Sociology     |Unknown           |Book Reviews      |
+
+For the AJS, ngrams for book reviews are calculated per issue. There are 
+numerous reviews per issue, and each of them has an identical file of ngrams,
+containing ngrams for all book reviews of this issue. 
+
