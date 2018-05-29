@@ -41,7 +41,7 @@
 #' file_list <- rep(jstor_example("sample_with_references.xml"), 2)
 #'
 #' # convert and write to file
-#' jstor_import(file_list, "article", out_path = tmp, .f = find_article,
+#' jst_import(file_list, "article", out_path = tmp, .f = find_article,
 #'              n_batches = 2, show_progress = FALSE)
 #'              
 #' # combine outputs
