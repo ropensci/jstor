@@ -12,7 +12,7 @@ status](https://codecov.io/gh/tklebel/jstor/branch/master/graph/badge.svg)](http
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![CRAN
 status](http://www.r-pkg.org/badges/version/jstor)](https://cran.r-project.org/package=jstor)
-[![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/jstor)](https://CRAN.R-project.org/package=jstor)
+<!---[![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/jstor)](https://CRAN.R-project.org/package=jstor)--->
 [![rOpenSci
 badge](https://badges.ropensci.org/189_status.svg)](https://github.com/ropensci/onboarding/issues/189)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1169862.svg)](https://doi.org/10.5281/zenodo.1169862)
@@ -23,18 +23,19 @@ provides functions and suggests workflows for importing datasets from
 DfR. It was developed to deal with very large datasets which require an
 agreement, but can be used with smaller ones as well.
 
-The most important set of functions is a group of `find_*` functions:
+The most important set of functions is a group of `jst_get*` functions:
 
-  - `find_article`
-  - `find_authors`
-  - `find_references`
-  - `find_footnotes`
-  - `find_fulltext`
-  - `find_book`
-  - `find_chapters`
+  - `jst_get_article`
+  - `jst_get_authors`
+  - `jst_get_references`
+  - `jst_get_footnotes`
+  - `jst_get_book`
+  - `jst_get_chapters`
+  - `jst_get_full_text`
+  - `jst_get_ngram`
 
 All functions which are concerned with meta data (therefore excluding
-`find_fulltext`) operate along the same lines:
+`jst_get_full_text` and `jst_get_ngram`) operate along the same lines:
 
 1.  The file is read with `xml2::read_xml()`.
 2.  Content of the file is extracted via XPATH or CSS-expressions.
@@ -55,6 +56,7 @@ In order to use `jstor`, you first need to load it:
 
 ``` r
 library(jstor)
+library(magrittr)
 ```
 
 The basic usage is simple: supply one of the `find_*`-functions with a
@@ -62,19 +64,19 @@ path and it will return a tibble with the extracted
 information.
 
 ``` r
-find_article(jstor_example("sample_with_references.xml")) %>% knitr::kable()
+jst_get_article(jst_example("sample_with_references.xml")) %>% knitr::kable()
 ```
 
-| basename\_id             | journal\_doi | journal\_jcode   | journal\_pub\_id | journal\_title                                     | article\_doi    | article\_pub\_id | article\_jcode | article\_type    | article\_title                     | volume | issue | language | pub\_day | pub\_month | pub\_year | first\_page | last\_page | page\_range |
+| file\_name               | journal\_doi | journal\_jcode   | journal\_pub\_id | journal\_title                                     | article\_doi    | article\_pub\_id | article\_jcode | article\_type    | article\_title                     | volume | issue | language | pub\_day | pub\_month | pub\_year | first\_page | last\_page | page\_range |
 | :----------------------- | :----------- | :--------------- | :--------------- | :------------------------------------------------- | :-------------- | :--------------- | :------------- | :--------------- | :--------------------------------- | :----- | :---- | :------- | :------- | :--------- | --------: | :---------- | :--------- | :---------- |
 | sample\_with\_references | NA           | tranamermicrsoci | NA               | Transactions of the American Microscopical Society | 10.2307/3221896 | NA               | NA             | research-article | On the Protozoa Parasitic in Frogs | 41     | 2     | eng      | 1        | 4          |      1922 | 59          | 76         | 59-76       |
 
 ``` r
 
-find_authors(jstor_example("sample_with_references.xml")) %>% knitr::kable()
+jst_get_authors(jst_example("sample_with_references.xml")) %>% knitr::kable()
 ```
 
-| basename\_id             | prefix | given\_name | surname | string\_name | suffix | author\_number |
+| file\_name               | prefix | given\_name | surname | string\_name | suffix | author\_number |
 | :----------------------- | :----- | :---------- | :------ | :----------- | :----- | -------------: |
 | sample\_with\_references | NA     | R.          | Kudo    | NA           | NA     |              1 |
 

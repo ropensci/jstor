@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 [![Coverage status](https://codecov.io/gh/tklebel/jstor/branch/master/graph/badge.svg)](https://codecov.io/github/tklebel/jstor?branch=master)
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![CRAN status](http://www.r-pkg.org/badges/version/jstor)](https://cran.r-project.org/package=jstor)
-[![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/jstor)](https://CRAN.R-project.org/package=jstor)
+<!---[![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/jstor)](https://CRAN.R-project.org/package=jstor)--->
 [![rOpenSci badge](https://badges.ropensci.org/189_status.svg)](https://github.com/ropensci/onboarding/issues/189)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1169862.svg)](https://doi.org/10.5281/zenodo.1169862)
   
@@ -29,18 +29,20 @@ provides functions and suggests workflows for importing
 datasets from DfR. It was developed to deal with very large datasets which
 require an agreement, but can be used with smaller ones as well.
 
-The most important set of functions is a group of `find_*` functions:
+The most important set of functions is a group of `jst_get*` functions:
 
-- `find_article`
-- `find_authors`
-- `find_references`
-- `find_footnotes`
-- `find_fulltext`
-- `find_book`
-- `find_chapters`
+- `jst_get_article`
+- `jst_get_authors`
+- `jst_get_references`
+- `jst_get_footnotes`
+- `jst_get_book`
+- `jst_get_chapters`
+- `jst_get_full_text`
+- `jst_get_ngram`
+
 
 All functions which are concerned with meta data (therefore excluding
-`find_fulltext`) operate along the same lines:
+`jst_get_full_text` and `jst_get_ngram`) operate along the same lines:
 
 1. The file is read with `xml2::read_xml()`.
 2. Content of the file is extracted via XPATH or CSS-expressions.
@@ -60,14 +62,15 @@ devtools::install_github("tklebel/jstor")
 In order to use `jstor`, you first need to load it:
 ```{r}
 library(jstor)
+library(magrittr)
 ```
 
 The basic usage is simple: supply one of the `find_*`-functions with a path and
 it will return a tibble with the extracted information.
 ```{r, results='asis'}
-find_article(jstor_example("sample_with_references.xml")) %>% knitr::kable()
+jst_get_article(jst_example("sample_with_references.xml")) %>% knitr::kable()
 
-find_authors(jstor_example("sample_with_references.xml")) %>% knitr::kable()
+jst_get_authors(jst_example("sample_with_references.xml")) %>% knitr::kable()
 ```
 
 Further explanations, especially on how to use jstor's functions for importing
@@ -153,7 +156,8 @@ The following table gives an overview, which elements are supported by `jstor`.
 
 
 ## Code of conduct
-Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md).
+Please note that this project is released with a 
+[Contributor Code of Conduct](CONDUCT.md).
 By participating in this project you agree to abide by its terms.
 
 ## Citation
