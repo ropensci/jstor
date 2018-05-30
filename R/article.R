@@ -160,13 +160,11 @@ extract_page <- function(article, element, convert = TRUE) {
 }
 
 convert_page <- function(x) {
-  # check if there are any non-digits
-  if (grepl("\\D", x)) {
-    # if there are non-digits, replace them with a empty space
-    gsub("\\D", "", x) %>%
-      as.integer()
-  } else {
-    as.integer(x)
-  }
+  # find entries with non-digits
+  has_char <- grepl("\\D", x)
+  # remove those entries
+  x[has_char] <- gsub("\\D", "", x[has_char])
+  # return integer
+  as.integer(x)
 }
 
