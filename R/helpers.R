@@ -113,7 +113,7 @@ read_jstor <- function(file) {
     
     on.exit(close(con))
     
-    xml2::read_xml(con)
+    suppressWarnings(xml2::read_xml(con))
     
   } else {
     stop("Unknown input file. Must be a `xml`-file.", 
