@@ -54,7 +54,7 @@ jst_augment <- function(meta_data) {
 #' # a weird format from the American Journal of Sociology is convered correctly
 #' jst_clean_page("AJSv104p126")
 #' # this is done by searching for "p", and if it is found, extracting the
-#' content after "p".
+#' # content after "p".
 jst_clean_page <- function(page) {
   # check if any has weird format like with AJS: AJSv104p126
   is_complicated <- str_detect(page, "p")

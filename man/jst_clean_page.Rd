@@ -22,5 +22,5 @@ jst_clean_page("A2-")
 # a weird format from the American Journal of Sociology is convered correctly
 jst_clean_page("AJSv104p126")
 # this is done by searching for "p", and if it is found, extracting the
-content after "p".
+# content after "p".
 }
