@@ -50,13 +50,20 @@ reference:
   - '`jst_get_ngram`'
   - '`jst_subset_ngrams`'
   
+- title: Augmentations
+  contents:
+  - '`jst_augment`'
+  - '`jst_clean_page`'
+  - '`jst_unify_journal_id`'
+  - '`jst_add_total_pages`'
+  - '`jst_get_total_pages`'
+  
 - title: Helper functions
   contents:
   - '`jst_get_file_name`'
   - '`jst_example`'
   - '`jst_preview_zip`'
   - '`jst_get_journal_overview`'
-  - '`jst_get_total_pages`'
   
 - title: Top level documentation
   contents:
