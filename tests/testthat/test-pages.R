@@ -26,15 +26,4 @@ test_that("no pages are handled", {
 })
 
 
-test_that("total pages are computed correctly", {
-  expect_identical(jst_get_total_pages(first_page = 2, last_page = 5), 4)
-  expect_identical(jst_get_total_pages(first_page = 2L, last_page = 5L), 4)
-  expect_identical(jst_get_total_pages(first_page = 2, last_page = 2), 1)
-  expect_identical(jst_get_total_pages(first_page = NA, last_page = NA),
-                   NA_real_)
-  expect_identical(jst_get_total_pages(1, NA), NA_real_)
-  expect_identical(jst_get_total_pages(page_range = "51 - 70, 200"), 20)
-  
-  expect_error(jst_get_total_pages(page_range = numeric()))
-  expect_error(jst_get_total_pages("A", "B"))
-})
+

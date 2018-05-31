@@ -4,8 +4,7 @@
 \alias{jst_get_total_pages}
 \title{Find total pages}
 \usage{
-jst_get_total_pages(first_page = NULL, last_page = NULL,
-  page_range = NULL)
+jst_get_total_pages(first_page, last_page, page_range)
 }
 \arguments{
 \item{first_page}{The first page of an article (numeric).}
