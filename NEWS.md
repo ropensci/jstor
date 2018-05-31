@@ -41,7 +41,7 @@ Before importing all files from a zip-archive, you can get a quick overview with
 
 
 ## Other changes
-* `jst_import` and `jst_import_zip` now use futures as a backend for parallel 
+`jst_import` and `jst_import_zip` now use futures as a backend for parallel 
 processing. This makes internals more compact and reduces dependencies. 
 Furthermore this reduces the number of arguments, since the argument `cores` 
 has been removed. By default, the functions run sequentially. If you want them
@@ -56,6 +56,11 @@ jst_import_zip("zip-archive.zip",
 ```
 If you want to terminate the proceses, at least on *nix-systems you need to kill
 them manually (once again).
+* A new set of convenience functions for taking a few cleaning steps:
+`jst_clean_page()` tries to turn a character vector with pages into a numeric
+one, `jst_unify_journal_id()` merges different specifications of journals into
+one, `jst_add_total_pages()` adds a total count of pages per article, and
+`jst_augment()` calls all three functions to clean the data set in one go.
 * A new function `jst_subset_ngrams` lets you create a subset of ngram files
 within a zip-file which you can import with `jst_get_ngram`.
 * The unique identifier for matching across files has been renamed to 
