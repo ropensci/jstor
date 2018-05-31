@@ -1,6 +1,4 @@
 context("test-augment.R")
-library(dplyr)
-library(tibble)
 
 
 test_that("converting pages works", {
@@ -12,20 +10,22 @@ test_that("converting pages works", {
 })
 
 test_that("total pages are computed", {
-  input <- tribble(
-    ~first_page,   ~last_page,   ~page_range,
-    NA_character_, NA_character_, NA_character_,
+  input <- tibble::tribble(
+    ~first_page,   ~last_page,    ~page_range,
+    NA_real_,      NA_real_,      NA_character_,
     1,             10,            "1 - 10",
     1,             10,            NA_character_,
-    1,             NA_character_, NA_character_,
-    1,             NA_character_, "1-10"
+    1,             NA_real_,      NA_character_,
+    1,             NA_real_,      "1-10"
   )
   
   correct_output <- c(NA_real_, 10, 10, NA_real_, 10)
 
   out <- input %>% 
-    mutate(out = jst_get_total_pages(first_page, last_page, page_range)) %>% 
-    pull(out)
+    dplyr::mutate(out = jst_get_total_pages(
+      first_page, last_page, page_range
+    )) %>% 
+    dplyr::pull(out)
   
   expect_identical(correct_output, out)
   expect_error(jst_get_total_pages(1, 1, 1:2)) # unequal lengths raise error
