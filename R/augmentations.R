@@ -15,6 +15,7 @@
 #' 
 #' @return A cleaned tibble.
 #' @seealso [jst_clean_page()] [jst_unify_journal_id()] [jst_add_total_pages()]
+#' [jst_get_total_pages()]
 #' 
 #' @export
 jst_augment <- function(meta_data) {
@@ -66,11 +67,12 @@ jst_clean_page <- function(page) {
 #' Add total count of pages
 #' 
 #' This function adds a column with the total count of pages. It calls 
-#' [jst_get_total_pages()] which does the work.
+#' [jst_get_total_pages()] which does the main work.
 #' 
 #' @param meta_data Data which was processed via [jst_get_article()].
 #' @param page_col The name of the new column with total count of pages.
 #' @export
+#' @seealso [jst_get_total_pages()]
 jst_add_total_pages <- function(meta_data, page_col = n_pages) {
   page_col <- rlang::enquo(page_col)
   

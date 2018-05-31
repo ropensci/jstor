@@ -13,5 +13,8 @@ jst_add_total_pages(meta_data, page_col = n_pages)
 }
 \description{
 This function adds a column with the total count of pages. It calls
-\code{\link[=jst_get_total_pages]{jst_get_total_pages()}} which does the work.
+\code{\link[=jst_get_total_pages]{jst_get_total_pages()}} which does the main work.
+}
+\seealso{
+\code{\link[=jst_get_total_pages]{jst_get_total_pages()}}
 }
