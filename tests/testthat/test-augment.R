@@ -27,8 +27,14 @@ test_that("total pages are computed", {
     )) %>% 
     dplyr::pull(out)
   
+  out2 <- jst_add_total_pages(input) %>% dplyr::pull(n_pages)
+  
   expect_identical(correct_output, out)
-  expect_error(jst_get_total_pages(1, 1, 1:2)) # unequal lengths raise error
+  expect_identical(correct_output, out2)
+  expect_error(jst_get_total_pages(1, 1, c("A", "B"))) # unequal lengths raise error
+  expect_error(jst_get_total_pages("2", 2, "A"))
+  expect_error(jst_get_total_pages(2, "2", "A"))
+  expect_error(jst_get_total_pages(2, 2, 2))
 })
 
 test_that("ranges are parsed correctly", {
