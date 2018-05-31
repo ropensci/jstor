@@ -34,7 +34,7 @@ jst_get_total_pages <- function(first_page, last_page, page_range) {
   
   case_when(
     is.na(first_page) & is.na(last_page) & is.na(page_range) ~ NA_real_,
-    !is.na(page_range) ~ wrap_parse_range(page_range),
+    !is.na(page_range) ~ parse_ranges(page_range),
     is.na(page_range) & !is.na(first_page) & is.na(last_page) ~ NA_real_,
     is.na(page_range) & 
       !is.na(first_page) & 
@@ -95,41 +95,33 @@ jst_augment <- function(meta_data) {
   }
 }
 
-parse_range <- function(x) {
-  x <- stringr::str_remove_all(x, "\\s")
-  
-  single_digits <- str_detect(x, "^\\d+$")
-  has_hyphen <- str_detect(x, "-")
-  has_roman <- str_detect(x, "x|i|v|X|I|V")
 
-  if (any(has_roman, na.rm = T)) {
-    warning("Cannot handle roman characters (`x|i|v|X|I|V`) when computing page range. ",
+
+parse_ranges <- function(page_range) {
+  splitted_df <- tibble::new_tibble(list(page_range = page_range)) %>% 
+    mutate(id = 1:n(),
+           splitted = stringr::str_split(page_range, ",|\\+")) %>% 
+    tidyr::unnest()
+  
+  # detect roman numerals which are occasionally used for introduction sections
+  roman_chars <- str_detect(splitted_df$splitted, "x|i|v|X|I|V")
+  
+  if (any(roman_chars, na.rm = T)) {
+    warning("Cannot handle roman numerals (`x|i|v|X|I|V`) in rows (",
+            paste(which(roman_chars), collapse = ", "),
+            ") when computing ",
+            "page range. ",
             "Returning `NA_character` instead.", call. = FALSE)
-    has_hyphen[has_roman] <- FALSE
-    x[has_roman] <- NA_character_
   }
   
-  # count entries with single digits as '1'
-  x[single_digits] <- 1
-  
-  # remove any alphanumeric characters
-  x <- stringr::str_remove_all(x, "[:alpha:]")
-  
-  if (any(has_hyphen, na.rm = T)) {
-    x[has_hyphen] <- x[has_hyphen] %>%
-      purrr::map_dbl(~abs(eval(parse(text = .))) + 1)
-  }
-  
-  as.integer(x)
-}
-
-
-
-
-wrap_parse_range <- function(x) {
-  x %>% 
-    stringr::str_split(",|\\+") %>% 
-    purrr::map(parse_range) %>% 
-    purrr::map_dbl(sum)
+  splitted_df %>% 
+    mutate(wo_space = stringr::str_remove(splitted, "\\s"),
+           wo_chars = stringr::str_remove_all(wo_space, "[:alpha:]"),
+           first = stringr::str_extract(wo_chars, "^\\d+") %>% as.integer(),
+           last = stringr::str_extract(wo_chars, "\\d+$") %>% as.integer(),
+           total = last - first + 1) %>% 
+    dplyr::group_by(id) %>% 
+    dplyr::summarise(sum = sum(total)) %>% 
+    dplyr::pull(sum)
 }
 

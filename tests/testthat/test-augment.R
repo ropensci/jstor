@@ -15,20 +15,14 @@ test_that("total pages are computed", {
   input <- tribble(
     ~first_page,   ~last_page,   ~page_range,
     NA_character_, NA_character_, NA_character_,
-    1,             10,            "1, 5-10",
-    11,            20,            "11, 15-20",
-    1,             10,            "1-6, 10",
-    1,             10,            "1-4, 8-10",
-    1,             10,            "1-2+4-5+8-10",
+    1,             10,            "1 - 10",
     1,             10,            NA_character_,
     1,             NA_character_, NA_character_,
-    1,             NA_character_, "1-10",
-    NA_character_, NA_character_, "1-10"
-    
+    1,             NA_character_, "1-10"
   )
   
-  correct_output <- c(NA_real_, 7, 7, 7, 7, 7, 10, NA_real_, 10, 10)
-  
+  correct_output <- c(NA_real_, 10, 10, NA_real_, 10)
+
   out <- input %>% 
     mutate(out = jst_get_total_pages(first_page, last_page, page_range)) %>% 
     pull(out)
@@ -37,7 +31,17 @@ test_that("total pages are computed", {
   expect_error(jst_get_total_pages(1, 1, 1:2)) # unequal lengths raise error
 })
 
-test_that("roman characters raise warning", {
-  expect_warning(parse_range("xiv-xx"))
-  expect_warning(parse_range("X-XX"))
+test_that("ranges are parsed correctly", {
+  
+  expect_identical(parse_ranges("1, 5-10"), 7)
+  expect_identical(parse_ranges("11, 15-20"), 7)
+  expect_identical(parse_ranges("1-6, 10"), 7)
+  expect_identical(parse_ranges("1-4, 8-10"), 7)
+  expect_identical(parse_ranges("1-2+4-5+8-10"), 7)
+  expect_identical(parse_ranges("1-2, C3"), 3)
+  expect_identical(parse_ranges("1-2, C3-C4"), 4)
+  expect_identical(parse_ranges("1-10"), 10)
+  
+  expect_warning(parse_ranges("xiv-xx"))
+  expect_warning(parse_ranges("X-XX"))
 })
