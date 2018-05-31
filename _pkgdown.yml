@@ -8,11 +8,15 @@ navbar:
   left:
   - icon: fa-home fa-lg
     href: index.html
-  - text: Introduction
-    href: articles/Introduction.html
-  - text: Automating File Import
-    href: articles/automating_file_import.html
-  - text: Case study -  ngrams
+  - text: Vignettes
+    menu:
+    - text: Introduction
+      href: articles/Introduction.html
+    - text: Automating File Import
+      href: articles/automating_file_import.html
+    - text: Known Data Quirks
+      href: articles/known-quirks.html
+  - text: Case Study - Analysing Ngrams
     href: articles/analysing-n-grams.html
   - text: Reference
     href: reference/index.html
