@@ -10,6 +10,10 @@ test_that("Files other than `book` and `article` raise an error", {
   expect_error(validate_book(file), "Unknown input file")
 })
 
+test_that("unvalid file paths raise an error", {
+  expect_error(validate_file_path("abc.txt", "xml"))
+})
+
 
 test_that("Warnings for invalid URI are suppressed", {
   expect_silent(read_jstor(invalid_file))
@@ -47,5 +51,14 @@ test_that("jst_get_file_name works", {
   
   expect_identical(jst_get_file_name(zip_loc), "standard_case")
   
+})
+
+test_that("unavailable path raises error", {
+  expect_error(check_path("abc"))
+})
+
+test_that("getting footnotes or references on book raises informative error", {
+  expect_error(jst_get_references(jst_example("sample_book.xml")), 
+               "Neither footnotes nor references")
 })
 
