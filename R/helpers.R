@@ -25,7 +25,7 @@ validate_file_path <- function(file_path, type) {
 validate_article <- function(xml_file) {
   if (identical(xml2::xml_name(xml_file), "book")) {
     original_call <- as.character(sys.call(-1)[[1]])
-    if (any(original_call %in% c("find_references", "find_article"))) {
+    if (any(original_call %in% c("jst_get_references", "jst_get_footnotes"))) {
       stop("You are using `", original_call, "` on a book. ",
            "Neither footnotes nor references are available for books.",
            call. = FALSE)
