@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>jstor: Read Data from JSTOR/DfR — jstor • jstor</title>
+<title>Unify journal IDs — jst_unify_journal_id • jstor</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,12 +30,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="jstor: Read Data from JSTOR/DfR — jstor" />
+<meta property="og:title" content="Unify journal IDs — jst_unify_journal_id" />
 
-<meta property="og:description" content="The tool Data for Research (DfR) by JSTOR is a
-valuable source for citation analysis and text mining. jstor
-provides functions and suggests workflows for importing
-datasets from DfR." />
+<meta property="og:description" content="This function is a simple wrapper to unify journal ids." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -123,40 +120,61 @@ datasets from DfR." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>jstor: Read Data from JSTOR/DfR</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tklebel/jstor/blob/master/R/jstor_package.R'><code>R/jstor_package.R</code></a></small>
-    <div class="hidden name"><code>jstor.Rd</code></div>
+    <h1>Unify journal IDs</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tklebel/jstor/blob/master/R/augmentations.R'><code>R/augmentations.R</code></a></small>
+    <div class="hidden name"><code>jst_unify_journal_id.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The tool <a href='http://www.jstor.org/dfr/'>Data for Research (DfR)</a> by JSTOR is a
-valuable source for citation analysis and text mining. <code>jstor</code>
-provides functions and suggests workflows for importing
-datasets from DfR.</p>
+    <p>This function is a simple wrapper to unify journal ids.</p>
     
     </div>
 
-        
+    <pre class="usage"><span class='fu'>jst_unify_journal_id</span>(<span class='no'>meta_data</span>, <span class='kw'>new_col</span> <span class='kw'>=</span> <span class='no'>journal_id</span>, <span class='kw'>remove_cols</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>meta_data</th>
+      <td><p>Data which was processed via <code><a href='jst_get_article.html'>jst_get_article()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>new_col</th>
+      <td><p>The name for the column with unified id.</p></td>
+    </tr>
+    <tr>
+      <th>remove_cols</th>
+      <td><p>Should the original columns be removed after unifying?</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A modified <code>tibble</code>.</p>
+<p>A modified tibble.</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Please refer to the vignettes for information on how to use the package:</p>
-<p><code>browseVignettes("jstor")</code></p>
-<p>If you encounter any issues or have ideas for new features, please file an
-issue at <a href='https://github.com/tklebel/jstor/issues'>https://github.com/tklebel/jstor/issues</a>.</p>
+    <p>Date on journal ids can be found in three columns:
+<code>journal_pub_id</code>, <code>journal_jcode</code> and <code>journal_doi</code>. From my experience,
+most of the time the relevant dat ais present in <code>journal_pub_id</code> or
+<code>journal_jcode</code>, with <code>journal_jcode</code> being to most common identifier.
+This function takes the value from <code>journal_pub_id</code>, and if it is missing,
+that from <code>journal_jcode</code>. <code>journal_doi</code> is currently disregarded</p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
           </ul>
-
-    <h2>Author</h2>
-    
-Thomas Klebel
 
   </div>
 </div>

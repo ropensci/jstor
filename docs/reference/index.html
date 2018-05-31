@@ -69,14 +69,26 @@
      
   </a>
 </li>
-<li>
-  <a href="../articles/Introduction.html">Introduction</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Vignettes
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Introduction.html">Introduction</a>
+    </li>
+    <li>
+      <a href="../articles/automating_file_import.html">Automating File Import</a>
+    </li>
+    <li>
+      <a href="../articles/known-quirks.html">Known Data Quirks</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../articles/automating_file_import.html">Automating File Import</a>
-</li>
-<li>
-  <a href="../articles/analysing-n-grams.html">Case study -  ngrams</a>
+  <a href="../articles/analysing-n-grams.html">Case Study - Analysing Ngrams</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -228,6 +240,44 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
+          <h2 id="section-augmentations" class="hasAnchor"><a href="#section-augmentations" class="anchor"></a>Augmentations</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="jst_augment.html">jst_augment()</a></code> </p>
+        </td>
+        <td><p>Clean data from DfR</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="jst_clean_page.html">jst_clean_page()</a></code> </p>
+        </td>
+        <td><p>Clean a character vector of pages</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="jst_unify_journal_id.html">jst_unify_journal_id()</a></code> </p>
+        </td>
+        <td><p>Unify journal IDs</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="jst_add_total_pages.html">jst_add_total_pages()</a></code> </p>
+        </td>
+        <td><p>Add total count of pages</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="jst_get_total_pages.html">jst_get_total_pages()</a></code> </p>
+        </td>
+        <td><p>Calculate total pages</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
           <h2 id="section-helper-functions" class="hasAnchor"><a href="#section-helper-functions" class="anchor"></a>Helper functions</h2>
           <p class="section-desc"></p>
         </th>
@@ -256,12 +306,6 @@
           <p><code><a href="jst_get_journal_overview.html">jst_get_journal_overview()</a></code> </p>
         </td>
         <td><p>Get table with information on journals</p></td>
-      </tr><tr>
-        <!--  -->
-        <td>
-          <p><code><a href="jst_get_total_pages.html">jst_get_total_pages()</a></code> </p>
-        </td>
-        <td><p>Find total pages</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -288,6 +332,7 @@
       <li><a href="#section-batch-import-many-files">Batch import many files</a></li>
       <li><a href="#section-re-import-files-after-batch-conversion">Re-import files after batch conversion</a></li>
       <li><a href="#section-import-full-text-ngram">Import full-text/ngram</a></li>
+      <li><a href="#section-augmentations">Augmentations</a></li>
       <li><a href="#section-helper-functions">Helper functions</a></li>
       <li><a href="#section-top-level-documentation">Top level documentation</a></li>
     </ul>

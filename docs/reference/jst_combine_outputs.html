@@ -74,14 +74,26 @@ one batch." />
      
   </a>
 </li>
-<li>
-  <a href="../articles/Introduction.html">Introduction</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Vignettes
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Introduction.html">Introduction</a>
+    </li>
+    <li>
+      <a href="../articles/automating_file_import.html">Automating File Import</a>
+    </li>
+    <li>
+      <a href="../articles/known-quirks.html">Known Data Quirks</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../articles/automating_file_import.html">Automating File Import</a>
-</li>
-<li>
-  <a href="../articles/analysing-n-grams.html">Case study -  ngrams</a>
+  <a href="../articles/analysing-n-grams.html">Case Study - Analysing Ngrams</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -156,7 +168,7 @@ caution.</p></td>
     </tr>
     <tr>
       <th>warn</th>
-      <td><p>Should warnings be raised, if the filetype cannot be determined?</p></td>
+      <td><p>Should warnings be raised, if the file type cannot be determined?</p></td>
     </tr>
     </table>
     
@@ -194,17 +206,32 @@ files, which you want to import.</p></li>
 <span class='no'>file_list</span> <span class='kw'>&lt;-</span> <span class='fu'>rep</span>(<span class='fu'><a href='jstor_example.html'>jstor_example</a></span>(<span class='st'>"sample_with_references.xml"</span>), <span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `jstor_example` has been deprecated. Please use `jst_example` instead.</span></div><div class='input'>
 <span class='co'># convert and write to file</span>
 <span class='fu'><a href='jst_import.html'>jst_import</a></span>(<span class='no'>file_list</span>, <span class='st'>"article"</span>, <span class='kw'>out_path</span> <span class='kw'>=</span> <span class='no'>tmp</span>, <span class='kw'>.f</span> <span class='kw'>=</span> <span class='no'>find_article</span>,
-             <span class='kw'>n_batches</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>show_progress</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Starting to import 2 file(s).</span></div><div class='output co'>#&gt; <span class='message'>Processing chunk 1/2</span></div><div class='output co'>#&gt; <span class='message'>Processing chunk 2/2</span></div><div class='output co'>#&gt; <span class='message'>Finished importing 2 file(s) in 0.46 secs.</span></div><div class='input'>
+             <span class='kw'>n_batches</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>show_progress</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Starting to import 2 file(s).</span></div><div class='output co'>#&gt; <span class='message'>Processing chunk 1/2</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `find_article` has been deprecated. Please use `jst_get_article` instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `get_basename` has been deprecated. Please use `jst_get_file_name` instead.</span></div><div class='output co'>#&gt; <span class='message'>Processing chunk 2/2</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `find_article` has been deprecated. Please use `jst_get_article` instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `get_basename` has been deprecated. Please use `jst_get_file_name` instead.</span></div><div class='output co'>#&gt; <span class='message'>Finished importing 2 file(s) in 0.11 secs.</span></div><div class='input'>
 <span class='co'># combine outputs</span>
-<span class='fu'>jst_combine_outputs</span>(<span class='no'>tmp</span>)</div><div class='output co'>#&gt; <span class='message'>Re-importing 2 batches.</span></div><div class='output co'>#&gt; <span class='message'>Writing combined file `/private/var/folders/kq/q5brchkd1vsbvt2ykdl5qcvc0000gn/T/Rtmpz3hWiG/combined_article.csv` to disk.</span></div><div class='input'><span class='fu'>list.files</span>(<span class='no'>tmp</span>, <span class='st'>"csv"</span>)</div><div class='output co'>#&gt; [1] "article-1.csv"        "article-2.csv"        "combined_article.csv"</div><div class='input'>
+<span class='fu'>jst_combine_outputs</span>(<span class='no'>tmp</span>)</div><div class='output co'>#&gt; <span class='message'>Re-importing 2 batches.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: number of columns of result is not a multiple of vector length (arg 2)</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 1 parsing failure.</span>
+#&gt; <span class='warning'>row # A tibble: 1 x 5 col     row col      expected   actual   file                                       expected   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;                                      actual 1     1 pub_year an integer pub_year '/private/var/folders/kq/q5brchkd1vsbvt2y… file # A tibble: 1 x 5</span></div><div class='output co'>#&gt; <span class='warning'>Warning: number of columns of result is not a multiple of vector length (arg 2)</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 1 parsing failure.</span>
+#&gt; <span class='warning'>row # A tibble: 1 x 5 col     row col      expected   actual   file                                       expected   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;                                      actual 1     1 pub_year an integer pub_year '/private/var/folders/kq/q5brchkd1vsbvt2y… file # A tibble: 1 x 5</span></div><div class='output co'>#&gt; <span class='message'>Re-importing 1 batches.</span></div><div class='output co'>#&gt; <span class='error'>Error: The file(s) `/private/var/folders/kq/q5brchkd1vsbvt2ykdl5qcvc0000gn/T/RtmpRQtNgE/combined_article.csv`, `/private/var/folders/kq/q5brchkd1vsbvt2ykdl5qcvc0000gn/T/RtmpRQtNgE/combined_test_book_chapter_jst_get_book.csv` already exists. Do you want `overwrite = TRUE`?</span></div><div class='input'><span class='fu'>list.files</span>(<span class='no'>tmp</span>, <span class='st'>"csv"</span>)</div><div class='output co'>#&gt; [1] "article-1.csv"                                     
+#&gt; [2] "article-2.csv"                                     
+#&gt; [3] "combined_article.csv"                              
+#&gt; [4] "combined_part1_journal_article_jst_get_article.csv"
+#&gt; [5] "combined_part2_journal_article_jst_get_article.csv"
+#&gt; [6] "combined_test_book_chapter_jst_get_book.csv"       
+#&gt; [7] "test_book_chapter_jst_get_book-1.csv"              </div><div class='input'>
 </div><span class='co'># NOT RUN {</span>
 <span class='co'># Trying to combine the files again raises an error.</span>
 <span class='fu'>jst_combine_outputs</span>(<span class='no'>tmp</span>)
 <span class='co'># }</span><div class='input'>
 <span class='co'># this doesn't</span>
-<span class='fu'>jst_combine_outputs</span>(<span class='no'>tmp</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Re-importing 2 batches.</span></div><div class='output co'>#&gt; <span class='message'>Writing combined file `/private/var/folders/kq/q5brchkd1vsbvt2ykdl5qcvc0000gn/T/Rtmpz3hWiG/combined_article.csv` to disk.</span></div><div class='input'>
+<span class='fu'>jst_combine_outputs</span>(<span class='no'>tmp</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Re-importing 2 batches.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: number of columns of result is not a multiple of vector length (arg 2)</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 1 parsing failure.</span>
+#&gt; <span class='warning'>row # A tibble: 1 x 5 col     row col      expected   actual   file                                       expected   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;                                      actual 1     1 pub_year an integer pub_year '/private/var/folders/kq/q5brchkd1vsbvt2y… file # A tibble: 1 x 5</span></div><div class='output co'>#&gt; <span class='warning'>Warning: number of columns of result is not a multiple of vector length (arg 2)</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 1 parsing failure.</span>
+#&gt; <span class='warning'>row # A tibble: 1 x 5 col     row col      expected   actual   file                                       expected   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;                                      actual 1     1 pub_year an integer pub_year '/private/var/folders/kq/q5brchkd1vsbvt2y… file # A tibble: 1 x 5</span></div><div class='output co'>#&gt; <span class='message'>Re-importing 1 batches.</span></div><div class='output co'>#&gt; <span class='message'>Writing combined file `/private/var/folders/kq/q5brchkd1vsbvt2ykdl5qcvc0000gn/T/RtmpRQtNgE/combined_article.csv` to disk.</span></div><div class='output co'>#&gt; <span class='message'>Writing combined file `/private/var/folders/kq/q5brchkd1vsbvt2ykdl5qcvc0000gn/T/RtmpRQtNgE/combined_test_book_chapter_jst_get_book.csv` to disk.</span></div><div class='input'>
 <span class='co'># we can remove the original files too</span>
-<span class='fu'>jst_combine_outputs</span>(<span class='no'>tmp</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>clean_up</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Re-importing 2 batches.</span></div><div class='output co'>#&gt; <span class='message'>Writing combined file `/private/var/folders/kq/q5brchkd1vsbvt2ykdl5qcvc0000gn/T/Rtmpz3hWiG/combined_article.csv` to disk.</span></div><div class='output co'>#&gt; <span class='message'>Deleting original batches.</span></div><div class='input'><span class='fu'>list.files</span>(<span class='no'>tmp</span>, <span class='st'>"csv"</span>)</div><div class='output co'>#&gt; [1] "combined_article.csv"</div><div class='input'>
+<span class='fu'>jst_combine_outputs</span>(<span class='no'>tmp</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>clean_up</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Re-importing 2 batches.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: number of columns of result is not a multiple of vector length (arg 2)</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 1 parsing failure.</span>
+#&gt; <span class='warning'>row # A tibble: 1 x 5 col     row col      expected   actual   file                                       expected   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;                                      actual 1     1 pub_year an integer pub_year '/private/var/folders/kq/q5brchkd1vsbvt2y… file # A tibble: 1 x 5</span></div><div class='output co'>#&gt; <span class='warning'>Warning: number of columns of result is not a multiple of vector length (arg 2)</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 1 parsing failure.</span>
+#&gt; <span class='warning'>row # A tibble: 1 x 5 col     row col      expected   actual   file                                       expected   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;                                      actual 1     1 pub_year an integer pub_year '/private/var/folders/kq/q5brchkd1vsbvt2y… file # A tibble: 1 x 5</span></div><div class='output co'>#&gt; <span class='message'>Re-importing 1 batches.</span></div><div class='output co'>#&gt; <span class='message'>Writing combined file `/private/var/folders/kq/q5brchkd1vsbvt2ykdl5qcvc0000gn/T/RtmpRQtNgE/combined_article.csv` to disk.</span></div><div class='output co'>#&gt; <span class='message'>Writing combined file `/private/var/folders/kq/q5brchkd1vsbvt2ykdl5qcvc0000gn/T/RtmpRQtNgE/combined_test_book_chapter_jst_get_book.csv` to disk.</span></div><div class='output co'>#&gt; <span class='message'>Deleting original batches.</span></div><div class='input'><span class='fu'>list.files</span>(<span class='no'>tmp</span>, <span class='st'>"csv"</span>)</div><div class='output co'>#&gt; [1] "combined_article.csv"                              
+#&gt; [2] "combined_part1_journal_article_jst_get_article.csv"
+#&gt; [3] "combined_part2_journal_article_jst_get_article.csv"
+#&gt; [4] "combined_test_book_chapter_jst_get_book.csv"       </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
