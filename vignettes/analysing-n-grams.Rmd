@@ -91,14 +91,16 @@ imported_metadata
 ```
 
 # Cleaning the data
-
-- convert years to integers
-- do other things from augment (unify journal id)
+Data from DfR is inherently messy. To fix a few common issues, we can use 
+`jst_augment()`:
 
 ```{r}
-imported_metadata <- imported_metadata %>% 
-  mutate(pub_year = as.integer(pub_year))
+imported_metadata <- jst_augment(imported_metadata, quietly = TRUE)
 ```
+
+For more information on common quirks with data from DfR and how to deal with
+them, take a look at the
+[vignette](https://tklebel.github.io/jstor/articles/known_quirks.html).
 
 
 # Exploration
