@@ -45,7 +45,6 @@ CRAN, but can be installed via `devtools`.
 
 library(jstor)
 library(tidyverse)
-library(visdat)
 library(future)
 
 # set a lighter theme for plots
@@ -99,8 +98,7 @@ imported_metadata <- jst_augment(imported_metadata, quietly = TRUE)
 ```
 
 For more information on common quirks with data from DfR and how to deal with
-them, take a look at the
-[vignette](https://tklebel.github.io/jstor/articles/known_quirks.html).
+them, take a look at the `vignette("known-quirks")`.
 
 
 # Exploration
@@ -172,53 +170,9 @@ could select only a few journals. Here, we will look at articles from two
 leading journals within the discipline, "American Journal
 of Sociology" and "American Sociological Review". 
 
-To identify articles from
-those journals, we need to take a look at the columns "journal_doi",
-"journal_jcode", and "journal_pub_id". For sociological journals in general, 
-the most common identifier is "journal_jcode". To demonstrate this, we
-can look at the
-missing proportion for each of the three variables:
 
-```{r}
-without_wall %>% 
-  select(contains("journal")) %>% 
-  vis_miss()
-```
-
-This illustrates rather strikingly, that most of the time our information is in
-"journal_jcode", and when it isn't, it is in "journal_pub_id".
-
-There are, however, some cases, where there is information in both variables:
-
-```{r}
-without_wall %>% 
-  filter(!is.na(journal_jcode) & !is.na(journal_pub_id))
-```
-
-
-Since for those cases, the form without digits (for example "geneses") is 
-similar to the usual format in "journal_jcode", we will take the information
-from "journal_jcode" when it is missing in "journal_pub_id" (which is the 
-most frequent case), and from "journal_pub_id" otherwise. 
-
-```{r}
-without_wall <- without_wall %>% 
-  mutate(journal_id = case_when(is.na(journal_pub_id) ~ journal_jcode,
-                                TRUE ~ journal_pub_id))
-```
-
-
-We can check, if there are any missings left:
-```{r}
-without_wall %>% 
-  pull(journal_id) %>% 
-  is.na() %>% 
-  any()
-```
-
-
-After cleaning up the identifier for journals, we can select our two 
-flagship-journals.
+Since we cleaned the identifiers for journals with `jst_augment` earlier,
+we can select our two flagship-journals very easily.
 
 ```{r}
 flagship_journals <- without_wall %>%
