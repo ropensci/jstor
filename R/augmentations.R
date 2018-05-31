@@ -1,6 +1,6 @@
 #' Clean data from DfR
 #' 
-#' This function takes data from [jst_get_article()] or [jst_get_book()] and
+#' This function takes data from [jst_get_article()] and
 #' applies helper functions for cleaning the data.
 #' 
 #' Data from DfR is inherently messy. For many examples see 
@@ -8,11 +8,10 @@
 #' convenience function that tries to deal with a few common tasks to
 #' clean the data.
 #' 
-#' For journal articles, it calles [jst_clean_page()] for first and last page,
-#' [jst_unify_journal_id()] and [jst_add_total_pages()].
+#' For journal articles, it calles [jst_clean_page()] to convert first and last
+#' page, [jst_unify_journal_id()] and [jst_add_total_pages()].
 #' 
-#' @param meta_data Data which was processed via [jst_get_article()] or 
-#' [jst_get_book()]
+#' @param meta_data Data which was processed via [jst_get_article()].
 #' 
 #' @return A cleaned tibble.
 #' @seealso [jst_clean_page()] [jst_unify_journal_id()] [jst_add_total_pages()]
@@ -29,11 +28,6 @@ jst_augment <- function(meta_data) {
                        jst_clean_page) %>% 
       jst_unify_journal_id() %>%
       jst_add_total_pages()
-    
-  } else if (identical(col_names, names(book_cols$cols))) {
-    # for books
-    meta_data %>%
-      dplyr::mutate_at(dplyr::vars("first_page"), jst_clean_page) 
   } else {
     abort("Unknown meta_data type.")
   }
