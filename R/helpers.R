@@ -35,7 +35,7 @@ validate_article <- function(xml_file) {
            call. = FALSE)
     }
   } else if (!identical(xml2::xml_name(xml_file), "article")) {
-    stop("Unknown input file.")
+    abort("Unknown input file.")
   }
 }
 
@@ -46,7 +46,7 @@ validate_book <- function(xml_file) {
                 "or `find_footnotes` instead."),
          call. = FALSE)
   } else if (!identical(xml2::xml_name(xml_file), "book")) {
-    stop("Unknown input file.")
+    abort("Unknown input file.")
   }
 }
 
