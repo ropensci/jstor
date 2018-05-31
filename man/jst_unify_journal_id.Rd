@@ -11,7 +11,7 @@ jst_unify_journal_id(meta_data, new_col = journal_id, remove_cols = TRUE)
 
 \item{new_col}{The name for the column with unified id.}
 
-\item{remove_cols}{Should the original columns be removed after unifiyng?}
+\item{remove_cols}{Should the original columns be removed after unifying?}
 }
 \value{
 A modified \code{tibble}.

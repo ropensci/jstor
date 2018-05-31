@@ -166,7 +166,7 @@ jst_get_total_pages <- function(first_page, last_page, page_range) {
 #' 
 #' @param meta_data Data which was processed via [jst_get_article()].
 #' @param new_col The name for the column with unified id.
-#' @param remove_cols Should the original columns be removed after unifiyng?
+#' @param remove_cols Should the original columns be removed after unifying?
 #' 
 #' @return A modified `tibble`.
 #' 
