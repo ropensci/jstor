@@ -4,12 +4,14 @@
 \alias{jst_add_total_pages}
 \title{Add total count of pages}
 \usage{
-jst_add_total_pages(meta_data, page_col = n_pages)
+jst_add_total_pages(meta_data, page_col = n_pages, quietly = FALSE)
 }
 \arguments{
 \item{meta_data}{Data which was processed via \code{\link[=jst_get_article]{jst_get_article()}}.}
 
 \item{page_col}{The name of the new column with total count of pages.}
+
+\item{quietly}{Should warnings from converting page ranges be suppressed?}
 }
 \description{
 This function adds a column with the total count of pages. It calls

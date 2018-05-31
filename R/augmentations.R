@@ -12,13 +12,14 @@
 #' page, [jst_unify_journal_id()] and [jst_add_total_pages()].
 #' 
 #' @param meta_data Data which was processed via [jst_get_article()].
+#' @param quietly Should warnings from converting page ranges be suppressed?
 #' 
 #' @return A cleaned tibble.
 #' @seealso [jst_clean_page()] [jst_unify_journal_id()] [jst_add_total_pages()]
 #' [jst_get_total_pages()]
 #' 
 #' @export
-jst_augment <- function(meta_data) {
+jst_augment <- function(meta_data, quietly = FALSE) {
   col_names <- names(meta_data)
   
   if (identical(col_names, names(article_cols$cols)) ||
@@ -28,7 +29,7 @@ jst_augment <- function(meta_data) {
       dplyr::mutate_at(dplyr::vars("first_page", "last_page"),
                        jst_clean_page) %>% 
       jst_unify_journal_id() %>%
-      jst_add_total_pages()
+      jst_add_total_pages(quietly = quietly)
   } else {
     abort("Unknown meta_data type.")
   }
@@ -71,14 +72,17 @@ jst_clean_page <- function(page) {
 #' 
 #' @param meta_data Data which was processed via [jst_get_article()].
 #' @param page_col The name of the new column with total count of pages.
+#' @param quietly Should warnings from converting page ranges be suppressed?
 #' @export
 #' @seealso [jst_get_total_pages()]
-jst_add_total_pages <- function(meta_data, page_col = n_pages) {
+jst_add_total_pages <- function(meta_data, page_col = n_pages, 
+                                quietly = FALSE) {
   page_col <- rlang::enquo(page_col)
   
   dplyr::mutate(
     meta_data,
-    !!page_col := jst_get_total_pages(first_page, last_page, page_range)
+    !!page_col := jst_get_total_pages(first_page, last_page, page_range,
+                                      quietly)
   )
 }
 
@@ -107,6 +111,9 @@ jst_add_total_pages <- function(meta_data, page_col = n_pages) {
 #' @param first_page The first page of an article (numeric).
 #' @param last_page The last page of an article (numeric).
 #' @param page_range The page range of an article (character).
+#' @param quietly Sometimes page ranges contain roman numerals like `xiv`. These
+#' are not recognized, return `NA` and raise a warning. If set to `TRUE`, this
+#' warning not raised.
 #' 
 #' @return A vector with the calculated total pages.
 #' 
@@ -125,7 +132,8 @@ jst_add_total_pages <- function(meta_data, page_col = n_pages) {
 #' jst_get_total_pages(NA_real_, NA_real_, "350, 51 - 70")
 #' jst_get_total_pages(NA_real_, NA_real_, "51 - 70, 80-100")
 #' jst_get_total_pages(NA_real_, NA_real_, "51-70+350")
-jst_get_total_pages <- function(first_page, last_page, page_range) {
+jst_get_total_pages <- function(first_page, last_page, page_range,
+                                quietly = FALSE) {
   if (!(is.numeric(first_page) && is.numeric(last_page))) 
     abort("`first_page` and `last_page` must be numeric.")
   
@@ -139,7 +147,7 @@ jst_get_total_pages <- function(first_page, last_page, page_range) {
   
   dplyr::case_when(
     is.na(first_page) & is.na(last_page) & is.na(page_range) ~ NA_real_,
-    !is.na(page_range) ~ parse_ranges(page_range),
+    !is.na(page_range) ~ parse_ranges(page_range, quietly),
     is.na(page_range) & !is.na(first_page) & is.na(last_page) ~ NA_real_,
     is.na(page_range) & 
       !is.na(first_page) & 
@@ -193,7 +201,7 @@ jst_unify_journal_id <- function(meta_data, new_col = journal_id,
 
 
 
-parse_ranges <- function(page_range) {
+parse_ranges <- function(page_range, quietly = FALSE) {
   splitted_df <- tibble::new_tibble(list(page_range = page_range)) %>% 
     mutate(id = 1:n(),
            splitted = stringr::str_split(page_range, ",|\\+")) %>% 
@@ -202,12 +210,12 @@ parse_ranges <- function(page_range) {
   # detect roman numerals which are occasionally used for introduction sections
   roman_chars <- str_detect(splitted_df$splitted, "x|i|v|X|I|V")
   
-  if (any(roman_chars, na.rm = T)) {
+  if (any(roman_chars, na.rm = T) && !quietly) {
     warning("Cannot handle roman numerals (`x|i|v|X|I|V`) in rows (",
             paste(which(roman_chars), collapse = ", "),
             ") when computing ",
             "page range. ",
-            "Returning `NA_character` instead.", call. = FALSE)
+            "Returning `NA_character` instead.\n", call. = FALSE)
   }
   
   splitted_df %>% 

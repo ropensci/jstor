@@ -4,7 +4,7 @@
 \alias{jst_get_total_pages}
 \title{Find total pages}
 \usage{
-jst_get_total_pages(first_page, last_page, page_range)
+jst_get_total_pages(first_page, last_page, page_range, quietly = FALSE)
 }
 \arguments{
 \item{first_page}{The first page of an article (numeric).}
@@ -12,6 +12,10 @@ jst_get_total_pages(first_page, last_page, page_range)
 \item{last_page}{The last page of an article (numeric).}
 
 \item{page_range}{The page range of an article (character).}
+
+\item{quietly}{Sometimes page ranges contain roman numerals like \code{xiv}. These
+are not recognized, return \code{NA} and raise a warning. If set to \code{TRUE}, this
+warning not raised.}
 }
 \value{
 A vector with the calculated total pages.

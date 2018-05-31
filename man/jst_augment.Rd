@@ -4,10 +4,12 @@
 \alias{jst_augment}
 \title{Clean data from DfR}
 \usage{
-jst_augment(meta_data)
+jst_augment(meta_data, quietly = FALSE)
 }
 \arguments{
 \item{meta_data}{Data which was processed via \code{\link[=jst_get_article]{jst_get_article()}}.}
+
+\item{quietly}{Should warnings from converting page ranges be suppressed?}
 }
 \value{
 A cleaned tibble.
