@@ -1,3 +1,48 @@
+#' @export
+jst_augment <- function(meta_data) {
+  col_names <- names(meta_data)
+  
+  if (identical(col_names, names(article_cols$cols)) ||
+      identical(col_names, names(article_cols_old$cols))) {
+    # for journal articles
+    meta_data %>%
+      dplyr::mutate_at(vars("first_page", "last_page"), jst_clean_page) %>% 
+      jst_unify_journal_id() %>%
+      jst_add_total_pages()
+    
+  } else if (identical(col_names, names(book_cols$cols))) {
+    # for books
+    meta_data %>%
+      dplyr::mutate_at(vars("first_page"), jst_clean_page) 
+  } else {
+    abort("Unknown meta_data type.")
+  }
+}
+
+#' @export
+jst_clean_page <- function(page) {
+  # check if any has weird format like with AJS: AJSv104p126
+  is_complicated <- str_detect(page, "p")
+  
+  # do not change missing values
+  is_complicated[is.na(is_complicated)] <- FALSE
+  
+  page[is_complicated] <- stringr::str_extract(page[is_complicated], 
+                                               "(?<=p)\\d+")
+  
+  convert_page(page)
+}
+
+#' @export
+jst_add_total_pages <- function(meta_data, page_col = n_pages) {
+  page_col <- rlang::enquo(page_col)
+  
+  dplyr::mutate(
+    meta_data,
+    !!page_col := jst_get_total_pages(first_page, last_page, page_range)
+  )
+}
+
 #' Find total pages 
 #' 
 #' This function is a simple helper to calculate the total number of pages of
@@ -45,15 +90,8 @@ jst_get_total_pages <- function(first_page, last_page, page_range) {
 
 
 
-jst_add_total_pages <- function(meta_data, page_col = n_pages) {
-  page_col <- rlang::enquo(page_col)
-  dplyr::mutate(
-    meta_data,
-    !!page_col := jst_get_total_pages(first_page, last_page, page_range)
-  )
-}
 
-
+#' @export
 jst_unify_journal_id <- function(meta_data) {
   meta_data %>%
     dplyr::mutate(journal_id = case_when(is.na(journal_pub_id) ~ journal_jcode,
@@ -61,39 +99,10 @@ jst_unify_journal_id <- function(meta_data) {
     dplyr::select(-journal_pub_id, -journal_jcode, -journal_doi)
 }
 
-jst_clean_page <- function(page) {
-  # check if any has weird format like with AJS: AJSv104p126
-  is_complicated <- str_detect(page, "p")
-  
-  # do not change missing values
-  is_complicated[is.na(is_complicated)] <- FALSE
-  
-  page[is_complicated] <- stringr::str_extract(page[is_complicated], 
-                                               "(?<=p)\\d+")
-  
-  convert_page(page)
-}
 
 
-jst_augment <- function(meta_data) {
-  col_names <- names(meta_data)
-  
-  if (identical(col_names, names(article_cols$cols)) ||
-      identical(col_names, names(article_cols_old$cols))) {
-    # for journal articles
-    meta_data %>%
-      dplyr::mutate_at(vars("first_page", "last_page"), jst_clean_page) %>% 
-      jst_unify_journal_id() %>%
-      jst_add_total_pages()
-    
-  } else if (identical(col_names, names(book_cols$cols))) {
-    # for books
-    meta_data %>%
-      dplyr::mutate_at(vars("first_page"), jst_clean_page) 
-  } else {
-    abort("Unknown meta_data type.")
-  }
-}
+
+
 
 
 
