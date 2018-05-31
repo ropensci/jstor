@@ -21,11 +21,11 @@ NULL
 
 
 # global variables
-utils::globalVariables(c("references", "footnotes", "encoding", "authors", "i",
-                         "Name", "Length", "Date", "chunk_number", ".",
-                         "fun_names", "meta_type", "type", "full_coverage",
-                         "title", "journal_id", "file_name", "id", "zip_loc",
-                         "first_page", "last_page", "splitted", "wo_space", 
-                         "wo_chars", "total", "vars", "page_range", "first",
-                         "last", "journal_doi", "journal_jcode", 
-                         "journal_pub_id", "n_pages", ":="))
+utils::globalVariables(
+  c("references", "footnotes", "encoding", "authors", "i", "Name", "Length",
+    "Date", "chunk_number", ".", "fun_names", "meta_type", "type",
+    "full_coverage", "title", "journal_id", "file_name", "id", "zip_loc",
+    "first_page", "last_page", "splitted", "wo_space",  "wo_chars", "total",
+    "vars", "page_range", "first", "last", "journal_doi", "journal_jcode",
+    "journal_pub_id", "n_pages", ":=")
+)
