@@ -86,7 +86,7 @@ jst_add_total_pages <- function(meta_data, page_col = n_pages,
   )
 }
 
-#' Find total pages 
+#' Calculate total pages 
 #' 
 #' This function is a simple helper to calculate the total number of pages of
 #' an article.

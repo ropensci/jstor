@@ -2,7 +2,7 @@
 % Please edit documentation in R/augmentations.R
 \name{jst_get_total_pages}
 \alias{jst_get_total_pages}
-\title{Find total pages}
+\title{Calculate total pages}
 \usage{
 jst_get_total_pages(first_page, last_page, page_range, quietly = FALSE)
 }
