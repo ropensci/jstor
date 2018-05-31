@@ -7,6 +7,7 @@
 ^LICENSE\.md$
 ^appveyor\.yml$
 ^README\.Rmd$
+^README\.md$
 ^codecov\.yml$
 ^CONDUCT\.md$
 ^paper.md$
