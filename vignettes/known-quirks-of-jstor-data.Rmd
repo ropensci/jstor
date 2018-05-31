@@ -4,7 +4,7 @@ author: "Thomas Klebel"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Known Quirks of JSTOR Dat}
+  %\VignetteIndexEntry{Known Quirks of JSTOR Data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -56,6 +56,11 @@ library(jstor)
 
 
 ## Page numbers
+Page numbers are a mess. Sometimes page numbers might be specified as 
+"pp. 1234-83" as in
+[this article from the American Journal of Sociology](http://www.jstor.org/stable/10.1086/659100).
+Of course, this results in `first_page = 1234` and `last_page = 83`.
+
 ### Clean pages
 
 ### Total pages
@@ -81,7 +86,7 @@ which in this case would look like `42 - 65, 362`.
 A small helper to deal with those situations is `jst_get_total_pages()`. It
 works for page ranges, but also for first and last pages:
 
-```{r}
+```{r, eval=FALSE}
 jst_get_total_pages(page_range = "42 - 65, 362")
 
 jst_get_total_pages(first_page = 20, last_page = 39)
