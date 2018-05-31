@@ -23,7 +23,7 @@ written to \code{path}.}
 \item{clean_up}{Do you want to remove the original batch files? Use with
 caution.}
 
-\item{warn}{Should warnings be raised, if the filetype cannot be determined?}
+\item{warn}{Should warnings be raised, if the file type cannot be determined?}
 }
 \value{
 Either writes to disk, or returns a list with all combined files.

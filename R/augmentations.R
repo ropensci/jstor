@@ -8,7 +8,7 @@
 #' convenience function that tries to deal with a few common tasks to
 #' clean the data.
 #' 
-#' For journal articles, it calles [jst_clean_page()] to convert first and last
+#' For journal articles, it calls [jst_clean_page()] to convert first and last
 #' page, [jst_unify_journal_id()] and [jst_add_total_pages()].
 #' 
 #' @param meta_data Data which was processed via [jst_get_article()].

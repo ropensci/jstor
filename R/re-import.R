@@ -29,7 +29,7 @@
 #' @param overwrite Should files be overwritten?
 #' @param clean_up Do you want to remove the original batch files? Use with
 #' caution.
-#' @param warn Should warnings be raised, if the filetype cannot be determined?
+#' @param warn Should warnings be raised, if the file type cannot be determined?
 #' 
 #' @return Either writes to disk, or returns a list with all combined files.
 #' 

@@ -24,7 +24,7 @@ Data from DfR is inherently messy. For many examples see
 convenience function that tries to deal with a few common tasks to
 clean the data.
 
-For journal articles, it calles \code{\link[=jst_clean_page]{jst_clean_page()}} to convert first and last
+For journal articles, it calls \code{\link[=jst_clean_page]{jst_clean_page()}} to convert first and last
 page, \code{\link[=jst_unify_journal_id]{jst_unify_journal_id()}} and \code{\link[=jst_add_total_pages]{jst_add_total_pages()}}.
 }
 \seealso{
