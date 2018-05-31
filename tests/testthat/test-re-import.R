@@ -142,7 +142,7 @@ article <- structure(list(file_name = "journal-article-standard_case", journal_d
     article_doi = "10.2307/4117222", article_pub_id = NA_character_, article_jcode = NA_character_, 
     article_type = "research-article", article_title = "Two New Species of Ischaemum", 
     volume = "5", issue = "2", language = "eng", pub_day = "1", pub_month = "1", 
-    pub_year = "1950", first_page = "187", last_page = "188", page_range = "187-188"), 
+    pub_year = 1950L, first_page = "187", last_page = "188", page_range = "187-188"), 
     row.names = c(NA, -1L), class = c("tbl_df", "tbl", "data.frame"))
 # authors -----
 authors <- structure(list(file_name = "journal-article-standard_case", prefix = NA_character_, 

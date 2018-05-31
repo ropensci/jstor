@@ -260,7 +260,7 @@ article_cols <- cols(
   language = col_character(),
   pub_day = col_character(),
   pub_month = col_character(),
-  pub_year = col_character(),
+  pub_year = col_integer(),
   first_page = col_character(),
   last_page = col_character(),
   page_range = col_character()
@@ -280,7 +280,7 @@ article_cols_old <- cols(
   language = col_character(),
   pub_day = col_character(),
   pub_month = col_character(),
-  pub_year = col_character(),
+  pub_year = col_integer(),
   first_page = col_character(),
   last_page = col_character()
 )
