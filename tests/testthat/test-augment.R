@@ -37,6 +37,17 @@ test_that("total pages are computed", {
   expect_error(jst_get_total_pages(2, 2, 2))
 })
 
+test_that("total pages are added", {
+  input <- tibble::tribble(
+    ~first_page, ~last_page, ~page_range,
+    1,           10,         NA_character_
+  )
+
+  output <- jst_add_total_pages(input)
+
+  expect_identical(dplyr::bind_cols(input, n_pages = 10), output)
+})
+
 test_that("ranges are parsed correctly", {
   
   expect_identical(parse_ranges("1, 5-10"), 7)
@@ -50,4 +61,37 @@ test_that("ranges are parsed correctly", {
   
   expect_warning(parse_ranges("xiv-xx"))
   expect_warning(parse_ranges("X-XX"))
+})
+
+
+test_that("journal id is unified", {
+  meta_data <- jst_get_article(jst_example("sample_with_references.xml"))
+  
+  output <- jst_unify_journal_id(meta_data)
+  correct_out <- dplyr::select(meta_data,
+                               -journal_doi, -journal_pub_id,
+                               journal_id = journal_jcode)
+  
+  expect_equal(output, correct_out)
+})
+
+test_that("data gets augmented", {
+  journal_meta <- jst_get_article(jst_example("sample_with_references.xml"))
+
+  correct_journal <- structure(
+    list(
+      file_name = "sample_with_references", 
+      journal_title = "Transactions of the American Microscopical Society", 
+      article_doi = "10.2307/3221896", article_pub_id = NA_character_, 
+      article_jcode = NA_character_, article_type = "research-article", 
+      article_title = "On the Protozoa Parasitic in Frogs", volume = "41", 
+      issue = "2", language = "eng", pub_day = "1", pub_month = "4",  
+      pub_year = 1922L, first_page = 59L, last_page = 76L, page_range = "59-76",
+      journal_id = "tranamermicrsoci", n_pages = 18),
+    class = c("tbl_df", "tbl", "data.frame"),
+    row.names = c(NA, -1L)
+  )
+  
+  expect_identical(correct_journal, jst_augment(journal_meta))
+  expect_error(jst_augment(data.frame(a = 1, b = 2)))
 })
