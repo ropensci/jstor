@@ -21,21 +21,35 @@ This function is a simple helper to calculate the total number of pages of
 an article.
 }
 \details{
-This function deals with three cases:
+This function deals with four cases:
 \itemize{
+\item if all three arguments are missing, NA is returned.
 \item if page_range is supplied, the number of pages is calculated from it.
-\item if only the first page is supplied, NA is returned
+\item if only the first page is supplied, NA is returned.
 \item if first and last page are supplied, the number of pages is calculated as
-\code{last_page - first_page + 1}
+\code{last_page - first_page + 1}.
 }
+
+The algorithm to parse page ranges works as follows: A typical page range is
+\code{1-10, 200} where the article starts at page 1, ends at page 10, and has an
+erratum at page 200. For this case, the range is calculated as
+\code{range + single_page}, as in\code{(10 - 1 + 1) + 1 = 11}. Sometimes multiple
+ranges are given: \code{1-10, 11-20}. For those cases all ranges are summed:
+\code{(10 - 1 + 1) + (20 - 11 + 1) = 20}. Another specification for multiple
+ranges is \code{1-10+11-20}, which is treated similarly.
 }
 \examples{
 # calculate pages from first and last page
 first_pages <- sample(30:50, 10)
 last_pages <- first_pages + sample(5:20, 10)
+page_ranges <- rep(NA_character_, 10)
 
-jst_get_total_pages(first_pages, last_pages)
+jst_get_total_pages(first_pages, last_pages, page_ranges)
 
 # get pages from page range
-jst_get_total_pages(page_range = "51 - 70, 350")
+jst_get_total_pages(NA_real_, NA_real_, "51 - 70")
+jst_get_total_pages(NA_real_, NA_real_, "51 - 70, 350")
+jst_get_total_pages(NA_real_, NA_real_, "350, 51 - 70")
+jst_get_total_pages(NA_real_, NA_real_, "51 - 70, 80-100")
+jst_get_total_pages(NA_real_, NA_real_, "51-70+350")
 }
