@@ -25,14 +25,15 @@ jst_augment <- function(meta_data) {
       identical(col_names, names(article_cols_old$cols))) {
     # for journal articles
     meta_data %>%
-      dplyr::mutate_at(vars("first_page", "last_page"), jst_clean_page) %>% 
+      dplyr::mutate_at(dplyr::vars("first_page", "last_page"),
+                       jst_clean_page) %>% 
       jst_unify_journal_id() %>%
       jst_add_total_pages()
     
   } else if (identical(col_names, names(book_cols$cols))) {
     # for books
     meta_data %>%
-      dplyr::mutate_at(vars("first_page"), jst_clean_page) 
+      dplyr::mutate_at(dplyr::vars("first_page"), jst_clean_page) 
   } else {
     abort("Unknown meta_data type.")
   }
