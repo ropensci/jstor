@@ -133,7 +133,7 @@ jst_get_total_pages <- function(first_page, last_page, page_range) {
     abort("`first_page` and `last_page` must be numeric.")
   
   if (!is.character(page_range))
-    abort("`page_range` must be a character vecttor.")
+    abort("`page_range` must be a character vector.")
   
   ll <- list(first_page, last_page, page_range)
   if (!identical(length(unique(lengths(ll))), 1L)) {
