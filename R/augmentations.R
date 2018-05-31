@@ -174,6 +174,8 @@ jst_get_total_pages <- function(first_page, last_page, page_range) {
 #' @export
 jst_unify_journal_id <- function(meta_data, new_col = journal_id, 
                                  remove_cols = TRUE) {
+  new_col <- rlang::enquo(new_col)
+  
   out <- meta_data %>%
     dplyr::mutate(!!new_col := dplyr::case_when(
       is.na(journal_pub_id) ~ journal_jcode,
