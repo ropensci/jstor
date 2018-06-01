@@ -1,8 +1,10 @@
 ---
-title: "Known Quirks of JSTOR Data"
+title: "Known Quirks of JSTOR/DfR Data"
 author: "Thomas Klebel"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
 vignette: >
   %\VignetteIndexEntry{Known Quirks of JSTOR Data}
   %\VignetteEngine{knitr::rmarkdown}
@@ -18,14 +20,20 @@ knitr::opts_chunk$set(
 
 # Collecting all the quirks
 Data from JSTOR/DfR is unlike most other data you encounter when doing text 
-analysis. First and foremost, the data about the articles and books come from a
-wide variety of journals or publishers. The level of detail and certain formats
+analysis. First and foremost, the data about articles and books come from a
+wide variety of journals and publishers. The level of detail and certain formats
 vary because of this. `jstor` tries to deal with this situation with two
 strategies:
 
 - try to recognise the format and read data accordingly
 - if this is not possible, read data as "raw" as possible, i.e. without any 
 conversions
+
+An example for the first case are references. Four different ways how
+references can be specified are known at this time, and all are imported in 
+specific ways to deal this variation. There might however be other formats,
+which should lead to an informative error when trying to import them via 
+`jst_get_references()`.
 
 An example for the latter case are page numbers. Most of the time, the entries
 for page numbers are simply `42`, or `61`. This is as expected, and could be
@@ -34,49 +42,76 @@ would pose no problem either, we could simply extract all digits via regex and
 parse as character. Unfortunately, sometimes the page is specified like this:
 `v75i2p84`. Extracting all digits would result in `75284`, which is wrong by
 a long shot. Since there might be other ways of specifying pages, `jstor` does
-not attempt to parse the pages to integers when importing.
+not attempt to parse the pages to integers when importing. However, it
+offers a set of convenience functions which deal with a few common cases
+(see `jst_augment()` and below).
 
-There are many other problems or pecularities like this. This vignette tries to
+There are many other problems or peculiarities like this. This vignette tries to
 list as many as possible, and offer solutions for dealing with them.
 Unfortunately I have neither the time nor the interest to wade through all the
 data which you could get from DfR in order to find all possible quirks. The
 following list is thus inevitably incomplete. If you encounter new 
-quirks/pecularities, you are thus welcome to share them by sending me an email,
-or [opening an issue at GitHub](https://github.com/tklebel/jstor/issues), and 
-I will include them in future version of this vignette, so this vignette can
+quirks/peculiarities, it would be greatly appreciated if you sent me an email,
+or [opened an issue at GitHub](https://github.com/tklebel/jstor/issues).
+I will then include your findings in future version of this vignette, so this 
+vignette can
 be a starting point for everybody who conducts text analysis with data from
 JSTOR/DfR.
 
 
+# Data augmentation
+After importing data via `jst_get_article()`, there are at least two tasks you
+might typically want to undertake:
+
+- Merge different identifiers for journals into one, so you can filter journals.
+- Convert pages from character into integers and calculate the total number
+of pages per article.
+
+There are four functions which help you to streamline this process:
+
+- `jst_clean_page()` attempts to turn a character vector with pages into an integer
+vector.
+- `jst_add_total_pages()` adds a column with the total number of pages per
+article.
+- `jst_unify_journal_id()` merges different identifiers for journals into one.
+- `jst_augment()` wraps the above functions for convenience.
+
 # Known quirks
 
-```{r}
-library(jstor)
-```
-
+In the following sections, known issues with data from DfR are described in
+greater detail.
 
 ## Page numbers
-Page numbers are a mess. Sometimes page numbers might be specified as 
-"pp. 1234-83" as in
-[this article from the American Journal of Sociology](http://www.jstor.org/stable/10.1086/659100).
-Of course, this results in `first_page = 1234` and `last_page = 83`.
+Page numbers are a mess. Besides the issues mentioned above, page numbers might
+sometimes be specified as "pp. 1234-83" as in
+[this article from the American Journal of 
+Sociology](http://www.jstor.org/stable/10.1086/659100).
+Of course, this results in `first_page = 1234` and `last_page = 83`, and the
+computed number of total pages from `jst_get_total_pages()` will be
+negative. There is currently no general solution for this issue.
 
-### Clean pages
 
-### Total pages
+### Calculating total pages
 As outlined above, page numbers come in very different forms. Besides this
 problem, there is actually another issue. Imagine you would like to quantify 
-the lenghts of articles. Obviously you will need information on the first
+the lengths of articles. Obviously you will need information on the first
 and the last page of the articles. Furthermore, the pages need to be
 parsed properly: you will run into troubles if you calculate page numbers like
-`75284 - 42 + 1`, in case the number was parsed badly. Parsing correctly is
-unfortunately not enough. Things like "Errata" could come to haunt you.
+`75284 - 42 + 1`, in case the number was parsed badly. `jst_clean_page()` tries
+to do this properly, based on a few known possibilities:
 
-There might be an article with `first_page = 42` and `last_page = 362`, which
+- "2" -> 2
+- "A2" -> 2
+- "v75i2p84" -> 84
+
+
+Parsing correctly is unfortunately not enough. Things like "Errata" might come
+to haunt you. For example there might be an article with `first_page = 42` and 
+`last_page = 362`, which
 would leave you puzzled as to if this can be true^[Although it sounds absurd,
-this can acutally be true. There are some articles which are 200 pages long.
+this can actually be true. There are some articles which are 200 pages long.
 Obviously, they are not standard research articles. You will need to decide
-if they fall into your sample or not]. There could be a simple explanation:
+if they fall into your sample or not.]. There could be a simple explanation:
 the article might start on page 42, and end on page 65, and there is furthermore
 an erratum on page 362. Technically, `last_page = 362` is true then, but it
 will cause problems for calculating the total number of pages. Quite often,
@@ -86,23 +121,67 @@ which in this case would look like `42 - 65, 362`.
 A small helper to deal with those situations is `jst_get_total_pages()`. It
 works for page ranges, but also for first and last pages:
 
-```{r, eval=FALSE}
-jst_get_total_pages(page_range = "42 - 65, 362")
+```{r, message=FALSE}
+library(jstor)
+library(dplyr)
 
-jst_get_total_pages(first_page = 20, last_page = 39)
+input <- tibble::tribble(
+  ~first_page,   ~last_page,    ~page_range,
+  NA_real_,      NA_real_,      NA_character_, 
+  1,             10,            "1 - 10",
+  1,             10,            NA_character_,
+  1,             NA_real_,      NA_character_, 
+  1,             NA_real_,      "1-10",
+  NA_real_,       NA_real_,      "1, 5-10",
+  NA_real_,       NA_real_,      "1-4, 5-10",
+  NA_real_,       NA_real_,      "1-4, C5-C10"
+)
 
-jst_get_total_pages(first_page = 20, last_page = NA)
+input %>% 
+  mutate(n_pages = jst_get_total_pages(first_page, last_page, page_range))
+```
+This is actually identical to using `jst_add_total_pages()`:
+
+```{r}
+input %>% 
+  jst_add_total_pages()
 ```
 
 
-## Unify journal id
+## Journal identifiers
+Identifiers for the journal usually appear in three columns:
 
+- `journal_doi`
+- `journal_jcode`
+- `journal_pub_id`
 
-## jst_augment
+```{r, results='asis'}
+jst_get_article(jst_example("sample_with_references.xml")) %>% knitr::kable()
+```
+
+From my samples, it seems that the information in `journal_pub_id` is 
+often missing, as is journal_doi. The most important identifier is thus
+`journal_jcode`. In cases where both `journal_jcode` and `journal_pub_id` are
+present, at least in my samples, the format of `journal_jcode` was different.
+For consistency, `jst_unify_journal_id()` thus takes content of
+`journal_pub_id` if it is present, and that of `journal_jcode` otherwise.
+
+With this algorithm, it should be possible to reliably match them to 
+general information about the respective journals, which are available from
+`jst_get_journal_overview()`:
+
+```{r}
+jst_get_article(jst_example("sample_with_references.xml")) %>% 
+  jst_unify_journal_id() %>% 
+  left_join(jst_get_journal_overview()) %>% 
+  tidyr::gather(variable, value) %>% 
+  knitr::kable()
+```
+
 
 
 ## Duplicated ngrams
-|Source                            |timespan          |Part              |
+|Source                            |time span          |Part              |
 |:---------------------------------|-----------------:|-----------------:|
 |American Journal of Sociology     |Unknown           |Book Reviews      |
 
@@ -110,3 +189,8 @@ For the AJS, ngrams for book reviews are calculated per issue. There are
 numerous reviews per issue, and each of them has an identical file of ngrams,
 containing ngrams for all book reviews of this issue. 
 
+A possible strategy for dealing with this is either not to use those ngrams,
+since they are calculated on all reviews in the issue, irrespective of 
+whether actually all reviews of the given issue are in the sample or not.
+Alternatively, one could group by issues, and only take one set of ngrams
+per issue.
