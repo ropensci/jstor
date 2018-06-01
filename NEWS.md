@@ -1,3 +1,5 @@
+# jstor 0.3.0
+
 # jstor 0.2.6.9000
 
 ## Major changes
