@@ -59,6 +59,16 @@ With the latest version of `jstor` we can now directly import files from a zip
 archive. We only need to specify, where the zip archive is located, which
 parts we want to extract, and where the resulting files should be saved. 
 
+Before importing data, we can take a quick look at the contents of each
+archive with `jst_preview_zip()`:
+
+```{r}
+jst_preview_zip("part1.zip")
+```
+```{r}
+jst_preview_zip("part2.zip")
+```
+
 Although we could import all ngrams at this point, this would be extremely 
 inefficient. It is thus best first to decide, which articles we want to analyze,
 and import the corresponding ngram-files afterwards.
