@@ -57,7 +57,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">jstor</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.6.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
       </span>
     </div>
 
@@ -121,36 +121,12 @@
       <small>Source: <a href='https://github.com/tklebel/jstor/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="jstor-0-2-6-9000" class="section level1">
+    <div id="jstor-0-3-0" class="section level1">
 <h1 class="page-header">
-<a href="#jstor-0-2-6-9000" class="anchor"></a>jstor 0.2.6.9000</h1>
-<div id="major-changes" class="section level2">
+<a href="#jstor-0-3-0" class="anchor"></a>jstor 0.3.0</h1>
+<div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes" class="anchor"></a>Major changes</h2>
-<p>There is a new set of functions which lets you directly import files from .zip-archives: <code><a href="../reference/jst_import.html">jst_import_zip()</a></code> and <code><a href="../reference/jst_define_import.html">jst_define_import()</a></code>.</p>
-<p>In the following example, we have a zip-archive from DfR and want to import metadata on books and articles. For all articles we want to apply <code><a href="../reference/find_article.html">find_article()</a></code> and <code><a href="../reference/find_authors.html">find_authors()</a></code>, for books only <code><a href="../reference/find_book.html">find_book()</a></code>, and we want to read unigrams (ngram1).</p>
-<p>First we specify what we want, and then we apply it to our zip-archive.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># specify definition</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">import_spec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_define_import.html">jst_define_import</a></span>(<span class="dt">article =</span> <span class="kw">c</span>(find_article, find_authors),</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">                                 <span class="dt">book =</span> find_book,</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">                                 <span class="dt">ngram1 =</span> jst_read_ngram)</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># apply definition to archive</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw"><a href="../reference/jst_import.html">jst_import_zip</a></span>(<span class="st">"zip_archive.zip"</span>,</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">               <span class="dt">import_spec =</span> import_spec,</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">               <span class="dt">out_file =</span> <span class="st">"out_path"</span>)</a></code></pre></div>
-<p>If the archive contains also research reports, pamphlets or other ngrams, they will not be imported. We could however change our specification, if we wanted to import all kinds of ngrams (given that we originally requested them from DfR):</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># import multiple forms of ngrams</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">import_spec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_define_import.html">jst_define_import</a></span>(<span class="dt">article =</span> <span class="kw">c</span>(find_article, find_authors),</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">                                 <span class="dt">book =</span> find_book,</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">                                 <span class="dt">ngram1 =</span> jst_read_ngram,</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">                                 <span class="dt">ngram2 =</span> jst_read_ngram,</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">                                 <span class="dt">ngram3 =</span> jst_read_ngram)</a></code></pre></div>
-<p>Before importing all files from a zip-archive, you can get a quick overview with <code><a href="../reference/jst_preview_zip.html">jst_preview_zip()</a></code>.</p>
-</div>
-<div id="other-changes" class="section level2">
-<h2 class="hasAnchor">
-<a href="#other-changes" class="anchor"></a>Other changes</h2>
+<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
 <p><code>jst_import</code> and <code>jst_import_zip</code> now use futures as a backend for parallel processing. This makes internals more compact and reduces dependencies. Furthermore this reduces the number of arguments, since the argument <code>cores</code> has been removed. By default, the functions run sequentially. If you want them to execute in parallel, use futures:</p>
 <pre><code>library(future)
 plan(multiprocess)
@@ -160,13 +136,55 @@ jst_import_zip("zip-archive.zip",
                out_file = "outfile")</code></pre>
 <p>If you want to terminate the proceses, at least on *nix-systems you need to kill them manually (once again).</p>
 <ul>
-<li>A new set of convenience functions for taking a few cleaning steps: <code><a href="../reference/jst_clean_page.html">jst_clean_page()</a></code> tries to turn a character vector with pages into a numeric one, <code><a href="../reference/jst_unify_journal_id.html">jst_unify_journal_id()</a></code> merges different specifications of journals into one, <code><a href="../reference/jst_add_total_pages.html">jst_add_total_pages()</a></code> adds a total count of pages per article, and <code><a href="../reference/jst_augment.html">jst_augment()</a></code> calls all three functions to clean the data set in one go.</li>
-<li>A new function <code>jst_subset_ngrams</code> lets you create a subset of ngram files within a zip-file which you can import with <code>jst_get_ngram</code>.</li>
+<li>All functions have been renamed to use a unified naming scheme: <code>jst_*</code>. The former group of <code>find_*</code> functions is now called <code>jst_get_*</code>, as in <code><a href="../reference/jst_get_article.html">jst_get_article()</a></code>. The previous functions have been deprecated and will be removed before submission to CRAN.</li>
 <li>The unique identifier for matching across files has been renamed to <code>file_name</code>, and the corresponding helper to get this file name from <code>get_basename</code> to <code>jst_get_file_name</code>.</li>
-<li>Functions have been renamed: All <code>find_*</code> functions are now called <code>jst_get_*</code>.</li>
-<li>New function <code>jst_combine_outputs</code> applies <code>jst_re_import</code> to a whole directory and lets you combine all related files in one go. It uses the file structure that <code>jst_import</code> and <code>jst_import_zip</code> provide as a heuristic: a filename with a dash and one or multiple digits at its end (<code>filename-1.csv</code>). All files with identical names (disregarding dash and digits) are combined into one file.</li>
-<li>New function <code>jst_re_import</code> lets you re_import a <code>.csv</code> file that <code>jstor_import</code> or <code>jst_import_zip</code> had exported. It tries to guess the type of content based on the column names or, if column names are not available, from the number of columns, raising a warning if guessing fails and reverting to a generic import.</li>
-<li>New function <code>jst_get_journal_overview</code> supplies a tibble with contextual information about the journals in JSTOR.</li>
+</ul>
+</div>
+<div id="importing-data-directly-from-zip-files" class="section level2">
+<h2 class="hasAnchor">
+<a href="#importing-data-directly-from-zip-files" class="anchor"></a>Importing data directly from zip-files</h2>
+<p>There is a new set of functions which lets you directly import files from .zip-archives: <code><a href="../reference/jst_import.html">jst_import_zip()</a></code> and <code><a href="../reference/jst_define_import.html">jst_define_import()</a></code>.</p>
+<p>In the following example, we have a zip-archive from DfR and want to import metadata on books and articles. For all articles we want to apply <code><a href="../reference/jst_get_article.html">jst_get_article()</a></code> and <code><a href="../reference/jst_get_authors.html">jst_get_authors()</a></code>, for books only <code><a href="../reference/jst_get_book.html">jst_get_book()</a></code>, and we want to read unigrams (ngram1).</p>
+<p>First we specify what we want, and then we apply it to our zip-archive:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># specify definition</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">import_spec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_define_import.html">jst_define_import</a></span>(<span class="dt">article =</span> <span class="kw">c</span>(jst_get_article, jst_get_authors),</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">                                 <span class="dt">book =</span> jst_get_book,</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">                                 <span class="dt">ngram1 =</span> jst_get_ngram)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co"># apply definition to archive</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="kw"><a href="../reference/jst_import.html">jst_import_zip</a></span>(<span class="st">"zip_archive.zip"</span>,</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">               <span class="dt">import_spec =</span> import_spec,</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">               <span class="dt">out_file =</span> <span class="st">"out_path"</span>)</a></code></pre></div>
+<p>If the archive contains also research reports, pamphlets or other ngrams, they will not be imported. We could however change our specification, if we wanted to import all kinds of ngrams (given that we originally requested them from DfR):</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># import multiple forms of ngrams</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">import_spec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_define_import.html">jst_define_import</a></span>(<span class="dt">article =</span> <span class="kw">c</span>(jst_get_article, jst_get_authors),</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">                                 <span class="dt">book =</span> jst_get_book,</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">                                 <span class="dt">ngram1 =</span> jst_get_ngram,</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">                                 <span class="dt">ngram2 =</span> jst_get_ngram,</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">                                 <span class="dt">ngram3 =</span> jst_get_ngram)</a></code></pre></div>
+<p>Note however that for larger archives, importing all ngrams takes a very long time. It is thus advisable to only import ngrams for articles which you want to analyse, i.e. most likely a subset of the initial request. The new function <code><a href="../reference/jst_subset_ngrams.html">jst_subset_ngrams()</a></code> helps you with this (see also the section on importing bigrams in the <a href="https://tklebel.github.io/jstor/articles/analysing-n-grams.html#importing-bigrams">case study</a>.</p>
+<p>Before importing all files from a zip-archive, you can get a quick overview with <code><a href="../reference/jst_preview_zip.html">jst_preview_zip()</a></code>.</p>
+</div>
+<div id="new-vignette" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-vignette" class="anchor"></a>New vignette</h2>
+<p>The new <code><a href="../articles/known-quirks.html">vignette("known-quirks")</a></code> lists common problems with data from JSTOR/DfR. Contributions with further cases are welcome!</p>
+</div>
+<div id="new-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functions" class="anchor"></a>New functions</h2>
+<ul>
+<li>New function <code><a href="../reference/jst_get_journal_overview.html">jst_get_journal_overview()</a></code> supplies a tibble with contextual information about the journals in JSTOR.</li>
+<li>New function <code><a href="../reference/jst_combine_outputs.html">jst_combine_outputs()</a></code> applies <code><a href="../reference/jst_re_import.html">jst_re_import()</a></code> to a whole directory and lets you combine all related files in one go. It uses the file structure that <code><a href="../reference/jst_import.html">jst_import()</a></code> and <code><a href="../reference/jst_import.html">jst_import_zip()</a></code> provide as a heuristic: a filename with a dash and one or multiple digits at its end (<code>filename-1.csv</code>). All files with identical names (disregarding dash and digits) are combined into one file.</li>
+<li>New function <code><a href="../reference/jst_re_import.html">jst_re_import()</a></code> lets you re_import a <code>.csv</code> file that <code><a href="../reference/jstor_import.html">jstor_import()</a></code> or <code><a href="../reference/jst_import.html">jst_import_zip()</a></code> had exported. It tries to guess the type of content based on the column names or, if column names are not available, from the number of columns, raising a warning if guessing fails and reverting to a generic import.</li>
+<li>A new function <code><a href="../reference/jst_subset_ngrams.html">jst_subset_ngrams()</a></code> lets you create a subset of ngram files within a zip-file which you can import with <code><a href="../reference/jst_get_ngram.html">jst_get_ngram()</a></code>.</li>
+<li>A new set of convenience functions for taking a few cleaning steps: <code><a href="../reference/jst_clean_page.html">jst_clean_page()</a></code> tries to turn a character vector with pages into a numeric one, <code><a href="../reference/jst_unify_journal_id.html">jst_unify_journal_id()</a></code> merges different specifications of journals into one, <code><a href="../reference/jst_add_total_pages.html">jst_add_total_pages()</a></code> adds a total count of pages per article, and <code><a href="../reference/jst_augment.html">jst_augment()</a></code> calls all three functions to clean the data set in one go.</li>
+</ul>
+</div>
+<div id="minor-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor changes</h2>
+<ul>
 <li>Improved documentation regarding endnotes (thanks <a href='http://github.com/elinw'>@elinw</a>)</li>
 <li>jstor_import has a new argument: <code>n_batches</code> which lets you specify the number of batches directly</li>
 </ul>
@@ -196,7 +214,7 @@ jst_import_zip("zip-archive.zip",
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#jstor-0-2-6-9000">0.2.6.9000</a></li>
+        <li><a href="#jstor-0-3-0">0.3.0</a></li>
         <li><a href="#jstor-0-2-6">0.2.6</a></li>
       </ul>
     </div>
