@@ -13,3 +13,4 @@ vignettes/*.csv
 vignettes/*.zip
 
 *.rds
+*.icloud
