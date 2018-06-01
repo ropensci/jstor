@@ -56,6 +56,8 @@ jst_import_zip("zip-archive.zip",
 ```
 If you want to terminate the proceses, at least on *nix-systems you need to kill
 them manually (once again).
+* The new `vignette("known-quirks")` lists common problems with data from
+JSTOR/DfR. Contributions with further cases are welcome!
 * A new set of convenience functions for taking a few cleaning steps:
 `jst_clean_page()` tries to turn a character vector with pages into a numeric
 one, `jst_unify_journal_id()` merges different specifications of journals into
