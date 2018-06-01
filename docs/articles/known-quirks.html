@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Known Quirks of JSTOR Data • jstor</title>
+<title>Known Quirks of JSTOR/DfR Data • jstor</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Known Quirks of JSTOR Data">
+<meta property="og:title" content="Known Quirks of JSTOR/DfR Data">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -89,10 +89,10 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Known Quirks of JSTOR Data</h1>
+      <h1>Known Quirks of JSTOR/DfR Data</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-05-31</h4>
+            <h4 class="date">2018-06-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/tklebel/jstor/blob/master/vignettes/known-quirks.Rmd"><code>vignettes/known-quirks.Rmd</code></a></small>
       <div class="hidden name"><code>known-quirks.Rmd</code></div>
@@ -104,46 +104,282 @@
 <div id="collecting-all-the-quirks" class="section level1">
 <h1 class="hasAnchor">
 <a href="#collecting-all-the-quirks" class="anchor"></a>Collecting all the quirks</h1>
-<p>Data from JSTOR/DfR is unlike most other data you encounter when doing text analysis. First and foremost, the data about the articles and books come from a wide variety of journals or publishers. The level of detail and certain formats vary because of this. <code>jstor</code> tries to deal with this situation with two strategies:</p>
+<p>Data from JSTOR/DfR is unlike most other data you encounter when doing text analysis. First and foremost, the data about articles and books come from a wide variety of journals and publishers. The level of detail and certain formats vary because of this. <code>jstor</code> tries to deal with this situation with two strategies:</p>
 <ul>
 <li>try to recognise the format and read data accordingly</li>
 <li>if this is not possible, read data as “raw” as possible, i.e. without any conversions</li>
 </ul>
-<p>An example for the latter case are page numbers. Most of the time, the entries for page numbers are simply <code>42</code>, or <code>61</code>. This is as expected, and could be parsed as integers. Sometimes, there are characters present, like <code>M77</code>. This would pose no problem either, we could simply extract all digits via regex and parse as character. Unfortunately, sometimes the page is specified like this: <code>v75i2p84</code>. Extracting all digits would result in <code>75284</code>, which is wrong by a long shot. Since there might be other ways of specifying pages, <code>jstor</code> does not attempt to parse the pages to integers when importing.</p>
-<p>There are many other problems or pecularities like this. This vignette tries to list as many as possible, and offer solutions for dealing with them. Unfortunately I have neither the time nor the interest to wade through all the data which you could get from DfR in order to find all possible quirks. The following list is thus inevitably incomplete. If you encounter new quirks/pecularities, you are thus welcome to share them by sending me an email, or <a href="https://github.com/tklebel/jstor/issues">opening an issue at GitHub</a>, and I will include them in future version of this vignette, so this vignette can be a starting point for everybody who conducts text analysis with data from JSTOR/DfR.</p>
+<p>An example for the first case are references. Four different ways how references can be specified are known at this time, and all are imported in specific ways to deal this variation. There might however be other formats, which should lead to an informative error when trying to import them via <code><a href="../reference/jst_get_references.html">jst_get_references()</a></code>.</p>
+<p>An example for the latter case are page numbers. Most of the time, the entries for page numbers are simply <code>42</code>, or <code>61</code>. This is as expected, and could be parsed as integers. Sometimes, there are characters present, like <code>M77</code>. This would pose no problem either, we could simply extract all digits via regex and parse as character. Unfortunately, sometimes the page is specified like this: <code>v75i2p84</code>. Extracting all digits would result in <code>75284</code>, which is wrong by a long shot. Since there might be other ways of specifying pages, <code>jstor</code> does not attempt to parse the pages to integers when importing. However, it offers a set of convenience functions which deal with a few common cases (see <code><a href="../reference/jst_augment.html">jst_augment()</a></code> and below).</p>
+<p>There are many other problems or peculiarities like this. This vignette tries to list as many as possible, and offer solutions for dealing with them. Unfortunately I have neither the time nor the interest to wade through all the data which you could get from DfR in order to find all possible quirks. The following list is thus inevitably incomplete. If you encounter new quirks/peculiarities, it would be greatly appreciated if you sent me an email, or <a href="https://github.com/tklebel/jstor/issues">opened an issue at GitHub</a>. I will then include your findings in future version of this vignette, so this vignette can be a starting point for everybody who conducts text analysis with data from JSTOR/DfR.</p>
+</div>
+<div id="data-augmentation" class="section level1">
+<h1 class="hasAnchor">
+<a href="#data-augmentation" class="anchor"></a>Data augmentation</h1>
+<p>After importing data via <code><a href="../reference/jst_get_article.html">jst_get_article()</a></code>, there are at least two tasks you might typically want to undertake:</p>
+<ul>
+<li>Merge different identifiers for journals into one, so you can filter journals.</li>
+<li>Convert pages from character into integers and calculate the total number of pages per article.</li>
+</ul>
+<p>There are four functions which help you to streamline this process:</p>
+<ul>
+<li>
+<code><a href="../reference/jst_clean_page.html">jst_clean_page()</a></code> attempts to turn a character vector with pages into an integer vector.</li>
+<li>
+<code><a href="../reference/jst_add_total_pages.html">jst_add_total_pages()</a></code> adds a column with the total number of pages per article.</li>
+<li>
+<code><a href="../reference/jst_unify_journal_id.html">jst_unify_journal_id()</a></code> merges different identifiers for journals into one.</li>
+<li>
+<code><a href="../reference/jst_augment.html">jst_augment()</a></code> wraps the above functions for convenience.</li>
+</ul>
 </div>
 <div id="known-quirks" class="section level1">
 <h1 class="hasAnchor">
 <a href="#known-quirks" class="anchor"></a>Known quirks</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(jstor)</a></code></pre></div>
+<p>In the following sections, known issues with data from DfR are described in greater detail.</p>
 <div id="page-numbers" class="section level2">
 <h2 class="hasAnchor">
 <a href="#page-numbers" class="anchor"></a>Page numbers</h2>
-<p>Page numbers are a mess. Sometimes page numbers might be specified as “pp. 1234-83” as in <a href="http://www.jstor.org/stable/10.1086/659100">this article from the American Journal of Sociology</a>. Of course, this results in <code>first_page = 1234</code> and <code>last_page = 83</code>.</p>
-<div id="clean-pages" class="section level3">
+<p>Page numbers are a mess. Besides the issues mentioned above, page numbers might sometimes be specified as “pp. 1234-83” as in <a href="http://www.jstor.org/stable/10.1086/659100">this article from the American Journal of Sociology</a>. Of course, this results in <code>first_page = 1234</code> and <code>last_page = 83</code>, and the computed number of total pages from <code><a href="../reference/jst_get_total_pages.html">jst_get_total_pages()</a></code> will be negative. There is currently no general solution for this issue.</p>
+<div id="calculating-total-pages" class="section level3">
 <h3 class="hasAnchor">
-<a href="#clean-pages" class="anchor"></a>Clean pages</h3>
-</div>
-<div id="total-pages" class="section level3">
-<h3 class="hasAnchor">
-<a href="#total-pages" class="anchor"></a>Total pages</h3>
-<p>As outlined above, page numbers come in very different forms. Besides this problem, there is actually another issue. Imagine you would like to quantify the lenghts of articles. Obviously you will need information on the first and the last page of the articles. Furthermore, the pages need to be parsed properly: you will run into troubles if you calculate page numbers like <code>75284 - 42 + 1</code>, in case the number was parsed badly. Parsing correctly is unfortunately not enough. Things like “Errata” could come to haunt you.</p>
-<p>There might be an article with <code>first_page = 42</code> and <code>last_page = 362</code>, which would leave you puzzled as to if this can be true<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. There could be a simple explanation: the article might start on page 42, and end on page 65, and there is furthermore an erratum on page 362. Technically, <code>last_page = 362</code> is true then, but it will cause problems for calculating the total number of pages. Quite often, there is information in another column which could resolve this: <code>page_range</code>, which in this case would look like <code>42 - 65, 362</code>.</p>
+<a href="#calculating-total-pages" class="anchor"></a>Calculating total pages</h3>
+<p>As outlined above, page numbers come in very different forms. Besides this problem, there is actually another issue. Imagine you would like to quantify the lengths of articles. Obviously you will need information on the first and the last page of the articles. Furthermore, the pages need to be parsed properly: you will run into troubles if you calculate page numbers like <code>75284 - 42 + 1</code>, in case the number was parsed badly. <code><a href="../reference/jst_clean_page.html">jst_clean_page()</a></code> tries to do this properly, based on a few known possibilities:</p>
+<ul>
+<li>“2” -&gt; 2</li>
+<li>“A2” -&gt; 2</li>
+<li>“v75i2p84” -&gt; 84</li>
+</ul>
+<p>Parsing correctly is unfortunately not enough. Things like “Errata” might come to haunt you. For example there might be an article with <code>first_page = 42</code> and <code>last_page = 362</code>, which would leave you puzzled as to if this can be true<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. There could be a simple explanation: the article might start on page 42, and end on page 65, and there is furthermore an erratum on page 362. Technically, <code>last_page = 362</code> is true then, but it will cause problems for calculating the total number of pages. Quite often, there is information in another column which could resolve this: <code>page_range</code>, which in this case would look like <code>42 - 65, 362</code>.</p>
 <p>A small helper to deal with those situations is <code><a href="../reference/jst_get_total_pages.html">jst_get_total_pages()</a></code>. It works for page ranges, but also for first and last pages:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/jst_get_total_pages.html">jst_get_total_pages</a></span>(<span class="dt">page_range =</span> <span class="st">"42 - 65, 362"</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="../reference/jst_get_total_pages.html">jst_get_total_pages</a></span>(<span class="dt">first_page =</span> <span class="dv">20</span>, <span class="dt">last_page =</span> <span class="dv">39</span>)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw"><a href="../reference/jst_get_total_pages.html">jst_get_total_pages</a></span>(<span class="dt">first_page =</span> <span class="dv">20</span>, <span class="dt">last_page =</span> <span class="ot">NA</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(jstor)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">input &lt;-<span class="st"> </span>tibble<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tibble/topics/tribble">tribble</a></span>(</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">  <span class="op">~</span>first_page,   <span class="op">~</span>last_page,    <span class="op">~</span>page_range,</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">  <span class="ot">NA_real_</span>,      <span class="ot">NA_real_</span>,      <span class="ot">NA_character_</span>, </a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">  <span class="dv">1</span>,             <span class="dv">10</span>,            <span class="st">"1 - 10"</span>,</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">  <span class="dv">1</span>,             <span class="dv">10</span>,            <span class="ot">NA_character_</span>,</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">  <span class="dv">1</span>,             <span class="ot">NA_real_</span>,      <span class="ot">NA_character_</span>, </a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">  <span class="dv">1</span>,             <span class="ot">NA_real_</span>,      <span class="st">"1-10"</span>,</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">  <span class="ot">NA_real_</span>,       <span class="ot">NA_real_</span>,      <span class="st">"1, 5-10"</span>,</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">  <span class="ot">NA_real_</span>,       <span class="ot">NA_real_</span>,      <span class="st">"1-4, 5-10"</span>,</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">  <span class="ot">NA_real_</span>,       <span class="ot">NA_real_</span>,      <span class="st">"1-4, C5-C10"</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">)</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">input <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">n_pages =</span> <span class="kw"><a href="../reference/jst_get_total_pages.html">jst_get_total_pages</a></span>(first_page, last_page, page_range))</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">#&gt; # A tibble: 8 x 4</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">#&gt;   first_page last_page page_range  n_pages</span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">#&gt;        &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">#&gt; 1         NA        NA &lt;NA&gt;             NA</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">#&gt; 2          1        10 1 - 10           10</span></a>
+<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="co">#&gt; 3          1        10 &lt;NA&gt;             10</span></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co">#&gt; 4          1        NA &lt;NA&gt;             NA</span></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="co">#&gt; 5          1        NA 1-10             10</span></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="co">#&gt; 6         NA        NA 1, 5-10           7</span></a>
+<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="co">#&gt; 7         NA        NA 1-4, 5-10        10</span></a>
+<a class="sourceLine" id="cb1-28" data-line-number="28"><span class="co">#&gt; 8         NA        NA 1-4, C5-C10      10</span></a></code></pre></div>
+<p>This is actually identical to using <code><a href="../reference/jst_add_total_pages.html">jst_add_total_pages()</a></code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">input <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/jst_add_total_pages.html">jst_add_total_pages</a></span>()</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; # A tibble: 8 x 4</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt;   first_page last_page page_range  n_pages</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt;        &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt; 1         NA        NA &lt;NA&gt;             NA</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; 2          1        10 1 - 10           10</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; 3          1        10 &lt;NA&gt;             10</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; 4          1        NA &lt;NA&gt;             NA</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; 5          1        NA 1-10             10</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; 6         NA        NA 1, 5-10           7</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; 7         NA        NA 1-4, 5-10        10</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; 8         NA        NA 1-4, C5-C10      10</span></a></code></pre></div>
 </div>
 </div>
-<div id="unify-journal-id" class="section level2">
+<div id="journal-identifiers" class="section level2">
 <h2 class="hasAnchor">
-<a href="#unify-journal-id" class="anchor"></a>Unify journal id</h2>
-</div>
-<div id="jst_augment" class="section level2">
-<h2 class="hasAnchor">
-<a href="#jst_augment" class="anchor"></a>jst_augment</h2>
+<a href="#journal-identifiers" class="anchor"></a>Journal identifiers</h2>
+<p>Identifiers for the journal usually appear in three columns:</p>
+<ul>
+<li><code>journal_doi</code></li>
+<li><code>journal_jcode</code></li>
+<li><code>journal_pub_id</code></li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">sample_article &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_article.html">jst_get_article</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"sample_with_references.xml"</span>)) </a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(sample_article)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">file_name</th>
+<th align="left">journal_doi</th>
+<th align="left">journal_jcode</th>
+<th align="left">journal_pub_id</th>
+<th align="left">journal_title</th>
+<th align="left">article_doi</th>
+<th align="left">article_pub_id</th>
+<th align="left">article_jcode</th>
+<th align="left">article_type</th>
+<th align="left">article_title</th>
+<th align="left">volume</th>
+<th align="left">issue</th>
+<th align="left">language</th>
+<th align="left">pub_day</th>
+<th align="left">pub_month</th>
+<th align="right">pub_year</th>
+<th align="left">first_page</th>
+<th align="left">last_page</th>
+<th align="left">page_range</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="left">sample_with_references</td>
+<td align="left">NA</td>
+<td align="left">tranamermicrsoci</td>
+<td align="left">NA</td>
+<td align="left">Transactions of the American Microscopical Society</td>
+<td align="left">10.2307/3221896</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">research-article</td>
+<td align="left">On the Protozoa Parasitic in Frogs</td>
+<td align="left">41</td>
+<td align="left">2</td>
+<td align="left">eng</td>
+<td align="left">1</td>
+<td align="left">4</td>
+<td align="right">1922</td>
+<td align="left">59</td>
+<td align="left">76</td>
+<td align="left">59-76</td>
+</tr></tbody>
+</table>
+<p>From my samples, it seems that the information in <code>journal_pub_id</code> is often missing, as is journal_doi. The most important identifier is thus <code>journal_jcode</code>. In cases where both <code>journal_jcode</code> and <code>journal_pub_id</code> are present, at least in my samples, the format of <code>journal_jcode</code> was different. For consistency, <code><a href="../reference/jst_unify_journal_id.html">jst_unify_journal_id()</a></code> thus takes content of <code>journal_pub_id</code> if it is present, and that of <code>journal_jcode</code> otherwise.</p>
+<p>With this algorithm, it should be possible to reliably match them to general information about the respective journals, which are available from <code><a href="../reference/jst_get_journal_overview.html">jst_get_journal_overview()</a></code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">sample_article <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/jst_unify_journal_id.html">jst_unify_journal_id</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(<span class="kw"><a href="../reference/jst_get_journal_overview.html">jst_get_journal_overview</a></span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/gather">gather</a></span>(variable, value) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="st">  </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; Joining, by = "journal_id"</span></a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">variable</th>
+<th align="left">value</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">file_name</td>
+<td align="left">sample_with_references</td>
+</tr>
+<tr class="even">
+<td align="left">journal_title</td>
+<td align="left">Transactions of the American Microscopical Society</td>
+</tr>
+<tr class="odd">
+<td align="left">article_doi</td>
+<td align="left">10.2307/3221896</td>
+</tr>
+<tr class="even">
+<td align="left">article_pub_id</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">article_jcode</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">article_type</td>
+<td align="left">research-article</td>
+</tr>
+<tr class="odd">
+<td align="left">article_title</td>
+<td align="left">On the Protozoa Parasitic in Frogs</td>
+</tr>
+<tr class="even">
+<td align="left">volume</td>
+<td align="left">41</td>
+</tr>
+<tr class="odd">
+<td align="left">issue</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">language</td>
+<td align="left">eng</td>
+</tr>
+<tr class="odd">
+<td align="left">pub_day</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">pub_month</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left">pub_year</td>
+<td align="left">1922</td>
+</tr>
+<tr class="even">
+<td align="left">first_page</td>
+<td align="left">59</td>
+</tr>
+<tr class="odd">
+<td align="left">last_page</td>
+<td align="left">76</td>
+</tr>
+<tr class="even">
+<td align="left">page_range</td>
+<td align="left">59-76</td>
+</tr>
+<tr class="odd">
+<td align="left">journal_id</td>
+<td align="left">tranamermicrsoci</td>
+</tr>
+<tr class="even">
+<td align="left">title</td>
+<td align="left">Transactions of the American Microscopical Society</td>
+</tr>
+<tr class="odd">
+<td align="left">issn</td>
+<td align="left">00030023</td>
+</tr>
+<tr class="even">
+<td align="left">eissn</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">doi</td>
+<td align="left">10.2307/j100072</td>
+</tr>
+<tr class="even">
+<td align="left">url</td>
+<td align="left"><a href="http://www.jstor.org/journal/tranamermicrsoci" class="uri">http://www.jstor.org/journal/tranamermicrsoci</a></td>
+</tr>
+<tr class="odd">
+<td align="left">discipline</td>
+<td align="left">Biological Sciences ; Science &amp; Mathematics ; Zoology</td>
+</tr>
+<tr class="even">
+<td align="left">publisher</td>
+<td align="left">American Microscopical Society ; Wiley</td>
+</tr>
+<tr class="odd">
+<td align="left">coverage_range</td>
+<td align="left">1878-1994</td>
+</tr>
+<tr class="even">
+<td align="left">oclc_catalog_identifier</td>
+<td align="left">61241470</td>
+</tr>
+<tr class="odd">
+<td align="left">lccn_catalog_identifier</td>
+<td align="left">2005 237209</td>
+</tr>
+<tr class="even">
+<td align="left">archive_release_date</td>
+<td align="left">2005-08-10</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="duplicated-ngrams" class="section level2">
 <h2 class="hasAnchor">
@@ -151,7 +387,7 @@
 <table class="table">
 <thead><tr class="header">
 <th align="left">Source</th>
-<th align="right">timespan</th>
+<th align="right">time span</th>
 <th align="right">Part</th>
 </tr></thead>
 <tbody><tr class="odd">
@@ -161,12 +397,22 @@
 </tr></tbody>
 </table>
 <p>For the AJS, ngrams for book reviews are calculated per issue. There are numerous reviews per issue, and each of them has an identical file of ngrams, containing ngrams for all book reviews of this issue.</p>
+<p>A possible strategy for dealing with this is either not to use those ngrams, since they are calculated on all reviews in the issue, irrespective of whether actually all reviews of the given issue are in the sample or not. Alternatively, one could group by issues, and only take one set of ngrams per issue.</p>
+</div>
+<div id="language-codes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#language-codes" class="anchor"></a>Language codes</h2>
+<p>Information on langues is not consistent. For the sample article, <code>language</code> is <code>eng</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">sample_article <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/pull.html">pull</a></span>(language)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [1] "eng"</span></a></code></pre></div>
+<p>In other cases it might be <code>en</code>. It is thus advisable to take a quick look at different variants via <code><a href="http://dplyr.tidyverse.org/reference/distinct.html">distinct(meta_data, language)</a></code> or <code><a href="http://dplyr.tidyverse.org/reference/tally.html">count(meta_data, language)</a></code>.</p>
 </div>
 </div>
 <div class="footnotes">
 <hr>
 <ol>
-<li id="fn1"><p>Although it sounds absurd, this can acutally be true. There are some articles which are 200 pages long. Obviously, they are not standard research articles. You will need to decide if they fall into your sample or not<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>Although it sounds absurd, this can actually be true. There are some articles which are 200 pages long. Obviously, they are not standard research articles. You will need to decide if they fall into your sample or not.<a href="#fnref1" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
   </div>
@@ -177,12 +423,13 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#collecting-all-the-quirks">Collecting all the quirks</a></li>
+      <li><a href="#data-augmentation">Data augmentation</a></li>
       <li>
 <a href="#known-quirks">Known quirks</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#page-numbers">Page numbers</a></li>
-      <li><a href="#unify-journal-id">Unify journal id</a></li>
-      <li><a href="#jst_augment">jst_augment</a></li>
+      <li><a href="#journal-identifiers">Journal identifiers</a></li>
       <li><a href="#duplicated-ngrams">Duplicated ngrams</a></li>
+      <li><a href="#language-codes">Language codes</a></li>
       </ul>
 </li>
       </ul>
