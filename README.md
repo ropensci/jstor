@@ -23,7 +23,7 @@ provides functions and suggests workflows for importing datasets from
 DfR. It was developed to deal with very large datasets which require an
 agreement, but can be used with smaller ones as well.
 
-The most important set of functions is a group of `jst_get*` functions:
+The most important set of functions is a group of `jst_get_*` functions:
 
   - `jst_get_article`
   - `jst_get_authors`
@@ -59,8 +59,8 @@ library(jstor)
 library(magrittr)
 ```
 
-The basic usage is simple: supply one of the `find_*`-functions with a
-path and it will return a tibble with the extracted
+The basic usage is simple: supply one of the `jst_get_*`-functions with
+a path and it will return a tibble with the extracted
 information.
 
 ``` r

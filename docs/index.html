@@ -99,7 +99,7 @@
 <a href="#jstor" class="anchor"></a>jstor</h1></div>
 
 <p>The tool <a href="http://www.jstor.org/dfr/">Data for Research (DfR)</a> by JSTOR is a valuable source for citation analysis and text mining. <code>jstor</code> provides functions and suggests workflows for importing datasets from DfR. It was developed to deal with very large datasets which require an agreement, but can be used with smaller ones as well.</p>
-<p>The most important set of functions is a group of <code>jst_get*</code> functions:</p>
+<p>The most important set of functions is a group of <code>jst_get_*</code> functions:</p>
 <ul>
 <li><code>jst_get_article</code></li>
 <li><code>jst_get_authors</code></li>
@@ -129,7 +129,7 @@
 <p>In order to use <code>jstor</code>, you first need to load it:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(jstor)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">library</span>(magrittr)</a></code></pre></div>
-<p>The basic usage is simple: supply one of the <code>find_*</code>-functions with a path and it will return a tibble with the extracted information.</p>
+<p>The basic usage is simple: supply one of the <code>jst_get_*</code>-functions with a path and it will return a tibble with the extracted information.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="reference/jst_get_article.html">jst_get_article</a></span>(<span class="kw"><a href="reference/jst_example.html">jst_example</a></span>(<span class="st">"sample_with_references.xml"</span>)) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
