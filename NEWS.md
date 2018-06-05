@@ -1,5 +1,8 @@
 # jstor 0.3.0.9000
 
+* fixed a few issues in README and man files regarding changes introduced with 
+0.3.0.
+
 # jstor 0.3.0
 
 ## Breaking changes
