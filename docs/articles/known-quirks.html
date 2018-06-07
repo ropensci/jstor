@@ -8,8 +8,8 @@
 <title>Known Quirks of JSTOR/DfR Data • jstor</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Known Quirks of JSTOR/DfR Data">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">jstor</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0.9000</span>
       </span>
     </div>
 
@@ -92,7 +92,7 @@
       <h1>Known Quirks of JSTOR/DfR Data</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-06-01</h4>
+            <h4 class="date">2018-06-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/tklebel/jstor/blob/master/vignettes/known-quirks.Rmd"><code>vignettes/known-quirks.Rmd</code></a></small>
       <div class="hidden name"><code>known-quirks.Rmd</code></div>
@@ -408,6 +408,26 @@
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [1] "eng"</span></a></code></pre></div>
 <p>In other cases it might be <code>en</code>. It is thus advisable to take a quick look at different variants via <code><a href="http://dplyr.tidyverse.org/reference/distinct.html">distinct(meta_data, language)</a></code> or <code><a href="http://dplyr.tidyverse.org/reference/tally.html">count(meta_data, language)</a></code>.</p>
 </div>
+<div id="incorrectodd-references" class="section level2">
+<h2 class="hasAnchor">
+<a href="#incorrectodd-references" class="anchor"></a>Incorrect/odd references</h2>
+<p>When analysing data about references and footnotes, you will encounter many inconsistencies and errors. Most of them are not due to errors from DfR, but stem simply from the fact, that humans make mistakes when creating manuscripts, and not all errors with references are caught before printing.</p>
+<div id="problems-with-non-english-characters" class="section level3">
+<h3 class="hasAnchor">
+<a href="#problems-with-non-english-characters" class="anchor"></a>Problems with non-english characters</h3>
+<p>A common problem are names with non-english characters like german umlauts (Ferdinand Tönnies) or nordic names (Gøsta Esping-Andersen). These will appear in many different variations: Tonnies, Tönnies, Gosta, Gösta, etc.</p>
+</div>
+<div id="ocr-issues" class="section level3">
+<h3 class="hasAnchor">
+<a href="#ocr-issues" class="anchor"></a>OCR-Issues</h3>
+<p>For older articles, you might encounter issues that stem from digitising text with OCR-software. A common problem is distinguishing <code>I</code> from <code>l</code>, like in the phrase “In love”. Depending on which names appear in your data, this might lead to inconsistencies.</p>
+</div>
+<div id="errors-by-article-authors" class="section level3">
+<h3 class="hasAnchor">
+<a href="#errors-by-article-authors" class="anchor"></a>Errors by article authors</h3>
+<p>There are many examples where authors make mistakes and your summary statistics end up being skewed. <a href="https://www.jstor.org/stable/25074331?seq=11&amp;refreqid=excelsior%3A6f9520d8aecff945ab2033fa66d3438e#page_scan_tab_contents">This article</a> about “Ethics Education in the Workplace” cites the same items multiple times, which is of course an artifact. The advantage of using JSTOR/DfR data is, that you can inspect all sources and check, if a specific pattern you see is an artifact or genuine.</p>
+</div>
+</div>
 </div>
 <div class="footnotes">
 <hr>
@@ -430,6 +450,7 @@
       <li><a href="#journal-identifiers">Journal identifiers</a></li>
       <li><a href="#duplicated-ngrams">Duplicated ngrams</a></li>
       <li><a href="#language-codes">Language codes</a></li>
+      <li><a href="#incorrectodd-references">Incorrect/odd references</a></li>
       </ul>
 </li>
       </ul>

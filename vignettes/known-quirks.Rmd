@@ -210,3 +210,29 @@ In other cases it might be `en`. It is thus advisable to take a quick look at
 different variants via `distinct(meta_data, language)` or 
 `count(meta_data, language)`. 
 
+
+## Incorrect/odd references
+When analysing data about references and footnotes, you will encounter many
+inconsistencies and errors. Most of them are not due to errors from DfR, but 
+stem simply from the fact, that humans make mistakes when creating manuscripts,
+and not all errors with references are caught before printing.
+
+### Problems with non-english characters
+A common problem are names with non-english characters like german umlauts
+(Ferdinand Tönnies) or nordic names (Gøsta Esping-Andersen). These will appear
+in many different variations: Tonnies, Tönnies, Gosta, Gösta, etc.
+
+### OCR-Issues
+For older articles, you might encounter issues that stem from digitising text 
+with OCR-software. A common problem is distinguishing `I` from `l`, like in
+the phrase "In love". Depending on which names appear in your data, this might
+lead to inconsistencies.
+
+### Errors by article authors
+There are many examples where authors make mistakes and your summary statistics
+end up being skewed. 
+[This article](https://www.jstor.org/stable/25074331?seq=11&refreqid=excelsior%3A6f9520d8aecff945ab2033fa66d3438e#page_scan_tab_contents) 
+about "Ethics Education in the Workplace" cites the same items multiple times,
+which is of course an artifact. The advantage of using JSTOR/DfR data is, that 
+you can inspect all sources and
+check, if a specific pattern you see is an artifact or genuine.
