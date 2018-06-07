@@ -107,8 +107,8 @@ one, `jst_add_total_pages()` adds a total count of pages per article, and
 
 ## Minor changes
 * Improved documentation regarding endnotes (thanks @elinw)
-* jstor_import has a new argument: `n_batches` which lets you specify the number
-of batches directly
+* jst_import and jst_import_zip have a new argument: `n_batches` which lets you 
+specify the number of batches directly
 
 
 # jstor 0.2.6
