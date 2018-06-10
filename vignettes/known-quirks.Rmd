@@ -233,6 +233,6 @@ There are many examples where authors make mistakes and your summary statistics
 end up being skewed. 
 [This article](https://www.jstor.org/stable/25074331?seq=11&refreqid=excelsior%3A6f9520d8aecff945ab2033fa66d3438e#page_scan_tab_contents) 
 about "Ethics Education in the Workplace" cites the same items multiple times,
-which is of course an artifact. The advantage of using JSTOR/DfR data is, that 
+which is possibly an artifact. The advantage of using JSTOR/DfR data is, that 
 you can inspect all sources and
 check, if a specific pattern you see is an artifact or genuine.
