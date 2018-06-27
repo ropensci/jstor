@@ -4,11 +4,11 @@
 # jstor
 
 [![Travis build
-status](https://travis-ci.org/tklebel/jstor.svg?branch=master)](https://travis-ci.org/tklebel/jstor)
+status](https://travis-ci.org/ropensci/jstor.svg?branch=master)](https://travis-ci.org/ropensci/jstor)
 [![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/tklebel/jstor?branch=master&svg=true)](https://ci.appveyor.com/project/tklebel/jstor)
+Status](https://ci.appveyor.com/api/projects/status/github/ropensci/jstor?branch=master&svg=true)](https://ci.appveyor.com/project/ropensci/jstor)
 [![Coverage
-status](https://codecov.io/gh/tklebel/jstor/branch/master/graph/badge.svg)](https://codecov.io/github/tklebel/jstor?branch=master)
+status](https://codecov.io/gh/ropensci/jstor/branch/master/graph/badge.svg)](https://codecov.io/github/ropensci/jstor?branch=master)
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![CRAN
 status](http://www.r-pkg.org/badges/version/jstor)](https://cran.r-project.org/package=jstor)
@@ -47,7 +47,7 @@ You can install `jstor` from GitHub with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("tklebel/jstor")
+devtools::install_github("ropensci/jstor")
 ```
 
 ## Usage
@@ -183,4 +183,7 @@ Work on `jstor` benefited from financial support for the project
 Science Fund (FWF), project number “P 29211 Einzelprojekte”.
 
 Some internal functions regarding file paths and example files were
-adapted from the package `readr`.
+adapted from the package
+`readr`.
+
+[![ropensci\_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
