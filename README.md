@@ -9,7 +9,7 @@
 [![Travis build
 status](https://travis-ci.org/ropensci/jstor.svg?branch=master)](https://travis-ci.org/ropensci/jstor)
 [![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/ropensci/jstor?branch=master&svg=true)](https://ci.appveyor.com/project/tklebel/jstor)
+Status](https://ci.appveyor.com/api/projects/status/a6djex51s32w6b82?svg=true)](https://ci.appveyor.com/project/tklebel/jstor-2fid0)
 [![Coverage
 status](https://codecov.io/gh/ropensci/jstor/branch/master/graph/badge.svg)](https://codecov.io/github/ropensci/jstor?branch=master)
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
