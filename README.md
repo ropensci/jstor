@@ -1,7 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# jstor
+# jstor: Import and Analyse Data from Scientific Articles
+
+**Author:** [Thomas Klebel](https://thomasklebel.eu) <br> **License:**
+[GPL v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
 [![Travis build
 status](https://travis-ci.org/ropensci/jstor.svg?branch=master)](https://travis-ci.org/ropensci/jstor)
