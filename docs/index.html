@@ -8,8 +8,8 @@
 <title>Read Data from JSTOR/DfR • jstor</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="Read Data from JSTOR/DfR">
 <meta property="og:description" content="Functions and helpers to import metadata and full-texts delivered
     by Data for Research (DfR) by JSTOR. ">
@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">jstor</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0.9000</span>
       </span>
     </div>
 
@@ -94,10 +94,11 @@
     
     
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<div id="jstor" class="section level1">
+<div id="jstor-import-and-analyse-data-from-scientific-articles" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#jstor" class="anchor"></a>jstor</h1></div>
-
+<a href="#jstor-import-and-analyse-data-from-scientific-articles" class="anchor"></a>jstor: Import and Analyse Data from Scientific Articles</h1></div>
+<p><strong>Author:</strong> <a href="https://thomasklebel.eu">Thomas Klebel</a> <br><strong>License:</strong> <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GPL v3.0</a></p>
+<p><a href="https://travis-ci.org/ropensci/jstor"><img src="https://travis-ci.org/ropensci/jstor.svg?branch=master" alt="Travis build status"></a> <a href="https://ci.appveyor.com/project/tklebel/jstor-2fid0"><img src="https://ci.appveyor.com/api/projects/status/a6djex51s32w6b82?svg=true" alt="AppVeyor Build Status"></a> <a href="https://codecov.io/github/ropensci/jstor?branch=master"><img src="https://codecov.io/gh/ropensci/jstor/branch/master/graph/badge.svg" alt="Coverage status"></a> <a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a> <a href="https://cran.r-project.org/package=jstor"><img src="http://www.r-pkg.org/badges/version/jstor" alt="CRAN status"></a> <!---[![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/jstor)](https://CRAN.R-project.org/package=jstor)---> <a href="https://github.com/ropensci/onboarding/issues/189"><img src="https://badges.ropensci.org/189_status.svg" alt="rOpenSci badge"></a> <a href="https://doi.org/10.5281/zenodo.1169862"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.1169862.svg" alt="DOI"></a></p>
 <p>The tool <a href="http://www.jstor.org/dfr/">Data for Research (DfR)</a> by JSTOR is a valuable source for citation analysis and text mining. <code>jstor</code> provides functions and suggests workflows for importing datasets from DfR. It was developed to deal with very large datasets which require an agreement, but can be used with smaller ones as well.</p>
 <p>The most important set of functions is a group of <code>jst_get_*</code> functions:</p>
 <ul>
@@ -121,7 +122,7 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install <code>jstor</code> from GitHub with:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"tklebel/jstor"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"ropensci/jstor"</span>)</a></code></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
@@ -510,6 +511,7 @@
 <a href="#acknowledgements" class="anchor"></a>Acknowledgements</h2>
 <p>Work on <code>jstor</code> benefited from financial support for the project “Academic Super-Elites in Sociology and Economics” by the Austrian Science Fund (FWF), project number “P 29211 Einzelprojekte”.</p>
 <p>Some internal functions regarding file paths and example files were adapted from the package <code>readr</code>.</p>
+<p><a href="https://ropensci.org"><img src="https://ropensci.org/public_images/ropensci_footer.png" alt="ropensci_footer"></a></p>
 </div>
 </div>
   </div>
@@ -540,19 +542,7 @@
 </ul>
 </div>
 
-      <div class="dev-status">
-<h2>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://travis-ci.org/tklebel/jstor"><img src="https://travis-ci.org/tklebel/jstor.svg?branch=master" alt="Travis build status"></a></li>
-<li><a href="https://ci.appveyor.com/project/tklebel/jstor"><img src="https://ci.appveyor.com/api/projects/status/github/tklebel/jstor?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
-<li><a href="https://codecov.io/github/tklebel/jstor?branch=master"><img src="https://codecov.io/gh/tklebel/jstor/branch/master/graph/badge.svg" alt="Coverage status"></a></li>
-<li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a></li>
-<li><a href="https://cran.r-project.org/package=jstor"><img src="http://www.r-pkg.org/badges/version/jstor" alt="CRAN status"></a></li>
-<li><a href="https://github.com/ropensci/onboarding/issues/189"><img src="https://badges.ropensci.org/189_status.svg" alt="rOpenSci badge"></a></li>
-<li><a href="https://doi.org/10.5281/zenodo.1169862"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.1169862.svg" alt="DOI"></a></li>
-</ul>
-</div>
-</div>
+      </div>
 
 </div>
 
