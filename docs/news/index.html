@@ -121,7 +121,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/tklebel/jstor/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+      <small>Source: <a href='https://github.com/ropensci/jstor/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
     <div id="jstor-0-3-0-9000" class="section level1">
@@ -209,9 +209,9 @@ jst_import_zip("zip-archive.zip",
 <li>added a pkgdown site at <a href="https://tklebel.github.io/jstor/" class="uri">https://tklebel.github.io/jstor/</a>
 </li>
 <li>changed implementation of parallel execution in <code>jstor_import</code> from <code><a href="http://www.rdocumentation.org/packages/parallel/topics/mclapply">parallel::mclapply</a></code> to <code><a href="http://www.rdocumentation.org/packages/foreach/topics/foreach">foreach::foreach</a></code> with <code>snow</code> as a backend for <code>%dopar%</code>.</li>
-<li>added support for progress bars <a href='https://github.com/tklebel/jstor/issues/34'>#34</a></li>
+<li>added support for progress bars <a href='https://github.com/ropensci/jstor/issues/34'>#34</a></li>
 <li>
-<code>jstor_import</code> now writes column names by default <a href='https://github.com/tklebel/jstor/issues/29'>#29</a></li>
+<code>jstor_import</code> now writes column names by default <a href='https://github.com/ropensci/jstor/issues/29'>#29</a></li>
 <li>new helper <code>get_basename</code> helps to get the basename of a file without its extension</li>
 <li>
 <code>find_article</code> does not coerce days and months to integer any more, since there might be information stored as text.</li>

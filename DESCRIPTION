@@ -30,8 +30,8 @@ Suggests:
     rmarkdown,
     future
 Remotes: r-lib/rlang
-BugReports: https://github.com/tklebel/jstor/issues
-URL: https://github.com/tklebel/jstor, https://tklebel.github.io/jstor/
+BugReports: https://github.com/ropensci/jstor/issues
+URL: https://github.com/ropensci/jstor, https://ropensci.github.io/jstor/
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
