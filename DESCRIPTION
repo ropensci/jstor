@@ -29,7 +29,6 @@ Suggests:
     knitr,
     rmarkdown,
     future
-Remotes: r-lib/rlang
 BugReports: https://github.com/ropensci/jstor/issues
 URL: https://github.com/ropensci/jstor, https://ropensci.github.io/jstor/
 RoxygenNote: 6.0.1

@@ -4,12 +4,10 @@
 \alias{jst_unify_journal_id}
 \title{Unify journal IDs}
 \usage{
-jst_unify_journal_id(meta_data, new_col = journal_id, remove_cols = TRUE)
+jst_unify_journal_id(meta_data, remove_cols = TRUE)
 }
 \arguments{
 \item{meta_data}{Data which was processed via \code{\link[=jst_get_article]{jst_get_article()}}.}
-
-\item{new_col}{The name for the column with unified id.}
 
 \item{remove_cols}{Should the original columns be removed after unifying?}
 }

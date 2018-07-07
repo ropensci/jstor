@@ -1,5 +1,9 @@
 # jstor 0.3.0.9000
 
+* `jstor` is now part of rOpenSci.
+* removed arguments `new_col` for `jst_unify_journal_id` and
+`jst_add_total_pages`, since both built on the dev version of rlang. Once this
+version is on CRAN, they will be re-introduced.
 * fixed a few issues in README and man files regarding changes introduced with 
 0.3.0.
 

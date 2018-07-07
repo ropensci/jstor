@@ -71,17 +71,15 @@ jst_clean_page <- function(page) {
 #' [jst_get_total_pages()] which does the main work.
 #' 
 #' @param meta_data Data which was processed via [jst_get_article()].
-#' @param page_col The name of the new column with total count of pages.
 #' @param quietly Should warnings from converting page ranges be suppressed?
 #' @export
 #' @seealso [jst_get_total_pages()]
-jst_add_total_pages <- function(meta_data, page_col = n_pages, 
+jst_add_total_pages <- function(meta_data,
                                 quietly = FALSE) {
-  page_col <- rlang::enquo(page_col)
-  
+
   dplyr::mutate(
     meta_data,
-    !!page_col := jst_get_total_pages(first_page, last_page, page_range,
+    n_pages = jst_get_total_pages(first_page, last_page, page_range,
                                       quietly)
   )
 }
@@ -170,19 +168,16 @@ jst_get_total_pages <- function(first_page, last_page, page_range,
 #' that from `journal_jcode`. `journal_doi` is currently disregarded
 #' 
 #' @param meta_data Data which was processed via [jst_get_article()].
-#' @param new_col The name for the column with unified id.
 #' @param remove_cols Should the original columns be removed after unifying?
 #' 
 #' @return A modified `tibble`.
 #' 
 #' @return A modified tibble.
 #' @export
-jst_unify_journal_id <- function(meta_data, new_col = journal_id, 
+jst_unify_journal_id <- function(meta_data,
                                  remove_cols = TRUE) {
-  new_col <- rlang::enquo(new_col)
-  
   out <- meta_data %>%
-    dplyr::mutate(!!new_col := dplyr::case_when(
+    dplyr::mutate(journal_id = dplyr::case_when(
       is.na(journal_pub_id) ~ journal_jcode,
       TRUE ~ journal_pub_id
     ))
