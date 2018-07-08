@@ -92,7 +92,7 @@
       <h1>Introduction to jstor</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-07-07</h4>
+            <h4 class="date">2018-07-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/jstor/blob/master/vignettes/Introduction.Rmd"><code>vignettes/Introduction.Rmd</code></a></small>
       <div class="hidden name"><code>Introduction.Rmd</code></div>
@@ -270,7 +270,7 @@
 <a class="sourceLine" id="cb5-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co"># we need to remove line breaks for knitr::kable() to work properly for printing</span></a>
 <a class="sourceLine" id="cb5-6" data-line-number="6">references &lt;-<span class="st"> </span>references <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">references =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(references, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/dplyr/topics/mutate">mutate</a></span>(<span class="dt">references =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(references, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>))</a></code></pre></div>
 <p>We have two columns:</p>
 <ul>
 <li>
@@ -338,7 +338,7 @@
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; instead.</span></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb8-5" data-line-number="5">footnotes <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">footnotes =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(footnotes, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/dplyr/topics/mutate">mutate</a></span>(<span class="dt">footnotes =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(footnotes, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -387,7 +387,7 @@
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt; Warning: `jstor_example` has been deprecated. Please use `jst_example`</span></a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt; instead.</span></a>
 <a class="sourceLine" id="cb9-4" data-line-number="4">full_text <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">full_text =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(full_text, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/dplyr/topics/mutate">mutate</a></span>(<span class="dt">full_text =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(full_text, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -405,13 +405,13 @@
 <div id="combining-results" class="section level2">
 <h2 class="hasAnchor">
 <a href="#combining-results" class="anchor"></a>Combining results</h2>
-<p>Different parts of meta-data can be combined by using <code><a href="http://dplyr.tidyverse.org/reference/join.html">dplyr::left_join()</a></code>.</p>
+<p>Different parts of meta-data can be combined by using <code><a href="http://www.rdocumentation.org/packages/dplyr/topics/join">dplyr::left_join()</a></code>.</p>
 <div id="matching-with-authors" class="section level3">
 <h3 class="hasAnchor">
 <a href="#matching-with-authors" class="anchor"></a>Matching with authors</h3>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">meta_data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(authors) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(file_name, article_title, pub_year, given_name, surname) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/dplyr/topics/join">left_join</a></span>(authors) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/dplyr/topics/select">select</a></span>(file_name, article_title, pub_year, given_name, surname) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a>
 <a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; Joining, by = "file_name"</span></a></code></pre></div>
 <table class="table">
@@ -435,8 +435,8 @@
 <h3 class="hasAnchor">
 <a href="#matching-with-references" class="anchor"></a>Matching with references</h3>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">meta_data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(references) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(file_name, article_title, volume, pub_year, references) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/dplyr/topics/join">left_join</a></span>(references) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/dplyr/topics/select">select</a></span>(file_name, article_title, volume, pub_year, references) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb11-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a>
 <a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt; Joining, by = "file_name"</span></a></code></pre></div>
@@ -547,7 +547,7 @@
 <a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co">#&gt;  $ part_first_page: chr  "i" "v" "vii" "xi" ...</span></a></code></pre></div>
 <p>Without the abstracts (they are rather long) the first 10 chapters look like this:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">chapters <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>abstract) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/dplyr/topics/select">select</a></span>(<span class="op">-</span>abstract) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb14-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
@@ -674,7 +674,7 @@
 <p>You can expand this list with <code><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">tidyr::unnest</a></code>:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">author_chap <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">unnest</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(part_id, given_name, surname) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/dplyr/topics/select">select</a></span>(part_id, given_name, surname) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb17-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">

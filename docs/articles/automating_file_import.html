@@ -92,7 +92,7 @@
       <h1>Automating File Import</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-07-07</h4>
+            <h4 class="date">2018-07-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/jstor/blob/master/vignettes/automating_file_import.Rmd"><code>vignettes/automating_file_import.Rmd</code></a></small>
       <div class="hidden name"><code>automating_file_import.Rmd</code></div>
@@ -101,64 +101,200 @@
 
     
     
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(jstor)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(purrr)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(stringr)</a></code></pre></div>
 <div id="intro" class="section level1">
 <h1 class="hasAnchor">
 <a href="#intro" class="anchor"></a>Intro</h1>
 <p>The <code>find_*</code> functions from <code>jstor</code> all work on a single file. Data from DfR however contains many single files, from up to 25,000 when using the self-service functions, up to several hundreds of thousands of files when requesting a large dataset via an agreement.</p>
-<p>In this vignette I will introduce <em>one</em> way to deal with this large amount of files. I start with how to list all corresponding files and follow up with some utility functions implemented in <code>jstor</code>. Possibly there are other ways one could import all those files, but this is how I did it four our research.</p>
+<p>Currently <code>jstor</code> offers two implementations to import many files: <code><a href="../reference/jst_import.html">jst_import_zip()</a></code> and <code><a href="../reference/jst_import.html">jst_import()</a></code>. The first one lets you import data directly from zip archives, the second works for file paths, so you need to unzip the archive first. I will first introduce <code><a href="../reference/jst_import.html">jst_import_zip()</a></code> and discuss the approach of with <code><a href="../reference/jst_import.html">jst_import()</a></code> afterwards.</p>
 </div>
-<div id="unzip-containers" class="section level1">
+<div id="importing-data-directly-from-zip-archives" class="section level1">
 <h1 class="hasAnchor">
-<a href="#unzip-containers" class="anchor"></a>Unzip containers</h1>
-<p>Data from DfR comes in <code>*.zip</code>-files. For simple purposes it might be sensible to unzip to a temporary directory (with <code>temp()</code> and <code>unzip()</code>) but for my research I simply extracted files to an external SSD, since I a) lacked disk space, b) needed to read them fast, and c) wanted to be able to look at specific files for debugging.</p>
+<a href="#importing-data-directly-from-zip-archives" class="anchor"></a>Importing data directly from zip-archives</h1>
+<p>Unpacking and working with many files directly is unpractical for at least three reasons:</p>
+<ol style="list-style-type: decimal">
+<li>If you unzip the archive, the single files will occupy a lot more disk space than the single archive.</li>
+<li>Before you can import the files, you need to list them via <code>list.files</code> or <code>system("find...")</code> on UNIX. Depending on the size of your data, this can take some time.</li>
+<li>There might be different types of data in your sample (journal articles, book chapters, etc.). You need to manage matching the paths to the appropriate functions, which is extra work.</li>
+</ol>
+<p>Importing directly from the zip archive simplifies all those tasks with a single function: <code><a href="../reference/jst_import.html">jst_import_zip()</a></code>. For the following demonstration, we will use a small sample archive that comes with the package.</p>
+<p>As a first step, we should take a look at the archive and its content. This is made easy with <code><a href="../reference/jst_preview_zip.html">jst_preview_zip()</a></code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/jst_preview_zip.html">jst_preview_zip</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"pseudo_dfr.zip"</span>)) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">type</th>
+<th align="left">meta_type</th>
+<th align="right">n</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">metadata</td>
+<td align="left">book_chapter</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">metadata</td>
+<td align="left">journal_article</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">metadata</td>
+<td align="left">pamphlet</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">ngram1</td>
+<td align="left">ngram1</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+<p>We can see that we have a simple archive with three metadata files and one ngram file. Before we can use <code><a href="../reference/jst_import.html">jst_import_zip()</a></code>, we first need to think about, what we acutally want to import: all of the data, or just parts? What kind of data do we want to extract from articles, books and pamphlets? We can specify this via <code><a href="../reference/jst_define_import.html">jst_define_import()</a></code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">import_spec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_define_import.html">jst_define_import</a></span>(</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="dt">article =</span> <span class="kw">c</span>(jst_get_article, jst_get_authors),</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="dt">book =</span> jst_get_book,</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="dt">ngram1 =</span> jst_get_ngram</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">)</a></code></pre></div>
+<p>In this case, we want to import data on articles (standard metadata plus information on the authors), general data on books and unigrams (ngram1). This specification can then be used with <code><a href="../reference/jst_import.html">jst_import_zip()</a></code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># set up a temporary folder for output files</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">tmp &lt;-<span class="st"> </span><span class="kw">tempdir</span>()</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co"># extract the content and write output to disk</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="kw"><a href="../reference/jst_import.html">jst_import_zip</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"pseudo_dfr.zip"</span>),</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">               <span class="dt">import_spec =</span> import_spec,</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">               <span class="dt">out_file =</span> <span class="st">"my_test"</span>,</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">               <span class="dt">out_path =</span> tmp)</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; Processing files for book_chapter with functions jst_get_book</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; Processing chunk 1/1</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; Processing files for journal_article with functions c("jst_get_article", "jst_get_authors")</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; Processing chunk 1/1</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; Processing chunk 1/1</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; Processing files for ngram1 with functions jst_get_ngram</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; Processing chunk 1/1</span></a></code></pre></div>
+<p>We can take a look at the files within <code>tmp</code> with <code>list.files()</code>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">list.files</span>(tmp, <span class="dt">pattern =</span> <span class="st">"csv"</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; [1] "my_test_book_chapter_jst_get_book-1.csv"      </span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [2] "my_test_journal_article_jst_get_article-1.csv"</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [3] "my_test_journal_article_jst_get_authors-1.csv"</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; [4] "my_test_ngram1_jst_get_ngram-1.csv"</span></a></code></pre></div>
+<p>As you can see, <code><a href="../reference/jst_import.html">jst_import_zip()</a></code> automatically creates file names based on the string you supplied to <code>out_file</code> to delianate the different types of output.</p>
+<p>If we want to re-import the data for further analysis, we can either use functions like <code><a href="http://www.rdocumentation.org/packages/readr/topics/read_delim">readr::read_csv()</a></code>, or a small helper function from the package which determines and sets the column types correctly:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../reference/jst_re_import.html">jst_re_import</a></span>(</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">  <span class="kw">paste0</span>(tmp, <span class="st">"/my_test_journal_article_jst_get_article-1.csv"</span>)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">file_name</th>
+<th align="left">journal_doi</th>
+<th align="left">journal_jcode</th>
+<th align="left">journal_pub_id</th>
+<th align="left">journal_title</th>
+<th align="left">article_doi</th>
+<th align="left">article_pub_id</th>
+<th align="left">article_jcode</th>
+<th align="left">article_type</th>
+<th align="left">article_title</th>
+<th align="left">volume</th>
+<th align="left">issue</th>
+<th align="left">language</th>
+<th align="left">pub_day</th>
+<th align="left">pub_month</th>
+<th align="right">pub_year</th>
+<th align="left">first_page</th>
+<th align="left">last_page</th>
+<th align="left">page_range</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="left">journal-article-standard_case</td>
+<td align="left">NA</td>
+<td align="left">kewbulletin</td>
+<td align="left">NA</td>
+<td align="left">Kew Bulletin</td>
+<td align="left">10.2307/4117222</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">research-article</td>
+<td align="left">Two New Species of Ischaemum</td>
+<td align="left">5</td>
+<td align="left">2</td>
+<td align="left">eng</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="right">1950</td>
+<td align="left">187</td>
+<td align="left">188</td>
+<td align="left">187-188</td>
+</tr></tbody>
+</table>
+<p>A side note on ngrams: For larger archives, importing all ngrams can take a very long time. It is thus advisable to only import ngrams for articles which you want to analyse, i.e. most likely a subset of the initial request. The function <code><a href="../reference/jst_subset_ngrams.html">jst_subset_ngrams()</a></code> helps you with this (see also the section on importing bigrams in the <a href="https://ropensci.github.io/jstor/articles/analysing-n-grams.html#importing-bigrams">case study</a>).</p>
+<div id="parallel-processing" class="section level2">
+<h2 class="hasAnchor">
+<a href="#parallel-processing" class="anchor"></a>Parallel processing</h2>
+<p>Since the above process might take a while for larger archives (files have to be unpacked, read and parsed), there might be a benefit of executing the function in parallel. <code><a href="../reference/jst_import.html">jst_import_zip()</a></code> and <code><a href="../reference/jst_import.html">jst_import()</a></code> use <code>furrr</code> at their core, therefore adding parallelism is very easy. Just add the following lines at the beginning of your script, and the import will use all available cores:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">library</span>(future)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/future/topics/plan">plan</a></span>(multiprocess)</a></code></pre></div>
+<p>You can find out more about futures by reading the package vignette:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">vignette</span>(<span class="st">"future-1-overview"</span>, <span class="dt">package =</span> <span class="st">"future"</span>)</a></code></pre></div>
 </div>
-<div id="list-files" class="section level1">
+</div>
+<div id="working-with-file-paths" class="section level1">
 <h1 class="hasAnchor">
-<a href="#list-files" class="anchor"></a>List files</h1>
+<a href="#working-with-file-paths" class="anchor"></a>Working with file paths</h1>
+<p>The above approach of importing directly from zip archives is very convenient, but in some cases you might want to have more control over how data is imported. For example, if you run into problems because the output from any of the functions provided with the package looks corrupted, you could want to look at the original files. Alongside this, you could unzip the archive and work with the files directly, which I will demonstrate in the following sections.</p>
+<div id="unzip-containers" class="section level2">
+<h2 class="hasAnchor">
+<a href="#unzip-containers" class="anchor"></a>Unzip containers</h2>
+<p>For simple purposes it might be sensible to unzip to a temporary directory (with <code>temp()</code> and <code>unzip()</code>) but for my research I simply extracted files to an external SSD, since I a) lacked disk space, b) needed to read them fast, and c) wanted to be able to look at specific files for debugging.</p>
+</div>
+<div id="list-files" class="section level2">
+<h2 class="hasAnchor">
+<a href="#list-files" class="anchor"></a>List files</h2>
 <p>There are many ways to generate a list of all files: <code>list.files()</code> or using <code>system()</code> in conjunction with <code>find</code> on unix-like systems are common options.</p>
 <p>For demonstration purposes I use files contained in <code>jstor</code> which can be accessed via <code>system.file</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">example_dir &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="dt">package =</span> <span class="st">"jstor"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">example_dir &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="dt">package =</span> <span class="st">"jstor"</span>)</a></code></pre></div>
+</div>
 <div id="list-files" class="section level2">
 <h2 class="hasAnchor">
 <a href="#list-files" class="anchor"></a><code>list.files</code>
 </h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">file_names_listed &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">path =</span> example_dir, <span class="dt">full.names =</span> T, <span class="dt">pattern =</span> <span class="st">"*.xml"</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">file_names_listed</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; [1] "/Library/Frameworks/R.framework/Versions/3.5/Resources/library/jstor/extdata/sample_book.xml"           </span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; [2] "/Library/Frameworks/R.framework/Versions/3.5/Resources/library/jstor/extdata/sample_with_footnotes.xml" </span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; [3] "/Library/Frameworks/R.framework/Versions/3.5/Resources/library/jstor/extdata/sample_with_references.xml"</span></a></code></pre></div>
-</div>
-<div id="system-and-find" class="section level2">
-<h2 class="hasAnchor">
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">file_names_listed &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">path =</span> example_dir, <span class="dt">full.names =</span> T, <span class="dt">pattern =</span> <span class="st">"*.xml"</span>)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">file_names_listed</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt; [1] "/Library/Frameworks/R.framework/Versions/3.5/Resources/library/jstor/extdata/sample_book.xml"           </span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">#&gt; [2] "/Library/Frameworks/R.framework/Versions/3.5/Resources/library/jstor/extdata/sample_with_footnotes.xml" </span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; [3] "/Library/Frameworks/R.framework/Versions/3.5/Resources/library/jstor/extdata/sample_with_references.xml"</span></a></code></pre></div>
+<div id="system-and-find" class="section level3">
+<h3 class="hasAnchor">
 <a href="#system-and-find" class="anchor"></a><code>system</code> and <code>find</code>
-</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">file_names &lt;-<span class="st"> </span><span class="kw">system</span>(<span class="kw">paste0</span>(<span class="st">"cd "</span>, example_dir, <span class="st">"; find . -name '*.xml' -type f"</span>), <span class="dt">intern =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(stringr)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">file_names_system &lt;-<span class="st"> </span>file_names <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_replace">str_replace</a></span>(<span class="st">"^</span><span class="ch">\\</span><span class="st">.</span><span class="ch">\\</span><span class="st">/"</span>, <span class="st">""</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_c">str_c</a></span>(example_dir, <span class="st">"/"</span>, .)</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">file_names_system</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; [1] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_footnotes.xml" </span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; [2] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_book.xml"</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; [3] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_references.xml"</span></a></code></pre></div>
-<p>In this case the two approaches give the same result. The main difference seems to be though, that <code>list.files</code> sorts the output, whereas <code>find</code> does not. For a large amour of files (200,000) this makes <code>list.files</code> slower, for smaller datasets the difference shouldn’t make an impact.</p>
+</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">file_names &lt;-<span class="st"> </span><span class="kw">system</span>(<span class="kw">paste0</span>(<span class="st">"cd "</span>, example_dir, <span class="st">"; find . -name '*.xml' -type f"</span>), <span class="dt">intern =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">library</span>(stringr)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">file_names_system &lt;-<span class="st"> </span>file_names <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_replace">str_replace</a></span>(<span class="st">"^</span><span class="ch">\\</span><span class="st">.</span><span class="ch">\\</span><span class="st">/"</span>, <span class="st">""</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_c">str_c</a></span>(example_dir, <span class="st">"/"</span>, .)</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">file_names_system</a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt; [1] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_footnotes.xml" </span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt; [2] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_book.xml"</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt; [3] "/Library/Frameworks/R.framework/Versions/3.4/Resources/library/jstor/extdata/sample_with_references.xml"</span></a></code></pre></div>
+<p>In this case the two approaches give the same result. The main difference seems to be though, that <code>list.files</code> sorts the output, whereas <code>find</code> does not. For a large amount of files (200,000) this makes <code>list.files</code> slower, for smaller datasets the difference shouldn’t make an impact.</p>
 </div>
 </div>
-<div id="batch-import" class="section level1">
-<h1 class="hasAnchor">
-<a href="#batch-import" class="anchor"></a>Batch import</h1>
-<p>Once the file list is generated, we can apply any of the <code>jst_get_*</code>-functions to the list. A good and simple way for small to moderate amounts of files is to use <code>map_df</code> from purrr:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(jstor)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">library</span>(purrr)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw">library</span>(stringr)</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">result &lt;-<span class="st"> </span>file_names_listed <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/keep">keep</a></span>(str_detect, <span class="st">"with"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># only operate on articles, remove book sample</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map_df</a></span>(jst_get_article)</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">result <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<div id="batch-import" class="section level2">
+<h2 class="hasAnchor">
+<a href="#batch-import" class="anchor"></a>Batch import</h2>
+<p>Once the file list is generated, we can apply any of the <code>jst_get_*</code>-functions to the list. A good and simple way for small to moderate amounts of files is to use <code><a href="http://www.rdocumentation.org/packages/purrr/topics/map">purrr::map_df()</a></code>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># only work with journal articles</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">article_paths &lt;-<span class="st"> </span>file_names_listed <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/keep">keep</a></span>(str_detect, <span class="st">"with"</span>)</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">article_paths <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map_df</a></span>(jst_get_article) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="st">  </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">file_name</th>
@@ -226,44 +362,28 @@
 </tr>
 </tbody>
 </table>
-<p>This works well if 1) there are no errors and 2) if there is only a moderate size of files. If you try to import many files, you could either run into problems regarding RAM, or it would take a long time and would benefit from executing the process in parallel.</p>
-<p>The function <code><a href="../reference/jst_import.html">jst_import()</a></code> takes care of errors and uses <code><a href="http://www.rdocumentation.org/packages/foreach/topics/foreach">foreach::foreach()</a></code> and <code><a href="http://www.rdocumentation.org/packages/snow/topics/snow-startstop">snow::makeCluster()</a></code> to speed up the process.</p>
-<p>The whole approach about importing many files is implemented like this:</p>
-<ul>
-<li>list all files which are to be converted</li>
-<li>split this list of files into batches of reasonable size</li>
-<li>apply on each batch the following process:
-<ul>
-<li>import and convert data in parallel</li>
-<li>write the result into a single .csv-file</li>
-<li>write any errors in a separate .csv-file</li>
-</ul>
-</li>
-</ul>
-<p><code><a href="../reference/jst_import.html">jst_import()</a></code> takes up to seven arguments:</p>
-<ul>
-<li>
-<em>in_paths</em>: this should be a character vector of all <code>xml-</code>files you want to import</li>
-<li>
-<em>out_file</em>: the file name for the resulting <code>.csv-</code>files.</li>
-<li>
-<em>out_path</em>: in case you want to export the files to a specific directory, specify it here.</li>
-<li>
-<em>.f</em>: the function to use (one of <code>jst_get_article</code>, <code>jst_get_authors</code>, <code>jst_get_references</code>, <code>jst_get_footnotes</code>, <code>jst_get_book</code> or <code>jst_get_chapters</code>).</li>
-<li>
-<em>files_per_batch</em>: how many files should be converted per batch? For my system, 20,000 files per batch worked well.</li>
-<li>
-<em>cores</em> number of cores to use for parallel processing (<code>1</code> on windows).</li>
-<li>
-<em>show_progress</em>: if <code>TRUE</code> and run from an interactive session, a progress bar will be displayed for each batch.</li>
-</ul>
-<p>You can specify all parameters like this:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../reference/jst_import.html">jst_import</a></span>(<span class="dt">in_paths =</span> vector_of_all_my_files, <span class="dt">out_file =</span> <span class="st">"metadata"</span>,</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">           <span class="dt">out_path =</span> <span class="st">"path/to/out/dir"</span>, <span class="dt">.f =</span> jst_get_article,</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">           <span class="dt">files_per_batch =</span> <span class="dv">20000</span>, <span class="dt">cores =</span> <span class="dv">4</span>)</a></code></pre></div>
-<p>Suppose you had 100,000 files to convert, and no errors happened, then you should have in your <code>"path/to/out/dir"</code> the following five files:</p>
-<pre><code>#&gt; [1] "metadata-1.csv" "metadata-2.csv" "metadata-3.csv" "metadata-4.csv"
-#&gt; [5] "metadata-5.csv"</code></pre>
+<p>This works well if 1) there are no errors and 2) if there is only a moderate size of files. For larger numbers of files, <code><a href="../reference/jst_import.html">jst_import()</a></code> can streamline the process for you. This function works very similar to <code><a href="../reference/jst_import.html">jst_import_zip()</a></code>, the main difference being that it needs file paths as input and can only handle one type of output</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw"><a href="../reference/jst_import.html">jst_import</a></span>(article_paths, <span class="dt">out_file =</span> <span class="st">"my_second_test"</span>, <span class="dt">.f =</span> find_article, </a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">           <span class="dt">out_path =</span> tmp)</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co">#&gt; Starting to import 2 file(s).</span></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt; Processing chunk 1/1</span></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co">#&gt; Warning: `find_article` has been deprecated. Please use `jst_get_article`</span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co">#&gt; instead.</span></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co">#&gt; Warning: `get_basename` has been deprecated. Please use `jst_get_file_name`</span></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt; instead.</span></a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt; Warning: `find_article` has been deprecated. Please use `jst_get_article`</span></a>
+<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt; instead.</span></a>
+<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt; Warning: `get_basename` has been deprecated. Please use `jst_get_file_name`</span></a>
+<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt; instead.</span></a>
+<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt; Finished importing 2 file(s) in 0.07 secs.</span></a></code></pre></div>
+<p>The result is again written to disk, as can be seen below:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">list.files</span>(tmp, <span class="dt">pattern =</span> <span class="st">"csv"</span>)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt; [1] "my_second_test-1.csv"                         </span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#&gt; [2] "my_test_book_chapter_jst_get_book-1.csv"      </span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">#&gt; [3] "my_test_journal_article_jst_get_article-1.csv"</span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">#&gt; [4] "my_test_journal_article_jst_get_authors-1.csv"</span></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt; [5] "my_test_ngram1_jst_get_ngram-1.csv"</span></a></code></pre></div>
+</div>
 </div>
   </div>
 
@@ -273,14 +393,19 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#intro">Intro</a></li>
-      <li><a href="#unzip-containers">Unzip containers</a></li>
       <li>
-<a href="#list-files">List files</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#list-files"><code>list.files</code></a></li>
-      <li><a href="#system-and-find"><code>system</code> and <code>find</code></a></li>
+<a href="#importing-data-directly-from-zip-archives">Importing data directly from zip-archives</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#parallel-processing">Parallel processing</a></li>
       </ul>
 </li>
+      <li>
+<a href="#working-with-file-paths">Working with file paths</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#unzip-containers">Unzip containers</a></li>
+      <li><a href="#list-files">List files</a></li>
+      <li><a href="#list-files"><code>list.files</code></a></li>
       <li><a href="#batch-import">Batch import</a></li>
+      </ul>
+</li>
       </ul>
 </div>
       </div>
