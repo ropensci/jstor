@@ -154,33 +154,32 @@
 <p>A small helper to deal with those situations is <code><a href="../reference/jst_get_total_pages.html">jst_get_total_pages()</a></code>. It works for page ranges, but also for first and last pages:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(jstor)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">#&gt; Warning: Paket 'dplyr' wurde unter R Version 3.5.1 erstellt</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">input &lt;-<span class="st"> </span>tibble<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tibble/topics/tribble">tribble</a></span>(</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">  <span class="op">~</span>first_page,   <span class="op">~</span>last_page,    <span class="op">~</span>page_range,</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">  <span class="ot">NA_real_</span>,      <span class="ot">NA_real_</span>,      <span class="ot">NA_character_</span>, </a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">  <span class="dv">1</span>,             <span class="dv">10</span>,            <span class="st">"1 - 10"</span>,</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">  <span class="dv">1</span>,             <span class="dv">10</span>,            <span class="ot">NA_character_</span>,</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">  <span class="dv">1</span>,             <span class="ot">NA_real_</span>,      <span class="ot">NA_character_</span>, </a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">  <span class="dv">1</span>,             <span class="ot">NA_real_</span>,      <span class="st">"1-10"</span>,</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">  <span class="ot">NA_real_</span>,       <span class="ot">NA_real_</span>,      <span class="st">"1, 5-10"</span>,</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">  <span class="ot">NA_real_</span>,       <span class="ot">NA_real_</span>,      <span class="st">"1-4, 5-10"</span>,</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">  <span class="ot">NA_real_</span>,       <span class="ot">NA_real_</span>,      <span class="st">"1-4, C5-C10"</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">)</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">input <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/dplyr/topics/mutate">mutate</a></span>(<span class="dt">n_pages =</span> <span class="kw"><a href="../reference/jst_get_total_pages.html">jst_get_total_pages</a></span>(first_page, last_page, page_range))</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">#&gt; # A tibble: 8 x 4</span></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">#&gt;   first_page last_page page_range  n_pages</span></a>
-<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">#&gt;        &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">#&gt; 1         NA        NA &lt;NA&gt;             NA</span></a>
-<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="co">#&gt; 2          1        10 1 - 10           10</span></a>
-<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co">#&gt; 3          1        10 &lt;NA&gt;             10</span></a>
-<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="co">#&gt; 4          1        NA &lt;NA&gt;             NA</span></a>
-<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="co">#&gt; 5          1        NA 1-10             10</span></a>
-<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="co">#&gt; 6         NA        NA 1, 5-10           7</span></a>
-<a class="sourceLine" id="cb1-28" data-line-number="28"><span class="co">#&gt; 7         NA        NA 1-4, 5-10        10</span></a>
-<a class="sourceLine" id="cb1-29" data-line-number="29"><span class="co">#&gt; 8         NA        NA 1-4, C5-C10      10</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">input &lt;-<span class="st"> </span>tibble<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tibble/topics/tribble">tribble</a></span>(</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">  <span class="op">~</span>first_page,   <span class="op">~</span>last_page,    <span class="op">~</span>page_range,</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">  <span class="ot">NA_real_</span>,      <span class="ot">NA_real_</span>,      <span class="ot">NA_character_</span>, </a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">  <span class="dv">1</span>,             <span class="dv">10</span>,            <span class="st">"1 - 10"</span>,</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">  <span class="dv">1</span>,             <span class="dv">10</span>,            <span class="ot">NA_character_</span>,</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">  <span class="dv">1</span>,             <span class="ot">NA_real_</span>,      <span class="ot">NA_character_</span>, </a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">  <span class="dv">1</span>,             <span class="ot">NA_real_</span>,      <span class="st">"1-10"</span>,</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">  <span class="ot">NA_real_</span>,       <span class="ot">NA_real_</span>,      <span class="st">"1, 5-10"</span>,</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">  <span class="ot">NA_real_</span>,       <span class="ot">NA_real_</span>,      <span class="st">"1-4, 5-10"</span>,</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">  <span class="ot">NA_real_</span>,       <span class="ot">NA_real_</span>,      <span class="st">"1-4, C5-C10"</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">)</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">input <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">n_pages =</span> <span class="kw"><a href="../reference/jst_get_total_pages.html">jst_get_total_pages</a></span>(first_page, last_page, page_range))</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">#&gt; # A tibble: 8 x 4</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">#&gt;   first_page last_page page_range  n_pages</span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">#&gt;        &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">#&gt; 1         NA        NA &lt;NA&gt;             NA</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">#&gt; 2          1        10 1 - 10           10</span></a>
+<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="co">#&gt; 3          1        10 &lt;NA&gt;             10</span></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co">#&gt; 4          1        NA &lt;NA&gt;             NA</span></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="co">#&gt; 5          1        NA 1-10             10</span></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="co">#&gt; 6         NA        NA 1, 5-10           7</span></a>
+<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="co">#&gt; 7         NA        NA 1-4, 5-10        10</span></a>
+<a class="sourceLine" id="cb1-28" data-line-number="28"><span class="co">#&gt; 8         NA        NA 1-4, C5-C10      10</span></a></code></pre></div>
 <p>This is actually identical to using <code><a href="../reference/jst_add_total_pages.html">jst_add_total_pages()</a></code>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">input <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/jst_add_total_pages.html">jst_add_total_pages</a></span>()</a>
@@ -257,7 +256,7 @@
 <p>With this algorithm, it should be possible to reliably match them to general information about the respective journals, which are available from <code><a href="../reference/jst_get_journal_overview.html">jst_get_journal_overview()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">sample_article <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/jst_unify_journal_id.html">jst_unify_journal_id</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/dplyr/topics/join">left_join</a></span>(<span class="kw"><a href="../reference/jst_get_journal_overview.html">jst_get_journal_overview</a></span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(<span class="kw"><a href="../reference/jst_get_journal_overview.html">jst_get_journal_overview</a></span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/gather">gather</a></span>(variable, value) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb4-5" data-line-number="5"><span class="st">  </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a>
 <a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; Joining, by = "journal_id"</span></a></code></pre></div>
@@ -405,9 +404,9 @@
 <a href="#language-codes" class="anchor"></a>Language codes</h2>
 <p>Information on langues is not consistent. For the sample article, <code>language</code> is <code>eng</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">sample_article <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/dplyr/topics/pull">pull</a></span>(language)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/pull.html">pull</a></span>(language)</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [1] "eng"</span></a></code></pre></div>
-<p>In other cases it might be <code>en</code>. It is thus advisable to take a quick look at different variants via <code><a href="http://www.rdocumentation.org/packages/dplyr/topics/distinct">distinct(meta_data, language)</a></code> or <code><a href="http://www.rdocumentation.org/packages/dplyr/topics/tally">count(meta_data, language)</a></code>.</p>
+<p>In other cases it might be <code>en</code>. It is thus advisable to take a quick look at different variants via <code><a href="http://dplyr.tidyverse.org/reference/distinct.html">distinct(meta_data, language)</a></code> or <code><a href="http://dplyr.tidyverse.org/reference/tally.html">count(meta_data, language)</a></code>.</p>
 </div>
 <div id="incorrectodd-references" class="section level2">
 <h2 class="hasAnchor">
