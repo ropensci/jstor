@@ -120,7 +120,7 @@ function in parallel. `jst_import_zip()` and `jst_import()` use `furrr` at their
 core, therefore adding parallelism is very easy. Just add the following lines
 at the beginning of your script, and the import will use all available cores:
 
-```{r}
+```{r, eval=FALSE}
 library(future)
 
 plan(multiprocess)
