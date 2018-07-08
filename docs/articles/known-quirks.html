@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">jstor</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.1</span>
       </span>
     </div>
 
@@ -92,7 +92,7 @@
       <h1>Known Quirks of JSTOR/DfR Data</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-07-07</h4>
+            <h4 class="date">2018-07-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/jstor/blob/master/vignettes/known-quirks.Rmd"><code>vignettes/known-quirks.Rmd</code></a></small>
       <div class="hidden name"><code>known-quirks.Rmd</code></div>
@@ -169,7 +169,7 @@
 <a class="sourceLine" id="cb1-15" data-line-number="15">)</a>
 <a class="sourceLine" id="cb1-16" data-line-number="16"></a>
 <a class="sourceLine" id="cb1-17" data-line-number="17">input <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">n_pages =</span> <span class="kw"><a href="../reference/jst_get_total_pages.html">jst_get_total_pages</a></span>(first_page, last_page, page_range))</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/dplyr/topics/mutate">mutate</a></span>(<span class="dt">n_pages =</span> <span class="kw"><a href="../reference/jst_get_total_pages.html">jst_get_total_pages</a></span>(first_page, last_page, page_range))</a>
 <a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">#&gt; # A tibble: 8 x 4</span></a>
 <a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">#&gt;   first_page last_page page_range  n_pages</span></a>
 <a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">#&gt;        &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;</span></a>
@@ -257,7 +257,7 @@
 <p>With this algorithm, it should be possible to reliably match them to general information about the respective journals, which are available from <code><a href="../reference/jst_get_journal_overview.html">jst_get_journal_overview()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">sample_article <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/jst_unify_journal_id.html">jst_unify_journal_id</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(<span class="kw"><a href="../reference/jst_get_journal_overview.html">jst_get_journal_overview</a></span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/dplyr/topics/join">left_join</a></span>(<span class="kw"><a href="../reference/jst_get_journal_overview.html">jst_get_journal_overview</a></span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/gather">gather</a></span>(variable, value) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb4-5" data-line-number="5"><span class="st">  </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a>
 <a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; Joining, by = "journal_id"</span></a></code></pre></div>
@@ -405,9 +405,9 @@
 <a href="#language-codes" class="anchor"></a>Language codes</h2>
 <p>Information on langues is not consistent. For the sample article, <code>language</code> is <code>eng</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">sample_article <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/pull.html">pull</a></span>(language)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/dplyr/topics/pull">pull</a></span>(language)</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [1] "eng"</span></a></code></pre></div>
-<p>In other cases it might be <code>en</code>. It is thus advisable to take a quick look at different variants via <code><a href="http://dplyr.tidyverse.org/reference/distinct.html">distinct(meta_data, language)</a></code> or <code><a href="http://dplyr.tidyverse.org/reference/tally.html">count(meta_data, language)</a></code>.</p>
+<p>In other cases it might be <code>en</code>. It is thus advisable to take a quick look at different variants via <code><a href="http://www.rdocumentation.org/packages/dplyr/topics/distinct">distinct(meta_data, language)</a></code> or <code><a href="http://www.rdocumentation.org/packages/dplyr/topics/tally">count(meta_data, language)</a></code>.</p>
 </div>
 <div id="incorrectodd-references" class="section level2">
 <h2 class="hasAnchor">

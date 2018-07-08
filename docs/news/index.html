@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">jstor</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.1</span>
       </span>
     </div>
 
@@ -124,10 +124,13 @@
       <small>Source: <a href='https://github.com/ropensci/jstor/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="jstor-0-3-0-9000" class="section level1">
+    <div id="jstor-0-3-1" class="section level1">
 <h1 class="page-header">
-<a href="#jstor-0-3-0-9000" class="anchor"></a>jstor 0.3.0.9000</h1>
+<a href="#jstor-0-3-1" class="anchor"></a>jstor 0.3.1</h1>
 <ul>
+<li>
+<code>jstor</code> is now part of rOpenSci.</li>
+<li>removed arguments <code>new_col</code> for <code>jst_unify_journal_id</code> and <code>jst_add_total_pages</code>, since both built on the dev version of rlang. Once this version is on CRAN, they will be re-introduced.</li>
 <li>fixed a few issues in README and man files regarding changes introduced with 0.3.0.</li>
 </ul>
 </div>
@@ -172,7 +175,7 @@ jst_import_zip("zip-archive.zip",
 <a class="sourceLine" id="cb3-4" data-line-number="4">                                 <span class="dt">ngram1 =</span> jst_get_ngram,</a>
 <a class="sourceLine" id="cb3-5" data-line-number="5">                                 <span class="dt">ngram2 =</span> jst_get_ngram,</a>
 <a class="sourceLine" id="cb3-6" data-line-number="6">                                 <span class="dt">ngram3 =</span> jst_get_ngram)</a></code></pre></div>
-<p>Note however that for larger archives, importing all ngrams takes a very long time. It is thus advisable to only import ngrams for articles which you want to analyse, i.e. most likely a subset of the initial request. The new function <code><a href="../reference/jst_subset_ngrams.html">jst_subset_ngrams()</a></code> helps you with this (see also the section on importing bigrams in the <a href="https://tklebel.github.io/jstor/articles/analysing-n-grams.html#importing-bigrams">case study</a>.</p>
+<p>Note however that for larger archives, importing all ngrams takes a very long time. It is thus advisable to only import ngrams for articles which you want to analyse, i.e. most likely a subset of the initial request. The new function <code><a href="../reference/jst_subset_ngrams.html">jst_subset_ngrams()</a></code> helps you with this (see also the section on importing bigrams in the <a href="https://ropensci.github.io/jstor/articles/analysing-n-grams.html#importing-bigrams">case study</a>.</p>
 <p>Before importing all files from a zip-archive, you can get a quick overview with <code><a href="../reference/jst_preview_zip.html">jst_preview_zip()</a></code>.</p>
 </div>
 <div id="new-vignette" class="section level2">
@@ -224,7 +227,7 @@ jst_import_zip("zip-archive.zip",
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#jstor-0-3-0-9000">0.3.0.9000</a></li>
+        <li><a href="#jstor-0-3-1">0.3.1</a></li>
         <li><a href="#jstor-0-3-0">0.3.0</a></li>
         <li><a href="#jstor-0-2-6">0.2.6</a></li>
       </ul>
