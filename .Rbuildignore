@@ -24,3 +24,4 @@
 ^vignettes/part1_journal_article_jst_get_article-1.csv$
 ^vignettes/part2_journal_article_jst_get_article-1.csv$
 ^data-raw$
+^cran-comments\.md$
