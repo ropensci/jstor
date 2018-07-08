@@ -31,11 +31,9 @@ dataset via an agreement.
 
 Currently `jstor` offers two implementations to import many files: 
 `jst_import_zip()` and `jst_import()`. The first one lets you import data directly
-from the zip archive, the second one works for file paths, so you need to unzip
-the archive first.
-
-I will first introduce `jst_import_zip()` and discuss the approach of with
-`jst_import()` afterwards.
+from zip archives, the second works for file paths, so you need to unzip
+the archive first. I will first introduce `jst_import_zip()` and discuss the 
+approach of with `jst_import()` afterwards.
 
 # Importing data directly from zip-archives
 Unpacking and working with many files directly is unpractical for at least three
@@ -47,18 +45,18 @@ than the single archive.
 `system("find...")` on UNIX. Depending on the size of your data, this can take
 some time.
 3. There might be different types of data in your sample (journal articles, book
-chapters, etc.). You need to manage the paths in order to apply the correct
-functions to them.
+chapters, etc.). You need to manage matching the paths to the appropriate 
+functions, which is extra work.
 
 Importing directly from the zip archive simplifies all those tasks with a
 single function: `jst_import_zip()`. For the following demonstration, we will
 use a small sample archive that comes with the package.
 
 As a first step, we should take a look at the archive and its content. This
-is made easy with `jst_preview_zip():
+is made easy with `jst_preview_zip()`:
 
 ```{r}
-jst_preview_zip(jst_example("pseudo_dfr.zip"))
+jst_preview_zip(jst_example("pseudo_dfr.zip")) %>% knitr::kable()
 ```
 
 We can see that we have a simple archive with three metadata files and one 
@@ -68,12 +66,14 @@ data do we want to extract from articles, books and pamphlets? We can specify
 this via `jst_define_import()`:
 
 ```{r}
-import_spec <- jst_define_import(article = c(jst_get_article, jst_get_authors),
-                                 book = jst_get_book,
-                                 ngram1 = jst_get_ngram)
+import_spec <- jst_define_import(
+  article = c(jst_get_article, jst_get_authors),
+  book = jst_get_book,
+  ngram1 = jst_get_ngram
+)
 ```
 
-In this case, we want to import data on articles (the standard metadata plus
+In this case, we want to import data on articles (standard metadata plus
 information on the authors), general data on books and unigrams (ngram1). This
 specification can then be used with `jst_import_zip()`:
 
@@ -102,16 +102,18 @@ functions like `readr::read_csv()`, or a small helper function from the package
 which determines and sets the column types correctly:
 
 ```{r}
-jst_re_import(paste0(tmp, "/my_test_journal_article_jst_get_article-1.csv")) %>% 
+jst_re_import(
+  paste0(tmp, "/my_test_journal_article_jst_get_article-1.csv")
+) %>% 
   knitr::kable()
 ```
 
-A side note on ngrams: For larger archives, importing all ngrams takes a very
+A side note on ngrams: For larger archives, importing all ngrams can take a very
 long time. It is thus advisable to only import ngrams for articles which you
 want to analyse, i.e. most likely a subset of the initial request. The 
 function `jst_subset_ngrams()` helps you with this (see also the section on
 importing bigrams in the 
-[case study](https://ropensci.github.io/jstor/articles/analysing-n-grams.html#importing-bigrams).
+[case study](https://ropensci.github.io/jstor/articles/analysing-n-grams.html#importing-bigrams)).
 
 ## Parallel processing
 Since the above process might take a while for larger archives (files have to
@@ -126,7 +128,7 @@ library(future)
 plan(multiprocess)
 ```
 
-You can find out mor about futures by reading the package vignette:
+You can find out more about futures by reading the package vignette:
 
 ```{r, eval=FALSE}
 vignette("future-1-overview", package = "future")
@@ -138,9 +140,10 @@ vignette("future-1-overview", package = "future")
 The above approach of importing directly from zip archives is very convenient,
 but in some cases you might want to have more control over how data is imported.
 For example, if you run into problems because the output from any of the 
-functions provided with the package doesn't make sense to your eyes, you could
-want to look at the original files. For this, you could unzip the archive and
-work with the files directly, which I will demonstrate in the following sections.
+functions provided with the package looks corrupted, you could
+want to look at the original files. Alongside this, you could unzip the archive
+and work with the files directly, which I will demonstrate in the following
+sections.
 
 
 ## Unzip containers
@@ -188,33 +191,33 @@ file_names_system
 
 In this case the two approaches give the same result.
 The main difference seems to be though, that `list.files` sorts the output, 
-whereas `find` does not. For a large amour of files (200,000) this makes
+whereas `find` does not. For a large amount of files (200,000) this makes
 `list.files` slower, for smaller datasets the difference shouldn't make an
 impact.
 
 ## Batch import
 Once the file list is generated, we can apply any of the `jst_get_*`-functions 
 to the list. A good and simple way for small to moderate amounts of files is to
-use `map_df` from purrr:
-
-```{r, results='asis'}
-result <- file_names_listed %>% 
-  keep(str_detect, "with") %>% # only operate on articles, remove book sample
-  map_df(jst_get_article)
-
-result %>% knitr::kable()
-```
-
-This works well if 1) there are no errors and 2) if there is only a moderate
-size of files. For larger numbers of files, `jst_import()` can streamline the 
-process for you. This function works very similar to `jst_import_zip()`, the 
-main difference being that it needs file paths as input.
+use `purrr::map_df()`:
 
 ```{r}
 # only work with journal articles
 article_paths <- file_names_listed %>% 
   keep(str_detect, "with")
 
+article_paths %>% 
+  map_df(jst_get_article) %>% 
+  knitr::kable()
+
+```
+
+This works well if 1) there are no errors and 2) if there is only a moderate
+size of files. For larger numbers of files, `jst_import()` can streamline the 
+process for you. This function works very similar to `jst_import_zip()`, the 
+main difference being that it needs file paths as input and can only handle
+one type of output
+
+```{r}
 jst_import(article_paths, out_file = "my_second_test", .f = find_article, 
            out_path = tmp)
 ```
