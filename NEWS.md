@@ -75,7 +75,7 @@ time. It is thus advisable to only import ngrams for articles which you
 want to analyse, i.e. most likely a subset of the initial request. The new 
 function `jst_subset_ngrams()` helps you with this (see also the section on
 importing bigrams in the 
-[case study](https://tklebel.github.io/jstor/articles/analysing-n-grams.html#importing-bigrams).
+[case study](https://ropensci.github.io/jstor/articles/analysing-n-grams.html#importing-bigrams).
 
 Before importing all files from a zip-archive, you can get a quick overview with
 `jst_preview_zip()`.
