@@ -1,4 +1,4 @@
-# jstor 0.3.0.9000
+# jstor 0.3.1
 
 * `jstor` is now part of rOpenSci.
 * removed arguments `new_col` for `jst_unify_journal_id` and
