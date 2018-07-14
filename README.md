@@ -15,7 +15,7 @@ status](https://codecov.io/gh/ropensci/jstor/branch/master/graph/badge.svg)](htt
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![CRAN
 status](http://www.r-pkg.org/badges/version/jstor)](https://cran.r-project.org/package=jstor)
-<!---[![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/jstor)](https://CRAN.R-project.org/package=jstor)--->
+[![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/jstor)](https://CRAN.R-project.org/package=jstor)
 [![rOpenSci
 badge](https://badges.ropensci.org/189_status.svg)](https://github.com/ropensci/onboarding/issues/189)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1169862.svg)](https://doi.org/10.5281/zenodo.1169862)
@@ -46,11 +46,17 @@ All functions which are concerned with meta data (therefore excluding
 
 ## Installation
 
-You can install `jstor` from GitHub with:
+To install the package use:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("ropensci/jstor")
+install.packages("jstor")
+```
+
+You can install the development version from GitHub with:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("ropensci/jstor")
 ```
 
 ## Usage
