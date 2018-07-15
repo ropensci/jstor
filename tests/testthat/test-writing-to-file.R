@@ -18,12 +18,12 @@ paths <- c("testfiles/standard_case.xml", "broken_path.txt")
 # tests ------
 test_that("writing correct results to file works", {
   temp_dir <- tempdir()
-  jstor_convert_to_file(paths, 1, paste0(temp_dir, "/meta_data"), jst_get_article,
-                        col_names = TRUE, n_batches = 1)
+  jstor_convert_to_file(paths, 1, file.path(temp_dir, "/meta_data"), 
+                        jst_get_article, col_names = TRUE, n_batches = 1)
 
   expect_identical(read_csv("testfiles/correct_meta_data.csv",
                             col_names = TRUE),
-                   read_csv(paste0(temp_dir, "/meta_data-1.csv"),
+                   read_csv(file.path(temp_dir, "/meta_data-1.csv"),
                             col_names = TRUE))
 
   unlink(temp_dir)
@@ -32,12 +32,12 @@ test_that("writing correct results to file works", {
 test_that("writing to file in parallel works", {
   future::plan(future::multiprocess)
   temp_dir <- tempdir()
-  jstor_convert_to_file(paths, 1, paste0(temp_dir, "/meta_data"), jst_get_article,
+  jstor_convert_to_file(paths, 1, file.path(temp_dir, "/meta_data"), jst_get_article,
                         col_names = TRUE, n_batches = 1)
   
   expect_identical(read_csv("testfiles/correct_meta_data.csv",
                             col_names = TRUE),
-                   read_csv(paste0(temp_dir, "/meta_data-1.csv"),
+                   read_csv(file.path(temp_dir, "/meta_data-1.csv"),
                             col_names = TRUE))
   
   unlink(temp_dir)
@@ -45,12 +45,12 @@ test_that("writing to file in parallel works", {
 
 test_that("not writing column names works", {
   temp_dir <- tempdir()
-  jstor_convert_to_file(paths, 1, paste0(temp_dir, "/meta_data"), jst_get_article,
+  jstor_convert_to_file(paths, 1, file.path(temp_dir, "/meta_data"), jst_get_article,
                         col_names = FALSE, n_batches = 1)
   
   expect_identical(read_csv("testfiles/correct_meta_data_wo_cols.csv",
                             col_names = FALSE),
-                   read_csv(paste0(temp_dir, "/meta_data-1.csv"),
+                   read_csv(file.path(temp_dir, "/meta_data-1.csv"),
                             col_names = FALSE))
   
   unlink(temp_dir)
@@ -60,10 +60,10 @@ test_that("not writing column names works", {
 test_that("writing error messages to file works", {
   temp_dir <- tempdir()
 
-  jstor_convert_to_file(paths, 1, paste0(temp_dir, "meta_data"), jst_get_article,
+  jstor_convert_to_file(paths, 1, file.path(temp_dir, "meta_data"), jst_get_article,
                         n_batches = 1)
 
-  res <- read_csv(paste0(temp_dir, "meta_data_broken-1.csv"),
+  res <- read_csv(file.path(temp_dir, "meta_data_broken-1.csv"),
                   col_names = TRUE)
 
   # the following is needed for expect_identical
@@ -87,7 +87,7 @@ test_that("import wrapper works with column names", {
 
   expect_identical(read_csv("testfiles/correct_meta_data.csv",
                             col_names = TRUE),
-                   read_csv(paste0(temp_dir, "/meta_data-1.csv"),
+                   read_csv(file.path(temp_dir, "/meta_data-1.csv"),
                             col_names = TRUE))
 
   unlink(temp_dir)
@@ -100,7 +100,7 @@ test_that("import wrapper works without column names", {
   
   expect_identical(read_csv("testfiles/correct_meta_data_wo_cols.csv",
                             col_names = FALSE),
-                   read_csv(paste0(temp_dir, "/meta_data-1.csv"),
+                   read_csv(file.path(temp_dir, "/meta_data-1.csv"),
                             col_names = FALSE))
   
   unlink(temp_dir)
@@ -113,7 +113,7 @@ test_that("files_per_batch works", {
   
   expect_identical(read_csv("testfiles/correct_meta_data_wo_cols.csv",
                             col_names = FALSE),
-                   read_csv(paste0(temp_dir, "/meta_data-1.csv"),
+                   read_csv(file.path(temp_dir, "/meta_data-1.csv"),
                             col_names = FALSE))
   
   unlink(temp_dir)

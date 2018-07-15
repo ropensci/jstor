@@ -34,7 +34,8 @@ test_that("subsetting ngrams works", {
                 out_file = "test", out_path = tmp, show_progress = F)
   
   # re-import as our selection for which we would like to import ngrams
-  selection <- jst_re_import(paste0(tmp, "/test_book_chapter_jst_get_book-1.csv"))
+  selection <- jst_re_import(file.path(tmp,
+                                       "test_book_chapter_jst_get_book-1.csv"))
   
   # get location of file
   zip_loc <- jst_subset_ngrams(jst_example("pseudo_dfr.zip"), "ngram1", selection) 
