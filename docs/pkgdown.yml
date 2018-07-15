@@ -2,8 +2,8 @@ pandoc: 2.1.1
 pkgdown: 1.1.0
 pkgdown_sha: ~
 articles:
-  Introduction: Introduction.html
   analysing-n-grams: analysing-n-grams.html
-  automating_file_import: automating_file_import.html
+  automating-file-import: automating-file-import.html
+  introduction: introduction.html
   known-quirks: known-quirks.html
 

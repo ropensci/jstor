@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">jstor</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.2</span>
       </span>
     </div>
 
@@ -50,10 +50,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/Introduction.html">Introduction</a>
+      <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
-      <a href="../articles/automating_file_import.html">Automating File Import</a>
+      <a href="../articles/automating-file-import.html">Automating File Import</a>
     </li>
     <li>
       <a href="../articles/known-quirks.html">Known Data Quirks</a>
@@ -92,10 +92,10 @@
       <h1>Automating File Import</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-07-08</h4>
+            <h4 class="date">2018-07-15</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/ropensci/jstor/blob/master/vignettes/automating_file_import.Rmd"><code>vignettes/automating_file_import.Rmd</code></a></small>
-      <div class="hidden name"><code>automating_file_import.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/ropensci/jstor/blob/master/vignettes/automating-file-import.Rmd"><code>vignettes/automating-file-import.Rmd</code></a></small>
+      <div class="hidden name"><code>automating-file-import.Rmd</code></div>
 
     </div>
 
@@ -182,7 +182,7 @@
 <p>As you can see, <code><a href="../reference/jst_import.html">jst_import_zip()</a></code> automatically creates file names based on the string you supplied to <code>out_file</code> to delianate the different types of output.</p>
 <p>If we want to re-import the data for further analysis, we can either use functions like <code><a href="http://www.rdocumentation.org/packages/readr/topics/read_delim">readr::read_csv()</a></code>, or a small helper function from the package which determines and sets the column types correctly:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../reference/jst_re_import.html">jst_re_import</a></span>(</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">  <span class="kw">paste0</span>(tmp, <span class="st">"/my_test_journal_article_jst_get_article-1.csv"</span>)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">  <span class="kw">file.path</span>(tmp, <span class="st">"my_test_journal_article_jst_get_article-1.csv"</span>)</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3">) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
@@ -375,7 +375,7 @@
 <a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt; instead.</span></a>
 <a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt; Warning: `get_basename` has been deprecated. Please use `jst_get_file_name`</span></a>
 <a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt; instead.</span></a>
-<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt; Finished importing 2 file(s) in 0.07 secs.</span></a></code></pre></div>
+<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt; Finished importing 2 file(s) in 0.06 secs.</span></a></code></pre></div>
 <p>The result is again written to disk, as can be seen below:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">list.files</span>(tmp, <span class="dt">pattern =</span> <span class="st">"csv"</span>)</a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt; [1] "my_second_test-1.csv"                         </span></a>

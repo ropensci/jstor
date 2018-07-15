@@ -11,9 +11,9 @@ navbar:
   - text: Vignettes
     menu:
     - text: Introduction
-      href: articles/Introduction.html
+      href: articles/introduction.html
     - text: Automating File Import
-      href: articles/automating_file_import.html
+      href: articles/automating-file-import.html
     - text: Known Data Quirks
       href: articles/known-quirks.html
   - text: Case Study - Analysing Ngrams

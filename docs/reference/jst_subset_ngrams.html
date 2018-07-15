@@ -65,7 +65,7 @@ terms of cpu and memory)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">jstor</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.2</span>
       </span>
     </div>
 
@@ -174,8 +174,8 @@ selected.</p></td>
                <span class='kw'>import_spec</span> <span class='kw'>=</span> <span class='fu'><a href='jst_define_import.html'>jst_define_import</a></span>(<span class='kw'>book</span> <span class='kw'>=</span> <span class='no'>jst_get_book</span>),
                <span class='kw'>out_file</span> <span class='kw'>=</span> <span class='st'>"test"</span>, <span class='kw'>out_path</span> <span class='kw'>=</span> <span class='no'>tmp</span>)</div><div class='output co'>#&gt; <span class='message'>Processing files for book_chapter with functions jst_get_book</span></div><div class='output co'>#&gt; <span class='message'>Processing chunk 1/1</span></div><div class='input'>
 <span class='co'># re-import as our selection for which we would like to import ngrams</span>
-<span class='no'>selection</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='jst_re_import.html'>jst_re_import</a></span>(<span class='fu'>paste0</span>(<span class='no'>tmp</span>,
-                                  <span class='st'>"/test_book_chapter_jst_get_book-1.csv"</span>))
+<span class='no'>selection</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='jst_re_import.html'>jst_re_import</a></span>(<span class='fu'>file.path</span>(<span class='no'>tmp</span>,
+                                     <span class='st'>"test_book_chapter_jst_get_book-1.csv"</span>))
 
 <span class='co'># get location of file</span>
 <span class='no'>zip_loc</span> <span class='kw'>&lt;-</span> <span class='fu'>jst_subset_ngrams</span>(<span class='fu'><a href='jst_example.html'>jst_example</a></span>(<span class='st'>"pseudo_dfr.zip"</span>), <span class='st'>"ngram1"</span>,
