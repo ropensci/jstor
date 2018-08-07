@@ -165,7 +165,7 @@ jst_get_total_pages <- function(first_page, last_page, page_range,
 #' most of the time the relevant dat ais present in `journal_pub_id` or
 #' `journal_jcode`, with `journal_jcode` being to most common identifier.
 #' This function takes the value from `journal_pub_id`, and if it is missing,
-#' that from `journal_jcode`. `journal_doi` is currently disregarded
+#' that from `journal_jcode`. `journal_doi` is currently disregarded.
 #' 
 #' @param meta_data Data which was processed via [jst_get_article()].
 #' @param remove_cols Should the original columns be removed after unifying?
@@ -174,6 +174,24 @@ jst_get_total_pages <- function(first_page, last_page, page_range,
 #' 
 #' @return A modified tibble.
 #' @export
+#' 
+#' @examples 
+#' article <- jst_get_article(jst_example("sample_with_references.xml"))
+#' 
+#' jst_unify_journal_id(article)
+#' 
+#' 
+#' # per default, original columns with data on the journal are removed
+#' library(dplyr)
+#' 
+#' jst_unify_journal_id(article) %>% 
+#'   select(contains("journal")) %>% 
+#'   names()
+#'   
+#' # you can keep them by setting `remove_cols` to `FALSE`
+#' jst_unify_journal_id(article, remove_cols = FALSE) %>%  
+#'   select(contains("journal")) %>%
+#'   names()
 jst_unify_journal_id <- function(meta_data,
                                  remove_cols = TRUE) {
   out <- meta_data %>%

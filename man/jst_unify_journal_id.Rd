@@ -25,5 +25,23 @@ Date on journal ids can be found in three columns:
 most of the time the relevant dat ais present in \code{journal_pub_id} or
 \code{journal_jcode}, with \code{journal_jcode} being to most common identifier.
 This function takes the value from \code{journal_pub_id}, and if it is missing,
-that from \code{journal_jcode}. \code{journal_doi} is currently disregarded
+that from \code{journal_jcode}. \code{journal_doi} is currently disregarded.
+}
+\examples{
+article <- jst_get_article(jst_example("sample_with_references.xml"))
+
+jst_unify_journal_id(article)
+
+
+# per default, original columns with data on the journal are removed
+library(dplyr)
+
+jst_unify_journal_id(article) \%>\% 
+  select(contains("journal")) \%>\% 
+  names()
+  
+# you can keep them by setting `remove_cols` to `FALSE`
+jst_unify_journal_id(article, remove_cols = FALSE) \%>\%  
+  select(contains("journal")) \%>\%
+  names()
 }
