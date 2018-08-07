@@ -55,7 +55,7 @@ jst_define_import(book = chapters_w_authors)
 imports <- jst_define_import(article = c(jst_get_article, jst_get_authors))
 
 # convert the files to .csv
-jstor_import_zip("my_archive.zip", out_file = "my_out_file", 
+jst_import_zip("my_archive.zip", out_file = "my_out_file", 
                  import_spec = imports)
 }
 }

@@ -5,8 +5,8 @@
 \title{Wrapper for file import}
 \usage{
 jstor_import(in_paths, out_file, out_path = NULL, .f, col_names = TRUE,
-  n_batches = NULL, files_per_batch = NULL, cores = getOption("mc.cores",
-  1L), show_progress = TRUE)
+  n_batches = NULL, files_per_batch = NULL,
+  cores = getOption("mc.cores", 1L), show_progress = TRUE)
 }
 \arguments{
 \item{in_paths}{A character vector to the \code{xml}-files which should be

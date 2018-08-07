@@ -9,7 +9,7 @@ jst_combine_outputs(path, write_to_file = TRUE, out_path = NULL,
 }
 \arguments{
 \item{path}{A path to a directory, containing .csv-files from
-\code{\link[=jstor_import]{jstor_import()}} or \code{\link[=jst_import_zip]{jst_import_zip()}}, or a vector of files which are to be
+\code{\link[=jst_import]{jst_import()}} or \code{\link[=jst_import_zip]{jst_import_zip()}}, or a vector of files which are to be
 imported.}
 
 \item{write_to_file}{Should combined data be written to a file?}
@@ -30,11 +30,11 @@ Either writes to disk, or returns a list with all combined files.
 }
 \description{
 \code{jst_combine_outputs()} helps you to manage the multitude of files you might
-receive after running \code{\link[=jstor_import]{jstor_import()}} or \code{\link[=jst_import_zip]{jst_import_zip()}} with more than
+receive after running \code{\link[=jst_import]{jst_import()}} or \code{\link[=jst_import_zip]{jst_import_zip()}} with more than
 one batch.
 }
 \details{
-Splitting the output of \code{\link[=jstor_import]{jstor_import()}} or \code{\link[=jst_import_zip]{jst_import_zip()}} might be done
+Splitting the output of \code{\link[=jst_import]{jst_import()}} or \code{\link[=jst_import_zip]{jst_import_zip()}} might be done
 for multiple reasons, but in the end you possibly want to combine all outputs
 into one file/data.frame. This function makes a few assumptions in order to
 combine files:
@@ -45,7 +45,7 @@ together and will be combined into one file.
 If you want to combine \code{foo-1.csv} and \code{foo-2.csv}, the combined file will
 be \code{combined_foo.csv}.
 \item The directory only contains files which were imported via
-\code{\link[=jstor_import]{jstor_import()}} or \code{\link[=jst_import_zip]{jst_import_zip()}}. If the directory contains other
+\code{\link[=jst_import]{jst_import()}} or \code{\link[=jst_import_zip]{jst_import_zip()}}. If the directory contains other
 \code{.csv} files, you should supply a character vector with paths to only those
 files, which you want to import.
 }

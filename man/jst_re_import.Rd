@@ -14,7 +14,7 @@ determined?}
 }
 \description{
 \code{jst_re_import()} lets you re-import a file which was exported via
-\code{\link[=jstor_import]{jstor_import()}} or \code{\link[=jst_import_zip]{jst_import_zip()}}.
+\code{\link[=jst_import]{jst_import()}} or \code{\link[=jst_import_zip]{jst_import_zip()}}.
 }
 \details{
 When attempting to re-import, a heuristic is applied. If the file has column
