@@ -17,13 +17,14 @@ tags:
  - citation analysis
 affiliations:
  - index: 1
-   name: University of Graz
+   name: Department of Sociology, University of Graz
 ---
 
 # Summary
-The interest in text as data has long history, spanning from discourse analysis
-to current approaches like topic modelling. Of course, every analysis has to
-start with data and hence data availability is an important question.
+The interest in text as data has has seen a sharp increase in the 
+past few years, mostly due to the advent of methods for automated text analysis.
+Every analysis of text needs some 
+data and hence data availability is an important issue.
 For researchers
 interested in the study of science and the scholarly literature in particular,
 the archival content of [JSTOR](http://www.jstor.org) offers a rich and diverse
@@ -37,8 +38,8 @@ analysing these datasets by enabling researchers to easily import the metadata
 to R [@r_core], for which no other integrated solution exists to date.
 
 The metadata from DfR
-can either be analysed on their own, or be used in conjunction with n-grams
-or full-text-data. Commonly, metadata include information
+can either be analysed on their own or be used in conjunction with n-grams
+or full-text-data. Commonly, metadata from DfR include information
 on the articles' authors, the title, journal, date of publishing, and quite
 frequently all footnotes and references. All this information can be of interest
 for specific research questions. For the analysis of n-grams or full-texts,
@@ -63,9 +64,7 @@ https://ropensci.github.io/jstor/. The package can be obtained from
 CRAN (https://CRAN.R-project.org/package=jstor)
 or from GitHub (https://github.com/ropensci/jstor). 
 Archived versions of all releases are available at Zenodo 
-(https://doi.org/10.5281/zenodo.1169861). If you encounter bugs or have
-suggestions for further improvement, please file them at 
-https://github.com/ropensci/jstor/issues.
+(https://doi.org/10.5281/zenodo.1169861). 
 
 
 
