@@ -9,6 +9,7 @@ dev_scripts
 test_output
 docs/articles/*.csv
 docs/articles/articles/*.csv
+docs/paper.html
 vignettes/*.csv
 vignettes/*.zip
 
