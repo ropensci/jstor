@@ -86,7 +86,7 @@ extract_ref_content <- function(x, file_path) {
   } else {
     abort(paste0("Unknown citation format in file `", file_path, "`.\n",
                  "Please file an issue at ",
-                 "`https://github.com/tklebel/jstor/issues`."))
+                 "`https://github.com/ropensci/jstor/issues`."))
   }
 }
 
