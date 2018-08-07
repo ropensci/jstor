@@ -65,7 +65,7 @@ the output in batches of .csv-files to disk." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">jstor</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.2.9000</span>
       </span>
     </div>
 
@@ -263,7 +263,7 @@ progress bar is displayed for each batch.</p>
 <span class='no'>imports</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='jst_define_import.html'>jst_define_import</a></span>(<span class='kw'>article</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='no'>jst_get_article</span>, <span class='no'>jst_get_authors</span>))
 
 <span class='co'># convert the files to .csv</span>
-<span class='fu'>jstor_import_zip</span>(<span class='st'>"my_archive.zip"</span>, <span class='kw'>out_file</span> <span class='kw'>=</span> <span class='st'>"my_out_file"</span>,
+<span class='fu'>jst_import_zip</span>(<span class='st'>"my_archive.zip"</span>, <span class='kw'>out_file</span> <span class='kw'>=</span> <span class='st'>"my_out_file"</span>,
                  <span class='kw'>import_spec</span> <span class='kw'>=</span> <span class='no'>imports</span>)
 <span class='co'># }</span></pre>
   </div>
