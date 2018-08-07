@@ -24,7 +24,7 @@ affiliations:
 ---
 
 # Summary
-The interest in text as data has has seen a sharp increase in the 
+The interest in text as data has seen a sharp increase in the 
 past few years, mostly due to the advent of methods for automated text analysis.
 At the same time, researches within the field of scientometrics have analysed
 citations and other aspects of the scholarly literature with great sophistication.
