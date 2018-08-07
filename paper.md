@@ -42,7 +42,7 @@ to R [@r_core], a task, for which no other integrated solution exists to date.
 The metadata from DfR
 can either be analysed on their own or be used in conjunction with n-grams
 or full-text data. Commonly, metadata from DfR include information
-on the articles' authors, the title, journal, date of publishing, and quite
+on the articles' authors, their title, journal, date of publishing, and quite
 frequently all footnotes and references. All this information can be of interest
 for specific research questions. For the analysis of n-grams or full-texts,
 the metadata imported with `jstor`
