@@ -35,14 +35,11 @@ logging in/creating an account, we select unigrams and bigrams. The resulting
 `.zip`-file can be downloaded from the email which DfR sends.
 
 
-Up-front, we need to load some packages. `jstor` is currently not available from
-CRAN, but can be installed via `devtools`.
+Up-front, we need to load some packages. `jstor` is  available from
+CRAN, so it can be installed via `install.packages("jstor")`.
 
 
 ```{r, message=FALSE}
-# install.packages("devtools")
-# devtools::install_github("tklebel/jstor")
-
 library(jstor)
 library(tidyverse)
 library(future)
