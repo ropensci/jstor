@@ -18,7 +18,10 @@ status](http://www.r-pkg.org/badges/version/jstor)](https://cran.r-project.org/p
 [![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/grand-total/jstor)](https://CRAN.R-project.org/package=jstor)
 [![rOpenSci
 badge](https://badges.ropensci.org/189_status.svg)](https://github.com/ropensci/onboarding/issues/189)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1169861.svg)](https://doi.org/10.5281/zenodo.1169861)
+[![JOSS
+badge](http://joss.theoj.org/papers/ba29665c4bff35c37c0ef68cfe356e44/status.svg)](http://joss.theoj.org/papers/ba29665c4bff35c37c0ef68cfe356e44)
+[![Zenodo
+DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1169861.svg)](https://doi.org/10.5281/zenodo.1169861)
 
 The tool [Data for Research (DfR)](http://www.jstor.org/dfr/) by JSTOR
 is a valuable source for citation analysis and text mining. `jstor`
