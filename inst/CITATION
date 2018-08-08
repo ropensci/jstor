@@ -1,0 +1,14 @@
+citHeader("To cite jstor in publications, please use:")
+
+citEntry(entry = "article",
+  author = "Thomas Klebel",
+  title = "jstor: Import and Analyse Data from Scientific Texts",
+  journal = "Journal of Open Source Software",
+  volume = "3",
+  issue = "28",
+  page = "883",
+  year = "2018",
+  doi = "10.21105/joss.00883",
+  url = "https://ropensci.github.io/jstor/",
+  textVersion = "Klebel (2018). jstor: Import and Analyse Data from Scientific Texts. Journal of Open Source Software, 3(28), 883, https://doi.org/10.21105/joss.00883"
+)
