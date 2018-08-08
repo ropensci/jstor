@@ -9,6 +9,6 @@ citEntry(entry = "article",
   page = "883",
   year = "2018",
   doi = "10.21105/joss.00883",
-  url = "https://ropensci.github.io/jstor/",
+  url = "https://ropensci.github.io/jstor",
   textVersion = "Klebel (2018). jstor: Import and Analyse Data from Scientific Texts. Journal of Open Source Software, 3(28), 883, https://doi.org/10.21105/joss.00883"
 )
