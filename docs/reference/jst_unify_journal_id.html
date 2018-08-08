@@ -176,8 +176,12 @@ that from <code>journal_jcode</code>. <code>journal_doi</code> is currently disr
 #&gt; #   first_page &lt;chr&gt;, last_page &lt;chr&gt;, page_range &lt;chr&gt;, journal_id &lt;chr&gt;</div><div class='input'>
 
 <span class='co'># per default, original columns with data on the journal are removed</span>
-<span class='fu'>library</span>(<span class='no'>dplyr</span>)
-
+<span class='fu'>library</span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attache Paket: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
 <span class='fu'>jst_unify_journal_id</span>(<span class='no'>article</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"journal"</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'>names</span>()</div><div class='output co'>#&gt; [1] "journal_title" "journal_id"   </div><div class='input'>

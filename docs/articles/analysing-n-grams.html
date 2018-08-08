@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">jstor</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.2.9000</span>
       </span>
     </div>
 
@@ -92,7 +92,7 @@
       <h1>Analysing n-grams with <code>jstor</code> for R</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-07-08</h4>
+            <h4 class="date">2018-08-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/jstor/blob/master/vignettes/analysing-n-grams.Rmd"><code>vignettes/analysing-n-grams.Rmd</code></a></small>
       <div class="hidden name"><code>analysing-n-grams.Rmd</code></div>
@@ -104,19 +104,16 @@
 <p>The service <a href="http://www.jstor.org/dfr/">DfR</a> by JSTOR offers several ways for text analysis of scientific articles. In this vignette I will demonstrate how to analyse n-grams which DfR delivers.</p>
 <p>Let’s suppose, we are interested in the topic of “inequality” within the discipline of sociology. Social inequality can be considered a prime subject of sociological inquiry. In order to gain some context on the subject, we might be interested to analyse frequently occurring terms. DfR offers different grades of tokenization: n-grams for 1-3 words, e.g. unigrams, bigrams and trigrams. In case you are unfamiliar with the analysis of tokenized text, you could read the first few paragraphs of chapters 1 and 4 in <a href="https://www.tidytextmining.com" class="uri">https://www.tidytextmining.com</a> as an introduction.</p>
 <p>Our analysis starts at the main page of <a href="http://www.jstor.org/dfr/">DfR</a>. We create a dataset<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> by searching for “inequality” and selecting “sociology” as our subject. To trim down the number of articles, we only select articles from 1997 to 2017. After logging in/creating an account, we select unigrams and bigrams. The resulting <code>.zip</code>-file can be downloaded from the email which DfR sends.</p>
-<p>Up-front, we need to load some packages. <code>jstor</code> is currently not available from CRAN, but can be installed via <code>devtools</code>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># devtools::install_github("tklebel/jstor")</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">library</span>(jstor)</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">library</span>(future)</a>
+<p>Up-front, we need to load some packages. <code>jstor</code> is available from CRAN, so it can be installed via <code>install.packages("jstor")</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(jstor)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(future)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co"># set a lighter theme for plots</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">theme_set</span>(<span class="kw">theme_bw</span>())</a>
 <a class="sourceLine" id="cb1-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co"># set a lighter theme for plots</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="kw">theme_set</span>(<span class="kw">theme_bw</span>())</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co"># import files in parallel</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="kw"><a href="http://www.rdocumentation.org/packages/future/topics/plan">plan</a></span>(multiprocess)</a></code></pre></div>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co"># import files in parallel</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="kw"><a href="http://www.rdocumentation.org/packages/future/topics/plan">plan</a></span>(multiprocess)</a></code></pre></div>
 <p>With the latest version of <code>jstor</code> we can now directly import files from a zip archive. We only need to specify, where the zip archive is located, which parts we want to extract, and where the resulting files should be saved.</p>
 <p>Before importing data, we can take a quick look at the contents of each archive with <code><a href="../reference/jst_preview_zip.html">jst_preview_zip()</a></code>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/jst_preview_zip.html">jst_preview_zip</a></span>(<span class="st">"part1.zip"</span>)</a></code></pre></div>
@@ -151,18 +148,18 @@
 <a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw">map_df</span>(jst_re_import)</a>
 <a class="sourceLine" id="cb7-4" data-line-number="4">imported_metadata</a></code></pre></div>
 <pre><code>## # A tibble: 23,909 x 19
-##    file_name     journal_doi journal_jcode journal_pub_id journal_title   
-##    &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt;          &lt;chr&gt;           
-##  1 journal-arti… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Journa…
-##  2 journal-arti… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Journa…
-##  3 journal-arti… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Journa…
-##  4 journal-arti… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Journa…
-##  5 journal-arti… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Journa…
-##  6 journal-arti… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Journa…
-##  7 journal-arti… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Journa…
-##  8 journal-arti… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Journa…
-##  9 journal-arti… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Journa…
-## 10 journal-arti… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Journa…
+##    file_name journal_doi journal_jcode journal_pub_id journal_title
+##    &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt;          &lt;chr&gt;        
+##  1 journal-… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Jou…
+##  2 journal-… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Jou…
+##  3 journal-… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Jou…
+##  4 journal-… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Jou…
+##  5 journal-… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Jou…
+##  6 journal-… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Jou…
+##  7 journal-… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Jou…
+##  8 journal-… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Jou…
+##  9 journal-… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Jou…
+## 10 journal-… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Jou…
 ## # ... with 23,899 more rows, and 14 more variables: article_doi &lt;chr&gt;,
 ## #   article_pub_id &lt;chr&gt;, article_jcode &lt;chr&gt;, article_type &lt;chr&gt;,
 ## #   article_title &lt;chr&gt;, volume &lt;chr&gt;, issue &lt;chr&gt;, language &lt;chr&gt;,
@@ -186,7 +183,7 @@
 <p>We can see, that the majority of articles are proper “research-articles”, which together with book-reviews and miscellaneous articles amount to ~99% of all articles.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">imported_metadata <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(article_type, <span class="dt">sort =</span> T) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">perc =</span> scales<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/percent_format">percent</a></span>(n<span class="op">/</span><span class="kw">sum</span>(n)))</a></code></pre></div>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">perc =</span> scales<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/scales/topics/number_format">percent</a></span>(n<span class="op">/</span><span class="kw">sum</span>(n)))</a></code></pre></div>
 <pre><code>## # A tibble: 14 x 3
 ##    article_type         n perc 
 ##    &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;
@@ -366,9 +363,9 @@
 <a class="sourceLine" id="cb29-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/graph_from_data_frame">graph_from_data_frame</a></span>()</a>
 <a class="sourceLine" id="cb29-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb29-5" data-line-number="5">bigram_graph</a></code></pre></div>
-<pre><code>## IGRAPH da460da DN-- 170 161 -- 
+<pre><code>## IGRAPH 25829ba DN-- 170 161 -- 
 ## + attr: name (v/c), n (e/n)
-## + edges from da460da (vertex names):
+## + edges from 25829ba (vertex names):
 ##  [1] labor                 -&gt;market   9                     -&gt;7       
 ##  [3] 7                     -&gt;6        10                    -&gt;9       
 ##  [5] amsmath               -&gt;amsxtra  begin                 -&gt;document
@@ -394,7 +391,7 @@
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">plot_bigrams</span>(bigram_graph)</a></code></pre></div>
 <p><img src="analysing-n-grams_files/figure-html/unnamed-chunk-24-1.png" width="1152"> Very obvious is a group of nodes which are not relevant to the topic of inequality. They come from LaTeX documents and somehow made their way into the original dataset. However, since they are more common than most of the other terms, they are quite easy to remove. We can look at the nodes/vertices of our graph with <code><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V(bigram_graph)</a></code>.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(bigram_graph)</a></code></pre></div>
-<pre><code>## + 170/170 vertices, named, from da460da:
+<pre><code>## + 170/170 vertices, named, from 25829ba:
 ##   [1] labor                  9                      7                     
 ##   [4] 10                     amsmath                begin                 
 ##   [7] declaremathsizes       declaretextfontcommand documentclass         
@@ -409,9 +406,9 @@
 <p>The first node, “labor”, is relevant to us, but all other nodes from 2 to at least 40 are clearly irrelevant. We can remove them by simple subtraction:</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">bigram_graph_clean &lt;-<span class="st"> </span>bigram_graph <span class="op">-</span><span class="st"> </span><span class="dv">2</span><span class="op">:</span><span class="dv">40</span></a>
 <a class="sourceLine" id="cb35-2" data-line-number="2">bigram_graph_clean</a></code></pre></div>
-<pre><code>## IGRAPH 183104b DN-- 131 105 -- 
+<pre><code>## IGRAPH 5eecb59 DN-- 131 105 -- 
 ## + attr: name (v/c), n (e/n)
-## + edges from 183104b (vertex names):
+## + edges from 5eecb59 (vertex names):
 ##  [1] labor     -&gt;market     labor     -&gt;force      0         -&gt;0         
 ##  [4] table     -&gt;2          1         -&gt;1          income    -&gt;inequality
 ##  [7] black     -&gt;white      table     -&gt;1          table     -&gt;3         
