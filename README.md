@@ -186,7 +186,11 @@ abide by its terms.
 
 ## Citation
 
-To cite `jstor`, please refer to `citation(package = "jstor")`.
+To cite `jstor`, please refer to `citation(package =
+    "jstor")`:
+
+    Klebel (2018). jstor: Import and Analyse Data from Scientific Texts. Journal of 
+    Open Source Software, 3(28), 883, https://doi.org/10.21105/joss.00883
 
 ## Acknowledgements
 
