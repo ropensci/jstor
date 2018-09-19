@@ -38,7 +38,11 @@ jst_get_journal_overview <- function(most_recent = FALSE, quiet = FALSE) {
     link <- "https://www.jstor.org/titlelists/journals/archive?fileFormat=xls"
     
     journal_list <- tempfile()
-    utils::download.file(link, journal_list, quiet = quiet, mode = "wb")
+    
+    handle <- curl::new_handle()
+    handle <- curl::handle_setheaders(handle, "User-Agent" = "Mozilla/4.0")
+    
+    curl::curl_download(link, journal_list, handle = handle)
     
     journals <- readxl::read_xls(journal_list)
 
