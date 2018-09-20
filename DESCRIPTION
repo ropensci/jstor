@@ -22,7 +22,9 @@ Imports:
     furrr (>= 0.1.0),
     readxl (>= 1.0.0),
     curl,
-    pryr
+    pryr,
+    crayon,
+    cli
 Suggests: 
     testthat,
     covr,
