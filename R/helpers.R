@@ -31,7 +31,7 @@ validate_article <- function(xml_file) {
            call. = FALSE)
     } else {
       stop("You are using `", original_call, "` on a book. ",
-           "Please use `find_book` or `find_chapter` instead.",
+           "Please use `jst_get_book` or `jst_get_chapters` instead.",
            call. = FALSE)
     }
   } else if (!identical(xml2::xml_name(xml_file), "article")) {
@@ -42,8 +42,8 @@ validate_article <- function(xml_file) {
 validate_book <- function(xml_file) {
   if (identical(xml2::xml_name(xml_file), "article")) {
     stop(paste0("You are using `", sys.call(-1)[[1]], "` on an article. ",
-                "Please use `find_article`, `find_authors`, `find_references` ",
-                "or `find_footnotes` instead."),
+                "Please use `jst_get_article`, `jst_get_authors`, `jst_get_references` ",
+                "or `jst_get_footnotes` instead."),
          call. = FALSE)
   } else if (!identical(xml2::xml_name(xml_file), "book")) {
     abort("Unknown input file.")
