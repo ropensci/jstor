@@ -2,7 +2,11 @@
 
 * `jst_define_import` now prints the specification in a pretty and informative
 way.
-* removed an outdated function from the vignette on batch importing files.
+* Removed an outdated function from the vignette on batch importing files.
+* `jst_define_import` now checks the definition more extensively: 
+`jst_define_import(article = jst_get_book)` will raise an error.
+* Import the crayon package for more colourful error messages which are easier
+to read.
 
 # jstor 0.3.2
 This is a hotfix to resolve an issue with writing to other directories than
