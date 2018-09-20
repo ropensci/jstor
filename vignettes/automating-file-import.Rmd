@@ -215,10 +215,10 @@ This works well if 1) there are no errors and 2) if there is only a moderate
 size of files. For larger numbers of files, `jst_import()` can streamline the 
 process for you. This function works very similar to `jst_import_zip()`, the 
 main difference being that it needs file paths as input and can only handle
-one type of output
+one type of output.
 
 ```{r}
-jst_import(article_paths, out_file = "my_second_test", .f = find_article, 
+jst_import(article_paths, out_file = "my_second_test", .f = jst_get_article, 
            out_path = tmp)
 ```
 
