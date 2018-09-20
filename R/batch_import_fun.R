@@ -17,7 +17,9 @@
 jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
                                   col_names = FALSE, n_batches,
                                   show_progress = TRUE) {
-  message("Processing chunk ", chunk_number, "/", n_batches)
+  if (n_batches > 1) {
+    message("Processing chunk ", chunk_number, "/", n_batches)
+  }
 
   safe_fun <- purrr::safely(fun)
   
