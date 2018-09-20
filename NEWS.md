@@ -1,5 +1,9 @@
 # jstor 0.3.2.9000
 
+* `jst_define_import` now prints the specification in a pretty and informative
+way.
+* removed an outdated function from the vignette on batch importing files.
+
 # jstor 0.3.2
 This is a hotfix to resolve an issue with writing to other directories than
 temporary folders during tests, which should not have happend in the first 
