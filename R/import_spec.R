@@ -59,8 +59,10 @@ jst_define_import <- function(...) {
   types_checked <- type %in% possible_types
   
   if (!all(types_checked)) {
-    stop("Input type must be one of ", paste(possible_types, collapse = ", "),
-         ", `", type[!types_checked], "` is not.")
+    stop("Input type must be one of ", 
+         paste(crayon::green(possible_types), collapse = ", "),
+         ".\n", crayon::blue(type[!types_checked]), " is not one of them.",
+         call. = FALSE)
   }
   
   
@@ -87,8 +89,8 @@ jst_define_import <- function(...) {
     str_detect("\\(\\)")
 
   if (any(not_bare_funs)) {
-    stop("All inputs must be bare functions or a vector of bare functions, `",
-         expressions[not_bare_funs], "` is not.", call. = FALSE)
+    stop("All inputs must be bare functions or a vector of bare functions, ",
+         crayon::blue(expressions[not_bare_funs]), " is not.", call. = FALSE)
   }
 
   evaled_funs <- import_spec %>% map(eval_tidy) 
@@ -99,8 +101,8 @@ jst_define_import <- function(...) {
   
   
   if (!all(funs_checked)) {
-    stop("All inputs must be bare functions or a vector of bare functions, `",
-         fun_names[[1]][!funs_checked], "` is not.", call. = FALSE)
+    stop("All inputs must be bare functions or a vector of bare functions, ",
+         crayon::blue(fun_names[[1]][!funs_checked]), " is not.", call. = FALSE)
   }
   
   # check namespaces of functions
@@ -110,8 +112,9 @@ jst_define_import <- function(...) {
   
   
   if (!all(matching_namespaces)) {
-    stop("All supplied functions must come from the `jstor` package, `",
-         fun_names[[1]][!matching_namespaces], "` does not.",
+    stop("All supplied functions must come from the ", crayon::green("jstor"),
+         " package, but ",
+         crayon::blue(fun_names[[1]][!matching_namespaces]), " does not.",
          call. = FALSE)
   }
   
@@ -221,9 +224,19 @@ check_env <- function(fun) {
 walk_spec <- function(spec_df, chunk_number, n_batches, out_path,
                       show_progress, col_names, test_mode = FALSE) {
   if (!test_mode) {
-    message("Processing files for ", paste(unique(spec_df$meta_type), 
-                                           collapse = " and "),
-            " with functions ", unique(spec_df$fun_names))
+    message(
+      "Processing files for ", 
+      paste(
+        crayon::green(unique(spec_df$meta_type)),
+        collapse = " and "
+      ), 
+      " with functions ", 
+      crayon::blue(
+        paste(
+          unlist(spec_df$fun_names),
+          collapse = ", ")
+        )
+      )
   }
 
   
