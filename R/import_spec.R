@@ -123,6 +123,34 @@ jst_define_import <- function(...) {
   out
 }
 
+
+print.jstor_import_spec <- function(x, ...) {
+  cli::cat_rule(left = crayon::bold("Import specification"))
+  
+  cli::cat_line(
+    crayon::col_align(paste0("  ", crayon::underline("Source")), width = 20),
+    crayon::col_align(crayon::underline("Import functions"))
+  )
+
+  print_part <- function(type, functions) {
+    type_formatted <- type %>% stringr::str_to_title() %>% str_replace("_", " ") 
+    
+    imports <- paste0(
+      crayon::col_align(
+        paste(crayon::green(cli::symbol$bullet), type_formatted), width = 20
+      ),
+      crayon::col_align(
+        paste(crayon::blue(functions), collapse = ", "), width = 20
+      ))
+    
+    cat(imports)
+    cli::cat_line()
+  }
+  
+  purrr::walk2(x$meta_type, x$fun_names, print_part)
+}
+
+
 capture_functions <- function(...) {
   dots <- enquos(..., .named = T)
   dots
