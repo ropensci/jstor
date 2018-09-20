@@ -2,7 +2,7 @@ Package: jstor
 Title: Read Data from JSTOR/DfR
 Version: 0.3.2.9000
 Authors@R: person("Thomas", "Klebel", email = "t.klebel@hotmail.com", 
-                  role = c("aut", "cre"))
+                  role = c("aut", "cre"), comment = c(ORCID = "0000-0002-7331-4751"))
 Description: Functions and helpers to import metadata, ngrams and full-texts 
     delivered by Data for Research by JSTOR. 
 Depends: R (>= 3.1)
