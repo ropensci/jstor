@@ -149,9 +149,9 @@ jst_define_import <- function(...) {
   )
  
   if (!is.null(evaluation)) {
-    print(evaluation)
     stop("Your import specification seems to be incorrect. Please make sure ",
          "that all import functions correspond to the right data type.",
+         "The error was: ", evaluation,
          call. = FALSE)
   }
  
