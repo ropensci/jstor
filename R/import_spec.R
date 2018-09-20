@@ -148,10 +148,9 @@ jst_define_import <- function(...) {
                     test_mode = T)
   )
  
-  if (!is.null(evaluation)) {
+  if (!is.null(evaluation) && "error" %in% attr(evaluation, "class")) {
     stop("Your import specification seems to be incorrect. Please make sure ",
          "that all import functions correspond to the right data type.",
-         "The error was: ", evaluation,
          call. = FALSE)
   }
  
