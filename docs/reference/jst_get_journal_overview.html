@@ -173,12 +173,12 @@ and last (available) issues were published, etc.</p>
 <p>The data on journals might change. Therefore this function provides two
 sources of data: a cached version which gets updated with every release, and
 the ability to pull the most recent version directly from DfR.</p>
-<p>The cached version was updated on 2018-05-15.</p>
+<p>The cached version was updated on 2018-09-27.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># use the function without arguments to get a tibble from disk</span>
-<span class='fu'>jst_get_journal_overview</span>()</div><div class='output co'>#&gt; # A tibble: 4,132 x 12
+<span class='fu'>jst_get_journal_overview</span>()</div><div class='output co'>#&gt; # A tibble: 4,220 x 12
 #&gt;    title journal_id issn  eissn doi   url   discipline publisher coverage_range
 #&gt;    &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;         
 #&gt;  1 14th… 14centeng… 0737… &lt;NA&gt;  10.2… http… Humanitie… Penn Sta… 1974-1983     
@@ -191,7 +191,7 @@ the ability to pull the most recent version directly from DfR.</p>
 #&gt;  8 AAA:… aaaarbean… 0171… &lt;NA&gt;  10.2… http… American … Narr Fra… 1976-2016     
 #&gt;  9 AATS… aatseeljo… 2325… 2379… 10.2… http… Area Stud… American… 1945-1956     
 #&gt; 10 AAUP… aaupbulle… 0001… &lt;NA&gt;  10.2… http… Education… American… 1915-1978     
-#&gt; # ... with 4,122 more rows, and 3 more variables:
+#&gt; # ... with 4,210 more rows, and 3 more variables:
 #&gt; #   oclc_catalog_identifier &lt;chr&gt;, lccn_catalog_identifier &lt;chr&gt;,
 #&gt; #   archive_release_date &lt;chr&gt;</div><div class='input'>
 </div><span class='co'># NOT RUN {</span>

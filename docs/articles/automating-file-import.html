@@ -98,7 +98,7 @@
       <h1>Automating File Import</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-09-20</h4>
+            <h4 class="date">2018-09-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/jstor/blob/master/vignettes/automating-file-import.Rmd"><code>vignettes/automating-file-import.Rmd</code></a></small>
       <div class="hidden name"><code>automating-file-import.Rmd</code></div>
@@ -173,12 +173,8 @@
 <a class="sourceLine" id="cb4-7" data-line-number="7">               <span class="dt">out_file =</span> <span class="st">"my_test"</span>,</a>
 <a class="sourceLine" id="cb4-8" data-line-number="8">               <span class="dt">out_path =</span> tmp)</a>
 <a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; Processing files for book_chapter with functions jst_get_book</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; Processing chunk 1/1</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; Processing files for journal_article with functions c("jst_get_article", "jst_get_authors")</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; Processing chunk 1/1</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; Processing chunk 1/1</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; Processing files for ngram1 with functions jst_get_ngram</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; Processing chunk 1/1</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; Processing files for journal_article with functions jst_get_article, jst_get_authors</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; Processing files for ngram1 with functions jst_get_ngram</span></a></code></pre></div>
 <p>We can take a look at the files within <code>tmp</code> with <code>list.files()</code>:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">list.files</span>(tmp, <span class="dt">pattern =</span> <span class="st">"csv"</span>)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; [1] "my_test_book_chapter_jst_get_book-1.csv"      </span></a>
@@ -372,8 +368,7 @@
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw"><a href="../reference/jst_import.html">jst_import</a></span>(article_paths, <span class="dt">out_file =</span> <span class="st">"my_second_test"</span>, <span class="dt">.f =</span> jst_get_article, </a>
 <a class="sourceLine" id="cb14-2" data-line-number="2">           <span class="dt">out_path =</span> tmp)</a>
 <a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co">#&gt; Starting to import 2 file(s).</span></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt; Processing chunk 1/1</span></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co">#&gt; Finished importing 2 file(s) in 0.05 secs.</span></a></code></pre></div>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt; Finished importing 2 file(s) in 0.05 secs.</span></a></code></pre></div>
 <p>The result is again written to disk, as can be seen below:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">list.files</span>(tmp, <span class="dt">pattern =</span> <span class="st">"csv"</span>)</a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt; [1] "my_second_test-1.csv"                         </span></a>
