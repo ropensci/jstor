@@ -40,5 +40,7 @@ In general, the implementation is not as fast as \code{find_article()} - article
 with many references slow the process down.
 }
 \examples{
+\dontrun{ 
 find_references(jstor_example("sample_with_references.xml"))
+}
 }

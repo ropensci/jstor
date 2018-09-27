@@ -39,8 +39,10 @@
 #' date.
 #'
 #' @export
-#' @examples 
+#' @examples
+#' \dontrun{ 
 #' find_article(jstor_example("sample_with_references.xml"))
+#' }
 find_article <- function(file_path) {
   base::.Defunct(msg = paste("`find_article` has been deprecated.",
                                 "Please use `jst_get_article()` instead."))
@@ -104,8 +106,10 @@ find_article <- function(file_path) {
 #' `NA_character`.
 #'
 #' @export
-#' @examples 
+#' @examples
+#' \dontrun{ 
 #' find_authors(jstor_example("sample_with_references.xml"))
+#' }
 find_authors <- function(file_path) {
   base::.Defunct(msg = paste("`find_authors` has been deprecated.",
                                 "Please use `jst_get_authors()` instead."))
@@ -187,7 +191,7 @@ find_authors <- function(file_path) {
 #'
 #' @seealso [jst_combine_outputs()]
 #' @export
-#' @examples 
+#' @examples
 #' \dontrun{
 #' # read from file list --------
 #' # find all files
@@ -289,8 +293,10 @@ jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
 #' date.
 #' 
 #' @export
-#' @examples 
+#' @examples
+#' \dontrun{ 
 #' find_book(jstor_example("sample_book.xml"))
+#' }
 find_book <- function(file_path) {
   base::.Defunct(msg = paste("`find_book` has been deprecated.",
                                 "Please use `jst_get_book()` instead."))
@@ -349,12 +355,14 @@ find_book <- function(file_path) {
 #' - part_title *(chr)*: The title of the part.
 #' - part_subtitle *(chr)*: The subtitle of the part, if specified.
 #' - authors *(list)*: A list-column with information on the authors. Can be
-#'   unnested with [tidyr::unnest()]. See the examples and [find_authors()].
+#'   unnested with [tidyr::unnest()]. See the examples
+#'   and [find_authors()].
 #' - abstract *(chr)*: The abstract to the part.
 #' - part_first_page *(chr)*: The page where the part begins.
 #' 
 #' @export
-#' @examples 
+#' @examples
+#' \dontrun{ 
 #' # extract parts without authors
 #' find_chapters(jstor_example("sample_book.xml"))
 #' 
@@ -363,6 +371,7 @@ find_book <- function(file_path) {
 #' parts
 #' 
 #' tidyr::unnest(parts)
+#' }
 find_chapters <- function(file_path, authors = FALSE) {
   base::.Defunct(msg = paste("`find_chapters` has been deprecated.",
                                 "Please use `jst_get_chapters()` instead."))
@@ -412,8 +421,10 @@ find_chapters <- function(file_path, authors = FALSE) {
 #' listed.
 #' @export
 #' @examples
+#' \dontrun{
 #' jstor_example()
 #' jstor_example("sample_with_references.xml") 
+#' }
 jstor_example <- function(path = NULL) {
   base::.Defunct(msg = paste("`jstor_example` has been deprecated.",
                                 "Please use `jst_example()` instead."))
@@ -448,8 +459,10 @@ jstor_example <- function(path = NULL) {
 #' column `footnotes`.
 #' 
 #' @export
-#' @examples 
+#' @examples
+#' \dontrun{ 
 #' find_footnotes(jstor_example("sample_with_footnotes.xml"))
+#' }
 find_footnotes <- function(file_path) {
   base::.Defunct(msg = paste("`find_footnotes` has been deprecated.",
                                 "Please use `jst_get_footnotes()` instead."))
@@ -546,8 +559,10 @@ get_basename <- function(file_path) {
 #' - `references`: the text of the references.
 #'
 #' @export
-#' @examples 
+#' @examples
+#' \dontrun{ 
 #' find_references(jstor_example("sample_with_references.xml"))
+#' }
 find_references <- function(file_path) {
   base::.Defunct(msg = paste("`find_references` has been deprecated.",
                                 "Please use `jst_get_references()` instead."))

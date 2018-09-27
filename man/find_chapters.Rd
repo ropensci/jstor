@@ -27,7 +27,8 @@ for joining with other data for the same file.
 \item part_title \emph{(chr)}: The title of the part.
 \item part_subtitle \emph{(chr)}: The subtitle of the part, if specified.
 \item authors \emph{(list)}: A list-column with information on the authors. Can be
-unnested with \code{\link[tidyr:unnest]{tidyr::unnest()}}. See the examples and \code{\link[=find_authors]{find_authors()}}.
+unnested with \code{\link[tidyr:unnest]{tidyr::unnest()}}. See the examples
+and \code{\link[=find_authors]{find_authors()}}.
 \item abstract \emph{(chr)}: The abstract to the part.
 \item part_first_page \emph{(chr)}: The page where the part begins.
 }
@@ -44,6 +45,7 @@ functions. It is roughly 10 times slower than \code{find_book}, depending on the
 number of chapters to extract.
 }
 \examples{
+\dontrun{ 
 # extract parts without authors
 find_chapters(jstor_example("sample_book.xml"))
 
@@ -52,4 +54,5 @@ parts <- find_chapters(jstor_example("sample_book.xml"), authors = TRUE)
 parts
 
 tidyr::unnest(parts)
+}
 }

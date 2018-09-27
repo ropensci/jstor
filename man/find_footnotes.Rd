@@ -32,5 +32,7 @@ In order to get all available information on citation data, you might need to
 combine \code{find_footnotes()} with \code{find_references()}.
 }
 \examples{
+\dontrun{ 
 find_footnotes(jstor_example("sample_with_footnotes.xml"))
+}
 }

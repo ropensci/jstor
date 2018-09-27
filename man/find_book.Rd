@@ -43,5 +43,7 @@ This function will be removed in the next release. Please use
 \code{find_book()} extracts meta-data from JSTOR-XML files for book chapters.
 }
 \examples{
+\dontrun{ 
 find_book(jstor_example("sample_book.xml"))
+}
 }

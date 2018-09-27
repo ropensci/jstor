@@ -21,6 +21,8 @@ makes them easy to access.
 The code for this function was adapted from the package \code{readr}.
 }
 \examples{
+\dontrun{
 jstor_example()
 jstor_example("sample_with_references.xml") 
+}
 }

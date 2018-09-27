@@ -48,5 +48,7 @@ This function will be removed in the next release. Please use
 \code{jst_get_article()} instead.
 }
 \examples{
+\dontrun{ 
 find_article(jstor_example("sample_with_references.xml"))
+}
 }

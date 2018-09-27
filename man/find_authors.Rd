@@ -31,5 +31,7 @@ data.
 }
 }
 \examples{
+\dontrun{ 
 find_authors(jstor_example("sample_with_references.xml"))
+}
 }
