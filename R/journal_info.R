@@ -13,7 +13,7 @@
 #' sources of data: a cached version which gets updated with every release, and
 #' the ability to pull the most recent version directly from DfR.
 #' 
-#' The cached version was updated on 2018-05-15.
+#' The cached version was updated on 2018-09-27.
 #' 
 #' @param most_recent Should the most recent version be downloaded from DfR?
 #' @param quiet Should status messages about the download be printed?

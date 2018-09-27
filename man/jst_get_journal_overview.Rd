@@ -29,7 +29,7 @@ The data on journals might change. Therefore this function provides two
 sources of data: a cached version which gets updated with every release, and
 the ability to pull the most recent version directly from DfR.
 
-The cached version was updated on 2018-05-15.
+The cached version was updated on 2018-09-27.
 }
 \examples{
 # use the function without arguments to get a tibble from disk
