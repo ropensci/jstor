@@ -2,7 +2,7 @@
 % Please edit documentation in R/deprecated.R
 \name{read_full_text}
 \alias{read_full_text}
-\title{Import full-text}
+\title{Defunct: Import full-text}
 \usage{
 read_full_text(filename)
 }
@@ -14,5 +14,9 @@ A \code{tibble}, containing the file-path as id, the full content of
 the file, and the encoding which was used to read it.
 }
 \description{
+This function will be removed in the next release. Please use
+\code{jst_get_full_text()} instead.
+}
+\details{
 This function imports the full_text contents of a JSTOR-article.
 }

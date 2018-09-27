@@ -2,7 +2,7 @@
 % Please edit documentation in R/deprecated.R
 \name{find_book}
 \alias{find_book}
-\title{Extract meta information for books}
+\title{Defunct: Extract meta information for books}
 \usage{
 find_book(file_path)
 }
@@ -36,6 +36,10 @@ which should correspond to the oldest date, in case there is more than one
 date.
 }
 \description{
+This function will be removed in the next release. Please use
+\code{jst_get_book()} instead.
+}
+\details{
 \code{find_book()} extracts meta-data from JSTOR-XML files for book chapters.
 }
 \examples{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/deprecated.R
 \name{find_references}
 \alias{find_references}
-\title{Extract all references}
+\title{Defunct: Extract all references}
 \usage{
 find_references(file_path)
 }
@@ -18,9 +18,12 @@ A \code{tibble} with three two containing the references:
 }
 }
 \description{
-This function extracts the content of \code{ref-list} from the \code{xml}-file.
+This function will be removed in the next release. Please use
+\code{jst_get_references()} instead.
 }
 \details{
+This function extracts the content of \code{ref-list} from the \code{xml}-file.
+
 This content may contain references or endnotes, depending on how the article
 used citations. Since references are currently not fully supported by DfR,
 there is no comprehensive documentation on the different variants. \code{jstor}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/deprecated.R
 \name{jstor_example}
 \alias{jstor_example}
-\title{Get path to jstor example}
+\title{Defunct: Get path to jstor example}
 \usage{
 jstor_example(path = NULL)
 }
@@ -11,10 +11,13 @@ jstor_example(path = NULL)
 listed.}
 }
 \description{
-jstor includes several sample files for demonstration purposes. This helper
-makes them easy to access.
+This function will be removed in the next release. Please use
+\code{jst_example()} instead.
 }
 \details{
+jstor includes several sample files for demonstration purposes. This helper
+makes them easy to access.
+
 The code for this function was adapted from the package \code{readr}.
 }
 \examples{

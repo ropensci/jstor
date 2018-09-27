@@ -2,7 +2,7 @@
 % Please edit documentation in R/deprecated.R
 \name{get_basename}
 \alias{get_basename}
-\title{Extract the basename of a path}
+\title{Defunct: Extract the basename of a path}
 \usage{
 get_basename(file_path)
 }
@@ -10,6 +10,10 @@ get_basename(file_path)
 \item{file_path}{A path to a file}
 }
 \description{
+This function will be removed in the next release. Please use
+\code{jst_get_file_name()} instead.
+}
+\details{
 This helper simply extracts the basename of a path and removes the extension,
 e.g. \code{foo/bar.txt} is shortened to \code{bar}.
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/deprecated.R
 \name{find_authors}
 \alias{find_authors}
-\title{Extract author information}
+\title{Defunct: Extract author information}
 \usage{
 find_authors(file_path)
 }
@@ -14,7 +14,8 @@ A \code{tibble} containing the extracted authors. All empty fields are
 \code{NA_character}.
 }
 \description{
-\code{find_authors()} extracts information about authors from JSTOR-XML files.
+This function will be removed in the next release. Please use
+\code{jst_get_authors()} instead.
 }
 \details{
 The function returns a \code{tibble} with the following six columns:

@@ -2,7 +2,7 @@
 % Please edit documentation in R/deprecated.R
 \name{jstor_import}
 \alias{jstor_import}
-\title{Wrapper for file import}
+\title{Defunct: Wrapper for file import}
 \usage{
 jstor_import(in_paths, out_file, out_path = NULL, .f, col_names = TRUE,
   n_batches = NULL, files_per_batch = NULL,
@@ -37,11 +37,14 @@ is interactive.}
 Writes \code{.csv}-files to disk.
 }
 \description{
+This function will be removed in the next release. Please use
+\code{jst_import()} instead.
+}
+\details{
 This function applies an import function to a list of \code{xml}-files
 or a .zip-archive in case of \code{jstor_import_zip} and saves
 the output in batches of \code{.csv}-files to disk.
-}
-\details{
+
 Along the way, we wrap three functions, which make the process of converting
 many files easier:
 \itemize{

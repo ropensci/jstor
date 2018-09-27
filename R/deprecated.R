@@ -1,9 +1,9 @@
 # nocov start
 
-#' Extract meta information for articles
+#' Defunct: Extract meta information for articles
 #'
-#' `find_article()` extracts meta-data from JSTOR-XML files for journal
-#' articles.
+#' This function will be removed in the next release. Please use
+#' `jst_get_article()` instead.
 #'
 #' @param file_path A `.xml`-file for a journal-article.
 #'
@@ -42,8 +42,8 @@
 #' @examples 
 #' find_article(jstor_example("sample_with_references.xml"))
 find_article <- function(file_path) {
-  base::.Deprecated(msg = paste("`find_article` has been deprecated.",
-                                "Please use `jst_get_article` instead."))
+  base::.Defunct(msg = paste("`find_article` has been deprecated.",
+                                "Please use `jst_get_article()` instead."))
   xml_file <- read_jstor(file_path)
   
   validate_article(xml_file)
@@ -83,9 +83,10 @@ find_article <- function(file_path) {
   dplyr::bind_cols(basename_id, journal_ids, journal_title, article_ids, out)
 }
 
-#' Extract author information
+#' Defunct: Extract author information
 #'
-#' `find_authors()` extracts information about authors from JSTOR-XML files.
+#' This function will be removed in the next release. Please use
+#' `jst_get_authors()` instead.
 #'
 #' The function returns a `tibble` with the following six columns:
 #' - *prefix*: in case there was a prefix to the name, like `"Dr."`.
@@ -106,8 +107,8 @@ find_article <- function(file_path) {
 #' @examples 
 #' find_authors(jstor_example("sample_with_references.xml"))
 find_authors <- function(file_path) {
-  base::.Deprecated(msg = paste("`find_authors` has been deprecated.",
-                                "Please use `jst_get_authors` instead."))
+  base::.Defunct(msg = paste("`find_authors` has been deprecated.",
+                                "Please use `jst_get_authors()` instead."))
   xml_file <- read_jstor(file_path)
   
   if (identical(xml2::xml_name(xml_file), "article")) {
@@ -123,8 +124,11 @@ find_authors <- function(file_path) {
 }
 
 
-#' Wrapper for file import
+#' Defunct: Wrapper for file import
 #'
+#' This function will be removed in the next release. Please use
+#' `jst_import()` instead.
+#' 
 #' This function applies an import function to a list of `xml`-files
 #' or a .zip-archive in case of `jstor_import_zip` and saves
 #' the output in batches of `.csv`-files to disk.
@@ -206,8 +210,8 @@ jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
                          files_per_batch = NULL,
                          cores = getOption("mc.cores", 1L),
                          show_progress = TRUE) {
-  base::.Deprecated(msg = paste("`jstor_import` has been deprecated.",
-                                "Please use `jst_import` instead."))
+  base::.Defunct(msg = paste("`jstor_import` has been deprecated.",
+                                "Please use `jst_import()` instead."))
   
   if (!is.null(n_batches) && !is.null(files_per_batch)) {
     stop("Either n_batches or files_per_batch needs to be specified, ",
@@ -252,7 +256,10 @@ jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
           " file(s) in ", format(round(run_time, 2)), ".")
 }
 
-#' Extract meta information for books
+#' Defunct: Extract meta information for books
+#'
+#' This function will be removed in the next release. Please use
+#' `jst_get_book()` instead.
 #'
 #' `find_book()` extracts meta-data from JSTOR-XML files for book chapters.
 #'
@@ -285,8 +292,8 @@ jstor_import <- function(in_paths, out_file, out_path = NULL, .f,
 #' @examples 
 #' find_book(jstor_example("sample_book.xml"))
 find_book <- function(file_path) {
-  base::.Deprecated(msg = paste("`find_book` has been deprecated.",
-                                "Please use `jst_get_book` instead."))
+  base::.Defunct(msg = paste("`find_book` has been deprecated.",
+                                "Please use `jst_get_book()` instead."))
   xml_file <- read_jstor(file_path)
   
   validate_book(xml_file)
@@ -314,8 +321,11 @@ find_book <- function(file_path) {
   tibble::new_tibble(out)
 }
 
-#' Extract information on book chapters
-#'
+#' Defunct: Extract information on book chapters
+#' 
+#' This function will be removed in the next release. Please use
+#' `jst_get_chapters()` instead.
+#' 
 #' `find_chapters()` extracts meta-data from JSTOR-XML files for book chapters.
 #' 
 #' Currently, `find_chapters()` is quite a lot slower than most of the other 
@@ -354,8 +364,8 @@ find_book <- function(file_path) {
 #' 
 #' tidyr::unnest(parts)
 find_chapters <- function(file_path, authors = FALSE) {
-  base::.Deprecated(msg = paste("`find_chapters` has been deprecated.",
-                                "Please use `jst_get_chapters` instead."))
+  base::.Defunct(msg = paste("`find_chapters` has been deprecated.",
+                                "Please use `jst_get_chapters()` instead."))
   xml_file <- read_jstor(file_path)
   
   validate_book(xml_file)
@@ -388,7 +398,10 @@ find_chapters <- function(file_path, authors = FALSE) {
   dplyr::bind_cols(base, parts_out)
 }
 
-#' Get path to jstor example
+#' Defunct: Get path to jstor example
+#' 
+#' This function will be removed in the next release. Please use
+#' `jst_example()` instead.
 #' 
 #' jstor includes several sample files for demonstration purposes. This helper
 #' makes them easy to access.
@@ -402,8 +415,8 @@ find_chapters <- function(file_path, authors = FALSE) {
 #' jstor_example()
 #' jstor_example("sample_with_references.xml") 
 jstor_example <- function(path = NULL) {
-  base::.Deprecated(msg = paste("`jstor_example` has been deprecated.",
-                                "Please use `jst_example` instead."))
+  base::.Defunct(msg = paste("`jstor_example` has been deprecated.",
+                                "Please use `jst_example()` instead."))
   if (is.null(path)) {
     dir(system.file("extdata", package = "jstor"))
   } else {
@@ -411,8 +424,11 @@ jstor_example <- function(path = NULL) {
   }
 }
 
-#' Extract all footnotes
+#' Defunct: Extract all footnotes
 #'
+#' This function will be removed in the next release. Please use
+#' `jst_get_footnotes()` instead.
+#' 
 #' This function extracts the content of `fn-group` from journal-articles.
 #' 
 #' The `fn-group` usually contains footnotes corresponding to the article.
@@ -435,8 +451,8 @@ jstor_example <- function(path = NULL) {
 #' @examples 
 #' find_footnotes(jstor_example("sample_with_footnotes.xml"))
 find_footnotes <- function(file_path) {
-  base::.Deprecated(msg = paste("`find_footnotes` has been deprecated.",
-                                "Please use `jst_get_footnotes` instead."))
+  base::.Defunct(msg = paste("`find_footnotes` has been deprecated.",
+                                "Please use `jst_get_footnotes()` instead."))
   xml_file <- read_jstor(file_path)
   
   validate_article(xml_file)
@@ -446,8 +462,11 @@ find_footnotes <- function(file_path) {
   expand_and_bind(file_path, footnotes)
 }
 
-#' Import full-text
+#' Defunct: Import full-text
 #'
+#' This function will be removed in the next release. Please use
+#' `jst_get_full_text()` instead.
+#' 
 #' This function imports the full_text contents of a JSTOR-article.
 #'
 #' @param filename The path to the file.
@@ -456,8 +475,8 @@ find_footnotes <- function(file_path) {
 #'
 #' @export
 read_full_text <- function(filename) {
-  base::.Deprecated(msg = paste("`read_full_text` has been deprecated.",
-                                "Please use `jst_get_full_text` instead."))
+  base::.Defunct(msg = paste("`read_full_text` has been deprecated.",
+                                "Please use `jst_get_full_text()` instead."))
   validate_file_path(filename, "txt")
   
   id <- get_basename(filename)
@@ -473,7 +492,10 @@ read_full_text <- function(filename) {
   )
 }
 
-#' Extract the basename of a path
+#' Defunct: Extract the basename of a path
+#' 
+#' This function will be removed in the next release. Please use
+#' `jst_get_file_name()` instead.
 #' 
 #' This helper simply extracts the basename of a path and removes the extension,
 #' e.g. `foo/bar.txt` is shortened to `bar`.
@@ -481,8 +503,8 @@ read_full_text <- function(filename) {
 #' @param file_path A path to a file
 #' @export
 get_basename <- function(file_path) {
-  base::.Deprecated(msg = paste("`get_basename` has been deprecated.",
-                                "Please use `jst_get_file_name` instead."))
+  base::.Defunct(msg = paste("`get_basename` has been deprecated.",
+                                "Please use `jst_get_file_name()` instead."))
   if (inherits(file_path, "jstor_zip")) {
     file_path[["file_path"]] %>% 
       basename() %>% 
@@ -493,8 +515,11 @@ get_basename <- function(file_path) {
   }
 }
 
-#' Extract all references
-#'
+#' Defunct: Extract all references
+#' 
+#' This function will be removed in the next release. Please use
+#' `jst_get_references()` instead.
+#' 
 #' This function extracts the content of `ref-list` from the `xml`-file.
 #' 
 #' This content may contain references or endnotes, depending on how the article
@@ -524,8 +549,8 @@ get_basename <- function(file_path) {
 #' @examples 
 #' find_references(jstor_example("sample_with_references.xml"))
 find_references <- function(file_path) {
-  base::.Deprecated(msg = paste("`find_references` has been deprecated.",
-                                "Please use `jst_get_references` instead."))
+  base::.Defunct(msg = paste("`find_references` has been deprecated.",
+                                "Please use `jst_get_references()` instead."))
   xml_file <- read_jstor(file_path)
   
   validate_article(xml_file)

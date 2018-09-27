@@ -2,7 +2,7 @@
 % Please edit documentation in R/deprecated.R
 \name{find_footnotes}
 \alias{find_footnotes}
-\title{Extract all footnotes}
+\title{Defunct: Extract all footnotes}
 \usage{
 find_footnotes(file_path)
 }
@@ -16,9 +16,12 @@ footnotes). If there were no footnotes, \code{NA_character} is returned for the
 column \code{footnotes}.
 }
 \description{
-This function extracts the content of \code{fn-group} from journal-articles.
+This function will be removed in the next release. Please use
+\code{jst_get_footnotes()} instead.
 }
 \details{
+This function extracts the content of \code{fn-group} from journal-articles.
+
 The \code{fn-group} usually contains footnotes corresponding to the article.
 However, since footnotes are currently not fully supported by DfR,
 there is no comprehensive documentation on the different variants. \code{jstor}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/deprecated.R
 \name{find_chapters}
 \alias{find_chapters}
-\title{Extract information on book chapters}
+\title{Defunct: Extract information on book chapters}
 \usage{
 find_chapters(file_path, authors = FALSE)
 }
@@ -33,9 +33,12 @@ unnested with \code{\link[tidyr:unnest]{tidyr::unnest()}}. See the examples and 
 }
 }
 \description{
-\code{find_chapters()} extracts meta-data from JSTOR-XML files for book chapters.
+This function will be removed in the next release. Please use
+\code{jst_get_chapters()} instead.
 }
 \details{
+\code{find_chapters()} extracts meta-data from JSTOR-XML files for book chapters.
+
 Currently, \code{find_chapters()} is quite a lot slower than most of the other
 functions. It is roughly 10 times slower than \code{find_book}, depending on the
 number of chapters to extract.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/deprecated.R
 \name{find_article}
 \alias{find_article}
-\title{Extract meta information for articles}
+\title{Defunct: Extract meta information for articles}
 \usage{
 find_article(file_path)
 }
@@ -44,8 +44,8 @@ which should correspond to the oldest date, in case there is more than one
 date.
 }
 \description{
-\code{find_article()} extracts meta-data from JSTOR-XML files for journal
-articles.
+This function will be removed in the next release. Please use
+\code{jst_get_article()} instead.
 }
 \examples{
 find_article(jstor_example("sample_with_references.xml"))
