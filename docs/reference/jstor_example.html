@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get path to jstor example — jstor_example • jstor</title>
+<title>Defunct: Get path to jstor example — jstor_example • jstor</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -32,10 +32,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Get path to jstor example — jstor_example" />
+<meta property="og:title" content="Defunct: Get path to jstor example — jstor_example" />
 
-<meta property="og:description" content="jstor includes several sample files for demonstration purposes. This helper
-makes them easy to access." />
+<meta property="og:description" content="This function will be removed in the next release. Please use
+jst_example() instead." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -133,15 +133,15 @@ makes them easy to access." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get path to jstor example</h1>
+    <h1>Defunct: Get path to jstor example</h1>
     <small class="dont-index">Source: <a href='https://github.com/ropensci/jstor/blob/master/R/deprecated.R'><code>R/deprecated.R</code></a></small>
     <div class="hidden name"><code>jstor_example.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>jstor includes several sample files for demonstration purposes. This helper
-makes them easy to access.</p>
+    <p>This function will be removed in the next release. Please use
+<code><a href='jst_example.html'>jst_example()</a></code> instead.</p>
     
     </div>
 
@@ -159,13 +159,16 @@ listed.</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The code for this function was adapted from the package <code>readr</code>.</p>
+    <p>jstor includes several sample files for demonstration purposes. This helper
+makes them easy to access.</p>
+<p>The code for this function was adapted from the package <code>readr</code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>jstor_example</span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: `jstor_example` has been deprecated. Please use `jst_example` instead.</span></div><div class='output co'>#&gt; [1] "pseudo_dfr.zip"             "sample_book.xml"           
-#&gt; [3] "sample_full_text.txt"       "sample_ngram.txt"          
-#&gt; [5] "sample_with_footnotes.xml"  "sample_with_references.xml"</div><div class='input'><span class='fu'>jstor_example</span>(<span class='st'>"sample_with_references.xml"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `jstor_example` has been deprecated. Please use `jst_example` instead.</span></div><div class='output co'>#&gt; [1] "/Users/tklebel/Documents/Software/R/jstor/inst/extdata/sample_with_references.xml"</div></pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>jstor_example</span>()
+<span class='fu'>jstor_example</span>(<span class='st'>"sample_with_references.xml"</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

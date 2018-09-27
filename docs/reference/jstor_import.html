@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Wrapper for file import — jstor_import • jstor</title>
+<title>Defunct: Wrapper for file import — jstor_import • jstor</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -32,11 +32,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Wrapper for file import — jstor_import" />
+<meta property="og:title" content="Defunct: Wrapper for file import — jstor_import" />
 
-<meta property="og:description" content="This function applies an import function to a list of xml-files
-or a .zip-archive in case of jstor_import_zip and saves
-the output in batches of .csv-files to disk." />
+<meta property="og:description" content="This function will be removed in the next release. Please use
+jst_import() instead." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -134,16 +133,15 @@ the output in batches of .csv-files to disk." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Wrapper for file import</h1>
+    <h1>Defunct: Wrapper for file import</h1>
     <small class="dont-index">Source: <a href='https://github.com/ropensci/jstor/blob/master/R/deprecated.R'><code>R/deprecated.R</code></a></small>
     <div class="hidden name"><code>jstor_import.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function applies an import function to a list of <code>xml</code>-files
-or a .zip-archive in case of <code>jstor_import_zip</code> and saves
-the output in batches of <code>.csv</code>-files to disk.</p>
+    <p>This function will be removed in the next release. Please use
+<code><a href='jst_import.html'>jst_import()</a></code> instead.</p>
     
     </div>
 
@@ -204,7 +202,10 @@ is interactive.</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Along the way, we wrap three functions, which make the process of converting
+    <p>This function applies an import function to a list of <code>xml</code>-files
+or a .zip-archive in case of <code>jstor_import_zip</code> and saves
+the output in batches of <code>.csv</code>-files to disk.</p>
+<p>Along the way, we wrap three functions, which make the process of converting
 many files easier:</p><ul>
 <li><p><code><a href='http://www.rdocumentation.org/packages/purrr/topics/safely'>purrr::safely()</a></code></p></li>
 <li><p><code><a href='http://www.rdocumentation.org/packages/foreach/topics/foreach'>foreach::foreach()</a></code></p></li>

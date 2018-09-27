@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract meta information for articles — find_article • jstor</title>
+<title>Defunct: Extract meta information for articles — find_article • jstor</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -32,10 +32,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Extract meta information for articles — find_article" />
+<meta property="og:title" content="Defunct: Extract meta information for articles — find_article" />
 
-<meta property="og:description" content="find_article() extracts meta-data from JSTOR-XML files for journal
-articles." />
+<meta property="og:description" content="This function will be removed in the next release. Please use
+jst_get_article() instead." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -133,15 +133,15 @@ articles." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract meta information for articles</h1>
+    <h1>Defunct: Extract meta information for articles</h1>
     <small class="dont-index">Source: <a href='https://github.com/ropensci/jstor/blob/master/R/deprecated.R'><code>R/deprecated.R</code></a></small>
     <div class="hidden name"><code>find_article.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>find_article()</code> extracts meta-data from JSTOR-XML files for journal
-articles.</p>
+    <p>This function will be removed in the next release. Please use
+<code><a href='jst_get_article.html'>jst_get_article()</a></code> instead.</p>
     
     </div>
 
@@ -192,14 +192,9 @@ date.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>find_article</span>(<span class='fu'><a href='jstor_example.html'>jstor_example</a></span>(<span class='st'>"sample_with_references.xml"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: `find_article` has been deprecated. Please use `jst_get_article` instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `jstor_example` has been deprecated. Please use `jst_example` instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `get_basename` has been deprecated. Please use `jst_get_file_name` instead.</span></div><div class='output co'>#&gt; # A tibble: 1 x 19
-#&gt;   basename_id journal_doi journal_jcode journal_pub_id journal_title article_doi
-#&gt;   &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt;          &lt;chr&gt;         &lt;chr&gt;      
-#&gt; 1 sample_wit… &lt;NA&gt;        tranamermicr… &lt;NA&gt;           Transactions… 10.2307/32…
-#&gt; # ... with 13 more variables: article_pub_id &lt;chr&gt;, article_jcode &lt;chr&gt;,
-#&gt; #   article_type &lt;chr&gt;, article_title &lt;chr&gt;, volume &lt;chr&gt;, issue &lt;chr&gt;,
-#&gt; #   language &lt;chr&gt;, pub_day &lt;chr&gt;, pub_month &lt;chr&gt;, pub_year &lt;int&gt;,
-#&gt; #   first_page &lt;chr&gt;, last_page &lt;chr&gt;, page_range &lt;chr&gt;</div></pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>find_article</span>(<span class='fu'><a href='jstor_example.html'>jstor_example</a></span>(<span class='st'>"sample_with_references.xml"</span>))
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

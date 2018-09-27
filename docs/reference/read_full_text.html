@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Import full-text — read_full_text • jstor</title>
+<title>Defunct: Import full-text — read_full_text • jstor</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -32,9 +32,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Import full-text — read_full_text" />
+<meta property="og:title" content="Defunct: Import full-text — read_full_text" />
 
-<meta property="og:description" content="This function imports the full_text contents of a JSTOR-article." />
+<meta property="og:description" content="This function will be removed in the next release. Please use
+jst_get_full_text() instead." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -132,14 +133,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Import full-text</h1>
+    <h1>Defunct: Import full-text</h1>
     <small class="dont-index">Source: <a href='https://github.com/ropensci/jstor/blob/master/R/deprecated.R'><code>R/deprecated.R</code></a></small>
     <div class="hidden name"><code>read_full_text.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function imports the full_text contents of a JSTOR-article.</p>
+    <p>This function will be removed in the next release. Please use
+<code><a href='jst_get_full_text.html'>jst_get_full_text()</a></code> instead.</p>
     
     </div>
 
@@ -159,6 +161,10 @@
     <p>A <code>tibble</code>, containing the file-path as id, the full content of
 the file, and the encoding which was used to read it.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This function imports the full_text contents of a JSTOR-article.</p>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -167,6 +173,8 @@ the file, and the encoding which was used to read it.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
           </ul>
 
   </div>
