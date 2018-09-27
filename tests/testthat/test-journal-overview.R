@@ -12,7 +12,7 @@ correct_names <- c(
 test_that("in memory journal list is available", {
   expect_s3_class(in_memory, "tbl_df")
   expect_identical(names(in_memory), correct_names)
-  expect_identical(nrow(in_memory), 4132L)
+  expect_identical(nrow(in_memory), 4220L)
 })
 
 test_that("out of memory journal list is available and correct", {
