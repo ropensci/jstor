@@ -13,6 +13,9 @@ which are easier to read.
 * Fixed a problem when downloading the most recent journals.
 * Removed an outdated function from the vignette on batch importing files.
 
+## Other changes
+* The old group of `find_*` functions is now defunct (they raise an error).
+* Updated cached version of journal data.
 
 # jstor 0.3.2
 This is a hotfix to resolve an issue with writing to other directories than
