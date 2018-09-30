@@ -58,6 +58,8 @@ test_that("jst_define_imports gives correct results", {
 })
 
 test_that("import-spec print method works", {
+  skip("This test is stupid, should be improved. It depends on the console width
+       which is not a good idea.")
   out <- jst_define_import(article = c(jst_get_article, jst_get_references),
                            pamphlet = jst_get_article,
                            book = jst_get_book,
