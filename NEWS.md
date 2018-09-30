@@ -1,3 +1,5 @@
+# jstor 0.3.3
+
 # jstor 0.3.2.9000
 
 ## Removed functionality
