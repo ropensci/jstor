@@ -1,7 +1,5 @@
 # jstor 0.3.3
 
-# jstor 0.3.2.9000
-
 ## Removed functionality
 * The option to download the most recent data on journals directly from JSTOR
 (as in `jst_get_journal_overview(most_recent = T)`)
