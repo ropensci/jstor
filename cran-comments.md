@@ -1,5 +1,5 @@
 ## Test environments
-* local OS X install, R 3.5.0
+* local OS X install, R 3.5.1
 * ubuntu 14.04 (on travis-ci), devel and release
 * win-builder (devel and release)
 
@@ -7,7 +7,7 @@
 
 0 errors | 0 warnings | 1 note
 
-* This is a quick fix to an issue raised by Kurt Hornik per mail. One test was
-writing to a directory which was not the R session's temporary directory due to
-a typo. In response `paste0(tmp, "/something")` has been replaced in many places
-with `file.path(tmp, "something")`, as suggested. 
+* This is a fix adressing changes on the servers of JSTOR. They are now blocking
+requests from scripts, which is why the CRAN checks failed.
+This is also the reason for the note regarding possibly invalid URLs. The links
+in the vignettes are correct and work when used in a browser.
