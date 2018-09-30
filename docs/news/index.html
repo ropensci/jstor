@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">jstor</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.2.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.3</span>
       </span>
     </div>
 
@@ -133,10 +133,17 @@
       <small>Source: <a href='https://github.com/ropensci/jstor/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="jstor-0-3-2-9000" class="section level1">
+    <div id="jstor-0-3-3" class="section level1">
 <h1 class="page-header">
-<a href="#jstor-0-3-2-9000" class="anchor"></a>jstor 0.3.2.9000<small> Unreleased </small>
+<a href="#jstor-0-3-3" class="anchor"></a>jstor 0.3.3<small> 2018-09-30 </small>
 </h1>
+<div id="removed-functionality" class="section level2">
+<h2 class="hasAnchor">
+<a href="#removed-functionality" class="anchor"></a>Removed functionality</h2>
+<ul>
+<li>The option to download the most recent data on journals directly from JSTOR (as in <code><a href="../reference/jst_get_journal_overview.html">jst_get_journal_overview(most_recent = T)</a></code>) had to be removed due changes on their server. I will try to find a solution with JSTOR support so we can add the functionality again.</li>
+</ul>
+</div>
 <div id="new-features" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>New features</h2>
@@ -152,7 +159,6 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixed a problem when downloading the most recent journals.</li>
 <li>Removed an outdated function from the vignette on batch importing files.</li>
 </ul>
 </div>
@@ -277,7 +283,7 @@ jst_import_zip("zip-archive.zip",
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#jstor-0-3-2-9000">0.3.2.9000</a></li>
+        <li><a href="#jstor-0-3-3">0.3.3</a></li>
         <li><a href="#jstor-0-3-2">0.3.2</a></li>
         <li><a href="#jstor-0-3-1">0.3.1</a></li>
         <li><a href="#jstor-0-3-0">0.3.0</a></li>
