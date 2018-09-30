@@ -1,0 +1,6 @@
+── Import specification ─────────────────────────────────────────────────────
+  Source            Import functions                                                                
+● Journal article   jst_get_article, jst_get_references
+● Pamphlet          jst_get_article     
+● Book chapter      jst_get_book        
+● Research report   jst_get_book        
