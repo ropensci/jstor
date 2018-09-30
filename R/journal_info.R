@@ -11,11 +11,13 @@
 #' 
 #' The data on journals might change. Therefore this function provides two
 #' sources of data: a cached version which gets updated with every release, and
-#' the ability to pull the most recent version directly from DfR.
+#' the ability to pull the most recent version directly from DfR (this had to
+#' be temporarily disabled.)
 #' 
 #' The cached version was updated on 2018-09-27.
 #' 
-#' @param most_recent Should the most recent version be downloaded from DfR?
+#' @param most_recent Should the most recent version be downloaded from DfR? 
+#' (Currently disabled due to changes on the JSTOR-servers).
 #' @param quiet Should status messages about the download be printed?
 #' 
 #' @return A `tibble` with various information about journals.
@@ -31,33 +33,36 @@
 #' }
 jst_get_journal_overview <- function(most_recent = FALSE, quiet = FALSE) {
   if (most_recent) {
-    if (!curl::has_internet()) {
-      abort("You don't seem to have a connection to the internet.")
-    }
-    
-    link <- "https://www.jstor.org/titlelists/journals/archive?fileFormat=xls"
-    
-    journal_list <- tempfile()
-    
-    handle <- curl::new_handle()
-    handle <- curl::handle_setheaders(handle, "User-Agent" = "Mozilla/4.0")
-    
-    curl::curl_download(link, journal_list, handle = handle)
-    
-    journals <- readxl::read_xls(journal_list)
-
-    fix_names <- function(names) {
-      names %>% 
-        tolower() %>%
-        stringr::str_remove("\\s\\(.*") %>% #remove (years) after coverage_range
-        str_replace_all("\\s", "_")
-    }
-    
-    
-    journals %>% 
-      purrr::set_names(fix_names(names(.))) %>% 
-      mutate(journal_id = stringr::str_extract(url, "[^\\/]+$")) %>% 
-      dplyr::select(title, journal_id, dplyr::everything())
+    warning("Downloading the most recent version from JSTOR had to be removed ",
+            "temporarily. If possible, it will be available again in a future ",
+            "release.", call. = FALSE)
+    # if (!curl::has_internet()) {
+    #   abort("You don't seem to have a connection to the internet.")
+    # }
+    # 
+    # link <- "https://www.jstor.org/titlelists/journals/archive?fileFormat=xls"
+    # 
+    # journal_list <- tempfile()
+    # 
+    # handle <- curl::new_handle()
+    # handle <- curl::handle_setheaders(handle, "User-Agent" = "Mozilla/4.0")
+    # 
+    # curl::curl_download(link, journal_list, handle = handle)
+    # 
+    # journals <- readxl::read_xls(journal_list)
+    # 
+    # fix_names <- function(names) {
+    #   names %>% 
+    #     tolower() %>%
+    #     stringr::str_remove("\\s\\(.*") %>% #remove (years) after coverage_range
+    #     str_replace_all("\\s", "_")
+    # }
+    # 
+    # 
+    # journals %>% 
+    #   purrr::set_names(fix_names(names(.))) %>% 
+    #   mutate(journal_id = stringr::str_extract(url, "[^\\/]+$")) %>% 
+    #   dplyr::select(title, journal_id, dplyr::everything())
     
   } else {
     jstor_journals
