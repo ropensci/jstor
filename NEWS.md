@@ -1,5 +1,11 @@
 # jstor 0.3.2.9000
 
+## Removed functionality
+* The option to download the most recent data on journals directly from JSTOR
+(as in `jst_get_journal_overview(most_recent = T)`)
+had to be removed due changes on their server. I will try to find a solution
+with JSTOR support so we can add the functionality again.
+
 ## New features
 * `jst_define_import` now prints the specification in a pretty and informative
 way.
@@ -10,7 +16,6 @@ will raise an error.
 which are easier to read.
 
 ## Bug fixes
-* Fixed a problem when downloading the most recent journals.
 * Removed an outdated function from the vignette on batch importing files.
 
 ## Other changes
