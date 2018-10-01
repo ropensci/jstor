@@ -20,8 +20,6 @@ Imports:
     tibble (>= 1.4.1),
     rlang (>= 0.2.0),
     furrr (>= 0.1.0),
-    readxl (>= 1.0.0),
-    curl,
     pryr,
     crayon,
     cli
