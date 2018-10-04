@@ -160,32 +160,65 @@ The number of rows matches the number of authors -- each author get its' own row
 ```{r}
 references <- jst_get_references(jst_example("sample_with_references.xml"))
 
-# we need to remove line breaks for knitr::kable() to work properly for printing
-references <- references %>% 
-  mutate(references = stringr::str_remove_all(references, "\\\n"))
+# # we need to remove line breaks for knitr::kable() to work properly for printing
+references <- references %>%
+  mutate(unparsed_refs = stringr::str_remove_all(unparsed_refs, "\\\n"))
 ```
 
 We have two columns:
 
 - *file_name*: Identifier, can be used for matching.
-- *references*: The content of each entry for reference.
+- *ref_title*: The title of the references sections.
+- *authors*: A string of authors. Several authors are separated with `;`.
+- *collab*: A field that may contain information on the authors, if authors
+            are not available.
+- *title*: The title of the cited entry.
+- *year*: A year, often the article's publication year, but not always. 
+- *source*: The source of the cited entry. Might be a publisher or similar
+- *unparsed_refs*: The full references entry in unparsed form.
 
-Here I display the first 5 entries for each column:
+
+Here I display the 5 random entries:
+
+```{r, echo=FALSE}
+set.seed(1234)
+```
 
 ```{r}
 references %>% 
-  head(5) %>% 
+  sample_n(5) %>% 
   kable()
 ```
 
 This example shows several things: `file_name` is identical among rows, since
-it identifies the article and all references came from one article.
+it identifies the article and all references came from one article. The the
+sample file doesn't follow a typical convention (it was published in 1922), 
+therefore there are several different headings (`ref_title`). Usually, this is
+only "Bibliography" or "References".
 
-The content of references (`references`) is in quite a raw state, quite often
-the result of digitising scans via OCR. Very often, the first entry in this column
-is something like "Bibliography" or "References", which is simply the heading 
-within the article. In the above example there are several headings, because the
-sample file doesn't follow a typical convention (it was published in 1922). 
+Since the references were not parsed by JSTOR, we only get an unparsed version.
+In general, the content of references (`unparsed_refs`) is in quite a raw state, 
+quite often the result of digitising scans via OCR. For example, the last entry 
+reads like this: 
+`MACHADO, A.1911 Zytologische Untersuchungen fiber Trypanosoma rotatorium ...`.
+There is an error here: `fiber` should be `über`. The language of the source
+is German, but the OCR-software assumed English. Therefore, it didn't
+recognize the *Umlaut*. Similar errors are common for text read via OCR.
+
+For other files, we can set `parse_refs = T`, so references will be imported 
+in their parsed form, whenever they are available. 
+
+```{r}
+jst_get_references(
+  jst_example("sample_with_references_parsed.xml"),
+  parse_refs = T
+) %>% 
+  kable()
+```
+
+
+
+
 
 Note, that there might be other content present like endnotes, in case the
 article used endnotes rather than footnotes.
@@ -249,7 +282,7 @@ meta_data %>%
 ```{r, results='asis'}
 meta_data %>% 
   left_join(references) %>% 
-  select(file_name, article_title, volume, pub_year, references) %>%
+  select(file_name, article_title, volume, pub_year, unparsed_refs) %>%
   head(5) %>% 
   kable()
 ```
