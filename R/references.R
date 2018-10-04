@@ -40,7 +40,7 @@
 #' # import parsed references
 #' jst_get_references(
 #'   jst_example("parsed_references.xml"),
-#'   parse_refs = T
+#'   parse_refs = TRUE
 #' ) 
 jst_get_references <- function(file_path, parse_refs = F) {
   xml_file <- read_jstor(file_path)
