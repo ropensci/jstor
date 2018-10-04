@@ -50,7 +50,7 @@ jst_get_references(jst_example("sample_with_references.xml"))
 
 # import parsed references
 jst_get_references(
-  jst_example("sample_with_references_parsed.xml"),
+  jst_example("parsed_references.xml"),
   parse_refs = T
 ) 
 }
