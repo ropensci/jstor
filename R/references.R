@@ -36,6 +36,12 @@
 #' @export
 #' @examples 
 #' jst_get_references(jst_example("sample_with_references.xml"))
+#' 
+#' # import parsed references
+#' jst_get_references(
+#'   jst_example("sample_with_references_parsed.xml"),
+#'   parse_refs = T
+#' ) 
 jst_get_references <- function(file_path, parse_refs = F) {
   xml_file <- read_jstor(file_path)
 

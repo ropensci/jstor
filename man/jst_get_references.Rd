@@ -47,4 +47,10 @@ articles with many references slow the process down.
 }
 \examples{
 jst_get_references(jst_example("sample_with_references.xml"))
+
+# import parsed references
+jst_get_references(
+  jst_example("sample_with_references_parsed.xml"),
+  parse_refs = T
+) 
 }
