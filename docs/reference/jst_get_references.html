@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">jstor</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.3.9000</span>
       </span>
     </div>
 
@@ -143,7 +143,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>jst_get_references</span>(<span class='no'>file_path</span>)</pre>
+    <pre class="usage"><span class='fu'>jst_get_references</span>(<span class='no'>file_path</span>, <span class='kw'>parse_refs</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,13 +153,24 @@
       <td><p>The path to the <code>.xml</code>-file from which references should be
 extracted.</p></td>
     </tr>
+    <tr>
+      <th>parse_refs</th>
+      <td><p>Should references be parsed, if available?</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>tibble</code> with three two containing the references:</p><ul>
-<li><p><code>basename_id</code>: the identifier for the article the references come from.</p></li>
-<li><p><code>references</code>: the text of the references.</p></li>
+    <p>A <code>tibble</code> with the following columns:</p><ul>
+<li><p><code>file_name</code>: the identifier for the article the references come from.</p></li>
+<li><p><code>ref_title</code>: the title of the references sections.</p></li>
+<li><p><code>authors</code>: a string of authors. Several authors are separated with <code>;</code>.</p></li>
+<li><p><code>collab</code>: a field that may contain information on the authors, if authors
+are not available.</p></li>
+<li><p><code>title</code>: the title of the cited entry.</p></li>
+<li><p><code>year</code>: a year, often the article's publication year, but not always.</p></li>
+<li><p><code>source</code>: the source of the cited entry. Might be a publisher or similar</p></li>
+<li><p><code>unparsed_refs</code>: The full references entry in unparsed form.</p></li>
 </ul>
 
     
@@ -179,20 +190,30 @@ articles with many references slow the process down.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>jst_get_references</span>(<span class='fu'><a href='jst_example.html'>jst_example</a></span>(<span class='st'>"sample_with_references.xml"</span>))</div><div class='output co'>#&gt; # A tibble: 29 x 2
-#&gt;    file_name           references                                              
-#&gt;    &lt;chr&gt;               &lt;chr&gt;                                                   
-#&gt;  1 sample_with_refere… Bibliography: Entamoeba ranarumn                        
-#&gt;  2 sample_with_refere… "DOBELL, C.C.\n1909 Researches on the intestinal Protoz…
-#&gt;  3 sample_with_refere… "1918 Are Entamoeba histolytica and Entamoeba ranarum t…
-#&gt;  4 sample_with_refere… References: Leptotheca ohilmacheri                      
-#&gt;  5 sample_with_refere… "KUDO, R.\n1920 Studies on Myxosporidia. A Synopsis of …
-#&gt;  6 sample_with_refere… "1921 On the nature of structures characteristic of Cni…
-#&gt;  7 sample_with_refere… "1922 On the morphology and life history of a Myxospori…
-#&gt;  8 sample_with_refere… References: Haemogregarines                             
-#&gt;  9 sample_with_refere… "DUTTON, J. E., J. L. TODD and E. N. TOBEY.\n1907 Conce…
-#&gt; 10 sample_with_refere… "FRANNÇA, C.\n1917 Sur la classification des hémosporid…
-#&gt; # ... with 19 more rows</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>jst_get_references</span>(<span class='fu'><a href='jst_example.html'>jst_example</a></span>(<span class='st'>"article_with_references.xml"</span>))</div><div class='output co'>#&gt; # A tibble: 23 x 8
+#&gt;    file_name   ref_title   authors collab title year  source unparsed_refs     
+#&gt;    &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;             
+#&gt;  1 article_wi… Bibliograp… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   "DOBELL, C.C.\n19…
+#&gt;  2 article_wi… Bibliograp… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   "1918 Are Entamoe…
+#&gt;  3 article_wi… References… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   "KUDO, R.\n1920 S…
+#&gt;  4 article_wi… References… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   "1921 On the natu…
+#&gt;  5 article_wi… References… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   "1922 On the morp…
+#&gt;  6 article_wi… References… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   "DUTTON, J. E., J…
+#&gt;  7 article_wi… References… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   "FRANNÇA, C.\n191…
+#&gt;  8 article_wi… References… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   "HINTZE, R.\n1902…
+#&gt;  9 article_wi… References… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   "STEBBINS, JR., J…
+#&gt; 10 article_wi… References… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   "1905 On the occu…
+#&gt; # ... with 13 more rows</div><div class='input'>
+<span class='co'># import parsed references</span>
+<span class='fu'>jst_get_references</span>(
+  <span class='fu'><a href='jst_example.html'>jst_example</a></span>(<span class='st'>"parsed_references.xml"</span>),
+  <span class='kw'>parse_refs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</div><div class='output co'>#&gt; # A tibble: 3 x 8
+#&gt;   file_name  ref_title  authors  collab  title   year  source   unparsed_refs  
+#&gt;   &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;          
+#&gt; 1 parsed_re… Notes      &lt;NA&gt;     &lt;NA&gt;    &lt;NA&gt;    2005  &lt;NA&gt;     1. The USA PAT…
+#&gt; 2 parsed_re… References Acohido… &lt;NA&gt;    “Snowd… 2013  USA Tod… Acohido, B. an…
+#&gt; 3 parsed_re… References &lt;NA&gt;     Amnest… &lt;NA&gt;    2013  “USA: R… Amnesty Intern…</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

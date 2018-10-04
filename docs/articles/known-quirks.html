@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">jstor</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.3.9000</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@
       <h1>Known Quirks of JSTOR/DfR Data</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-09-30</h4>
+            <h4 class="date">2018-10-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/jstor/blob/master/vignettes/known-quirks.Rmd"><code>vignettes/known-quirks.Rmd</code></a></small>
       <div class="hidden name"><code>known-quirks.Rmd</code></div>
@@ -211,7 +211,7 @@
 <li><code>journal_jcode</code></li>
 <li><code>journal_pub_id</code></li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">sample_article &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_article.html">jst_get_article</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"sample_with_references.xml"</span>)) </a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">sample_article &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_article.html">jst_get_article</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"article_with_references.xml"</span>)) </a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(sample_article)</a></code></pre></div>
 <table class="table">
@@ -237,7 +237,7 @@
 <th align="left">page_range</th>
 </tr></thead>
 <tbody><tr class="odd">
-<td align="left">sample_with_references</td>
+<td align="left">article_with_references</td>
 <td align="left">NA</td>
 <td align="left">tranamermicrsoci</td>
 <td align="left">NA</td>
@@ -274,7 +274,7 @@
 <tbody>
 <tr class="odd">
 <td align="left">file_name</td>
-<td align="left">sample_with_references</td>
+<td align="left">article_with_references</td>
 </tr>
 <tr class="even">
 <td align="left">journal_title</td>

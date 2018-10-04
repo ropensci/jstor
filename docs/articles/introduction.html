@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">jstor</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.3.9000</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@
       <h1>Introduction to jstor</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-09-30</h4>
+            <h4 class="date">2018-10-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/jstor/blob/master/vignettes/introduction.Rmd"><code>vignettes/introduction.Rmd</code></a></small>
       <div class="hidden name"><code>introduction.Rmd</code></div>
@@ -149,7 +149,7 @@
 <h2 class="hasAnchor">
 <a href="#jst_get_article" class="anchor"></a>jst_get_article</h2>
 <p>The basic usage of the <code>jst_get_*</code> functions is very simple. They take only one argument, the path to the file to import:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">meta_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_article.html">jst_get_article</a></span>(<span class="dt">file_path =</span> <span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"sample_with_references.xml"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">meta_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_article.html">jst_get_article</a></span>(<span class="dt">file_path =</span> <span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"article_with_references.xml"</span>))</a></code></pre></div>
 <p>The resulting object is a <code>tibble</code> with one row and 17 columns. The columns correspond to most of the elements documented here: <a href="http://www.jstor.org/dfr/about/technical-specifications" class="uri">http://www.jstor.org/dfr/about/technical-specifications</a>.</p>
 <p>The columns are:</p>
 <ul>
@@ -196,7 +196,7 @@
 <th align="left">page_range</th>
 </tr></thead>
 <tbody><tr class="odd">
-<td align="left">sample_with_references</td>
+<td align="left">article_with_references</td>
 <td align="left">NA</td>
 <td align="left">tranamermicrsoci</td>
 <td align="left">NA</td>
@@ -222,7 +222,7 @@
 <h2 class="hasAnchor">
 <a href="#jst_get_authors" class="anchor"></a>jst_get_authors</h2>
 <p>Extracting the authors works in similar fashion:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">authors &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_authors.html">jst_get_authors</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"sample_with_references.xml"</span>))</a>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">authors &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_authors.html">jst_get_authors</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"article_with_references.xml"</span>))</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(authors)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -235,7 +235,7 @@
 <th align="right">author_number</th>
 </tr></thead>
 <tbody><tr class="odd">
-<td align="left">sample_with_references</td>
+<td align="left">article_with_references</td>
 <td align="left">NA</td>
 <td align="left">R.</td>
 <td align="left">Kudo</td>
@@ -266,76 +266,174 @@
 <div id="jst_get_references" class="section level2">
 <h2 class="hasAnchor">
 <a href="#jst_get_references" class="anchor"></a>jst_get_references</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">references &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_references.html">jst_get_references</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"sample_with_references.xml"</span>))</a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">references &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_references.html">jst_get_references</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"article_with_references.xml"</span>))</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># we need to remove line breaks for knitr::kable() to work properly for printing</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">references &lt;-<span class="st"> </span>references <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">references =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(references, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># # we need to remove line breaks for knitr::kable() to work properly for printing</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">references &lt;-<span class="st"> </span>references <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">unparsed_refs =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(unparsed_refs, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>))</a></code></pre></div>
 <p>We have two columns:</p>
 <ul>
 <li>
 <em>file_name</em>: Identifier, can be used for matching.</li>
 <li>
-<em>references</em>: The content of each entry for reference.</li>
+<em>ref_title</em>: The title of the references sections.</li>
+<li>
+<em>authors</em>: A string of authors. Several authors are separated with <code>;</code>.</li>
+<li>
+<em>collab</em>: A field that may contain information on the authors, if authors are not available.</li>
+<li>
+<em>title</em>: The title of the cited entry.</li>
+<li>
+<em>year</em>: A year, often the article’s publication year, but not always.</li>
+<li>
+<em>source</em>: The source of the cited entry. Might be a publisher or similar</li>
+<li>
+<em>unparsed_refs</em>: The full references entry in unparsed form.</li>
 </ul>
-<p>Here I display the first 5 entries for each column:</p>
+<p>Here I display the 5 random entries:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">references <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/sample.html">sample_n</a></span>(<span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">file_name</th>
-<th align="left">references</th>
+<th align="left">ref_title</th>
+<th align="left">authors</th>
+<th align="left">collab</th>
+<th align="left">title</th>
+<th align="left">year</th>
+<th align="left">source</th>
+<th align="left">unparsed_refs</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">sample_with_references</td>
-<td align="left">Bibliography: Entamoeba ranarumn</td>
-</tr>
-<tr class="even">
-<td align="left">sample_with_references</td>
-<td align="left">DOBELL, C.C.1909 Researches on the intestinal Protozoa of frogs and toads. Quart. Jour. Micros.Sc., 53:201-276, 4 pl. and 1 textfig.</td>
-</tr>
-<tr class="odd">
-<td align="left">sample_with_references</td>
-<td align="left">1918 Are Entamoeba histolytica and Entamoeba ranarum the same species? An experi-mental study. Parasit., 10:294-310.</td>
-</tr>
-<tr class="even">
-<td align="left">sample_with_references</td>
+<td align="left">article_with_references</td>
 <td align="left">References: Leptotheca ohilmacheri</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">KUDO, R.1920 Studies on Myxosporidia. A Synopsis of Genera and Species of Myxosporidia.ill. Biol. Monogr., 5:243-503, 25 pl. and 2 textfig.</td>
+</tr>
+<tr class="even">
+<td align="left">article_with_references</td>
+<td align="left">References: Trypanosomes</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">DUTTON, J. E., J. L. TODD and E. N. TOBEY (see haemogregarines).</td>
 </tr>
 <tr class="odd">
-<td align="left">sample_with_references</td>
-<td align="left">KUDO, R.1920 Studies on Myxosporidia. A Synopsis of Genera and Species of Myxosporidia.ill. Biol. Monogr., 5:243-503, 25 pl. and 2 textfig.</td>
+<td align="left">article_with_references</td>
+<td align="left">References: Trypanosomes</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">DOFLEIN, F.1910 Studien zur Naturgeschichte der Protozoen. VI. Experimentelle Studien fiberdie Trypanosomen des Frosches. Arch. Protist., 19:207-231, 3 pl. and 1textfig.</td>
+</tr>
+<tr class="even">
+<td align="left">article_with_references</td>
+<td align="left">Intestinal flagellates</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">1915a On a new trichomonad flagellate, Trichomitus parvus, from the intestine of Amphi-bians. Uni. Calif. Publi. in Zoology, 16:89-94, 1 pl.</td>
+</tr>
+<tr class="odd">
+<td align="left">article_with_references</td>
+<td align="left">References: Trypanosomes</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">MACHADO, A.1911 Zytologische Untersuchungen fiber Trypanosoma rotatorium Gruby. Mem. Inst.Oswaldo Cruz, 3:108-135, 2 pl.</td>
 </tr>
 </tbody>
 </table>
-<p>This example shows several things: <code>file_name</code> is identical among rows, since it identifies the article and all references came from one article.</p>
-<p>The content of references (<code>references</code>) is in quite a raw state, quite often the result of digitising scans via OCR. Very often, the first entry in this column is something like “Bibliography” or “References”, which is simply the heading within the article. In the above example there are several headings, because the sample file doesn’t follow a typical convention (it was published in 1922).</p>
+<p>This example shows several things: <code>file_name</code> is identical among rows, since it identifies the article and all references came from one article. The the sample file doesn’t follow a typical convention (it was published in 1922), therefore there are several different headings (<code>ref_title</code>). Usually, this is only “Bibliography” or “References”.</p>
+<p>Since the references were not parsed by JSTOR, we only get an unparsed version. In general, the content of references (<code>unparsed_refs</code>) is in quite a raw state, quite often the result of digitising scans via OCR. For example, the last entry reads like this: <code>MACHADO, A.1911 Zytologische Untersuchungen fiber Trypanosoma rotatorium ...</code>. There is an error here: <code>fiber</code> should be <code>über</code>. The language of the source is German, but the OCR-software assumed English. Therefore, it didn’t recognize the <em>Umlaut</em>. Similar errors are common for text read via OCR.</p>
+<p>For other files, we can set <code>parse_refs = T</code>, so references will be imported in their parsed form, whenever they are available.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="../reference/jst_get_references.html">jst_get_references</a></span>(</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">  <span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"parsed_references.xml"</span>),</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">  <span class="dt">parse_refs =</span> T</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">file_name</th>
+<th align="left">ref_title</th>
+<th align="left">authors</th>
+<th align="left">collab</th>
+<th align="left">title</th>
+<th align="left">year</th>
+<th align="left">source</th>
+<th align="left">unparsed_refs</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">parsed_references</td>
+<td align="left">Notes</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">2005</td>
+<td align="left">NA</td>
+<td align="left">1. The USA PATRIOT Act expanded the government’s surveillance power in numerous other ways (see, e.g. Keenan 2005 ).</td>
+</tr>
+<tr class="even">
+<td align="left">parsed_references</td>
+<td align="left">References</td>
+<td align="left">Acohido, B.; Eisler, P.</td>
+<td align="left">NA</td>
+<td align="left">“Snowden Case: How Low-Level Insider Could Steal from NSA”</td>
+<td align="left">2013</td>
+<td align="left">USA Today</td>
+<td align="left">Acohido, B. and Eisler, P. ( 2013 ) “Snowden Case: How Low-Level Insider Could Steal from NSA” , USA Today , 12 June. Available online at <a href="http://www.usatoday.com/story/news/nation/2013/06/11/snowden-nsa-hacking-privileged-accounts/2412507/" class="uri">http://www.usatoday.com/story/news/nation/2013/06/11/snowden-nsa-hacking-privileged-accounts/2412507/</a> (accessed 15 June 2013).</td>
+</tr>
+<tr class="odd">
+<td align="left">parsed_references</td>
+<td align="left">References</td>
+<td align="left">NA</td>
+<td align="left">Amnesty International</td>
+<td align="left">NA</td>
+<td align="left">2013</td>
+<td align="left">“USA: Revelations about Government Surveillance ‘raise red flags’”</td>
+<td align="left">Amnesty International ( 2013 ) “USA: Revelations about Government Surveillance ‘raise red flags’” , 7 June. Available online at <a href="http://www.amnesty.org/en/news/usa-revelations-about-government-surveillance-raise-red-flags-2013%E2%80%9306%E2%80%9307" class="uri">http://www.amnesty.org/en/news/usa-revelations-about-government-surveillance-raise-red-flags-2013–06–07</a> (accessed 14 June 2013).</td>
+</tr>
+</tbody>
+</table>
 <p>Note, that there might be other content present like endnotes, in case the article used endnotes rather than footnotes.</p>
 </div>
 <div id="jst_get_footnotes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#jst_get_footnotes" class="anchor"></a>jst_get_footnotes</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="../reference/jst_get_footnotes.html">jst_get_footnotes</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"sample_with_references.xml"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../reference/jst_get_footnotes.html">jst_get_footnotes</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"article_with_references.xml"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">file_name</th>
 <th align="left">footnotes</th>
 </tr></thead>
 <tbody><tr class="odd">
-<td align="left">sample_with_references</td>
+<td align="left">article_with_references</td>
 <td align="left">NA</td>
 </tr></tbody>
 </table>
 <p>Very commonly, articles either have footnotes or references. The sample file used here does not have footnotes, therefore a simple <code>tibble</code> with missing footnotes is returned.</p>
 <p>I will use another file to demonstrate footnotes.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">footnotes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_footnotes.html">jst_get_footnotes</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"sample_with_footnotes.xml"</span>))</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">footnotes <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">footnotes =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(footnotes, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">footnotes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_footnotes.html">jst_get_footnotes</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"article_with_footnotes.xml"</span>))</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">footnotes <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">footnotes =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(footnotes, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">file_name</th>
@@ -343,31 +441,31 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">sample_with_footnotes</td>
+<td align="left">article_with_footnotes</td>
 <td align="left">[Footnotes]</td>
 </tr>
 <tr class="even">
-<td align="left">sample_with_footnotes</td>
+<td align="left">article_with_footnotes</td>
 <td align="left">9Quarterly, vol. XIII, no. 1,entries for April 19 and 21.</td>
 </tr>
 <tr class="odd">
-<td align="left">sample_with_footnotes</td>
+<td align="left">article_with_footnotes</td>
 <td align="left">10Quarterly, vol. XIII,no. 1, p. 8.</td>
 </tr>
 <tr class="even">
-<td align="left">sample_with_footnotes</td>
+<td align="left">article_with_footnotes</td>
 <td align="left">14Quarterly, vol. VIII, no. 1.Olympia Columbian, Sept. 11, 1852,</td>
 </tr>
 <tr class="odd">
-<td align="left">sample_with_footnotes</td>
+<td align="left">article_with_footnotes</td>
 <td align="left">26Quarterly, vol. XII,no. 2, p. 141.</td>
 </tr>
 <tr class="even">
-<td align="left">sample_with_footnotes</td>
+<td align="left">article_with_footnotes</td>
 <td align="left">32Dr. David S. Maynard, later (March 31, 1852)</td>
 </tr>
 <tr class="odd">
-<td align="left">sample_with_footnotes</td>
+<td align="left">article_with_footnotes</td>
 <td align="left">34Thomas Linklater, Shepherd, since October 6, 1849,</td>
 </tr>
 </tbody>
@@ -379,10 +477,10 @@
 <a href="#jst_get_full_text" class="anchor"></a>jst_get_full_text</h2>
 <p>The function to extract full texts can’t be demonstrated with proper data, since the full texts are only supplied upon special request with DfR. The function guesses the encoding of the specified file via <code><a href="http://www.rdocumentation.org/packages/readr/topics/encoding">readr::guess_encoding()</a></code>, reads the whole file and returns a <code>tibble</code> with <code>file_name</code>, <code>full_text</code> and <code>encoding</code>.</p>
 <p>I created a file that looks similar to files supplied by DfR with sample text:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">full_text &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_full_text.html">jst_get_full_text</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"sample_full_text.txt"</span>))</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">full_text <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">full_text =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(full_text, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">full_text &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_full_text.html">jst_get_full_text</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"full_text.txt"</span>))</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">full_text <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">full_text =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(full_text, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">file_name</th>
@@ -390,7 +488,7 @@
 <th align="left">encoding</th>
 </tr></thead>
 <tbody><tr class="odd">
-<td align="left">sample_full_text</td>
+<td align="left">full_text</td>
 <td align="left"><plain_text><page sequence="1">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laborisnisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sintobcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit animid est laborum.</page></plain_text></td>
 <td align="left">ASCII</td>
 </tr></tbody>
@@ -403,11 +501,11 @@
 <div id="matching-with-authors" class="section level3">
 <h3 class="hasAnchor">
 <a href="#matching-with-authors" class="anchor"></a>Matching with authors</h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">meta_data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(authors) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(file_name, article_title, pub_year, given_name, surname) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; Joining, by = "file_name"</span></a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">meta_data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(authors) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(file_name, article_title, pub_year, given_name, surname) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="co">#&gt; Joining, by = "file_name"</span></a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">file_name</th>
@@ -417,7 +515,7 @@
 <th align="left">surname</th>
 </tr></thead>
 <tbody><tr class="odd">
-<td align="left">sample_with_references</td>
+<td align="left">article_with_references</td>
 <td align="left">On the Protozoa Parasitic in Frogs</td>
 <td align="right">1922</td>
 <td align="left">R.</td>
@@ -428,55 +526,55 @@
 <div id="matching-with-references" class="section level3">
 <h3 class="hasAnchor">
 <a href="#matching-with-references" class="anchor"></a>Matching with references</h3>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">meta_data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(references) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(file_name, article_title, volume, pub_year, references) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt; Joining, by = "file_name"</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">meta_data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(references) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(file_name, article_title, volume, pub_year, unparsed_refs) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt; Joining, by = "file_name"</span></a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">file_name</th>
 <th align="left">article_title</th>
 <th align="left">volume</th>
 <th align="right">pub_year</th>
-<th align="left">references</th>
+<th align="left">unparsed_refs</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">sample_with_references</td>
-<td align="left">On the Protozoa Parasitic in Frogs</td>
-<td align="left">41</td>
-<td align="right">1922</td>
-<td align="left">Bibliography: Entamoeba ranarumn</td>
-</tr>
-<tr class="even">
-<td align="left">sample_with_references</td>
+<td align="left">article_with_references</td>
 <td align="left">On the Protozoa Parasitic in Frogs</td>
 <td align="left">41</td>
 <td align="right">1922</td>
 <td align="left">DOBELL, C.C.1909 Researches on the intestinal Protozoa of frogs and toads. Quart. Jour. Micros.Sc., 53:201-276, 4 pl. and 1 textfig.</td>
 </tr>
-<tr class="odd">
-<td align="left">sample_with_references</td>
+<tr class="even">
+<td align="left">article_with_references</td>
 <td align="left">On the Protozoa Parasitic in Frogs</td>
 <td align="left">41</td>
 <td align="right">1922</td>
 <td align="left">1918 Are Entamoeba histolytica and Entamoeba ranarum the same species? An experi-mental study. Parasit., 10:294-310.</td>
 </tr>
-<tr class="even">
-<td align="left">sample_with_references</td>
-<td align="left">On the Protozoa Parasitic in Frogs</td>
-<td align="left">41</td>
-<td align="right">1922</td>
-<td align="left">References: Leptotheca ohilmacheri</td>
-</tr>
 <tr class="odd">
-<td align="left">sample_with_references</td>
+<td align="left">article_with_references</td>
 <td align="left">On the Protozoa Parasitic in Frogs</td>
 <td align="left">41</td>
 <td align="right">1922</td>
 <td align="left">KUDO, R.1920 Studies on Myxosporidia. A Synopsis of Genera and Species of Myxosporidia.ill. Biol. Monogr., 5:243-503, 25 pl. and 2 textfig.</td>
+</tr>
+<tr class="even">
+<td align="left">article_with_references</td>
+<td align="left">On the Protozoa Parasitic in Frogs</td>
+<td align="left">41</td>
+<td align="right">1922</td>
+<td align="left">1921 On the nature of structures characteristic of Cnidosporidian spores. Trans.Micro. Soc., 40:60-74.</td>
+</tr>
+<tr class="odd">
+<td align="left">article_with_references</td>
+<td align="left">On the Protozoa Parasitic in Frogs</td>
+<td align="left">41</td>
+<td align="right">1922</td>
+<td align="left">1922 On the morphology and life history of a Myxosporidian, Leptotheca ohlmacheri,parasitic in Rana clamitans and Rana pipiens. Parasitology, 14, no. 2.</td>
 </tr>
 </tbody>
 </table>
@@ -488,7 +586,7 @@
 <a href="#books" class="anchor"></a>Books</h1>
 <p>Quite recently DfR added book chapters to their stack. To import metadata about the books and chapters, jstor supplies <code>jst_get_book</code> and <code>jst_get_chapters</code>.</p>
 <p><code>jst_get_book</code> is very similar to <code>jst_get_article</code>. We obtain general information about the complete book:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="../reference/jst_get_book.html">jst_get_book</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"sample_book.xml"</span>)) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="../reference/jst_get_book.html">jst_get_book</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"book.xml"</span>)) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">book_id</th>
@@ -507,7 +605,7 @@
 </tr></thead>
 <tbody><tr class="odd">
 <td align="left">j.ctt24hdz7</td>
-<td align="left">sample_book</td>
+<td align="left">book</td>
 <td align="left">Political Science</td>
 <td align="left">The 2006 Military Takeover in Fiji</td>
 <td align="left">A Coup to End All Coups?</td>
@@ -522,24 +620,24 @@
 </tr></tbody>
 </table>
 <p>A single book might contain many chapters. <code>jst_get_chapters</code> extracts all of them. Due to this, the function is a bit slower than most of jstor’s other functions.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">chapters &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_chapters.html">jst_get_chapters</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"sample_book.xml"</span>))</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="kw">str</span>(chapters)</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="co">#&gt; Classes 'tbl_df', 'tbl' and 'data.frame':    36 obs. of  9 variables:</span></a>
-<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="co">#&gt;  $ book_id        : chr  "j.ctt24hdz7" "j.ctt24hdz7" "j.ctt24hdz7" "j.ctt24hdz7" ...</span></a>
-<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="co">#&gt;  $ file_name      : chr  "sample_book" "sample_book" "sample_book" "sample_book" ...</span></a>
-<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="co">#&gt;  $ part_id        : chr  "j.ctt24hdz7.1" "j.ctt24hdz7.2" "j.ctt24hdz7.3" "j.ctt24hdz7.4" ...</span></a>
-<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co">#&gt;  $ part_label     : chr  NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co">#&gt;  $ part_title     : chr  "Front Matter" "Table of Contents" "Acronyms and abbreviations" "Authors’ biographies" ...</span></a>
-<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">#&gt;  $ part_subtitle  : chr  NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb13-11" data-line-number="11"><span class="co">#&gt;  $ authors        : chr  NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb13-12" data-line-number="12"><span class="co">#&gt;  $ abstract       : chr  NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb13-13" data-line-number="13"><span class="co">#&gt;  $ part_first_page: chr  "i" "v" "vii" "xi" ...</span></a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">chapters &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_chapters.html">jst_get_chapters</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"book.xml"</span>))</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="kw">str</span>(chapters)</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt; Classes 'tbl_df', 'tbl' and 'data.frame':    36 obs. of  9 variables:</span></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co">#&gt;  $ book_id        : chr  "j.ctt24hdz7" "j.ctt24hdz7" "j.ctt24hdz7" "j.ctt24hdz7" ...</span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co">#&gt;  $ file_name      : chr  "book" "book" "book" "book" ...</span></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co">#&gt;  $ part_id        : chr  "j.ctt24hdz7.1" "j.ctt24hdz7.2" "j.ctt24hdz7.3" "j.ctt24hdz7.4" ...</span></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt;  $ part_label     : chr  NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt;  $ part_title     : chr  "Front Matter" "Table of Contents" "Acronyms and abbreviations" "Authors’ biographies" ...</span></a>
+<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt;  $ part_subtitle  : chr  NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt;  $ authors        : chr  NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt;  $ abstract       : chr  NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt;  $ part_first_page: chr  "i" "v" "vii" "xi" ...</span></a></code></pre></div>
 <p>Without the abstracts (they are rather long) the first 10 chapters look like this:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">chapters <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>abstract) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">chapters <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>abstract) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">book_id</th>
@@ -554,7 +652,7 @@
 <tbody>
 <tr class="odd">
 <td align="left">j.ctt24hdz7</td>
-<td align="left">sample_book</td>
+<td align="left">book</td>
 <td align="left">j.ctt24hdz7.1</td>
 <td align="left">NA</td>
 <td align="left">Front Matter</td>
@@ -564,7 +662,7 @@
 </tr>
 <tr class="even">
 <td align="left">j.ctt24hdz7</td>
-<td align="left">sample_book</td>
+<td align="left">book</td>
 <td align="left">j.ctt24hdz7.2</td>
 <td align="left">NA</td>
 <td align="left">Table of Contents</td>
@@ -574,7 +672,7 @@
 </tr>
 <tr class="odd">
 <td align="left">j.ctt24hdz7</td>
-<td align="left">sample_book</td>
+<td align="left">book</td>
 <td align="left">j.ctt24hdz7.3</td>
 <td align="left">NA</td>
 <td align="left">Acronyms and abbreviations</td>
@@ -584,7 +682,7 @@
 </tr>
 <tr class="even">
 <td align="left">j.ctt24hdz7</td>
-<td align="left">sample_book</td>
+<td align="left">book</td>
 <td align="left">j.ctt24hdz7.4</td>
 <td align="left">NA</td>
 <td align="left">Authors’ biographies</td>
@@ -594,7 +692,7 @@
 </tr>
 <tr class="odd">
 <td align="left">j.ctt24hdz7</td>
-<td align="left">sample_book</td>
+<td align="left">book</td>
 <td align="left">j.ctt24hdz7.5</td>
 <td align="left">1.</td>
 <td align="left">The enigmas of Fiji’s good governance coup</td>
@@ -604,7 +702,7 @@
 </tr>
 <tr class="even">
 <td align="left">j.ctt24hdz7</td>
-<td align="left">sample_book</td>
+<td align="left">book</td>
 <td align="left">j.ctt24hdz7.6</td>
 <td align="left">2.</td>
 <td align="left">‘Anxiety, uncertainty and fear in our land’:</td>
@@ -614,7 +712,7 @@
 </tr>
 <tr class="odd">
 <td align="left">j.ctt24hdz7</td>
-<td align="left">sample_book</td>
+<td align="left">book</td>
 <td align="left">j.ctt24hdz7.7</td>
 <td align="left">3.</td>
 <td align="left">Fiji’s December 2006 coup:</td>
@@ -624,7 +722,7 @@
 </tr>
 <tr class="even">
 <td align="left">j.ctt24hdz7</td>
-<td align="left">sample_book</td>
+<td align="left">book</td>
 <td align="left">j.ctt24hdz7.8</td>
 <td align="left">4.</td>
 <td align="left">‘This process of political readjustment’:</td>
@@ -634,7 +732,7 @@
 </tr>
 <tr class="odd">
 <td align="left">j.ctt24hdz7</td>
-<td align="left">sample_book</td>
+<td align="left">book</td>
 <td align="left">j.ctt24hdz7.9</td>
 <td align="left">5.</td>
 <td align="left">The changing role of the Great Council of Chiefs</td>
@@ -644,7 +742,7 @@
 </tr>
 <tr class="even">
 <td align="left">j.ctt24hdz7</td>
-<td align="left">sample_book</td>
+<td align="left">book</td>
 <td align="left">j.ctt24hdz7.10</td>
 <td align="left">6.</td>
 <td align="left">The Fiji military and ethno-nationalism:</td>
@@ -655,16 +753,16 @@
 </tbody>
 </table>
 <p>Since extracting all authors for all chapters needs considerably more time, by default authors are not extracted. You can import them like so:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">author_chap &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_chapters.html">jst_get_chapters</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"sample_book.xml"</span>), <span class="dt">authors =</span> <span class="ot">TRUE</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">author_chap &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jst_get_chapters.html">jst_get_chapters</a></span>(<span class="kw"><a href="../reference/jst_example.html">jst_example</a></span>(<span class="st">"book.xml"</span>), <span class="dt">authors =</span> <span class="ot">TRUE</span>) </a></code></pre></div>
 <p>The authors are supplied in a list column:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">class</span>(author_chap<span class="op">$</span>authors)</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="co">#&gt; [1] "list"</span></a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">class</span>(author_chap<span class="op">$</span>authors)</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="co">#&gt; [1] "list"</span></a></code></pre></div>
 <p>You can expand this list with <code><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">tidyr::unnest</a></code>:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">author_chap <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">unnest</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(part_id, given_name, surname) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">author_chap <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">unnest</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(part_id, given_name, surname) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">part_id</th>

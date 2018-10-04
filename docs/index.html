@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">jstor</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.3.9000</span>
       </span>
     </div>
 
@@ -139,7 +139,7 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(jstor)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">library</span>(magrittr)</a></code></pre></div>
 <p>The basic usage is simple: supply one of the <code>jst_get_*</code>-functions with a path and it will return a tibble with the extracted information.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="reference/jst_get_article.html">jst_get_article</a></span>(<span class="kw"><a href="reference/jst_example.html">jst_example</a></span>(<span class="st">"sample_with_references.xml"</span>)) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="reference/jst_get_article.html">jst_get_article</a></span>(<span class="kw"><a href="reference/jst_example.html">jst_example</a></span>(<span class="st">"article_with_references.xml"</span>)) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">file_name</th>
@@ -163,7 +163,7 @@
 <th align="left">page_range</th>
 </tr></thead>
 <tbody><tr class="odd">
-<td align="left">sample_with_references</td>
+<td align="left">article_with_references</td>
 <td align="left">NA</td>
 <td align="left">tranamermicrsoci</td>
 <td align="left">NA</td>
@@ -185,7 +185,7 @@
 </tr></tbody>
 </table>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="reference/jst_get_authors.html">jst_get_authors</a></span>(<span class="kw"><a href="reference/jst_example.html">jst_example</a></span>(<span class="st">"sample_with_references.xml"</span>)) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="reference/jst_get_authors.html">jst_get_authors</a></span>(<span class="kw"><a href="reference/jst_example.html">jst_example</a></span>(<span class="st">"article_with_references.xml"</span>)) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">file_name</th>
@@ -197,7 +197,7 @@
 <th align="right">author_number</th>
 </tr></thead>
 <tbody><tr class="odd">
-<td align="left">sample_with_references</td>
+<td align="left">article_with_references</td>
 <td align="left">NA</td>
 <td align="left">R.</td>
 <td align="left">Kudo</td>
