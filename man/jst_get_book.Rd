@@ -39,5 +39,5 @@ date.
 \code{jst_get_book()} extracts meta-data from JSTOR-XML files for book chapters.
 }
 \examples{
-jst_get_book(jst_example("sample_book.xml"))
+jst_get_book(jst_example("book.xml"))
 }

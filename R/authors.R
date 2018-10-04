@@ -19,7 +19,7 @@
 #'
 #' @export
 #' @examples 
-#' jst_get_authors(jst_example("sample_with_references.xml"))
+#' jst_get_authors(jst_example("article_with_references.xml"))
 jst_get_authors <- function(file_path) {
   xml_file <- read_jstor(file_path)
   

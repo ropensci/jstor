@@ -1,5 +1,7 @@
 # jstor 0.3.3.9000
 * Added option to parse references, if the information is available. #32
+* Example files have been renamed for clarity. `sample_` has been replaced with
+`article_` or removed altogether.
 
 # jstor 0.3.3
 

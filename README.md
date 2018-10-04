@@ -76,21 +76,21 @@ a path and it will return a tibble with the extracted
 information.
 
 ``` r
-jst_get_article(jst_example("sample_with_references.xml")) %>% knitr::kable()
+jst_get_article(jst_example("article_with_references.xml")) %>% knitr::kable()
 ```
 
-| file\_name               | journal\_doi | journal\_jcode   | journal\_pub\_id | journal\_title                                     | article\_doi    | article\_pub\_id | article\_jcode | article\_type    | article\_title                     | volume | issue | language | pub\_day | pub\_month | pub\_year | first\_page | last\_page | page\_range |
-| :----------------------- | :----------- | :--------------- | :--------------- | :------------------------------------------------- | :-------------- | :--------------- | :------------- | :--------------- | :--------------------------------- | :----- | :---- | :------- | :------- | :--------- | --------: | :---------- | :--------- | :---------- |
-| sample\_with\_references | NA           | tranamermicrsoci | NA               | Transactions of the American Microscopical Society | 10.2307/3221896 | NA               | NA             | research-article | On the Protozoa Parasitic in Frogs | 41     | 2     | eng      | 1        | 4          |      1922 | 59          | 76         | 59-76       |
+| file\_name                | journal\_doi | journal\_jcode   | journal\_pub\_id | journal\_title                                     | article\_doi    | article\_pub\_id | article\_jcode | article\_type    | article\_title                     | volume | issue | language | pub\_day | pub\_month | pub\_year | first\_page | last\_page | page\_range |
+| :------------------------ | :----------- | :--------------- | :--------------- | :------------------------------------------------- | :-------------- | :--------------- | :------------- | :--------------- | :--------------------------------- | :----- | :---- | :------- | :------- | :--------- | --------: | :---------- | :--------- | :---------- |
+| article\_with\_references | NA           | tranamermicrsoci | NA               | Transactions of the American Microscopical Society | 10.2307/3221896 | NA               | NA             | research-article | On the Protozoa Parasitic in Frogs | 41     | 2     | eng      | 1        | 4          |      1922 | 59          | 76         | 59-76       |
 
 ``` r
 
-jst_get_authors(jst_example("sample_with_references.xml")) %>% knitr::kable()
+jst_get_authors(jst_example("article_with_references.xml")) %>% knitr::kable()
 ```
 
-| file\_name               | prefix | given\_name | surname | string\_name | suffix | author\_number |
-| :----------------------- | :----- | :---------- | :------ | :----------- | :----- | -------------: |
-| sample\_with\_references | NA     | R.          | Kudo    | NA           | NA     |              1 |
+| file\_name                | prefix | given\_name | surname | string\_name | suffix | author\_number |
+| :------------------------ | :----- | :---------- | :------ | :----------- | :----- | -------------: |
+| article\_with\_references | NA     | R.          | Kudo    | NA           | NA     |              1 |
 
 Further explanations, especially on how to use jstor’s functions for
 importing many files, can be found in the vignettes.

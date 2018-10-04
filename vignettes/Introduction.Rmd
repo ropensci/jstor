@@ -98,7 +98,7 @@ library(knitr)
 The basic usage of the `jst_get_*` functions is very simple. They take only one 
 argument, the path to the file to import:
 ```{r}
-meta_data <- jst_get_article(file_path = jst_example("sample_with_references.xml"))
+meta_data <- jst_get_article(file_path = jst_example("article_with_references.xml"))
 ```
 
 The resulting object is a `tibble` with one row and 17 columns. The columns
@@ -139,7 +139,7 @@ meta_data %>% kable()
 Extracting the authors works in similar fashion:
 
 ```{r, results='asis'}
-authors <- jst_get_authors(jst_example("sample_with_references.xml"))
+authors <- jst_get_authors(jst_example("article_with_references.xml"))
 kable(authors)
 ```
 
@@ -158,7 +158,7 @@ The number of rows matches the number of authors -- each author get its' own row
 
 ## jst_get_references
 ```{r}
-references <- jst_get_references(jst_example("sample_with_references.xml"))
+references <- jst_get_references(jst_example("article_with_references.xml"))
 
 # # we need to remove line breaks for knitr::kable() to work properly for printing
 references <- references %>%
@@ -226,7 +226,7 @@ article used endnotes rather than footnotes.
 
 ## jst_get_footnotes
 ```{r, results='asis'}
-jst_get_footnotes(jst_example("sample_with_references.xml")) %>% 
+jst_get_footnotes(jst_example("article_with_references.xml")) %>% 
   kable()
 ```
 
@@ -237,7 +237,7 @@ footnotes is returned.
 I will use another file to demonstrate footnotes.
 
 ```{r, results='asis'}
-footnotes <- jst_get_footnotes(jst_example("sample_with_footnotes.xml"))
+footnotes <- jst_get_footnotes(jst_example("article_with_footnotes.xml"))
 
 footnotes %>% 
   mutate(footnotes = stringr::str_remove_all(footnotes, "\\\n")) %>% 
@@ -258,7 +258,7 @@ the whole file and returns a `tibble` with `file_name`, `full_text` and
 I created a file that looks similar to files supplied by DfR with sample text:
 
 ```{r, results='asis'}
-full_text <- jst_get_full_text(jst_example("sample_full_text.txt"))
+full_text <- jst_get_full_text(jst_example("full_text.txt"))
 full_text %>% 
   mutate(full_text = stringr::str_remove_all(full_text, "\\\n")) %>% 
   kable()
@@ -296,14 +296,14 @@ the books and chapters, jstor supplies `jst_get_book` and `jst_get_chapters`.
 about the complete book:
 
 ```{r, results='asis'}
-jst_get_book(jst_example("sample_book.xml")) %>% knitr::kable()
+jst_get_book(jst_example("book.xml")) %>% knitr::kable()
 ```
 
 A single book might contain many chapters. `jst_get_chapters` extracts all of them.
 Due to this, the function is a bit slower than most of jstor's other functions.
 
 ```{r}
-chapters <- jst_get_chapters(jst_example("sample_book.xml"))
+chapters <- jst_get_chapters(jst_example("book.xml"))
 
 str(chapters)
 ```
@@ -324,7 +324,7 @@ Since extracting all authors for all chapters needs considerably
 more time, by default authors are not extracted. You can import them like so:
 
 ```{r}
-author_chap <- jst_get_chapters(jst_example("sample_book.xml"), authors = TRUE) 
+author_chap <- jst_get_chapters(jst_example("book.xml"), authors = TRUE) 
 ```
 
 The authors are supplied in a list column:

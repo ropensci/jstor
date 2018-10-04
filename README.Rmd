@@ -79,9 +79,9 @@ library(magrittr)
 The basic usage is simple: supply one of the `jst_get_*`-functions with a path
 and it will return a tibble with the extracted information.
 ```{r, results='asis'}
-jst_get_article(jst_example("sample_with_references.xml")) %>% knitr::kable()
+jst_get_article(jst_example("article_with_references.xml")) %>% knitr::kable()
 
-jst_get_authors(jst_example("sample_with_references.xml")) %>% knitr::kable()
+jst_get_authors(jst_example("article_with_references.xml")) %>% knitr::kable()
 ```
 
 Further explanations, especially on how to use jstor's functions for importing

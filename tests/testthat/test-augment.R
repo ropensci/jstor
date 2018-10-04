@@ -65,7 +65,7 @@ test_that("ranges are parsed correctly", {
 
 
 test_that("journal id is unified", {
-  meta_data <- jst_get_article(jst_example("sample_with_references.xml"))
+  meta_data <- jst_get_article(jst_example("article_with_references.xml"))
   
   output <- jst_unify_journal_id(meta_data)
   correct_out <- dplyr::select(meta_data,
@@ -76,11 +76,11 @@ test_that("journal id is unified", {
 })
 
 test_that("data gets augmented", {
-  journal_meta <- jst_get_article(jst_example("sample_with_references.xml"))
+  journal_meta <- jst_get_article(jst_example("article_with_references.xml"))
 
   correct_journal <- structure(
     list(
-      file_name = "sample_with_references", 
+      file_name = "article_with_references", 
       journal_title = "Transactions of the American Microscopical Society", 
       article_doi = "10.2307/3221896", article_pub_id = NA_character_, 
       article_jcode = NA_character_, article_type = "research-article", 

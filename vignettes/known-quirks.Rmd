@@ -156,7 +156,7 @@ Identifiers for the journal usually appear in three columns:
 - `journal_pub_id`
 
 ```{r, results='asis'}
-sample_article <- jst_get_article(jst_example("sample_with_references.xml")) 
+sample_article <- jst_get_article(jst_example("article_with_references.xml")) 
 
 knitr::kable(sample_article)
 ```

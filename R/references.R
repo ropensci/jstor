@@ -35,7 +35,7 @@
 #'
 #' @export
 #' @examples 
-#' jst_get_references(jst_example("sample_with_references.xml"))
+#' jst_get_references(jst_example("article_with_references.xml"))
 #' 
 #' # import parsed references
 #' jst_get_references(

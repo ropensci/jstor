@@ -43,10 +43,10 @@ the number of chapters to extract.
 }
 \examples{
 # extract parts without authors
-jst_get_chapters(jst_example("sample_book.xml"))
+jst_get_chapters(jst_example("book.xml"))
 
 # import authors too
-parts <- jst_get_chapters(jst_example("sample_book.xml"), authors = TRUE)
+parts <- jst_get_chapters(jst_example("book.xml"), authors = TRUE)
 parts
 
 tidyr::unnest(parts)

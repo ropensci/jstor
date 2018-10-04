@@ -29,5 +29,5 @@ In order to get all available information on citation data, you might need to
 combine \code{jst_get_footnotes()} with \code{jst_get_references()}.
 }
 \examples{
-jst_get_footnotes(jst_example("sample_with_footnotes.xml"))
+jst_get_footnotes(jst_example("article_with_footnotes.xml"))
 }

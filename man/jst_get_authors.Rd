@@ -30,5 +30,5 @@ data.
 }
 }
 \examples{
-jst_get_authors(jst_example("sample_with_references.xml"))
+jst_get_authors(jst_example("article_with_references.xml"))
 }

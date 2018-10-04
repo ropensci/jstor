@@ -28,7 +28,7 @@ This function takes the value from \code{journal_pub_id}, and if it is missing,
 that from \code{journal_jcode}. \code{journal_doi} is currently disregarded.
 }
 \examples{
-article <- jst_get_article(jst_example("sample_with_references.xml"))
+article <- jst_get_article(jst_example("article_with_references.xml"))
 
 jst_unify_journal_id(article)
 

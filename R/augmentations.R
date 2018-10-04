@@ -176,7 +176,7 @@ jst_get_total_pages <- function(first_page, last_page, page_range,
 #' @export
 #' 
 #' @examples 
-#' article <- jst_get_article(jst_example("sample_with_references.xml"))
+#' article <- jst_get_article(jst_example("article_with_references.xml"))
 #' 
 #' jst_unify_journal_id(article)
 #' 

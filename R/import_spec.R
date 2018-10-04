@@ -126,13 +126,13 @@ jst_define_import <- function(...) {
   # several functions to deal with each input.
   correct_types <- tibble::tribble(
     ~meta_type, ~path,
-    "journal_article", jst_example("sample_with_references.xml"),
-    "book_chapter", jst_example("sample_book.xml"),
-    "research_report", jst_example("sample_book.xml"),
-    "pamphlet", jst_example("sample_with_references.xml"),
-    "ngram1", jst_example("sample_ngram.txt"),
-    "ngram2", jst_example("sample_ngram.txt"),
-    "ngram3", jst_example("sample_ngram.txt")
+    "journal_article", jst_example("article_with_references.xml"),
+    "book_chapter", jst_example("book.xml"),
+    "research_report", jst_example("book.xml"),
+    "pamphlet", jst_example("article_with_references.xml"),
+    "ngram1", jst_example("ngram.txt"),
+    "ngram2", jst_example("ngram.txt"),
+    "ngram3", jst_example("ngram.txt")
   )
   
   matched_types <- tibble::tibble(meta_type = type, evaled_funs = evaled_funs,

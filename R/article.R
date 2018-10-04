@@ -38,7 +38,7 @@
 #'
 #' @export
 #' @examples 
-#' jst_get_article(jst_example("sample_with_references.xml"))
+#' jst_get_article(jst_example("article_with_references.xml"))
 jst_get_article <- function(file_path) {
   xml_file <- read_jstor(file_path)
   

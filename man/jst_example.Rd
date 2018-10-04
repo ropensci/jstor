@@ -19,5 +19,5 @@ The code for this function was adapted from the package \code{readr}.
 }
 \examples{
 jst_example()
-jst_example("sample_with_references.xml") 
+jst_example("article_with_references.xml") 
 }

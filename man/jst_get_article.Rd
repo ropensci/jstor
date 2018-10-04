@@ -48,5 +48,5 @@ date.
 articles.
 }
 \examples{
-jst_get_article(jst_example("sample_with_references.xml"))
+jst_get_article(jst_example("article_with_references.xml"))
 }

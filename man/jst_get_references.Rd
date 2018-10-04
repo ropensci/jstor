@@ -46,7 +46,7 @@ In general, the implementation is not as fast as \code{jst_get_article()} -
 articles with many references slow the process down.
 }
 \examples{
-jst_get_references(jst_example("sample_with_references.xml"))
+jst_get_references(jst_example("article_with_references.xml"))
 
 # import parsed references
 jst_get_references(

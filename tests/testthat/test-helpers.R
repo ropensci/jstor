@@ -58,7 +58,7 @@ test_that("unavailable path raises error", {
 })
 
 test_that("getting footnotes or references on book raises informative error", {
-  expect_error(jst_get_references(jst_example("sample_book.xml")), 
+  expect_error(jst_get_references(jst_example("book.xml")), 
                "Neither footnotes nor references")
 })
 

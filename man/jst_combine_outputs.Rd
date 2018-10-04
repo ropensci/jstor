@@ -55,7 +55,7 @@ files, which you want to import.
 tmp <- tempdir()
 
 # find multiple files
-file_list <- rep(jst_example("sample_with_references.xml"), 2)
+file_list <- rep(jst_example("article_with_references.xml"), 2)
 
 # convert and write to file
 jst_import(file_list, "article", out_path = tmp, .f = jst_get_article,

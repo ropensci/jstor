@@ -20,7 +20,7 @@
 #' 
 #' @export
 #' @examples 
-#' jst_get_footnotes(jst_example("sample_with_footnotes.xml"))
+#' jst_get_footnotes(jst_example("article_with_footnotes.xml"))
 jst_get_footnotes <- function(file_path) {
   xml_file <- read_jstor(file_path)
 
