@@ -19,70 +19,90 @@
 #' 
 #' @param file_path The path to the `.xml`-file from which references should be
 #'   extracted.
+#' @param parse_refs Should references be parsed, if available?
 #'
-#' @return A `tibble` with three two containing the references:
+#' @return A `tibble` with the following columns:
 #'
-#' - `basename_id`: the identifier for the article the references come from.
-#' - `references`: the text of the references.
+#' - `file_name`: the identifier for the article the references come from.
+#' - `ref_title`: the title of the references sections.
+#' - `authors`: a string of authors. Several authors are separated with `;`.
+#' - `collab`: a field that may contain information on the authors, if authors
+#'             are not available.
+#' - `title`: the title of the cited entry.
+#' - `year`: a year, often the article's publication year, but not always. 
+#' - `source`: the source of the cited entry. Might be a publisher or similar
+#' - `unparsed_refs`: The full references entry in unparsed form.
 #'
 #' @export
 #' @examples 
 #' jst_get_references(jst_example("sample_with_references.xml"))
-jst_get_references <- function(file_path) {
+jst_get_references <- function(file_path, parse_refs = F) {
   xml_file <- read_jstor(file_path)
 
   validate_article(xml_file)
 
   # the file path is passed down to extract_ref_content to create more
   # informative error messages
-  references <- extract_references(xml_file, file_path) %>%
-    rlang::set_names("references") %>%
-    new_tibble()
+  references <- extract_references(xml_file, file_path, parse_refs)
 
   expand_and_bind(file_path, references)
 }
 
 
-extract_references <- function(xml_file, file_path) {
+extract_references <- function(xml_file, file_path, parse_refs) {
   res <- xml_find_all(xml_file, ".//ref-list")
 
   # if there are no references, exit and return NA
   if (is_empty(res)) {
-    return(list(NA_character_))
+    return(new_tibble(list(
+      ref_title = NA_character_,
+      authors = NA_character_,
+      collab = NA_character_,
+      title = NA_character_,
+      year = NA_character_,
+      source = NA_character_,
+      unparsed_refs = NA_character_
+    )))
   }
 
-  full_string <- purrr::pmap(list(res, file_path), extract_ref_content) %>% 
-    flatten_chr()
+  purrr::pmap(list(res, file_path, parse_refs), extract_ref_content) %>% 
+    dplyr::bind_rows()
 
-  # empty strings should be NA
-  if (is_empty(full_string)) {
-    full_string <- NA_character_
-  }
-  full_string <- gsub("^$", NA_character_, full_string)
-
-  list(full_string)
 }
 
 
-extract_ref_content <- function(x, file_path) {
+extract_ref_content <- function(x, file_path, parse_refs) {
   if (identical(xml2::xml_attr(x, "content-type"), "parsed-citations")) {
-    x %>%
-      xml_find_all("title|ref/mixed-citation") %>%
-      map_chr(collapse_text)
+    if (parse_refs) {
+      parse_references(x)
+    } else {
+      title <- extract_first(x, "title")
+      x %>%
+        xml_find_all("ref/mixed-citation") %>%
+        map_chr(collapse_text) %>% 
+        ref_to_tibble(title)
+    }
+
 
   } else if (is.na(xml2::xml_attr(x, "content-type"))) {
+    title <- extract_first(x, "title")
     x %>%
-      xml_find_all("title|ref/mixed-citation/node()[not(self::*)]") %>%
+      xml_find_all("ref/mixed-citation/node()[not(self::*)]") %>%
       xml_text() %>%
       purrr::keep(str_detect, "[a-z]") %>%
-      str_replace("^\\\n", "") # remove "\n" at beginning of strings
-
+      str_replace("^\\\n", "") %>% # remove "\n" at beginning of strings
+      ref_to_tibble(title)
+    
   } else if (identical(xml2::xml_attr(x, "content-type"), "unparsed") ||
              identical(xml2::xml_attr(x, "content-type"),
                        "unparsed-citations")) {
+    
+    title <- extract_first(x, "title")
     x %>%
-      xml_find_all("title|ref/mixed-citation") %>%
-      xml_text()
+      xml_find_all("ref/mixed-citation") %>%
+      xml_text() %>% 
+      ref_to_tibble(title)
+    
   } else {
     abort(paste0("Unknown citation format in file `", file_path, "`.\n",
                  "Please file an issue at ",
@@ -94,4 +114,43 @@ collapse_text <- function(x) {
   xml_find_all(x, ".//text()") %>%
     xml_text() %>%
     paste(collapse = " ")
+}
+
+parse_references <- function(ref_list) {
+  
+  title <- extract_child(ref_list, "title")
+  
+  out <- ref_list %>% 
+    xml_find_all("ref") %>% 
+    map(~{
+      list(
+        authors = extract_all(., ".//string-name"),
+        collab = extract_all(., ".//collab"),
+        title = extract_first(., ".//article-title"),
+        year = extract_all(., ".//year"),
+        source = extract_first(., ".//source"),
+        unparsed_refs = collapse_text(.)
+      )
+    }) %>% 
+    dplyr::bind_rows()
+
+  dplyr::bind_cols(ref_title = rep(title, nrow(out)), out)  
+}
+
+
+ref_to_tibble <- function(refs, title) {
+  if (is_empty(refs)) {
+    refs <- NA_character_
+  }
+  refs <- gsub("^$", NA_character_, refs)
+  
+  new_tibble(list(
+    ref_title = rep(title, length(refs)),
+    authors = rep(NA_character_, length(refs)),
+    collab = rep(NA_character_, length(refs)),
+    title = rep(NA_character_, length(refs)),
+    year = rep(NA_character_, length(refs)),
+    source = rep(NA_character_, length(refs)),
+    unparsed_refs = refs
+  ))
 }

@@ -4,17 +4,26 @@
 \alias{jst_get_references}
 \title{Extract all references}
 \usage{
-jst_get_references(file_path)
+jst_get_references(file_path, parse_refs = F)
 }
 \arguments{
 \item{file_path}{The path to the \code{.xml}-file from which references should be
 extracted.}
+
+\item{parse_refs}{Should references be parsed, if available?}
 }
 \value{
-A \code{tibble} with three two containing the references:
+A \code{tibble} with the following columns:
 \itemize{
-\item \code{basename_id}: the identifier for the article the references come from.
-\item \code{references}: the text of the references.
+\item \code{file_name}: the identifier for the article the references come from.
+\item \code{ref_title}: the title of the references sections.
+\item \code{authors}: a string of authors. Several authors are separated with \code{;}.
+\item \code{collab}: a field that may contain information on the authors, if authors
+are not available.
+\item \code{title}: the title of the cited entry.
+\item \code{year}: a year, often the article's publication year, but not always.
+\item \code{source}: the source of the cited entry. Might be a publisher or similar
+\item \code{unparsed_refs}: The full references entry in unparsed form.
 }
 }
 \description{

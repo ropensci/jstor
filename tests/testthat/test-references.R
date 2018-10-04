@@ -35,22 +35,20 @@ test_that("catching errors works", {
 })
 
 test_that("null results work", {
-  expect_identical(result_empty[["references"]], NA_character_)
-  expect_identical(jst_get_references(unparsed)[["references"]][2],
+  expect_identical(result_empty[["unparsed_refs"]], NA_character_)
+  expect_identical(jst_get_references(unparsed)[["unparsed_refs"]][1],
                    NA_character_)
-  expect_identical(jst_get_references(half_empty)[["references"]],
+  expect_identical(jst_get_references(half_empty)[["unparsed_refs"]],
                    NA_character_)
 })
 
 # nolint start
 correct_refs <- c(
-  "Bibliography: Entamoeba ranarumn",
   "DOBELL, C.C.
 1909 Researches on the intestinal Protozoa of frogs and toads. Quart. Jour. Micros.
 Sc., 53:201-276, 4 pl. and 1 textfig.",
   "1918 Are Entamoeba histolytica and Entamoeba ranarum the same species? An experi-
 mental study. Parasit., 10:294-310.",
-  "References: Leptotheca ohilmacheri",
   "KUDO, R.
 1920 Studies on Myxosporidia. A Synopsis of Genera and Species of Myxosporidia.
 ill. Biol. Monogr., 5:243-503, 25 pl. and 2 textfig."
@@ -58,7 +56,6 @@ ill. Biol. Monogr., 5:243-503, 25 pl. and 2 textfig."
 # nolint end
 
 unparsed_refs <- c(
-  "References",
   NA_character_,
   "Producer Dynamics: New Evidence from Micro Data",
   "American Economic Review",
@@ -66,10 +63,8 @@ unparsed_refs <- c(
 )
 
 parsed_refs <- c(
-  "Notes",
   paste("The USA PATRIOT Act expanded the government's surveillance power in",
         "numerous other ways (see, e.g. Keenan 2005 )."),
-  "References",
   paste0("Acohido, B. and Eisler, P. ( 2013 ) “Snowden Case: How Low-Level ",
          "Insider Could Steal from NSA” , USA Today , 12 June. Available ",
          "online at http://www.usatoday.com/story/news/nation/2013/06/11/",
@@ -82,7 +77,6 @@ parsed_refs <- c(
 )
 
 unparsed_citations <- c(
-  "Ouvrages cités",
   paste("Becker, Howard. 2010 [1982]. Les mondes de l’art. Paris, Flammarion",
         "(éd. orig. Art Worlds. Berkeley, The University of Califoria Press).")
 )
@@ -90,12 +84,34 @@ unparsed_citations <- c(
 
 test_that("extracting references works", {
   skip_on_os("windows")
-  expect_identical(result[["references"]], correct_refs)
-  expect_identical(jst_get_references(unparsed)[["references"]], unparsed_refs)
-  expect_identical(jst_get_references(unparsed_citation)[["references"]],
+  expect_identical(result[["unparsed_refs"]], correct_refs)
+  expect_identical(jst_get_references(unparsed)[["unparsed_refs"]], unparsed_refs)
+  expect_identical(jst_get_references(unparsed_citation)[["unparsed_refs"]],
                    unparsed_citations)
-  expect_identical(jst_get_references(parsed)[["references"]], parsed_refs)
+  expect_identical(jst_get_references(parsed)[["unparsed_refs"]], parsed_refs)
   expect_error(jst_get_references(unknown),
                paste("Unknown citation format in file",
                      "`testfiles/unknown-reference.xml`"))
+})
+
+# nolint start
+correct_parsed <- structure(
+  list(
+    file_name = c("references-parsed", "references-parsed",  "references-parsed"), 
+    ref_title = c("Notes", "References", "References" ),
+    authors = c(NA, "Acohido, B.; Eisler, P.", NA), 
+    collab = c(NA, NA, "Amnesty International"), 
+    title = c(NA, "“Snowden Case: How Low-Level Insider Could Steal from NSA”", 
+              NA), 
+    year = c("2005", "2013", "2013"), 
+    source = c(NA, "USA Today", 
+               "“USA: Revelations about Government Surveillance ‘raise red flags’”"),
+    unparsed_refs = c("1. The USA PATRIOT Act expanded the government's surveillance power in numerous other ways (see, e.g. Keenan 2005 ).", 
+                      "Acohido, B. and Eisler, P. ( 2013 ) “Snowden Case: How Low-Level Insider Could Steal from NSA” , USA Today , 12 June. Available online at http://www.usatoday.com/story/news/nation/2013/06/11/snowden-nsa-hacking-privileged-accounts/2412507/ (accessed 15 June 2013).", 
+                      "Amnesty International ( 2013 ) “USA: Revelations about Government Surveillance ‘raise red flags’” , 7 June. Available online at http://www.amnesty.org/en/news/usa-revelations-about-government-surveillance-raise-red-flags-2013–06–07 (accessed 14 June 2013).")), 
+  class = c("tbl_df", "tbl", "data.frame"), row.names = c(NA, -3L))
+# nolint end
+
+test_that("parsing references works", {
+  expect_identical(correct_parsed, jst_get_references(parsed, parse_refs = T))
 })
