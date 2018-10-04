@@ -1,4 +1,5 @@
 # jstor 0.3.3.9000
+* Added option to parse references, if the information is available. #32
 
 # jstor 0.3.3
 
