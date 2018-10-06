@@ -278,3 +278,10 @@ test_that("files can be written to dir", {
 test_that("files are removed", {
   
 })
+
+
+test_that("only .csv files can be reimported", {
+  expect_equal(tools::file_ext(jstor::jst_re_import("testfiles/re-import/wi_col_book_chapter_jst_get_book-1.csv",warn = FALSE)),"csv")
+})
+
+
