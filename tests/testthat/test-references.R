@@ -94,6 +94,14 @@ test_that("extracting references works", {
                      "`testfiles/unknown-reference.xml`"))
 })
 
+test_that("extracting only the title works", {
+  expect_equal(result_empty[["ref_title"]], NA_character_)
+  expect_equal(result[["ref_title"]],
+               c("Bibliography: Entamoeba ranarumn",
+                 "Bibliography: Entamoeba ranarumn",
+                 "References: Leptotheca ohilmacheri"))
+})
+
 # nolint start
 correct_parsed <- structure(
   list(
