@@ -2,6 +2,8 @@
 * Added option to parse references, if the information is available. #32
 * Example files have been renamed for clarity. `sample_` has been replaced with
 `article_` or removed altogether.
+* Reworked internals for catching misspecifications in `jst_define_import` due 
+to upcoming release of `rlang v0.3.0`.
 
 # jstor 0.3.3
 

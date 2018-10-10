@@ -139,20 +139,30 @@ jst_define_import <- function(...) {
                               fun_names = fun_names, chunk_number = 1) %>% 
     dplyr::left_join(correct_types, by = "meta_type") 
   
-  evaluation <- rlang::catch_cnd(
+  
+  tryCatch(
+    book_function_for_article = function(cnd) {
+      abort(paste0(
+        "Your import specification seems to be incorrect, since you are using ",
+        "a book function on an article. Please make sure ",
+        "that all import functions correspond to the right data type."),
+        type = "import_spec")
+      },
+    article_function_for_book = function(cnd) {
+      abort(paste0(
+        "Your import specification seems to be incorrect, since you are using ",
+        "an article function on a book. Please make sure ",
+        "that all import functions correspond to the right data type."),
+        type = "import_spec")
+    },
     matched_types %>% 
-        split(.$meta_type) %>% 
-        purrr::map(walk_spec, n_batches = 1,
-                    chunk_number = 1, out_path = "",
-                    show_progress = FALSE, col_names = "",
-                    test_mode = T)
-  )
- 
-  if (!is.null(evaluation) && "error" %in% attr(evaluation, "class")) {
-    stop("Your import specification seems to be incorrect. Please make sure ",
-         "that all import functions correspond to the right data type.",
-         call. = FALSE)
-  }
+      split(.$meta_type) %>% 
+      purrr::map(walk_spec, n_batches = 1,
+                 chunk_number = 1, out_path = "",
+                 show_progress = FALSE, col_names = "",
+                 test_mode = T)
+    )
+  
  
  
   
