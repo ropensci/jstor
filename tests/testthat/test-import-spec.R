@@ -15,6 +15,7 @@ test_that("jst_define_import validates input", {
   expect_silent(jst_define_import(article = c(jst_get_article, jst_get_authors)))
   
   expect_error(jst_define_import(article = jst_get_book))
+  expect_error(jst_define_import(book = jst_get_article))
   expect_error(jst_define_import(article = c(jst_get_article, jst_get_book),
                                  pamphlet = jst_get_article))
   
