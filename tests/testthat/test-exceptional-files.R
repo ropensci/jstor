@@ -1,7 +1,6 @@
+context("exceptional-files")
 library(xml2)
 library(magrittr)
-context("exceptional-files")
-
 
 # import files
 result <- "testfiles/standard_case.xml" %>%

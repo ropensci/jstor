@@ -1,5 +1,5 @@
-library(readr)
 context("writing-to-file")
+library(readr)
 
 paths <- c("testfiles/standard_case.xml", "broken_path.txt")
 

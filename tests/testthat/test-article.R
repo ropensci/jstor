@@ -1,7 +1,6 @@
+context("meta-information")
 library(xml2)
 library(magrittr)
-context("meta-information")
-
 
 # import files -----
 result <- "testfiles/standard_case.xml" %>%
