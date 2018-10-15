@@ -203,7 +203,8 @@ jst_re_import <- function(file, warn = TRUE) {
       book = 13L,
       chapter = 9L,
       chapter_w_authors = 15L,
-      ngram = 3L
+      ngram = 3L,
+      references  = 8L
     ) %>% 
       purrr::map_lgl(identical, length(sample_row))
     
@@ -224,15 +225,19 @@ jst_re_import <- function(file, warn = TRUE) {
                col_names = names(chapter_w_authors$cols)
              ),
              ngram = read_csv(file, col_types = ngram_cols,
-                              col_names = names(ngram_cols$cols)))
+                              col_names = names(ngram_cols$cols)),
+             references = read_csv(file, col_types = references_cols,
+                                   col_names = names(reference_cols$cols)))
     } else {
       # try to guess which type our source file is.
       # only looking at the first row might lead to errors, but there is only so
       # much we can do to try guessing the type.
-      if (any(str_detect(sample_row, "Referen.*|Biblio.*|Endnote.*"))) {
+      if (any(str_detect(stringr::str_to_lower(sample_row),
+                         "referen.*|biblio.*|endnote.*"))) {
         read_csv(file, col_types = reference_cols,
                  col_names = names(reference_cols$cols))
-      } else if (any(str_detect(sample_row, "Footnote.*"))) {
+      } else if (any(stringr::str_detect(str_to_lower(sample_row),
+                                         "footnote.*"))) {
         read_csv(file, col_types = footnote_cols,
                  col_names = names(footnote_cols$cols))
       } else {
