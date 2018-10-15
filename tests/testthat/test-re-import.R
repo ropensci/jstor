@@ -293,7 +293,12 @@ test_that("reimporting checks inputs", {
     "You must specify")
   
   expect_error(jst_combine_outputs("abc"), "'abc' does not exist in current")
-  expect_error(jst_combine_outputs(tempdir()), "There are no files")
+
+  
+  new_dir <- tempdir()
+  dir.create(file.path(new_dir, "obiwan"))
+  expect_error(jst_combine_outputs(file.path(new_dir, "obiwan")), 
+               "There are no files")
 })
 
 
