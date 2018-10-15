@@ -287,7 +287,7 @@ test_that("only .csv files can be reimported", {
 
 test_that("reimporting checks inputs", {
   expect_error(
-    jst_combine_outputs(list.files("tests/testthat/testfiles/re-import/", 
+    jst_combine_outputs(list.files("testfiles/re-import/", 
                              full.names = T),
                   out_path = NULL),
     "You must specify")
