@@ -82,14 +82,6 @@ jst_combine_outputs <- function(path, write_to_file = TRUE,
     }
   }
   
-  if (write_to_file) {
-    if (any(file.exists(out_path)) && !overwrite) {
-      abort(paste0("The file(s) `", paste0(out_path, collapse = "`, `"),
-                   "` already exists. Do you want",
-                   " `overwrite = TRUE`?"))
-    }
-  }
-  
   
   splitted_paths <- tibble::tibble(files = files) %>% 
     mutate(group = stringr::str_remove(files, "-\\d+\\.csv$")) %>% 
@@ -111,22 +103,30 @@ jst_combine_outputs <- function(path, write_to_file = TRUE,
     write_csv(x, path = path)
   }
   
-  re_imported <- purrr::map(splitted_paths, reader)
-  
+
   if (write_to_file) {
+    # create out-path
     if (is.null(out_path)) {
       out_path <- file.path(path, paste0("combined_",
-                                          basename(names(splitted_paths)),
-                                          ".csv"))
+                                         basename(names(splitted_paths)),
+                                         ".csv"))
     } else {
       out_path <- file.path(out_path, paste0("combined_",
-                                              basename(names(splitted_paths)), 
-                                              ".csv"))
+                                             basename(names(splitted_paths)), 
+                                             ".csv"))
     }
+    
+    if (any(file.exists(out_path)) && !overwrite) {
+      abort(paste0("The file(s) `", paste0(out_path, collapse = "`, `"),
+                   "` already exists. Do you want",
+                   " `overwrite = TRUE`?"))
+    }
+    
+    re_imported <- purrr::map(splitted_paths, reader)
     
     purrr::walk2(re_imported, out_path, writer)
   } else {
-    return(re_imported)
+    purrr::map(splitted_paths, reader)
   }
 
   if (clean_up) {
@@ -177,7 +177,8 @@ jst_re_import <- function(file, warn = TRUE) {
     chapter_w_authors = names(chapter_w_authors$cols),
     footnotes = names(footnote_cols$cols),
     references = names(reference_cols$cols),
-    ngram = names(ngram_cols$cols)
+    ngram = names(ngram_cols$cols),
+    error = names(error_cols$cols)
   ) %>% 
     purrr::map_lgl(identical, sample_row)
   
@@ -191,7 +192,8 @@ jst_re_import <- function(file, warn = TRUE) {
            chapter_w_authors = read_csv(file, col_types = chapter_w_authors),
            footnotes = read_csv(file, col_types = footnote_cols),
            references = read_csv(file, col_types = reference_cols),
-           ngram = read_csv(file, col_types = ngram_cols))
+           ngram = read_csv(file, col_types = ngram_cols),
+           error = read_csv(file, col_types = error_cols))
   } else {
     # match by column length
     matches <- c(
@@ -350,11 +352,22 @@ footnote_cols <- cols(
 )
 reference_cols <- cols(
   file_name = col_character(),
-  references = col_character()
+  ref_title = col_character(),
+  authors = col_character(), 
+  collab = col_character(),
+  title = col_character(),
+  year = col_character(),
+  source = col_character(),
+  unparsed_refs = col_character()
 )
 
 ngram_cols <- cols(
   file_name = col_character(),
   ngram = col_character(),
   n = col_integer()
+)
+
+error_cols <- cols(
+  id = col_integer(),
+  error_message = col_character()
 )
