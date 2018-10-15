@@ -1,5 +1,6 @@
 # jstor 0.3.3.9000
 * Added option to parse references, if the information is available. #32
+* Output from error messages is "re-imported" properly as well.
 * Example files have been renamed for clarity. `sample_` has been replaced with
 `article_` or removed altogether.
 * Reworked internals for catching misspecifications in `jst_define_import` due 
