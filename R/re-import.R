@@ -126,7 +126,7 @@ jst_combine_outputs <- function(path, write_to_file = TRUE,
     
     purrr::walk2(re_imported, out_path, writer)
   } else {
-    purrr::map(splitted_paths, reader)
+    return(purrr::map(splitted_paths, reader))
   }
 
   if (clean_up) {
