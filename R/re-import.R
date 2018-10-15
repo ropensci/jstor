@@ -228,7 +228,7 @@ jst_re_import <- function(file, warn = TRUE) {
              ),
              ngram = read_csv(file, col_types = ngram_cols,
                               col_names = names(ngram_cols$cols)),
-             references = read_csv(file, col_types = references_cols,
+             references = read_csv(file, col_types = reference_cols,
                                    col_names = names(reference_cols$cols)))
     } else {
       # try to guess which type our source file is.
