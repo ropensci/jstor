@@ -236,8 +236,10 @@ jst_re_import <- function(file, warn = TRUE) {
       # much we can do to try guessing the type.
       if (any(str_detect(stringr::str_to_lower(sample_row),
                          "referen.*|biblio.*|endnote.*"))) {
-        read_csv(file, col_types = reference_cols,
-                 col_names = names(reference_cols$cols))
+        # we can be sure here, that we have the old format for references, since
+        # the new format has 8 columns
+        read_csv(file, col_types = reference_cols_old,
+                 col_names = names(reference_cols_old$cols))
       } else if (any(str_detect(stringr::str_to_lower(sample_row),
                                          "footnote.*"))) {
         read_csv(file, col_types = footnote_cols,
