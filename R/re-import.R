@@ -82,6 +82,14 @@ jst_combine_outputs <- function(path, write_to_file = TRUE,
     }
   }
   
+  if (write_to_file) {
+    if (any(file.exists(out_path)) && !overwrite) {
+      abort(paste0("The file(s) `", paste0(out_path, collapse = "`, `"),
+                   "` already exists. Do you want",
+                   " `overwrite = TRUE`?"))
+    }
+  }
+  
   
   splitted_paths <- tibble::tibble(files = files) %>% 
     mutate(group = stringr::str_remove(files, "-\\d+\\.csv$")) %>% 
@@ -114,12 +122,6 @@ jst_combine_outputs <- function(path, write_to_file = TRUE,
       out_path <- file.path(out_path, paste0("combined_",
                                               basename(names(splitted_paths)), 
                                               ".csv"))
-    }
-    
-    if (any(file.exists(out_path)) && !overwrite) {
-      abort(paste0("The file(s) `", paste0(out_path, collapse = "`, `"),
-                   "` already exists. Do you want",
-                   " `overwrite = TRUE`?"))
     }
     
     purrr::walk2(re_imported, out_path, writer)
