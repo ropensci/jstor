@@ -285,4 +285,15 @@ test_that("only .csv files can be reimported", {
                "Only .csv-files which were generated")
 })
 
+test_that("reimporting checks inputs", {
+  expect_error(
+    jst_combine_outputs(list.files("tests/testthat/testfiles/re-import/", 
+                             full.names = T),
+                  out_path = NULL),
+    "You must specify")
+  
+  expect_error(jst_combine_outputs("abc"), "'abc' does not exist in current")
+  expect_error(jst_combine_outputs(tempdir()), "There are no files")
+})
+
 
