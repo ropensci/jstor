@@ -278,3 +278,10 @@ test_that("files can be written to dir", {
 test_that("files are removed", {
   
 })
+
+
+test_that("only .csv files can be reimported", {
+  expect_error(jst_re_import(jst_example("book.xml")), "Only .csv-files which were generated")
+})
+
+
