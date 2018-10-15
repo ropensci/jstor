@@ -177,6 +177,7 @@ jst_re_import <- function(file, warn = TRUE) {
     chapter_w_authors = names(chapter_w_authors$cols),
     footnotes = names(footnote_cols$cols),
     references = names(reference_cols$cols),
+    references_old = names(reference_cols_old$cols),
     ngram = names(ngram_cols$cols),
     error = names(error_cols$cols)
   ) %>% 
@@ -192,6 +193,7 @@ jst_re_import <- function(file, warn = TRUE) {
            chapter_w_authors = read_csv(file, col_types = chapter_w_authors),
            footnotes = read_csv(file, col_types = footnote_cols),
            references = read_csv(file, col_types = reference_cols),
+           references_old = read_csv(file, col_types = reference_cols_old),
            ngram = read_csv(file, col_types = ngram_cols),
            error = read_csv(file, col_types = error_cols))
   } else {
@@ -236,7 +238,7 @@ jst_re_import <- function(file, warn = TRUE) {
                          "referen.*|biblio.*|endnote.*"))) {
         read_csv(file, col_types = reference_cols,
                  col_names = names(reference_cols$cols))
-      } else if (any(stringr::str_detect(str_to_lower(sample_row),
+      } else if (any(str_detect(stringr::str_to_lower(sample_row),
                                          "footnote.*"))) {
         read_csv(file, col_types = footnote_cols,
                  col_names = names(footnote_cols$cols))
@@ -354,6 +356,10 @@ chapter_w_authors <- cols(
 footnote_cols <- cols(
   file_name = col_character(),
   footnotes = col_character()
+)
+reference_cols_old <- cols(
+  file_name = col_character(),
+  references = col_character()
 )
 reference_cols <- cols(
   file_name = col_character(),
