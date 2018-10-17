@@ -19,13 +19,53 @@
                   <italic>USA Today</italic>
                </source>, 12 June. Available online at<ext-link xmlns:xlink="http://www.w3.org/1999/xlink"
                          ext-link-type="uri"
-                         xlink:href="http://www.usatoday.com/story/news/nation/2013/06/11/snowden-nsa-hacking-privileged-accounts/2412507/">http://www.usatoday.com/story/news/nation/2013/06/11/snowden-nsa-hacking-privileged-accounts/2412507/</ext-link>(accessed 15 June 2013).</mixed-citation>
+                         xlink:href="http://www.google.com">http://www.google.com</ext-link>(accessed 15 June 2013).</mixed-citation>
          </ref>
          <ref id="ref4">
             <mixed-citation publication-type="other">
                <collab>Amnesty International</collab>(<year>2013</year>)<source>“USA: Revelations about Government Surveillance ‘raise red flags’”</source>, 7 June. Available online at<ext-link xmlns:xlink="http://www.w3.org/1999/xlink"
                          ext-link-type="uri"
-                         xlink:href="http://www.amnesty.org/en/news/usa-revelations-about-government-surveillance-raise-red-flags-2013-06-07">http://www.amnesty.org/en/news/usa-revelations-about-government-surveillance-raise-red-flags-2013–06–07</ext-link>(accessed 14 June 2013).</mixed-citation>
+                         xlink:href="http://www.google.com">http://www.google.com</ext-link>(accessed 14 June 2013).</mixed-citation>
+         </ref>
+         <ref id="ref27">
+            <mixed-citation publication-type="book">
+               <person-group person-group-type="author">
+                  <string-name>Jacobson, D.</string-name>
+               </person-group>,<year>2009</year>.<article-title>Chapter title</article-title>. In:<person-group person-group-type="editor">
+                  <string-name>D. E. Davis</string-name>
+               </person-group>&amp;<person-group person-group-type="editor">
+                  <string-name>J. Go</string-name>
+               </person-group>, eds.<source>
+                  <italic>Book title</italic>
+               </source>.:<publisher-name>Routledge</publisher-name>, pp.<fpage>281</fpage>-<lpage>286</lpage>.</mixed-citation>
+         </ref>
+         <ref id="ref9">
+            <mixed-citation publication-type="journal">
+               <string-name>Costall, Alan</string-name>(<year>1980</year>).<article-title>“Some article title”</article-title>
+               <source>
+                  <italic>Theory and Psychology</italic>
+               </source>
+               <volume>1</volume>:<fpage>123</fpage>–<lpage>145</lpage>.</mixed-citation>
+         </ref>
+        <ref id="ref25">
+            <mixed-citation publication-type="journal">
+               <person-group person-group-type="author">
+                  <string-name>Hudson, W.</string-name>
+               </person-group>,<year>2000</year>.<article-title>Another article title</article-title>.<source>
+                  <italic>Australian Journal of Cats &amp; Dogs</italic>
+               </source>,<month>September</month>,<volume>40</volume>(<issue>3</issue>), p.<fpage>134</fpage>–<lpage>150</lpage>.</mixed-citation>
+         </ref>
+         <ref id="ref9">
+            <mixed-citation publication-type="journal">
+               <person-group person-group-type="author">
+                  <string-name xmlns:xlink="http://www.w3.org/1999/xlink">
+                     <surname>Fries-Britt</surname>
+                     <given-names>S.</given-names>
+                  </string-name>, &amp;<string-name xmlns:xlink="http://www.w3.org/1999/xlink">
+                     <surname>Griffin</surname>
+                     <given-names>K.A.</given-names>
+                  </string-name>
+               </person-group>(<year>2000</year>).<article-title>Some article about race</article-title>.<source>Journal of College Student Fun</source>,<volume>20</volume>,<fpage>60</fpage>–<lpage>120</lpage>.</mixed-citation>
          </ref>
       </ref-list>
    </back>
