@@ -137,6 +137,7 @@ parse_references <- function(ref_list) {
         title = extract_first(., ".//article-title"),
         year = extract_all(., ".//year"),
         source = extract_first(., ".//source"),
+        publication_type = extract_child(., "mixed-citation/@publication-type"),
         unparsed_refs = collapse_text(.)
       )
     }) %>% 
