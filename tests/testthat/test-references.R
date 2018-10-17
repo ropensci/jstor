@@ -83,8 +83,8 @@ unparsed_refs <- c(
 
 
 parsed_refs <-  c("The USA PATRIOT Act expanded the government's surveillance power in numerous other ways (see, e.g. Keenan 2005 ).", 
-                  "Acohido, B. and Eisler, P. ( 2013 ) “Snowden Case: How Low-Level Insider Could Steal from NSA” , USA Today , 12 June. Available online at http://www.usatoday.com/story/news/nation/2013/06/11/snowden-nsa-hacking-privileged-accounts/2412507/ (accessed 15 June 2013).", 
-                  "Amnesty International ( 2013 ) “USA: Revelations about Government Surveillance ‘raise red flags’” , 7 June. Available online at http://www.amnesty.org/en/news/usa-revelations-about-government-surveillance-raise-red-flags-2013–06–07 (accessed 14 June 2013).", 
+                  "Acohido, B. and Eisler, P. ( 2013 ) “Snowden Case: How Low-Level Insider Could Steal from NSA” , USA Today , 12 June. Available online at http://www.google.com (accessed 15 June 2013).", 
+                  "Amnesty International ( 2013 ) “USA: Revelations about Government Surveillance ‘raise red flags’” , 7 June. Available online at http://www.google.com (accessed 14 June 2013).", 
                   "Jacobson, D. , 2009 . Chapter title . In: D. E. Davis & J. Go , eds. Book title .: Routledge , pp. 281 - 286 .", 
                   "Costall, Alan ( 1980 ). “Some article title” Theory and Psychology 1 : 123 – 145 .", 
                   "Hudson, W. , 2000 . Another article title . Australian Journal of Cats & Dogs , September , 40 ( 3 ), p. 134 – 150 .", 
@@ -123,8 +123,8 @@ correct_parsed <- structure(
     publication_type = c("other", "other", "other", "book", 
                          "journal", "journal", "journal"), 
     unparsed_refs = c("1. The USA PATRIOT Act expanded the government's surveillance power in numerous other ways (see, e.g. Keenan 2005 ).", 
-                      "Acohido, B. and Eisler, P. ( 2013 ) “Snowden Case: How Low-Level Insider Could Steal from NSA” , USA Today , 12 June. Available online at http://www.usatoday.com/story/news/nation/2013/06/11/snowden-nsa-hacking-privileged-accounts/2412507/ (accessed 15 June 2013).", 
-                      "Amnesty International ( 2013 ) “USA: Revelations about Government Surveillance ‘raise red flags’” , 7 June. Available online at http://www.amnesty.org/en/news/usa-revelations-about-government-surveillance-raise-red-flags-2013–06–07 (accessed 14 June 2013).", 
+                      "Acohido, B. and Eisler, P. ( 2013 ) “Snowden Case: How Low-Level Insider Could Steal from NSA” , USA Today , 12 June. Available online at http://www.google.com (accessed 15 June 2013).", 
+                      "Amnesty International ( 2013 ) “USA: Revelations about Government Surveillance ‘raise red flags’” , 7 June. Available online at http://www.google.com (accessed 14 June 2013).", 
                       "Jacobson, D. , 2009 . Chapter title . In: D. E. Davis & J. Go , eds. Book title .: Routledge , pp. 281 - 286 .", 
                       "Costall, Alan ( 1980 ). “Some article title” Theory and Psychology 1 : 123 – 145 .", 
                       "Hudson, W. , 2000 . Another article title . Australian Journal of Cats & Dogs , September , 40 ( 3 ), p. 134 – 150 .", 
