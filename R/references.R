@@ -26,11 +26,19 @@
 #' - `file_name`: the identifier for the article the references come from.
 #' - `ref_title`: the title of the references sections.
 #' - `authors`: a string of authors. Several authors are separated with `;`.
+#' - `editors`: a string of editors, if available.
 #' - `collab`: a field that may contain information on the authors, if authors
 #'             are not available.
-#' - `title`: the title of the cited entry.
+#' - `title`: the title of the cited entry. For books this is often empty, with
+#'    the title being in `source`.
 #' - `year`: a year, often the article's publication year, but not always. 
-#' - `source`: the source of the cited entry. Might be a publisher or similar
+#' - `source`: the source of the cited entry. For books often the title of the
+#'    book, for articles the publisher of the journal.
+#' - `volume`: the volume of the journal article.
+#' - `first_page`: the first page of the article/chapter.
+#' - `last_page`: the last page of the article/chapter.
+#' - `publisher`: For books the publisher, for articles often missing.
+#' - `publication_type`: Known types: `book`, `journal`, `web`, `other`.
 #' - `unparsed_refs`: The full references entry in unparsed form.
 #'
 #' @export
