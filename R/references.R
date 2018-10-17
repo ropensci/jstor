@@ -71,10 +71,16 @@ extract_references <- function(xml_file, file_path, parse_refs) {
     return(new_tibble(list(
       ref_title = NA_character_,
       authors = NA_character_,
+      editors = NA_character_,
       collab = NA_character_,
       title = NA_character_,
       year = NA_character_,
       source = NA_character_,
+      volume = NA_character_,
+      first_page = NA_character_,
+      last_page = NA_character_,
+      publisher = NA_character_,
+      publication_type = NA_character_,
       unparsed_refs = NA_character_
     )))
   }
@@ -212,6 +218,11 @@ ref_to_tibble <- function(refs, title) {
     title = rep(NA_character_, length(refs)),
     year = rep(NA_character_, length(refs)),
     source = rep(NA_character_, length(refs)),
+    volume = rep(NA_character_, length(refs)),
+    first_page = rep(NA_character_, length(refs)),
+    last_page = rep(NA_character_, length(refs)),
+    publisher = rep(NA_character_, length(refs)),
+    publication_type = rep(NA_character_, length(refs)),
     unparsed_refs = refs
   ))
 }
