@@ -170,15 +170,22 @@ We have two columns:
 - *file_name*: Identifier, can be used for matching.
 - *ref_title*: The title of the references sections.
 - *authors*: A string of authors. Several authors are separated with `;`.
+- *editors*: A string of editors, if present.
 - *collab*: A field that may contain information on the authors, if authors
             are not available.
 - *title*: The title of the cited entry.
 - *year*: A year, often the article's publication year, but not always. 
-- *source*: The source of the cited entry. Might be a publisher or similar
+- *source*: The source of the cited entry. For books often the title of the book,
+            for articles the publisher of the journal.
+- *volume*: The volume of the journal article.
+- *first_page*: The first page of the article/chapter.
+- *last_page*: The last page of the article/chapter.
+- *publisher*: For books the publisher, for articles often missing.
+- *publication_type*: Known types: book, journal, web, other.
 - *unparsed_refs*: The full references entry in unparsed form.
 
 
-Here I display the 5 random entries:
+Here I display 5 random entries:
 
 ```{r, echo=FALSE}
 set.seed(1234)
@@ -215,9 +222,6 @@ jst_get_references(
 ) %>% 
   kable()
 ```
-
-
-
 
 
 Note, that there might be other content present like endnotes, in case the
