@@ -78,7 +78,8 @@ extract_references <- function(xml_file, file_path, parse_refs) {
 
 
 extract_ref_content <- function(x, file_path, parse_refs) {
-  if (identical(xml2::xml_attr(x, "content-type"), "parsed-citations")) {
+  if (identical(xml2::xml_attr(x, "content-type"), "parsed-citations") ||
+      identical(xml2::xml_attr(x, "content-type"), "references")) {
     if (parse_refs) {
       parse_references(x)
     } else {
