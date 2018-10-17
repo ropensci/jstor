@@ -206,7 +206,7 @@ jst_re_import <- function(file, warn = TRUE) {
       chapter = 9L,
       chapter_w_authors = 15L,
       ngram = 3L,
-      references  = 8L
+      references  = 14L
     ) %>% 
       purrr::map_lgl(identical, length(sample_row))
     
@@ -367,10 +367,16 @@ reference_cols <- cols(
   file_name = col_character(),
   ref_title = col_character(),
   authors = col_character(), 
+  editors = col_character(),
   collab = col_character(),
   title = col_character(),
   year = col_character(),
   source = col_character(),
+  volume = col_character(),
+  first_page = col_character(),
+  last_page = col_character(),
+  publisher = col_character(),
+  publication_type = col_character(),
   unparsed_refs = col_character()
 )
 

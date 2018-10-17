@@ -1,6 +1,6 @@
 context("test-re-import.R")
 
-# # prepare data
+# # # prepare data
 # jst_import_zip("inst/extdata/pseudo_dfr.zip", import_spec = jst_define_import(article = c(jst_get_article,
 #     jst_get_authors, jst_get_references, jst_get_footnotes), book = c(jst_get_book, jst_get_chapters),
 #     ngram1 = jst_get_ngram), out_path = "tests/testthat/testfiles/re-import/",
@@ -16,6 +16,7 @@ context("test-re-import.R")
 # new_names <- stringr::str_replace_all(files, "-1", "-2")
 # file.copy(files, new_names)
 # 
+# library(tidyverse)
 # # # create two separate files with references and footnotes in them
 # read_csv("tests/testthat/testfiles/re-import/wo_col_journal_article_jst_get_footnotes-1.csv",
 #          col_names = F) %>%
@@ -155,13 +156,42 @@ footnotes <- structure(list(file_name = "journal-article-standard_case", footnot
 footnotes_wi_cont <- structure(list(file_name = "journal-article-standard_case", footnotes = "Footnotes"), 
                        row.names = c(NA, -1L), class = c("tbl_df", "tbl", "data.frame"))
 # references ----
-references <- structure(list(file_name = "journal-article-standard_case", 
-    references = NA_character_), row.names = c(NA, -1L), class = c("tbl_df", 
+references <- structure(
+  list(
+    file_name = "journal-article-standard_case", 
+    ref_title = NA_character_,
+    authors = NA_character_,
+    editors = NA_character_,
+    collab = NA_character_,
+    title = NA_character_,
+    year = NA_character_,
+    source = NA_character_,
+    volume = NA_character_,
+    first_page = NA_character_,
+    last_page = NA_character_,
+    publisher = NA_character_,
+    publication_type = NA_character_,
+    unparsed_refs = NA_character_), row.names = c(NA, -1L), class = c("tbl_df", 
     "tbl", "data.frame"))
 
-references_wi_cont <- structure(list(file_name = "journal-article-standard_case", 
-                             references = "References"), row.names = c(NA, -1L), class = c("tbl_df", 
-                                                                                           "tbl", "data.frame"))
+references_wi_cont <- structure(
+  list(
+    file_name = "journal-article-standard_case", 
+    ref_title = "References",
+    authors = NA_character_,
+    editors = NA_character_,
+    collab = NA_character_,
+    title = NA_character_,
+    year = NA_character_,
+    source = NA_character_,
+    volume = NA_character_,
+    first_page = NA_character_,
+    last_page = NA_character_,
+    publisher = NA_character_,
+    publication_type = NA_character_,
+    unparsed_refs = NA_character_), 
+  row.names = c(NA, -1L), 
+  class = c("tbl_df", "tbl", "data.frame"))
 
 # ngrams -----
 ngram <- structure(list(file_name = c("book-chapter-standard_book", "book-chapter-standard_book"), 
@@ -231,6 +261,10 @@ test_that("files without column names can be re-read", {
       jst_re_import("testfiles/re-import/wo_col_journal_article_jst_get_references_wi_cont-1.csv"),
       references_wi_cont
     )
+    expect_equal(
+      jst_re_import("testfiles/re-import/wo_col_journal_article_jst_get_references-1.csv"),
+      references
+    )
     
 })
 
@@ -239,20 +273,12 @@ test_that("warnings are emitted, if no file is recognized", {
     jst_re_import("testfiles/re-import/wo_col_journal_article_jst_get_footnotes-1.csv"), 
     "Unable to distinguish"
   )
-  expect_warning(
-    jst_re_import("testfiles/re-import/wo_col_journal_article_jst_get_references-1.csv"), 
-    "Unable to distinguish"
-  )
   
   footnotes_unrecognized <- suppressWarnings(
     jst_re_import("testfiles/re-import/wo_col_journal_article_jst_get_footnotes-1.csv")
   )
-  references_unrecognized <- suppressWarnings(
-    jst_re_import("testfiles/re-import/wo_col_journal_article_jst_get_references-1.csv")
-  )
   
   expect_named(footnotes_unrecognized, c("X1", "X2"))
-  expect_named(references_unrecognized, c("X1", "X2"))
 })
 
 
