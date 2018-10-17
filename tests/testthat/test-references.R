@@ -22,6 +22,7 @@ unknown <- "testfiles/unknown-reference.xml"
 
 
 # definitions -----
+# nolint start
 standard_references <- structure(
   list(
     file_name = c("references", "references", "references"),
@@ -43,21 +44,6 @@ standard_references <- structure(
   class = c("tbl_df", "tbl", "data.frame"), row.names = c(NA, -3L))
 
 
-# tests -----
-test_that("Input data is checked", {
-  expect_error(jst_get_references("my_path.txt"))
-  expect_error(jst_get_references("testfiles/standard_book.xml"), "You are using")
-})
-
-test_that("class is correct", {
-  expect_s3_class(result, "tbl_df")
-})
-
-test_that("catching errors works", {
-  expect_silent(jst_get_references(unparsed))
-})
-
-
 no_references <- tibble::data_frame(
   file_name = "author-prefix",
   ref_title = NA_character_,
@@ -75,17 +61,7 @@ no_references <- tibble::data_frame(
   unparsed_refs = NA_character_
 )
 
-test_that("null results work", {
-  expect_identical(result_empty[["unparsed_refs"]], NA_character_)
-  expect_identical(jst_get_references(unparsed)[["unparsed_refs"]][1],
-                   NA_character_)
-  expect_identical(jst_get_references(half_empty)[["unparsed_refs"]],
-                   NA_character_)
-  expect_identical(jst_get_references("testfiles/author-prefix.xml"),
-                   no_references)
-})
 
-# nolint start
 correct_refs <- c(
   "DOBELL, C.C.
 1909 Researches on the intestinal Protozoa of frogs and toads. Quart. Jour. Micros.
@@ -96,7 +72,7 @@ mental study. Parasit., 10:294-310.",
 1920 Studies on Myxosporidia. A Synopsis of Genera and Species of Myxosporidia.
 ill. Biol. Monogr., 5:243-503, 25 pl. and 2 textfig."
 )
-# nolint end
+
 
 unparsed_refs <- c(
   NA_character_,
@@ -105,7 +81,7 @@ unparsed_refs <- c(
   NA_character_
 )
 
-# nolint start
+
 parsed_refs <-  c("The USA PATRIOT Act expanded the government's surveillance power in numerous other ways (see, e.g. Keenan 2005 ).", 
                   "Acohido, B. and Eisler, P. ( 2013 ) “Snowden Case: How Low-Level Insider Could Steal from NSA” , USA Today , 12 June. Available online at http://www.usatoday.com/story/news/nation/2013/06/11/snowden-nsa-hacking-privileged-accounts/2412507/ (accessed 15 June 2013).", 
                   "Amnesty International ( 2013 ) “USA: Revelations about Government Surveillance ‘raise red flags’” , 7 June. Available online at http://www.amnesty.org/en/news/usa-revelations-about-government-surveillance-raise-red-flags-2013–06–07 (accessed 14 June 2013).", 
@@ -113,7 +89,7 @@ parsed_refs <-  c("The USA PATRIOT Act expanded the government's surveillance po
                   "Costall, Alan ( 1980 ). “Some article title” Theory and Psychology 1 : 123 – 145 .", 
                   "Hudson, W. , 2000 . Another article title . Australian Journal of Cats & Dogs , September , 40 ( 3 ), p. 134 – 150 .", 
                   "Fries-Britt S. , & Griffin K.A. ( 2000 ). Some article about race . Journal of College Student Fun , 20 , 60 – 120 .")
-# nolint end
+
 
 unparsed_citations <- c(
   paste("Becker, Howard. 2010 [1982]. Les mondes de l’art. Paris, Flammarion",
@@ -121,35 +97,6 @@ unparsed_citations <- c(
 )
 
 
-test_that("standard references work", {
-  expect_identical(result, standard_references)
-})
-
-
-
-
-test_that("extracting references works", {
-  skip_on_os("windows")
-  expect_identical(result[["unparsed_refs"]], correct_refs)
-  expect_identical(jst_get_references(unparsed)[["unparsed_refs"]], unparsed_refs)
-  expect_identical(jst_get_references(unparsed_citation)[["unparsed_refs"]],
-                   unparsed_citations)
-  expect_identical(jst_get_references(parsed)[["unparsed_refs"]], parsed_refs)
-  expect_error(jst_get_references(unknown),
-               paste("Unknown citation format in file",
-                     "`testfiles/unknown-reference.xml`"))
-})
-
-test_that("extracting only the title works", {
-  expect_equal(result_empty[["ref_title"]], NA_character_)
-  expect_equal(result[["ref_title"]],
-               c("Bibliography: Entamoeba ranarumn",
-                 "Bibliography: Entamoeba ranarumn",
-                 "References: Leptotheca ohilmacheri"))
-})
-
-
-# nolint start
 correct_parsed <- structure(
   list(
     file_name = c("references-parsed", "references-parsed", "references-parsed",
@@ -174,7 +121,7 @@ correct_parsed <- structure(
     last_page = c(NA, NA, NA, "286", "145", "150", "120"), 
     publisher = c(NA, NA, NA, "Routledge", NA, NA, NA), 
     publication_type = c("other", "other", "other", "book", 
-                        "journal", "journal", "journal"), 
+                         "journal", "journal", "journal"), 
     unparsed_refs = c("1. The USA PATRIOT Act expanded the government's surveillance power in numerous other ways (see, e.g. Keenan 2005 ).", 
                       "Acohido, B. and Eisler, P. ( 2013 ) “Snowden Case: How Low-Level Insider Could Steal from NSA” , USA Today , 12 June. Available online at http://www.usatoday.com/story/news/nation/2013/06/11/snowden-nsa-hacking-privileged-accounts/2412507/ (accessed 15 June 2013).", 
                       "Amnesty International ( 2013 ) “USA: Revelations about Government Surveillance ‘raise red flags’” , 7 June. Available online at http://www.amnesty.org/en/news/usa-revelations-about-government-surveillance-raise-red-flags-2013–06–07 (accessed 14 June 2013).", 
@@ -183,7 +130,56 @@ correct_parsed <- structure(
                       "Hudson, W. , 2000 . Another article title . Australian Journal of Cats & Dogs , September , 40 ( 3 ), p. 134 – 150 .", 
                       "Fries-Britt S. , & Griffin K.A. ( 2000 ). Some article about race . Journal of College Student Fun , 20 , 60 – 120 .")),
   class = c("tbl_df", "tbl", "data.frame"), row.names = c(NA, -7L))
+
 # nolint end
+# tests -----
+test_that("Input data is checked", {
+  expect_error(jst_get_references("my_path.txt"))
+  expect_error(jst_get_references("testfiles/standard_book.xml"), "You are using")
+})
+
+test_that("class is correct", {
+  expect_s3_class(result, "tbl_df")
+})
+
+test_that("catching errors works", {
+  expect_silent(jst_get_references(unparsed))
+})
+
+test_that("null results work", {
+  expect_identical(result_empty[["unparsed_refs"]], NA_character_)
+  expect_identical(jst_get_references(unparsed)[["unparsed_refs"]][1],
+                   NA_character_)
+  expect_identical(jst_get_references(half_empty)[["unparsed_refs"]],
+                   NA_character_)
+  expect_identical(jst_get_references("testfiles/author-prefix.xml"),
+                   no_references)
+})
+
+test_that("standard references work", {
+  expect_identical(result, standard_references)
+})
+
+test_that("extracting references works", {
+  skip_on_os("windows")
+  expect_identical(result[["unparsed_refs"]], correct_refs)
+  expect_identical(jst_get_references(unparsed)[["unparsed_refs"]], unparsed_refs)
+  expect_identical(jst_get_references(unparsed_citation)[["unparsed_refs"]],
+                   unparsed_citations)
+  expect_identical(jst_get_references(parsed)[["unparsed_refs"]], parsed_refs)
+  expect_error(jst_get_references(unknown),
+               paste("Unknown citation format in file",
+                     "`testfiles/unknown-reference.xml`"))
+})
+
+test_that("extracting only the title works", {
+  expect_equal(result_empty[["ref_title"]], NA_character_)
+  expect_equal(result[["ref_title"]],
+               c("Bibliography: Entamoeba ranarumn",
+                 "Bibliography: Entamoeba ranarumn",
+                 "References: Leptotheca ohilmacheri"))
+})
+
 
 test_that("parsing references works", {
   expect_identical(correct_parsed, jst_get_references(parsed, parse_refs = T))
