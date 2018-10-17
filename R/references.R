@@ -130,7 +130,8 @@ parse_references <- function(ref_list) {
     xml_find_all("ref") %>% 
     map(~{
       list(
-        authors = extract_all(., ".//string-name"),
+        authors = extract_all(., ".//person-group[@person-group-type='author']"),
+        editors = extract_all(., ".//person-group[@person-group-type='editor']"),
         collab = extract_all(., ".//collab"),
         title = extract_first(., ".//article-title"),
         year = extract_all(., ".//year"),
