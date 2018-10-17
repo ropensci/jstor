@@ -62,19 +62,15 @@ unparsed_refs <- c(
   NA_character_
 )
 
-parsed_refs <- c(
-  paste("The USA PATRIOT Act expanded the government's surveillance power in",
-        "numerous other ways (see, e.g. Keenan 2005 )."),
-  paste0("Acohido, B. and Eisler, P. ( 2013 ) “Snowden Case: How Low-Level ",
-         "Insider Could Steal from NSA” , USA Today , 12 June. Available ",
-         "online at http://www.usatoday.com/story/news/nation/2013/06/11/",
-         "snowden-nsa-hacking-privileged-accounts/2412507/ ",
-         "(accessed 15 June 2013)."),
-  paste0("Amnesty International ( 2013 ) “USA: Revelations about Government ",
-         "Surveillance ‘raise red flags’” , 7 June. Available online at ",
-         "http://www.amnesty.org/en/news/usa-revelations-about-government-",
-         "surveillance-raise-red-flags-2013–06–07 (accessed 14 June 2013).")
-)
+# nolint start
+parsed_refs <-  c("The USA PATRIOT Act expanded the government's surveillance power in numerous other ways (see, e.g. Keenan 2005 ).", 
+                  "Acohido, B. and Eisler, P. ( 2013 ) “Snowden Case: How Low-Level Insider Could Steal from NSA” , USA Today , 12 June. Available online at http://www.usatoday.com/story/news/nation/2013/06/11/snowden-nsa-hacking-privileged-accounts/2412507/ (accessed 15 June 2013).", 
+                  "Amnesty International ( 2013 ) “USA: Revelations about Government Surveillance ‘raise red flags’” , 7 June. Available online at http://www.amnesty.org/en/news/usa-revelations-about-government-surveillance-raise-red-flags-2013–06–07 (accessed 14 June 2013).", 
+                  "Jacobson, D. , 2009 . Chapter title . In: D. E. Davis & J. Go , eds. Book title .: Routledge , pp. 281 - 286 .", 
+                  "Costall, Alan ( 1980 ). “Some article title” Theory and Psychology 1 : 123 – 145 .", 
+                  "Hudson, W. , 2000 . Another article title . Australian Journal of Cats & Dogs , September , 40 ( 3 ), p. 134 – 150 .", 
+                  "Fries-Britt S. , & Griffin K.A. ( 2000 ). Some article about race . Journal of College Student Fun , 20 , 60 – 120 .")
+# nolint end
 
 unparsed_citations <- c(
   paste("Becker, Howard. 2010 [1982]. Les mondes de l’art. Paris, Flammarion",
@@ -102,22 +98,41 @@ test_that("extracting only the title works", {
                  "References: Leptotheca ohilmacheri"))
 })
 
+
 # nolint start
 correct_parsed <- structure(
   list(
-    file_name = c("references-parsed", "references-parsed",  "references-parsed"), 
-    ref_title = c("Notes", "References", "References" ),
-    authors = c(NA, "Acohido, B.; Eisler, P.", NA), 
-    collab = c(NA, NA, "Amnesty International"), 
+    file_name = c("references-parsed", "references-parsed", "references-parsed",
+                  "references-parsed", "references-parsed", "references-parsed", 
+                  "references-parsed"), 
+    ref_title = c("Notes", "References", "References", "References", 
+                  "References", "References", "References"), 
+    authors = c(NA, "Acohido, B.; Eisler, P.", NA, "Jacobson, D.",
+                "Costall, Alan", "Hudson, W.", "Fries-Britt, S.; Griffin, K.A."),
+    editors = c(NA, NA, NA, "D. E. Davis; J. Go", NA, NA, NA), 
+    collab = c(NA, NA, "Amnesty International", NA, NA, NA, NA),
     title = c(NA, "“Snowden Case: How Low-Level Insider Could Steal from NSA”", 
-              NA), 
-    year = c("2005", "2013", "2013"), 
+              NA, "Chapter title", "“Some article title”", "Another article title", 
+              "Some article about race"), 
+    year = c("2005", "2013", "2013", "2009", "1980", "2000", "2000"), 
     source = c(NA, "USA Today", 
-               "“USA: Revelations about Government Surveillance ‘raise red flags’”"),
+               "“USA: Revelations about Government Surveillance ‘raise red flags’”", 
+               "Book title", "Theory and Psychology", "Australian Journal of Cats & Dogs", 
+               "Journal of College Student Fun"), 
+    volume = c(NA, NA, NA, NA, "1", "40", "20"), 
+    first_page = c(NA, NA, NA, "281", "123", "134", "60"), 
+    last_page = c(NA, NA, NA, "286", "145", "150", "120"), 
+    publisher = c(NA, NA, NA, "Routledge", NA, NA, NA), 
+    publication_type = c("other", "other", "other", "book", 
+                        "journal", "journal", "journal"), 
     unparsed_refs = c("1. The USA PATRIOT Act expanded the government's surveillance power in numerous other ways (see, e.g. Keenan 2005 ).", 
                       "Acohido, B. and Eisler, P. ( 2013 ) “Snowden Case: How Low-Level Insider Could Steal from NSA” , USA Today , 12 June. Available online at http://www.usatoday.com/story/news/nation/2013/06/11/snowden-nsa-hacking-privileged-accounts/2412507/ (accessed 15 June 2013).", 
-                      "Amnesty International ( 2013 ) “USA: Revelations about Government Surveillance ‘raise red flags’” , 7 June. Available online at http://www.amnesty.org/en/news/usa-revelations-about-government-surveillance-raise-red-flags-2013–06–07 (accessed 14 June 2013).")), 
-  class = c("tbl_df", "tbl", "data.frame"), row.names = c(NA, -3L))
+                      "Amnesty International ( 2013 ) “USA: Revelations about Government Surveillance ‘raise red flags’” , 7 June. Available online at http://www.amnesty.org/en/news/usa-revelations-about-government-surveillance-raise-red-flags-2013–06–07 (accessed 14 June 2013).", 
+                      "Jacobson, D. , 2009 . Chapter title . In: D. E. Davis & J. Go , eds. Book title .: Routledge , pp. 281 - 286 .", 
+                      "Costall, Alan ( 1980 ). “Some article title” Theory and Psychology 1 : 123 – 145 .", 
+                      "Hudson, W. , 2000 . Another article title . Australian Journal of Cats & Dogs , September , 40 ( 3 ), p. 134 – 150 .", 
+                      "Fries-Britt S. , & Griffin K.A. ( 2000 ). Some article about race . Journal of College Student Fun , 20 , 60 – 120 .")),
+  class = c("tbl_df", "tbl", "data.frame"), row.names = c(NA, -7L))
 # nolint end
 
 test_that("parsing references works", {
