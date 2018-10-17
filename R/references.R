@@ -129,21 +129,65 @@ parse_references <- function(ref_list) {
   
   out <- ref_list %>% 
     xml_find_all("ref") %>% 
-    map(~{
-      list(
-        authors = extract_all(., ".//person-group[@person-group-type='author']"),
-        editors = extract_all(., ".//person-group[@person-group-type='editor']"),
-        collab = extract_all(., ".//collab"),
-        title = extract_first(., ".//article-title"),
-        year = extract_all(., ".//year"),
-        source = extract_first(., ".//source"),
-        publication_type = extract_child(., "mixed-citation/@publication-type"),
-        unparsed_refs = collapse_text(.)
-      )
-    }) %>% 
+    map(parse_ref_content) %>% 
     dplyr::bind_rows()
 
   dplyr::bind_cols(ref_title = rep(title, nrow(out)), out)  
+}
+
+
+parse_ref_content <- function(ref) {
+  
+  # detect whether we have surnames
+  surname <- xml2::xml_find_first(ref, ".//surname") 
+
+  if (is.na(surname)) {
+    authors <- extract_all(ref, ".//person-group[@person-group-type='author']")
+    editors <- extract_all(ref, ".//person-group[@person-group-type='editor']")
+    
+    # if we have no precise data about authors or editors, we simply extract all
+    # possible authors.
+    if (is.na(authors)) {
+      authors <- extract_all(ref, ".//string-name")
+    }
+  } else {
+    authors <- collapse_names(ref, ".//person-group[@person-group-type='author']")
+    editors <- collapse_names(ref, ".//person-group[@person-group-type='editor']")
+  }
+ 
+  list(
+    authors = authors,
+    editors = editors,
+    collab = extract_all(ref, ".//collab"),
+    title = extract_first(ref, ".//article-title"),
+    year = extract_all(ref, ".//year"),
+    source = extract_first(ref, ".//source"),
+    volume = extract_first(ref, ".//volume"),
+    first_page = extract_first(ref, ".//fpage"),
+    last_page = extract_first(ref, ".//lpage"),
+    publisher = extract_first(ref, ".//publisher-name"),
+    publication_type = extract_child(ref, "mixed-citation/@publication-type"),
+    unparsed_refs = collapse_text(ref)
+  )
+  
+  
+}
+
+collapse_names <- function(ref, xpath) {
+  # find the base (e.g. person groups)
+  base <- xml_find_all(ref, xpath)
+  
+  surnames <- xml_find_all(base, ".//surname") %>% xml_text()
+  given_names <- xml_find_all(base, ".//given-names") %>% xml_text()
+  
+  res <- paste(surnames, given_names, sep = ", ") %>% 
+    paste(collapse = "; ")
+  
+  if (res == "") {
+    res <- NA_character_
+  }
+  
+  res
 }
 
 
