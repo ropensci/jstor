@@ -20,6 +20,29 @@ parsed <- "testfiles/references-parsed.xml"
 
 unknown <- "testfiles/unknown-reference.xml"
 
+
+# definitions -----
+standard_references <- structure(
+  list(
+    file_name = c("references", "references", "references"),
+    ref_title = c("Bibliography: Entamoeba ranarumn", "Bibliography: Entamoeba ranarumn", 
+                 "References: Leptotheca ohilmacheri"), 
+    authors = c(NA_character_, NA_character_, NA_character_),
+    collab = c(NA_character_, NA_character_, NA_character_), 
+    title = c(NA_character_, NA_character_, NA_character_),
+    year = c(NA_character_, NA_character_, NA_character_), 
+    source = c(NA_character_, NA_character_, NA_character_),
+    volume = c(NA_character_, NA_character_, NA_character_),
+    first_page = c(NA_character_, NA_character_, NA_character_), 
+    last_page = c(NA_character_, NA_character_, NA_character_),
+    publisher = c(NA_character_, NA_character_, NA_character_), 
+    publication_type = c(NA_character_, NA_character_, NA_character_), 
+    unparsed_refs = c("DOBELL, C.C.\n1909 Researches on the intestinal Protozoa of frogs and toads. Quart. Jour. Micros.\nSc., 53:201-276, 4 pl. and 1 textfig.", 
+                      "1918 Are Entamoeba histolytica and Entamoeba ranarum the same species? An experi-\nmental study. Parasit., 10:294-310.", 
+                      "KUDO, R.\n1920 Studies on Myxosporidia. A Synopsis of Genera and Species of Myxosporidia.\nill. Biol. Monogr., 5:243-503, 25 pl. and 2 textfig.")),
+  class = c("tbl_df", "tbl", "data.frame"), row.names = c(NA, -3L))
+
+
 # tests -----
 test_that("Input data is checked", {
   expect_error(jst_get_references("my_path.txt"))
@@ -34,12 +57,32 @@ test_that("catching errors works", {
   expect_silent(jst_get_references(unparsed))
 })
 
+
+no_references <- tibble::data_frame(
+  file_name = "author-prefix",
+  ref_title = NA_character_,
+  authors = NA_character_,
+  editors = NA_character_,
+  collab = NA_character_,
+  title = NA_character_,
+  year = NA_character_,
+  source = NA_character_,
+  volume = NA_character_,
+  first_page = NA_character_,
+  last_page = NA_character_,
+  publisher = NA_character_,
+  publication_type = NA_character_,
+  unparsed_refs = NA_character_
+)
+
 test_that("null results work", {
   expect_identical(result_empty[["unparsed_refs"]], NA_character_)
   expect_identical(jst_get_references(unparsed)[["unparsed_refs"]][1],
                    NA_character_)
   expect_identical(jst_get_references(half_empty)[["unparsed_refs"]],
                    NA_character_)
+  expect_identical(jst_get_references("testfiles/author-prefix.xml"),
+                   no_references)
 })
 
 # nolint start
@@ -76,6 +119,13 @@ unparsed_citations <- c(
   paste("Becker, Howard. 2010 [1982]. Les mondes de l’art. Paris, Flammarion",
         "(éd. orig. Art Worlds. Berkeley, The University of Califoria Press).")
 )
+
+
+test_that("standard references work", {
+  expect_identical(result, standard_references)
+})
+
+
 
 
 test_that("extracting references works", {
