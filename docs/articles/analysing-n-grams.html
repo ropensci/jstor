@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">jstor</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.3.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.4</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@
       <h1>Analysing n-grams with <code>jstor</code> for R</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-10-04</h4>
+            <h4 class="date">2018-10-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/jstor/blob/master/vignettes/analysing-n-grams.Rmd"><code>vignettes/analysing-n-grams.Rmd</code></a></small>
       <div class="hidden name"><code>analysing-n-grams.Rmd</code></div>
@@ -369,9 +369,9 @@
 <a class="sourceLine" id="cb29-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/graph_from_data_frame">graph_from_data_frame</a></span>()</a>
 <a class="sourceLine" id="cb29-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb29-5" data-line-number="5">bigram_graph</a></code></pre></div>
-<pre><code>## IGRAPH 1a9ab57 DN-- 170 161 -- 
+<pre><code>## IGRAPH 022ffd7 DN-- 170 161 -- 
 ## + attr: name (v/c), n (e/n)
-## + edges from 1a9ab57 (vertex names):
+## + edges from 022ffd7 (vertex names):
 ##  [1] labor                 -&gt;market   9                     -&gt;7       
 ##  [3] 7                     -&gt;6        10                    -&gt;9       
 ##  [5] amsmath               -&gt;amsxtra  begin                 -&gt;document
@@ -397,7 +397,7 @@
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">plot_bigrams</span>(bigram_graph)</a></code></pre></div>
 <p><img src="analysing-n-grams_files/figure-html/unnamed-chunk-24-1.png" width="1152"> Very obvious is a group of nodes which are not relevant to the topic of inequality. They come from LaTeX documents and somehow made their way into the original dataset. However, since they are more common than most of the other terms, they are quite easy to remove. We can look at the nodes/vertices of our graph with <code><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V(bigram_graph)</a></code>.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(bigram_graph)</a></code></pre></div>
-<pre><code>## + 170/170 vertices, named, from 1a9ab57:
+<pre><code>## + 170/170 vertices, named, from 022ffd7:
 ##   [1] labor                  9                      7                     
 ##   [4] 10                     amsmath                begin                 
 ##   [7] declaremathsizes       declaretextfontcommand documentclass         
@@ -412,9 +412,9 @@
 <p>The first node, “labor”, is relevant to us, but all other nodes from 2 to at least 40 are clearly irrelevant. We can remove them by simple subtraction:</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">bigram_graph_clean &lt;-<span class="st"> </span>bigram_graph <span class="op">-</span><span class="st"> </span><span class="dv">2</span><span class="op">:</span><span class="dv">40</span></a>
 <a class="sourceLine" id="cb35-2" data-line-number="2">bigram_graph_clean</a></code></pre></div>
-<pre><code>## IGRAPH 7fc9c00 DN-- 131 105 -- 
+<pre><code>## IGRAPH a19ef4e DN-- 131 105 -- 
 ## + attr: name (v/c), n (e/n)
-## + edges from 7fc9c00 (vertex names):
+## + edges from a19ef4e (vertex names):
 ##  [1] labor     -&gt;market     labor     -&gt;force      0         -&gt;0         
 ##  [4] table     -&gt;2          1         -&gt;1          income    -&gt;inequality
 ##  [7] black     -&gt;white      table     -&gt;1          table     -&gt;3         

@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">jstor</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.3.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.4</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@
       <h1>Automating File Import</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-10-04</h4>
+            <h4 class="date">2018-10-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/jstor/blob/master/vignettes/automating-file-import.Rmd"><code>vignettes/automating-file-import.Rmd</code></a></small>
       <div class="hidden name"><code>automating-file-import.Rmd</code></div>
@@ -369,7 +369,7 @@
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw"><a href="../reference/jst_import.html">jst_import</a></span>(article_paths, <span class="dt">out_file =</span> <span class="st">"my_second_test"</span>, <span class="dt">.f =</span> jst_get_article, </a>
 <a class="sourceLine" id="cb14-2" data-line-number="2">           <span class="dt">out_path =</span> tmp)</a>
 <a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co">#&gt; Starting to import 2 file(s).</span></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt; Finished importing 2 file(s) in 0.06 secs.</span></a></code></pre></div>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt; Finished importing 2 file(s) in 0.11 secs.</span></a></code></pre></div>
 <p>The result is again written to disk, as can be seen below:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">list.files</span>(tmp, <span class="dt">pattern =</span> <span class="st">"csv"</span>)</a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt; [1] "my_second_test-1.csv"                         </span></a>

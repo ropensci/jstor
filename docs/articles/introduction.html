@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">jstor</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.3.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.4</span>
       </span>
     </div>
 
@@ -98,10 +98,10 @@
       <h1>Introduction to jstor</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-10-04</h4>
+            <h4 class="date">2018-10-18</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/ropensci/jstor/blob/master/vignettes/introduction.Rmd"><code>vignettes/introduction.Rmd</code></a></small>
-      <div class="hidden name"><code>introduction.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/ropensci/jstor/blob/master/vignettes/Introduction.Rmd"><code>vignettes/Introduction.Rmd</code></a></small>
+      <div class="hidden name"><code>Introduction.Rmd</code></div>
 
     </div>
 
@@ -280,17 +280,29 @@
 <li>
 <em>authors</em>: A string of authors. Several authors are separated with <code>;</code>.</li>
 <li>
+<em>editors</em>: A string of editors, if present.</li>
+<li>
 <em>collab</em>: A field that may contain information on the authors, if authors are not available.</li>
 <li>
 <em>title</em>: The title of the cited entry.</li>
 <li>
 <em>year</em>: A year, often the article’s publication year, but not always.</li>
 <li>
-<em>source</em>: The source of the cited entry. Might be a publisher or similar</li>
+<em>source</em>: The source of the cited entry. For books often the title of the book, for articles the publisher of the journal.</li>
+<li>
+<em>volume</em>: The volume of the journal article.</li>
+<li>
+<em>first_page</em>: The first page of the article/chapter.</li>
+<li>
+<em>last_page</em>: The last page of the article/chapter.</li>
+<li>
+<em>publisher</em>: For books the publisher, for articles often missing.</li>
+<li>
+<em>publication_type</em>: Known types: book, journal, web, other.</li>
 <li>
 <em>unparsed_refs</em>: The full references entry in unparsed form.</li>
 </ul>
-<p>Here I display the 5 random entries:</p>
+<p>Here I display 5 random entries:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">references <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/sample.html">sample_n</a></span>(<span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a></code></pre></div>
@@ -303,12 +315,22 @@
 <th align="left">title</th>
 <th align="left">year</th>
 <th align="left">source</th>
+<th align="left">volume</th>
+<th align="left">first_page</th>
+<th align="left">last_page</th>
+<th align="left">publisher</th>
+<th align="left">publication_type</th>
 <th align="left">unparsed_refs</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">article_with_references</td>
 <td align="left">References: Leptotheca ohilmacheri</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
@@ -324,11 +346,21 @@
 <td align="left">NA</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">DUTTON, J. E., J. L. TODD and E. N. TOBEY (see haemogregarines).</td>
 </tr>
 <tr class="odd">
 <td align="left">article_with_references</td>
 <td align="left">References: Trypanosomes</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
@@ -344,11 +376,21 @@
 <td align="left">NA</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">1915a On a new trichomonad flagellate, Trichomitus parvus, from the intestine of Amphi-bians. Uni. Calif. Publi. in Zoology, 16:89-94, 1 pl.</td>
 </tr>
 <tr class="odd">
 <td align="left">article_with_references</td>
 <td align="left">References: Trypanosomes</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
@@ -371,10 +413,16 @@
 <th align="left">file_name</th>
 <th align="left">ref_title</th>
 <th align="left">authors</th>
+<th align="left">editors</th>
 <th align="left">collab</th>
 <th align="left">title</th>
 <th align="left">year</th>
 <th align="left">source</th>
+<th align="left">volume</th>
+<th align="left">first_page</th>
+<th align="left">last_page</th>
+<th align="left">publisher</th>
+<th align="left">publication_type</th>
 <th align="left">unparsed_refs</th>
 </tr></thead>
 <tbody>
@@ -384,8 +432,14 @@
 <td align="left">NA</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">2005</td>
 <td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">other</td>
 <td align="left">1. The USA PATRIOT Act expanded the government’s surveillance power in numerous other ways (see, e.g. Keenan 2005 ).</td>
 </tr>
 <tr class="even">
@@ -393,20 +447,96 @@
 <td align="left">References</td>
 <td align="left">Acohido, B.; Eisler, P.</td>
 <td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">“Snowden Case: How Low-Level Insider Could Steal from NSA”</td>
 <td align="left">2013</td>
 <td align="left">USA Today</td>
-<td align="left">Acohido, B. and Eisler, P. ( 2013 ) “Snowden Case: How Low-Level Insider Could Steal from NSA” , USA Today , 12 June. Available online at <a href="http://www.usatoday.com/story/news/nation/2013/06/11/snowden-nsa-hacking-privileged-accounts/2412507/" class="uri">http://www.usatoday.com/story/news/nation/2013/06/11/snowden-nsa-hacking-privileged-accounts/2412507/</a> (accessed 15 June 2013).</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">other</td>
+<td align="left">Acohido, B. and Eisler, P. ( 2013 ) “Snowden Case: How Low-Level Insider Could Steal from NSA” , USA Today , 12 June. Available online at <a href="http://www.google.com" class="uri">http://www.google.com</a> (accessed 15 June 2013).</td>
 </tr>
 <tr class="odd">
 <td align="left">parsed_references</td>
 <td align="left">References</td>
 <td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">Amnesty International</td>
 <td align="left">NA</td>
 <td align="left">2013</td>
 <td align="left">“USA: Revelations about Government Surveillance ‘raise red flags’”</td>
-<td align="left">Amnesty International ( 2013 ) “USA: Revelations about Government Surveillance ‘raise red flags’” , 7 June. Available online at <a href="http://www.amnesty.org/en/news/usa-revelations-about-government-surveillance-raise-red-flags-2013%E2%80%9306%E2%80%9307" class="uri">http://www.amnesty.org/en/news/usa-revelations-about-government-surveillance-raise-red-flags-2013–06–07</a> (accessed 14 June 2013).</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">other</td>
+<td align="left">Amnesty International ( 2013 ) “USA: Revelations about Government Surveillance ‘raise red flags’” , 7 June. Available online at <a href="http://www.google.com" class="uri">http://www.google.com</a> (accessed 14 June 2013).</td>
+</tr>
+<tr class="even">
+<td align="left">parsed_references</td>
+<td align="left">References</td>
+<td align="left">Jacobson, D.</td>
+<td align="left">D. E. Davis; J. Go</td>
+<td align="left">NA</td>
+<td align="left">Chapter title</td>
+<td align="left">2009</td>
+<td align="left">Book title</td>
+<td align="left">NA</td>
+<td align="left">281</td>
+<td align="left">286</td>
+<td align="left">Routledge</td>
+<td align="left">book</td>
+<td align="left">Jacobson, D. , 2009 . Chapter title . In: D. E. Davis &amp; J. Go , eds. Book title .: Routledge , pp. 281 - 286 .</td>
+</tr>
+<tr class="odd">
+<td align="left">parsed_references</td>
+<td align="left">References</td>
+<td align="left">Costall, Alan</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">“Some article title”</td>
+<td align="left">1980</td>
+<td align="left">Theory and Psychology</td>
+<td align="left">1</td>
+<td align="left">123</td>
+<td align="left">145</td>
+<td align="left">NA</td>
+<td align="left">journal</td>
+<td align="left">Costall, Alan ( 1980 ). “Some article title” Theory and Psychology 1 : 123 – 145 .</td>
+</tr>
+<tr class="even">
+<td align="left">parsed_references</td>
+<td align="left">References</td>
+<td align="left">Hudson, W.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Another article title</td>
+<td align="left">2000</td>
+<td align="left">Australian Journal of Cats &amp; Dogs</td>
+<td align="left">40</td>
+<td align="left">134</td>
+<td align="left">150</td>
+<td align="left">NA</td>
+<td align="left">journal</td>
+<td align="left">Hudson, W. , 2000 . Another article title . Australian Journal of Cats &amp; Dogs , September , 40 ( 3 ), p. 134 – 150 .</td>
+</tr>
+<tr class="odd">
+<td align="left">parsed_references</td>
+<td align="left">References</td>
+<td align="left">Fries-Britt, S.; Griffin, K.A.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Some article about race</td>
+<td align="left">2000</td>
+<td align="left">Journal of College Student Fun</td>
+<td align="left">20</td>
+<td align="left">60</td>
+<td align="left">120</td>
+<td align="left">NA</td>
+<td align="left">journal</td>
+<td align="left">Fries-Britt S. , &amp; Griffin K.A. ( 2000 ). Some article about race . Journal of College Student Fun , 20 , 60 – 120 .</td>
 </tr>
 </tbody>
 </table>
@@ -531,7 +661,7 @@
 <a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(file_name, article_title, volume, pub_year, unparsed_refs) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt; Joining, by = "file_name"</span></a></code></pre></div>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt; Joining, by = c("file_name", "volume", "first_page", "last_page")</span></a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">file_name</th>
@@ -540,43 +670,13 @@
 <th align="right">pub_year</th>
 <th align="left">unparsed_refs</th>
 </tr></thead>
-<tbody>
-<tr class="odd">
+<tbody><tr class="odd">
 <td align="left">article_with_references</td>
 <td align="left">On the Protozoa Parasitic in Frogs</td>
 <td align="left">41</td>
 <td align="right">1922</td>
-<td align="left">DOBELL, C.C.1909 Researches on the intestinal Protozoa of frogs and toads. Quart. Jour. Micros.Sc., 53:201-276, 4 pl. and 1 textfig.</td>
-</tr>
-<tr class="even">
-<td align="left">article_with_references</td>
-<td align="left">On the Protozoa Parasitic in Frogs</td>
-<td align="left">41</td>
-<td align="right">1922</td>
-<td align="left">1918 Are Entamoeba histolytica and Entamoeba ranarum the same species? An experi-mental study. Parasit., 10:294-310.</td>
-</tr>
-<tr class="odd">
-<td align="left">article_with_references</td>
-<td align="left">On the Protozoa Parasitic in Frogs</td>
-<td align="left">41</td>
-<td align="right">1922</td>
-<td align="left">KUDO, R.1920 Studies on Myxosporidia. A Synopsis of Genera and Species of Myxosporidia.ill. Biol. Monogr., 5:243-503, 25 pl. and 2 textfig.</td>
-</tr>
-<tr class="even">
-<td align="left">article_with_references</td>
-<td align="left">On the Protozoa Parasitic in Frogs</td>
-<td align="left">41</td>
-<td align="right">1922</td>
-<td align="left">1921 On the nature of structures characteristic of Cnidosporidian spores. Trans.Micro. Soc., 40:60-74.</td>
-</tr>
-<tr class="odd">
-<td align="left">article_with_references</td>
-<td align="left">On the Protozoa Parasitic in Frogs</td>
-<td align="left">41</td>
-<td align="right">1922</td>
-<td align="left">1922 On the morphology and life history of a Myxosporidian, Leptotheca ohlmacheri,parasitic in Rana clamitans and Rana pipiens. Parasitology, 14, no. 2.</td>
-</tr>
-</tbody>
+<td align="left">NA</td>
+</tr></tbody>
 </table>
 </div>
 </div>

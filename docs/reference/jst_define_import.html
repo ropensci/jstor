@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">jstor</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.3.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.4</span>
       </span>
     </div>
 
@@ -169,12 +169,12 @@ functions.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># articles will be imported via `jst_get_article()` and `jst_get_authors()`</span>
-<span class='fu'>jst_define_import</span>(<span class='kw'>article</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='no'>jst_get_article</span>, <span class='no'>jst_get_authors</span>))</div><div class='output co'>#&gt; ── Import specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+<span class='fu'>jst_define_import</span>(<span class='kw'>article</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='no'>jst_get_article</span>, <span class='no'>jst_get_authors</span>))</div><div class='output co'>#&gt; ── Import specification ─────────────────────────────────────────────────────────────────
 #&gt;   Source            Import functions                                                                
 #&gt; ● Journal article   jst_get_article, jst_get_authors</div><div class='input'>
 <span class='co'># define a specification for importing article metadata and unigrams (ngram1)</span>
 <span class='fu'>jst_define_import</span>(<span class='kw'>article</span> <span class='kw'>=</span> <span class='no'>jst_get_article</span>,
-                  <span class='kw'>ngram1</span> <span class='kw'>=</span> <span class='no'>jst_get_ngram</span>)</div><div class='output co'>#&gt; ── Import specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+                  <span class='kw'>ngram1</span> <span class='kw'>=</span> <span class='no'>jst_get_ngram</span>)</div><div class='output co'>#&gt; ── Import specification ─────────────────────────────────────────────────────────────────
 #&gt;   Source            Import functions                                                                
 #&gt; ● Journal article   jst_get_article     
 #&gt; ● Ngram1            jst_get_ngram       </div><div class='input'>
@@ -183,7 +183,7 @@ functions.</p>
 <span class='fu'>jst_define_import</span>(<span class='kw'>article</span> <span class='kw'>=</span> <span class='no'>jst_get_article</span>,
                   <span class='kw'>book</span> <span class='kw'>=</span> <span class='no'>jst_get_book</span>,
                   <span class='kw'>report</span> <span class='kw'>=</span> <span class='no'>jst_get_book</span>,
-                  <span class='kw'>pamphlet</span> <span class='kw'>=</span> <span class='no'>jst_get_article</span>)</div><div class='output co'>#&gt; ── Import specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+                  <span class='kw'>pamphlet</span> <span class='kw'>=</span> <span class='no'>jst_get_article</span>)</div><div class='output co'>#&gt; ── Import specification ─────────────────────────────────────────────────────────────────
 #&gt;   Source            Import functions                                                                
 #&gt; ● Journal article   jst_get_article     
 #&gt; ● Book chapter      jst_get_book        
@@ -193,7 +193,7 @@ functions.</p>
 <span class='fu'>jst_define_import</span>(<span class='kw'>article</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='no'>jst_get_article</span>, <span class='no'>jst_get_authors</span>, <span class='no'>jst_get_references</span>),
                   <span class='kw'>book</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='no'>jst_get_book</span>, <span class='no'>jst_get_chapters</span>),
                   <span class='kw'>report</span> <span class='kw'>=</span> <span class='no'>jst_get_book</span>,
-                  <span class='kw'>pamphlet</span> <span class='kw'>=</span> <span class='no'>jst_get_article</span>)</div><div class='output co'>#&gt; ── Import specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+                  <span class='kw'>pamphlet</span> <span class='kw'>=</span> <span class='no'>jst_get_article</span>)</div><div class='output co'>#&gt; ── Import specification ─────────────────────────────────────────────────────────────────
 #&gt;   Source            Import functions                                                                
 #&gt; ● Journal article   jst_get_article, jst_get_authors, jst_get_references
 #&gt; ● Book chapter      jst_get_book, jst_get_chapters
@@ -203,7 +203,7 @@ functions.</p>
 <span class='co'># function</span>
 
 <span class='no'>chapters_w_authors</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='jst_get_chapters.html'>jst_get_chapters</a></span>(<span class='no'>x</span>, <span class='kw'>authors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'>jst_define_import</span>(<span class='kw'>book</span> <span class='kw'>=</span> <span class='no'>chapters_w_authors</span>)</div><div class='output co'>#&gt; ── Import specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+<span class='fu'>jst_define_import</span>(<span class='kw'>book</span> <span class='kw'>=</span> <span class='no'>chapters_w_authors</span>)</div><div class='output co'>#&gt; ── Import specification ─────────────────────────────────────────────────────────────────
 #&gt;   Source            Import functions                                                                
 #&gt; ● Book chapter      chapters_w_authors  </div><div class='input'>
 

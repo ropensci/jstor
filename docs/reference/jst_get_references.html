@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">jstor</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.3.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.4</span>
       </span>
     </div>
 
@@ -165,11 +165,19 @@ extracted.</p></td>
 <li><p><code>file_name</code>: the identifier for the article the references come from.</p></li>
 <li><p><code>ref_title</code>: the title of the references sections.</p></li>
 <li><p><code>authors</code>: a string of authors. Several authors are separated with <code>;</code>.</p></li>
+<li><p><code>editors</code>: a string of editors, if available.</p></li>
 <li><p><code>collab</code>: a field that may contain information on the authors, if authors
 are not available.</p></li>
-<li><p><code>title</code>: the title of the cited entry.</p></li>
+<li><p><code>title</code>: the title of the cited entry. For books this is often empty, with
+the title being in <code>source</code>.</p></li>
 <li><p><code>year</code>: a year, often the article's publication year, but not always.</p></li>
-<li><p><code>source</code>: the source of the cited entry. Might be a publisher or similar</p></li>
+<li><p><code>source</code>: the source of the cited entry. For books often the title of the
+book, for articles the publisher of the journal.</p></li>
+<li><p><code>volume</code>: the volume of the journal article.</p></li>
+<li><p><code>first_page</code>: the first page of the article/chapter.</p></li>
+<li><p><code>last_page</code>: the last page of the article/chapter.</p></li>
+<li><p><code>publisher</code>: For books the publisher, for articles often missing.</p></li>
+<li><p><code>publication_type</code>: Known types: <code>book</code>, <code>journal</code>, <code>web</code>, <code>other</code>.</p></li>
 <li><p><code>unparsed_refs</code>: The full references entry in unparsed form.</p></li>
 </ul>
 
@@ -190,30 +198,37 @@ articles with many references slow the process down.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>jst_get_references</span>(<span class='fu'><a href='jst_example.html'>jst_example</a></span>(<span class='st'>"article_with_references.xml"</span>))</div><div class='output co'>#&gt; # A tibble: 23 x 8
-#&gt;    file_name   ref_title   authors collab title year  source unparsed_refs     
-#&gt;    &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;             
-#&gt;  1 article_wi… Bibliograp… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   "DOBELL, C.C.\n19…
-#&gt;  2 article_wi… Bibliograp… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   "1918 Are Entamoe…
-#&gt;  3 article_wi… References… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   "KUDO, R.\n1920 S…
-#&gt;  4 article_wi… References… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   "1921 On the natu…
-#&gt;  5 article_wi… References… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   "1922 On the morp…
-#&gt;  6 article_wi… References… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   "DUTTON, J. E., J…
-#&gt;  7 article_wi… References… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   "FRANNÇA, C.\n191…
-#&gt;  8 article_wi… References… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   "HINTZE, R.\n1902…
-#&gt;  9 article_wi… References… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   "STEBBINS, JR., J…
-#&gt; 10 article_wi… References… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   "1905 On the occu…
-#&gt; # ... with 13 more rows</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>jst_get_references</span>(<span class='fu'><a href='jst_example.html'>jst_example</a></span>(<span class='st'>"article_with_references.xml"</span>))</div><div class='output co'>#&gt; # A tibble: 23 x 13
+#&gt;    file_name ref_title authors collab title year  source volume first_page
+#&gt;    &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;     
+#&gt;  1 article_… Bibliogr… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;      
+#&gt;  2 article_… Bibliogr… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;      
+#&gt;  3 article_… Referenc… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;      
+#&gt;  4 article_… Referenc… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;      
+#&gt;  5 article_… Referenc… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;      
+#&gt;  6 article_… Referenc… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;      
+#&gt;  7 article_… Referenc… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;      
+#&gt;  8 article_… Referenc… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;      
+#&gt;  9 article_… Referenc… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;      
+#&gt; 10 article_… Referenc… &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;      
+#&gt; # ... with 13 more rows, and 4 more variables: last_page &lt;chr&gt;,
+#&gt; #   publisher &lt;chr&gt;, publication_type &lt;chr&gt;, unparsed_refs &lt;chr&gt;</div><div class='input'>
 <span class='co'># import parsed references</span>
 <span class='fu'>jst_get_references</span>(
   <span class='fu'><a href='jst_example.html'>jst_example</a></span>(<span class='st'>"parsed_references.xml"</span>),
   <span class='kw'>parse_refs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div><div class='output co'>#&gt; # A tibble: 3 x 8
-#&gt;   file_name  ref_title  authors  collab  title   year  source   unparsed_refs  
-#&gt;   &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;          
-#&gt; 1 parsed_re… Notes      &lt;NA&gt;     &lt;NA&gt;    &lt;NA&gt;    2005  &lt;NA&gt;     1. The USA PAT…
-#&gt; 2 parsed_re… References Acohido… &lt;NA&gt;    “Snowd… 2013  USA Tod… Acohido, B. an…
-#&gt; 3 parsed_re… References &lt;NA&gt;     Amnest… &lt;NA&gt;    2013  “USA: R… Amnesty Intern…</div></pre>
+)</div><div class='output co'>#&gt; # A tibble: 7 x 14
+#&gt;   file_name ref_title authors editors collab title year  source volume
+#&gt;   &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; 
+#&gt; 1 parsed_r… Notes     &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;  2005  &lt;NA&gt;   &lt;NA&gt;  
+#&gt; 2 parsed_r… Referenc… Acohid… &lt;NA&gt;    &lt;NA&gt;   “Sno… 2013  USA T… &lt;NA&gt;  
+#&gt; 3 parsed_r… Referenc… &lt;NA&gt;    &lt;NA&gt;    Amnes… &lt;NA&gt;  2013  “USA:… &lt;NA&gt;  
+#&gt; 4 parsed_r… Referenc… Jacobs… D. E. … &lt;NA&gt;   Chap… 2009  Book … &lt;NA&gt;  
+#&gt; 5 parsed_r… Referenc… Costal… &lt;NA&gt;    &lt;NA&gt;   “Som… 1980  Theor… 1     
+#&gt; 6 parsed_r… Referenc… Hudson… &lt;NA&gt;    &lt;NA&gt;   Anot… 2000  Austr… 40    
+#&gt; 7 parsed_r… Referenc… Fries-… &lt;NA&gt;    &lt;NA&gt;   Some… 2000  Journ… 20    
+#&gt; # ... with 5 more variables: first_page &lt;chr&gt;, last_page &lt;chr&gt;,
+#&gt; #   publisher &lt;chr&gt;, publication_type &lt;chr&gt;, unparsed_refs &lt;chr&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
