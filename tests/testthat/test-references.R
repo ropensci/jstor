@@ -28,17 +28,17 @@ standard_references <- structure(
     file_name = c("references", "references", "references"),
     ref_title = c("Bibliography: Entamoeba ranarumn", "Bibliography: Entamoeba ranarumn", 
                  "References: Leptotheca ohilmacheri"), 
-    authors = c(NA_character_, NA_character_, NA_character_),
-    collab = c(NA_character_, NA_character_, NA_character_), 
-    title = c(NA_character_, NA_character_, NA_character_),
-    year = c(NA_character_, NA_character_, NA_character_), 
-    source = c(NA_character_, NA_character_, NA_character_),
-    volume = c(NA_character_, NA_character_, NA_character_),
-    first_page = c(NA_character_, NA_character_, NA_character_), 
-    last_page = c(NA_character_, NA_character_, NA_character_),
-    publisher = c(NA_character_, NA_character_, NA_character_), 
-    publication_type = c(NA_character_, NA_character_, NA_character_), 
-    unparsed_refs = c("DOBELL, C.C.\n1909 Researches on the intestinal Protozoa of frogs and toads. Quart. Jour. Micros.\nSc., 53:201-276, 4 pl. and 1 textfig.", 
+    ref_authors = c(NA_character_, NA_character_, NA_character_),
+    ref_collab = c(NA_character_, NA_character_, NA_character_), 
+    ref_item_title = c(NA_character_, NA_character_, NA_character_),
+    ref_year = c(NA_character_, NA_character_, NA_character_), 
+    ref_source = c(NA_character_, NA_character_, NA_character_),
+    ref_volume = c(NA_character_, NA_character_, NA_character_),
+    ref_first_page = c(NA_character_, NA_character_, NA_character_), 
+    ref_last_page = c(NA_character_, NA_character_, NA_character_),
+    ref_publisher = c(NA_character_, NA_character_, NA_character_), 
+    ref_publication_type = c(NA_character_, NA_character_, NA_character_), 
+    ref_unparsed = c("DOBELL, C.C.\n1909 Researches on the intestinal Protozoa of frogs and toads. Quart. Jour. Micros.\nSc., 53:201-276, 4 pl. and 1 textfig.", 
                       "1918 Are Entamoeba histolytica and Entamoeba ranarum the same species? An experi-\nmental study. Parasit., 10:294-310.", 
                       "KUDO, R.\n1920 Studies on Myxosporidia. A Synopsis of Genera and Species of Myxosporidia.\nill. Biol. Monogr., 5:243-503, 25 pl. and 2 textfig.")),
   class = c("tbl_df", "tbl", "data.frame"), row.names = c(NA, -3L))
@@ -47,18 +47,18 @@ standard_references <- structure(
 no_references <- tibble::data_frame(
   file_name = "author-prefix",
   ref_title = NA_character_,
-  authors = NA_character_,
-  editors = NA_character_,
-  collab = NA_character_,
-  title = NA_character_,
-  year = NA_character_,
-  source = NA_character_,
-  volume = NA_character_,
-  first_page = NA_character_,
-  last_page = NA_character_,
-  publisher = NA_character_,
-  publication_type = NA_character_,
-  unparsed_refs = NA_character_
+  ref_authors = NA_character_,
+  ref_editors = NA_character_,
+  ref_collab = NA_character_,
+  ref_item_title = NA_character_,
+  ref_year = NA_character_,
+  ref_source = NA_character_,
+  ref_volume = NA_character_,
+  ref_first_page = NA_character_,
+  ref_last_page = NA_character_,
+  ref_publisher = NA_character_,
+  ref_publication_type = NA_character_,
+  ref_unparsed = NA_character_
 )
 
 
@@ -74,7 +74,7 @@ ill. Biol. Monogr., 5:243-503, 25 pl. and 2 textfig."
 )
 
 
-unparsed_refs <- c(
+ref_unparsed <- c(
   NA_character_,
   "Producer Dynamics: New Evidence from Micro Data",
   "American Economic Review",
@@ -104,25 +104,25 @@ correct_parsed <- structure(
                   "references-parsed"), 
     ref_title = c("Notes", "References", "References", "References", 
                   "References", "References", "References"), 
-    authors = c(NA, "Acohido, B.; Eisler, P.", NA, "Jacobson, D.",
+    ref_authors = c(NA, "Acohido, B.; Eisler, P.", NA, "Jacobson, D.",
                 "Costall, Alan", "Hudson, W.", "Fries-Britt, S.; Griffin, K.A."),
-    editors = c(NA, NA, NA, "D. E. Davis; J. Go", NA, NA, NA), 
-    collab = c(NA, NA, "Amnesty International", NA, NA, NA, NA),
-    title = c(NA, "“Snowden Case: How Low-Level Insider Could Steal from NSA”", 
+    ref_editors = c(NA, NA, NA, "D. E. Davis; J. Go", NA, NA, NA), 
+    ref_collab = c(NA, NA, "Amnesty International", NA, NA, NA, NA),
+    ref_item_title = c(NA, "“Snowden Case: How Low-Level Insider Could Steal from NSA”", 
               NA, "Chapter title", "“Some article title”", "Another article title", 
               "Some article about race"), 
-    year = c("2005", "2013", "2013", "2009", "1980", "2000", "2000"), 
-    source = c(NA, "USA Today", 
+    ref_year = c("2005", "2013", "2013", "2009", "1980", "2000", "2000"), 
+    ref_source = c(NA, "USA Today", 
                "“USA: Revelations about Government Surveillance ‘raise red flags’”", 
                "Book title", "Theory and Psychology", "Australian Journal of Cats & Dogs", 
                "Journal of College Student Fun"), 
-    volume = c(NA, NA, NA, NA, "1", "40", "20"), 
-    first_page = c(NA, NA, NA, "281", "123", "134", "60"), 
-    last_page = c(NA, NA, NA, "286", "145", "150", "120"), 
-    publisher = c(NA, NA, NA, "Routledge", NA, NA, NA), 
-    publication_type = c("other", "other", "other", "book", 
+    ref_volume = c(NA, NA, NA, NA, "1", "40", "20"), 
+    ref_first_page = c(NA, NA, NA, "281", "123", "134", "60"), 
+    ref_last_page = c(NA, NA, NA, "286", "145", "150", "120"), 
+    ref_publisher = c(NA, NA, NA, "Routledge", NA, NA, NA), 
+    ref_publication_type = c("other", "other", "other", "book", 
                          "journal", "journal", "journal"), 
-    unparsed_refs = c("1. The USA PATRIOT Act expanded the government's surveillance power in numerous other ways (see, e.g. Keenan 2005 ).", 
+    ref_unparsed = c("1. The USA PATRIOT Act expanded the government's surveillance power in numerous other ways (see, e.g. Keenan 2005 ).", 
                       "Acohido, B. and Eisler, P. ( 2013 ) “Snowden Case: How Low-Level Insider Could Steal from NSA” , USA Today , 12 June. Available online at http://www.google.com (accessed 15 June 2013).", 
                       "Amnesty International ( 2013 ) “USA: Revelations about Government Surveillance ‘raise red flags’” , 7 June. Available online at http://www.google.com (accessed 14 June 2013).", 
                       "Jacobson, D. , 2009 . Chapter title . In: D. E. Davis & J. Go , eds. Book title .: Routledge , pp. 281 - 286 .", 
@@ -147,10 +147,10 @@ test_that("catching errors works", {
 })
 
 test_that("null results work", {
-  expect_identical(result_empty[["unparsed_refs"]], NA_character_)
-  expect_identical(jst_get_references(unparsed)[["unparsed_refs"]][1],
+  expect_identical(result_empty[["ref_unparsed"]], NA_character_)
+  expect_identical(jst_get_references(unparsed)[["ref_unparsed"]][1],
                    NA_character_)
-  expect_identical(jst_get_references(half_empty)[["unparsed_refs"]],
+  expect_identical(jst_get_references(half_empty)[["ref_unparsed"]],
                    NA_character_)
   expect_identical(jst_get_references("testfiles/author-prefix.xml"),
                    no_references)
@@ -162,11 +162,11 @@ test_that("standard references work", {
 
 test_that("extracting references works", {
   skip_on_os("windows")
-  expect_identical(result[["unparsed_refs"]], correct_refs)
-  expect_identical(jst_get_references(unparsed)[["unparsed_refs"]], unparsed_refs)
-  expect_identical(jst_get_references(unparsed_citation)[["unparsed_refs"]],
+  expect_identical(result[["ref_unparsed"]], correct_refs)
+  expect_identical(jst_get_references(unparsed)[["ref_unparsed"]], ref_unparsed)
+  expect_identical(jst_get_references(unparsed_citation)[["ref_unparsed"]],
                    unparsed_citations)
-  expect_identical(jst_get_references(parsed)[["unparsed_refs"]], parsed_refs)
+  expect_identical(jst_get_references(parsed)[["ref_unparsed"]], parsed_refs)
   expect_error(jst_get_references(unknown),
                paste("Unknown citation format in file",
                      "`testfiles/unknown-reference.xml`"))

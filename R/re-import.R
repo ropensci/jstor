@@ -366,18 +366,18 @@ reference_cols_old <- cols(
 reference_cols <- cols(
   file_name = col_character(),
   ref_title = col_character(),
-  authors = col_character(), 
-  editors = col_character(),
-  collab = col_character(),
-  title = col_character(),
-  year = col_character(),
-  source = col_character(),
-  volume = col_character(),
-  first_page = col_character(),
-  last_page = col_character(),
-  publisher = col_character(),
-  publication_type = col_character(),
-  unparsed_refs = col_character()
+  ref_authors = col_character(), 
+  ref_editors = col_character(),
+  ref_collab = col_character(),
+  ref_item_title = col_character(),
+  ref_year = col_character(),
+  ref_source = col_character(),
+  ref_volume = col_character(),
+  ref_first_page = col_character(),
+  ref_last_page = col_character(),
+  ref_publisher = col_character(),
+  ref_publication_type = col_character(),
+  ref_unparsed = col_character()
 )
 
 ngram_cols <- cols(

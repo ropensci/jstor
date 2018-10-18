@@ -25,21 +25,21 @@
 #'
 #' - `file_name`: the identifier for the article the references come from.
 #' - `ref_title`: the title of the references sections.
-#' - `authors`: a string of authors. Several authors are separated with `;`.
-#' - `editors`: a string of editors, if available.
-#' - `collab`: a field that may contain information on the authors, if authors
+#' - `ref_authors`: a string of authors. Several authors are separated with `;`.
+#' - `ref_editors`: a string of editors, if available.
+#' - `ref_collab`: a field that may contain information on the authors, if authors
 #'             are not available.
-#' - `title`: the title of the cited entry. For books this is often empty, with
-#'    the title being in `source`.
-#' - `year`: a year, often the article's publication year, but not always. 
-#' - `source`: the source of the cited entry. For books often the title of the
+#' - `ref_item_title`: the title of the cited entry. For books this is often 
+#'    empty, with the title being in `ref_source`.
+#' - `ref_year`: a year, often the article's publication year, but not always. 
+#' - `ref_source`: the source of the cited entry. For books often the title of the
 #'    book, for articles the publisher of the journal.
-#' - `volume`: the volume of the journal article.
-#' - `first_page`: the first page of the article/chapter.
-#' - `last_page`: the last page of the article/chapter.
-#' - `publisher`: For books the publisher, for articles often missing.
-#' - `publication_type`: Known types: `book`, `journal`, `web`, `other`.
-#' - `unparsed_refs`: The full references entry in unparsed form.
+#' - `ref_volume`: the volume of the journal article.
+#' - `ref_first_page`: the first page of the article/chapter.
+#' - `ref_last_page`: the last page of the article/chapter.
+#' - `ref_publisher`: For books the publisher, for articles often missing.
+#' - `ref_publication_type`: Known types: `book`, `journal`, `web`, `other`.
+#' - `ref_unparsed`: The full references entry in unparsed form.
 #'
 #' @export
 #' @examples 
@@ -70,18 +70,18 @@ extract_references <- function(xml_file, file_path, parse_refs) {
   if (is_empty(res)) {
     return(new_tibble(list(
       ref_title = NA_character_,
-      authors = NA_character_,
-      editors = NA_character_,
-      collab = NA_character_,
-      title = NA_character_,
-      year = NA_character_,
-      source = NA_character_,
-      volume = NA_character_,
-      first_page = NA_character_,
-      last_page = NA_character_,
-      publisher = NA_character_,
-      publication_type = NA_character_,
-      unparsed_refs = NA_character_
+      ref_authors = NA_character_,
+      ref_editors = NA_character_,
+      ref_collab = NA_character_,
+      ref_item_title = NA_character_,
+      ref_year = NA_character_,
+      ref_source = NA_character_,
+      ref_volume = NA_character_,
+      ref_first_page = NA_character_,
+      ref_last_page = NA_character_,
+      ref_publisher = NA_character_,
+      ref_publication_type = NA_character_,
+      ref_unparsed = NA_character_
     )))
   }
 
@@ -170,18 +170,18 @@ parse_ref_content <- function(ref) {
   }
  
   list(
-    authors = authors,
-    editors = editors,
-    collab = extract_all(ref, ".//collab"),
-    title = extract_first(ref, ".//article-title"),
-    year = extract_all(ref, ".//year"),
-    source = extract_first(ref, ".//source"),
-    volume = extract_first(ref, ".//volume"),
-    first_page = extract_first(ref, ".//fpage"),
-    last_page = extract_first(ref, ".//lpage"),
-    publisher = extract_first(ref, ".//publisher-name"),
-    publication_type = extract_child(ref, "mixed-citation/@publication-type"),
-    unparsed_refs = collapse_text(ref)
+    ref_authors = authors,
+    ref_editors = editors,
+    ref_collab = extract_all(ref, ".//collab"),
+    ref_item_title = extract_first(ref, ".//article-title"),
+    ref_year = extract_all(ref, ".//year"),
+    ref_source = extract_first(ref, ".//source"),
+    ref_volume = extract_first(ref, ".//volume"),
+    ref_first_page = extract_first(ref, ".//fpage"),
+    ref_last_page = extract_first(ref, ".//lpage"),
+    ref_publisher = extract_first(ref, ".//publisher-name"),
+    ref_publication_type = extract_child(ref, "mixed-citation/@publication-type"),
+    ref_unparsed = collapse_text(ref)
   )
   
   
@@ -213,16 +213,16 @@ ref_to_tibble <- function(refs, title) {
   
   new_tibble(list(
     ref_title = rep(title, length(refs)),
-    authors = rep(NA_character_, length(refs)),
-    collab = rep(NA_character_, length(refs)),
-    title = rep(NA_character_, length(refs)),
-    year = rep(NA_character_, length(refs)),
-    source = rep(NA_character_, length(refs)),
-    volume = rep(NA_character_, length(refs)),
-    first_page = rep(NA_character_, length(refs)),
-    last_page = rep(NA_character_, length(refs)),
-    publisher = rep(NA_character_, length(refs)),
-    publication_type = rep(NA_character_, length(refs)),
-    unparsed_refs = refs
+    ref_authors = rep(NA_character_, length(refs)),
+    ref_collab = rep(NA_character_, length(refs)),
+    ref_item_title = rep(NA_character_, length(refs)),
+    ref_year = rep(NA_character_, length(refs)),
+    ref_source = rep(NA_character_, length(refs)),
+    ref_volume = rep(NA_character_, length(refs)),
+    ref_first_page = rep(NA_character_, length(refs)),
+    ref_last_page = rep(NA_character_, length(refs)),
+    ref_publisher = rep(NA_character_, length(refs)),
+    ref_publication_type = rep(NA_character_, length(refs)),
+    ref_unparsed = refs
   ))
 }

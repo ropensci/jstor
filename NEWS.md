@@ -1,4 +1,8 @@
 # jstor 0.3.4.9000
+## Breaking changes
+* Output column names for `jst_get_refernces` have been renamed to avoid 
+ambiguity when matching with output from `jst_get_article`. All columns now have
+a `ref_*` prefix.
 
 # jstor 0.3.4
 * Added option to parse references, if the information is available. #32

@@ -1,2 +1,2 @@
-file_name,ref_title,authors,editors,collab,title,year,source,volume,first_page,last_page,publisher,publication_type,unparsed_refs
+file_name,ref_title,ref_authors,ref_editors,ref_collab,ref_item_title,ref_year,ref_source,ref_volume,ref_first_page,ref_last_page,ref_publisher,ref_publication_type,ref_unparsed
 journal-article-standard_case,,,,,,,,,,,,,
