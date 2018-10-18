@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">jstor</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.4.9000</span>
       </span>
     </div>
 
@@ -270,7 +270,7 @@
 <a class="sourceLine" id="cb5-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># # we need to remove line breaks for knitr::kable() to work properly for printing</span></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4">references &lt;-<span class="st"> </span>references <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">unparsed_refs =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(unparsed_refs, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">ref_unparsed =</span> stringr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringr/topics/str_remove">str_remove_all</a></span>(ref_unparsed, <span class="st">"</span><span class="ch">\\\n</span><span class="st">"</span>))</a></code></pre></div>
 <p>We have two columns:</p>
 <ul>
 <li>
@@ -278,29 +278,29 @@
 <li>
 <em>ref_title</em>: The title of the references sections.</li>
 <li>
-<em>authors</em>: A string of authors. Several authors are separated with <code>;</code>.</li>
+<em>ref_authors</em>: A string of authors. Several authors are separated with <code>;</code>.</li>
 <li>
-<em>editors</em>: A string of editors, if present.</li>
+<em>ref_editors</em>: A string of editors, if present.</li>
 <li>
-<em>collab</em>: A field that may contain information on the authors, if authors are not available.</li>
+<em>ref_collab</em>: A field that may contain information on the authors, if authors are not available.</li>
 <li>
-<em>title</em>: The title of the cited entry.</li>
+<em>ref_item_title</em>: The title of the cited entry.</li>
 <li>
-<em>year</em>: A year, often the article’s publication year, but not always.</li>
+<em>ref_year</em>: A year, often the article’s publication year, but not always.</li>
 <li>
-<em>source</em>: The source of the cited entry. For books often the title of the book, for articles the publisher of the journal.</li>
+<em>ref_source</em>: The source of the cited entry. For books often the title of the book, for articles the publisher of the journal.</li>
 <li>
-<em>volume</em>: The volume of the journal article.</li>
+<em>ref_volume</em>: The volume of the journal article.</li>
 <li>
-<em>first_page</em>: The first page of the article/chapter.</li>
+<em>ref_first_page</em>: The first page of the article/chapter.</li>
 <li>
-<em>last_page</em>: The last page of the article/chapter.</li>
+<em>ref_last_page</em>: The last page of the article/chapter.</li>
 <li>
-<em>publisher</em>: For books the publisher, for articles often missing.</li>
+<em>ref_publisher</em>: For books the publisher, for articles often missing.</li>
 <li>
-<em>publication_type</em>: Known types: book, journal, web, other.</li>
+<em>ref_publication_type</em>: Known types: book, journal, web, other.</li>
 <li>
-<em>unparsed_refs</em>: The full references entry in unparsed form.</li>
+<em>ref_unparsed</em>: The full references entry in unparsed form.</li>
 </ul>
 <p>Here I display 5 random entries:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">references <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -310,17 +310,17 @@
 <thead><tr class="header">
 <th align="left">file_name</th>
 <th align="left">ref_title</th>
-<th align="left">authors</th>
-<th align="left">collab</th>
-<th align="left">title</th>
-<th align="left">year</th>
-<th align="left">source</th>
-<th align="left">volume</th>
-<th align="left">first_page</th>
-<th align="left">last_page</th>
-<th align="left">publisher</th>
-<th align="left">publication_type</th>
-<th align="left">unparsed_refs</th>
+<th align="left">ref_authors</th>
+<th align="left">ref_collab</th>
+<th align="left">ref_item_title</th>
+<th align="left">ref_year</th>
+<th align="left">ref_source</th>
+<th align="left">ref_volume</th>
+<th align="left">ref_first_page</th>
+<th align="left">ref_last_page</th>
+<th align="left">ref_publisher</th>
+<th align="left">ref_publication_type</th>
+<th align="left">ref_unparsed</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -412,18 +412,18 @@
 <thead><tr class="header">
 <th align="left">file_name</th>
 <th align="left">ref_title</th>
-<th align="left">authors</th>
-<th align="left">editors</th>
-<th align="left">collab</th>
-<th align="left">title</th>
-<th align="left">year</th>
-<th align="left">source</th>
-<th align="left">volume</th>
-<th align="left">first_page</th>
-<th align="left">last_page</th>
-<th align="left">publisher</th>
-<th align="left">publication_type</th>
-<th align="left">unparsed_refs</th>
+<th align="left">ref_authors</th>
+<th align="left">ref_editors</th>
+<th align="left">ref_collab</th>
+<th align="left">ref_item_title</th>
+<th align="left">ref_year</th>
+<th align="left">ref_source</th>
+<th align="left">ref_volume</th>
+<th align="left">ref_first_page</th>
+<th align="left">ref_last_page</th>
+<th align="left">ref_publisher</th>
+<th align="left">ref_publication_type</th>
+<th align="left">ref_unparsed</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -658,25 +658,55 @@
 <a href="#matching-with-references" class="anchor"></a>Matching with references</h3>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">meta_data <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(references) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(file_name, article_title, volume, pub_year, unparsed_refs) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(file_name, article_title, volume, pub_year, ref_unparsed) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>()</a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt; Joining, by = c("file_name", "volume", "first_page", "last_page")</span></a></code></pre></div>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt; Joining, by = "file_name"</span></a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">file_name</th>
 <th align="left">article_title</th>
 <th align="left">volume</th>
 <th align="right">pub_year</th>
-<th align="left">unparsed_refs</th>
+<th align="left">ref_unparsed</th>
 </tr></thead>
-<tbody><tr class="odd">
+<tbody>
+<tr class="odd">
 <td align="left">article_with_references</td>
 <td align="left">On the Protozoa Parasitic in Frogs</td>
 <td align="left">41</td>
 <td align="right">1922</td>
-<td align="left">NA</td>
-</tr></tbody>
+<td align="left">DOBELL, C.C.1909 Researches on the intestinal Protozoa of frogs and toads. Quart. Jour. Micros.Sc., 53:201-276, 4 pl. and 1 textfig.</td>
+</tr>
+<tr class="even">
+<td align="left">article_with_references</td>
+<td align="left">On the Protozoa Parasitic in Frogs</td>
+<td align="left">41</td>
+<td align="right">1922</td>
+<td align="left">1918 Are Entamoeba histolytica and Entamoeba ranarum the same species? An experi-mental study. Parasit., 10:294-310.</td>
+</tr>
+<tr class="odd">
+<td align="left">article_with_references</td>
+<td align="left">On the Protozoa Parasitic in Frogs</td>
+<td align="left">41</td>
+<td align="right">1922</td>
+<td align="left">KUDO, R.1920 Studies on Myxosporidia. A Synopsis of Genera and Species of Myxosporidia.ill. Biol. Monogr., 5:243-503, 25 pl. and 2 textfig.</td>
+</tr>
+<tr class="even">
+<td align="left">article_with_references</td>
+<td align="left">On the Protozoa Parasitic in Frogs</td>
+<td align="left">41</td>
+<td align="right">1922</td>
+<td align="left">1921 On the nature of structures characteristic of Cnidosporidian spores. Trans.Micro. Soc., 40:60-74.</td>
+</tr>
+<tr class="odd">
+<td align="left">article_with_references</td>
+<td align="left">On the Protozoa Parasitic in Frogs</td>
+<td align="left">41</td>
+<td align="right">1922</td>
+<td align="left">1922 On the morphology and life history of a Myxosporidian, Leptotheca ohlmacheri,parasitic in Rana clamitans and Rana pipiens. Parasitology, 14, no. 2.</td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>
