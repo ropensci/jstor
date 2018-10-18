@@ -1,3 +1,5 @@
+# jstor 0.3.4.9000
+
 # jstor 0.3.4
 * Added option to parse references, if the information is available. #32
 * Output from error messages is "re-imported" properly as well.

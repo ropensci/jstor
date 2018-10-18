@@ -1,6 +1,6 @@
 Package: jstor
 Title: Read Data from JSTOR/DfR
-Version: 0.3.4
+Version: 0.3.4.9000
 Authors@R: person("Thomas", "Klebel", email = "t.klebel@hotmail.com", 
                   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-7331-4751"))
 Description: Functions and helpers to import metadata, ngrams and full-texts 
