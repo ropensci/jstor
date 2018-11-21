@@ -64,7 +64,7 @@ test_that("writing error messages to file works", {
                         n_batches = 1)
 
   res <- read_csv(file.path(temp_dir, "meta_data_broken-1.csv"),
-                  col_names = TRUE)
+                  col_names = TRUE, col_types = cols(id = col_integer()))
 
   # the following is needed for expect_identical
   attr(res, "spec") <- NULL
