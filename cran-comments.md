@@ -7,6 +7,6 @@
 
 0 errors | 0 warnings | 1 note
 
-* This is a fix adressing changes in rlang v0.3.0.
+* This is a fix adressing changes in readr v1.2.0.
 The links in the vignettes are correct and work when used in a browser, as in
 the last release.
