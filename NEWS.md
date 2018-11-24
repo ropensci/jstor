@@ -1,3 +1,5 @@
+# jstor 0.3.5
+
 # jstor 0.3.4.9000
 ## Breaking changes
 * Output column names for `jst_get_refernces` have been renamed to avoid 
