@@ -36,7 +36,7 @@ The most important set of functions is a group of `jst_get_*` functions:
 - `jst_get_references` (for journal documents)
 - `jst_get_footnotes` (for journal documents)
 - `jst_get_book` (for books and research reports)
-- `jst_get_chapters` (for books and possibly reserach reports)
+- `jst_get_chapters` (for books and possibly research reports)
 
 I will demonstrate their usage using the
 [sample dataset](http://www.jstor.org/dfr/about/sample-datasets)
@@ -59,7 +59,7 @@ and only one article is processed at a time.
 Running `jst_get_authors` for the same article might give you a tibble with one
 or multiple rows, depending on the number of authors the article has. The same
 is true for `jst_get_references` and `jst_get_footnotes`. If a file has no data on
-references (they migth still exist, but JSTOR might not have parsed them), the
+references (they might still exist, but JSTOR might not have parsed them), the
 output is only one row, with missing references. If there is data on references,
 each entry gets its own row. Note however, that the number of rows does not
 equal the number of references. References usually start with a title like 
@@ -68,7 +68,7 @@ Be sure to think carefully about your assumptions and to check the content of
 your data before you make inferences.
 
 Books work a bit differently. Searching for data on
-https://www.jstor.org/dfr/results lets you filter for books, which are acutally
+https://www.jstor.org/dfr/results lets you filter for books, which are actually
 book chapters. If you receive data from DfR on a book chapter, you always get 
 one xml-file with the whole book, including data on all chapters. Ngram or 
 full-text data for the same entry however is processed only from single

@@ -61,7 +61,7 @@ jst_preview_zip(jst_example("pseudo_dfr.zip")) %>% knitr::kable()
 
 We can see that we have a simple archive with three metadata files and one 
 ngram file. Before we can use `jst_import_zip()`, we first need to think about,
-what we acutally want to import: all of the data, or just parts? What kind of
+what we actually want to import: all of the data, or just parts? What kind of
 data do we want to extract from articles, books and pamphlets? We can specify
 this via `jst_define_import()`:
 
@@ -95,7 +95,8 @@ list.files(tmp, pattern = "csv")
 ```
 
 As you can see, `jst_import_zip()` automatically creates file names based on
-the string you supplied to `out_file` to delianate the different types of output.
+the string you supplied to `out_file` to delineate the different types of
+output.
 
 If we want to re-import the data for further analysis, we can either use 
 functions like `readr::read_csv()`, or a small helper function from the package

@@ -109,7 +109,7 @@ them, take a look at the `vignette("known-quirks")`.
 
 
 # Exploration
-Before diving into the analysis of n-grams, we might wish to take an explorative
+Before diving into the analysis of n-grams, we might wish to take an exploratory
 look at our metadata. The first thing to look at are the types of articles.
 ```{r}
 ggplot(imported_metadata, aes(article_type)) +
