@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">jstor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.6</span>
       </span>
     </div>
 
@@ -99,7 +99,7 @@
       <h1>Analysing n-grams with <code>jstor</code> for R</h1>
                         <h4 class="author">Thomas Klebel</h4>
             
-            <h4 class="date">2018-11-24</h4>
+            <h4 class="date">2018-12-11</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/jstor/blob/master/vignettes/analysing-n-grams.Rmd"><code>vignettes/analysing-n-grams.Rmd</code></a></small>
       <div class="hidden name"><code>analysing-n-grams.Rmd</code></div>
@@ -167,7 +167,7 @@
 ##  8 journal-… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Jou…
 ##  9 journal-… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Jou…
 ## 10 journal-… &lt;NA&gt;        &lt;NA&gt;          amerjsoci      American Jou…
-## # ... with 23,899 more rows, and 14 more variables: article_doi &lt;chr&gt;,
+## # … with 23,899 more rows, and 14 more variables: article_doi &lt;chr&gt;,
 ## #   article_pub_id &lt;chr&gt;, article_jcode &lt;chr&gt;, article_type &lt;chr&gt;,
 ## #   article_title &lt;chr&gt;, volume &lt;chr&gt;, issue &lt;chr&gt;, language &lt;chr&gt;,
 ## #   pub_day &lt;chr&gt;, pub_month &lt;chr&gt;, pub_year &lt;int&gt;, first_page &lt;chr&gt;,
@@ -225,7 +225,7 @@
 ##  8 journal-article-10.1086_210280 Book Reviews      1999
 ##  9 journal-article-10.1086_210281 Book Reviews      1999
 ## 10 journal-article-10.1086_210283 Book Reviews      1999
-## # ... with 180 more rows</code></pre>
+## # … with 180 more rows</code></pre>
 <p>For the current demonstration, we want to restrict the type of articles to research articles, therefore we need to take steps to remove book reviews and other miscellaneous articles: First, filter by <code>article_type</code>, then remove articles where the title starts with “Book Review”.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">research_articles &lt;-<span class="st"> </span>imported_metadata <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(article_type <span class="op">==</span><span class="st"> "research-article"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -347,7 +347,7 @@
 ##  8 10           9             3230
 ##  9 amsmath      amsxtra       3192
 ## 10 begin        document      3192
-## # ... with 106,696 more rows</code></pre>
+## # … with 106,696 more rows</code></pre>
 <p>From the first few terms we can see, that there are still many terms which are not very interesting for our analysis. The terms “american” and “sociological” are simply part of the title of a journal we selected (American Sociological Review). To clean the terms up, we can employ different approaches. One is to simply filter the terms we wish to exclude:</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">bigram_counts_clean &lt;-<span class="st"> </span>bigram_counts <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb27-2" data-line-number="2"><span class="st">  </span><span class="kw">unite</span>(bigram, word1, word2, <span class="dt">sep =</span> <span class="st">" "</span>) <span class="op">%&gt;%</span></a>
@@ -370,9 +370,9 @@
 <a class="sourceLine" id="cb29-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/graph_from_data_frame">graph_from_data_frame</a></span>()</a>
 <a class="sourceLine" id="cb29-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb29-5" data-line-number="5">bigram_graph</a></code></pre></div>
-<pre><code>## IGRAPH 7f33568 DN-- 170 161 -- 
+<pre><code>## IGRAPH 2a54c0f DN-- 170 161 -- 
 ## + attr: name (v/c), n (e/n)
-## + edges from 7f33568 (vertex names):
+## + edges from 2a54c0f (vertex names):
 ##  [1] labor                 -&gt;market   9                     -&gt;7       
 ##  [3] 7                     -&gt;6        10                    -&gt;9       
 ##  [5] amsmath               -&gt;amsxtra  begin                 -&gt;document
@@ -398,7 +398,7 @@
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">plot_bigrams</span>(bigram_graph)</a></code></pre></div>
 <p><img src="analysing-n-grams_files/figure-html/unnamed-chunk-24-1.png" width="1152"> Very obvious is a group of nodes which are not relevant to the topic of inequality. They come from LaTeX documents and somehow made their way into the original dataset. However, since they are more common than most of the other terms, they are quite easy to remove. We can look at the nodes/vertices of our graph with <code><a href="https://www.rdocumentation.org/packages/igraph/topics/V">V(bigram_graph)</a></code>.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/V">V</a></span>(bigram_graph)</a></code></pre></div>
-<pre><code>## + 170/170 vertices, named, from 7f33568:
+<pre><code>## + 170/170 vertices, named, from 2a54c0f:
 ##   [1] labor                  9                      7                     
 ##   [4] 10                     amsmath                begin                 
 ##   [7] declaremathsizes       declaretextfontcommand documentclass         
@@ -413,9 +413,9 @@
 <p>The first node, “labor”, is relevant to us, but all other nodes from 2 to at least 40 are clearly irrelevant. We can remove them by simple subtraction:</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">bigram_graph_clean &lt;-<span class="st"> </span>bigram_graph <span class="op">-</span><span class="st"> </span><span class="dv">2</span><span class="op">:</span><span class="dv">40</span></a>
 <a class="sourceLine" id="cb35-2" data-line-number="2">bigram_graph_clean</a></code></pre></div>
-<pre><code>## IGRAPH 008cfa5 DN-- 131 105 -- 
+<pre><code>## IGRAPH a301120 DN-- 131 105 -- 
 ## + attr: name (v/c), n (e/n)
-## + edges from 008cfa5 (vertex names):
+## + edges from a301120 (vertex names):
 ##  [1] labor     -&gt;market     labor     -&gt;force      0         -&gt;0         
 ##  [4] table     -&gt;2          1         -&gt;1          income    -&gt;inequality
 ##  [7] black     -&gt;white      table     -&gt;1          table     -&gt;3         
@@ -481,7 +481,7 @@
 ##  8 et al                     2013   748
 ##  9 et al                     2010   691
 ## 10 et al                     2012   687
-## # ... with 248,715 more rows</code></pre>
+## # … with 248,715 more rows</code></pre>
 <p>We now only keep the two terms of interest and plot them in a simple chart.</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="co"># filter the terms of interest</span></a>
 <a class="sourceLine" id="cb43-2" data-line-number="2">time_comparison &lt;-<span class="st"> </span>time_bigrams <span class="op">%&gt;%</span><span class="st"> </span></a>
