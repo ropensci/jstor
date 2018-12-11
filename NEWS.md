@@ -1,4 +1,7 @@
 # jstor 0.3.6
+This is another small release to fix compatibility with `readr v1.3.0` and
+`tibble v2.0.0`. There are no other changes.
+
 
 # jstor 0.3.5
 This is a small release, mainly to fix compatibility with version `1.2.0` of 
