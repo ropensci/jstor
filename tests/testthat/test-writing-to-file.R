@@ -68,6 +68,7 @@ test_that("writing error messages to file works", {
 
   # the following is needed for expect_identical
   attr(res, "spec") <- NULL
+  print(attributes(res))
 
   correct_res <- data_frame(
     id = 2L,
