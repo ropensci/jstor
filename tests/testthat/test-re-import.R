@@ -38,7 +38,7 @@ book <- structure(list(book_id = "j.ctt24hdz7", file_name = "book-chapter-standa
     book_subtitle = "A Coup to End All Coups?", pub_day = 30L, pub_month = 4L, 
     pub_year = 2009L, isbn = "9781921536502; 9781921536519", publisher_name = "ANU E Press", 
     publisher_location = "Canberra", n_pages = NA_integer_, language = "eng"), 
-    row.names = c(NA, -1L), class = c("tbl_df", "tbl", "data.frame"))
+    row.names = c(NA, -1L), class = c("spec_tbl_df", "tbl_df", "tbl", "data.frame"))
 
 # chapter -----
 chapter <- structure(list(book_id = c("j.ctt24hdz7", "j.ctt24hdz7", "j.ctt24hdz7", 
@@ -135,7 +135,7 @@ chapter <- structure(list(book_id = c("j.ctt24hdz7", "j.ctt24hdz7", "j.ctt24hdz7
     NA), part_first_page = c("i", "v", "vii", "xi", "3", "21", "43", "67", "97", 
     "117", "139", "155", "187", "209", "237", "253", "267", "277", "291", "301", 
     "311", "321", "339", "343", "353", "375", "385", "393", "397", "405", "409", 
-    "415", "419", "425", "449", "459")), row.names = c(NA, -36L), class = c("tbl_df", 
+    "415", "419", "425", "449", "459")), row.names = c(NA, -36L), class = c("spec_tbl_df", "tbl_df", 
     "tbl", "data.frame"))
 # article -----
 article <- structure(list(file_name = "journal-article-standard_case", journal_doi = NA_character_, 

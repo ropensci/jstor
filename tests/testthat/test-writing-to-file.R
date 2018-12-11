@@ -69,10 +69,13 @@ test_that("writing error messages to file works", {
   # the following is needed for expect_identical
   attr(res, "spec") <- NULL
 
-  correct_res <- data_frame(
-    id = 2L,
-    error_message = "Unknown input file. Must be a `xml`-file."
-  )
+  correct_res <- structure(
+    list(
+      id = 2L, 
+      error_message = "Unknown input file. Must be a `xml`-file."
+    ), 
+    row.names = c(NA, -1L), 
+    class = c("spec_tbl_df", "tbl_df", "tbl", "data.frame"))
 
   expect_identical(res, correct_res)
 
