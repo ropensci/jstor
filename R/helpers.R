@@ -29,12 +29,12 @@ validate_article <- function(xml_file) {
       abort(paste0(
         "You are using `", original_call, "` on a book. ",
         "Neither footnotes nor references are available for books."),
-        type = "article_function_for_book")
+        .subclass = "article_function_for_book")
     } else {
       abort(paste0(
         "You are using `", original_call, "` on a book. ",
         "Please use `jst_get_book` or `jst_get_chapters` instead."),
-        type = "article_function_for_book")
+        .subclass = "article_function_for_book")
     }
   } else if (!identical(xml2::xml_name(xml_file), "article")) {
     abort("Unknown input file.")
@@ -47,7 +47,7 @@ validate_book <- function(xml_file) {
       paste0("You are using `", sys.call(-1)[[1]], "` on an article. ",
              "Please use `jst_get_article`, `jst_get_authors`, `jst_get_references` ",
              "or `jst_get_footnotes` instead."),
-      type = "book_function_for_article")
+      .subclass = "book_function_for_article")
   } else if (!identical(xml2::xml_name(xml_file), "book")) {
     abort("Unknown input file.")
   }
