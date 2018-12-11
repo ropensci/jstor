@@ -55,7 +55,9 @@ jst_get_book <- function(file_path) {
     language = extract_child(book, ".//meta-value")
   )
   
-  tibble::new_tibble(out)
+  nrow <- validate_tibble(out)
+  
+  new_tibble(out, nrow = nrow)
 }
 
 
@@ -125,7 +127,7 @@ jst_get_chapters <- function(file_path, authors = FALSE) {
       authors = NA_character_,
       abstract = NA_character_,
       part_first_page = NA_character_
-    ))
+    ), nrow = 1L)
   } else {
     parts_out <- purrr::map_df(parts, find_part, authors)
   }
@@ -159,5 +161,7 @@ find_part <- function(part, authors = FALSE) {
     part_first_page = extract_child(part, ".//fpage")
   )
 
-  new_tibble(out)
+  nrow <- validate_tibble(out)
+  
+  new_tibble(out, nrow = nrow)
 }

@@ -66,7 +66,7 @@ chapters." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">jstor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.6</span>
       </span>
     </div>
 
@@ -206,7 +206,7 @@ the number of chapters to extract.</p>
 #&gt; </span><span style='color: #555555;'> 8</span><span> j.ctt2… book      j.ctt2… 4.         ‘This pro… The aftermat… </span><span style='color: #BB0000;'>NA</span><span>     
 #&gt; </span><span style='color: #555555;'> 9</span><span> j.ctt2… book      j.ctt2… 5.         The chang… </span><span style='color: #BB0000;'>NA</span><span>            </span><span style='color: #BB0000;'>NA</span><span>     
 #&gt; </span><span style='color: #555555;'>10</span><span> j.ctt2… book      j.ctt2… 6.         The Fiji … Analyzing th… </span><span style='color: #BB0000;'>NA</span><span>     
-#&gt; </span><span style='color: #555555;'># ... with 26 more rows, and 2 more variables: abstract </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; </span><span style='color: #555555;'># … with 26 more rows, and 2 more variables: abstract </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
 #&gt; #   part_first_page </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
 <span class='co'># import authors too</span>
 <span class='no'>parts</span> <span class='kw'>&lt;-</span> <span class='fu'>jst_get_chapters</span>(<span class='fu'><a href='jst_example.html'>jst_example</a></span>(<span class='st'>"book.xml"</span>), <span class='kw'>authors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -223,7 +223,7 @@ the number of chapters to extract.</p>
 #&gt; </span><span style='color: #555555;'> 8</span><span> j.ctt2… book      j.ctt2… 4.         ‘This pro… The aftermat… </span><span style='color: #555555;'>&lt;tibbl</span><span>…
 #&gt; </span><span style='color: #555555;'> 9</span><span> j.ctt2… book      j.ctt2… 5.         The chang… </span><span style='color: #BB0000;'>NA</span><span>            </span><span style='color: #555555;'>&lt;tibbl</span><span>…
 #&gt; </span><span style='color: #555555;'>10</span><span> j.ctt2… book      j.ctt2… 6.         The Fiji … Analyzing th… </span><span style='color: #555555;'>&lt;tibbl</span><span>…
-#&gt; </span><span style='color: #555555;'># ... with 26 more rows, and 2 more variables: abstract </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; </span><span style='color: #555555;'># … with 26 more rows, and 2 more variables: abstract </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
 #&gt; #   part_first_page </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
 <span class='kw pkg'>tidyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/unnest.html'>unnest</a></span>(<span class='no'>parts</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 39 x 14</span><span>
 #&gt;    book_id file_name part_id part_label part_title part_subtitle abstract
@@ -238,7 +238,7 @@ the number of chapters to extract.</p>
 #&gt; </span><span style='color: #555555;'> 8</span><span> j.ctt2… book      j.ctt2… 3.         Fiji’s De… Who, what, w… The Fij…
 #&gt; </span><span style='color: #555555;'> 9</span><span> j.ctt2… book      j.ctt2… 4.         ‘This pro… The aftermat… ‘We con…
 #&gt; </span><span style='color: #555555;'>10</span><span> j.ctt2… book      j.ctt2… 5.         The chang… </span><span style='color: #BB0000;'>NA</span><span>            The cen…
-#&gt; </span><span style='color: #555555;'># ... with 29 more rows, and 7 more variables: part_first_page </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; </span><span style='color: #555555;'># … with 29 more rows, and 7 more variables: part_first_page </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
 #&gt; #   prefix </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, given_name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, surname </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, string_name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
 #&gt; #   suffix </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, author_number </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div></span></pre>
   </div>

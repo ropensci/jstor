@@ -82,7 +82,7 @@ extract_references <- function(xml_file, file_path, parse_refs) {
       ref_publisher = NA_character_,
       ref_publication_type = NA_character_,
       ref_unparsed = NA_character_
-    )))
+    ), nrow = 1L))
   }
 
   purrr::pmap(list(res, file_path, parse_refs), extract_ref_content) %>% 
@@ -211,7 +211,7 @@ ref_to_tibble <- function(refs, title) {
   }
   refs <- gsub("^$", NA_character_, refs)
   
-  new_tibble(list(
+  out <- list(
     ref_title = rep(title, length(refs)),
     ref_authors = rep(NA_character_, length(refs)),
     ref_collab = rep(NA_character_, length(refs)),
@@ -224,5 +224,9 @@ ref_to_tibble <- function(refs, title) {
     ref_publisher = rep(NA_character_, length(refs)),
     ref_publication_type = rep(NA_character_, length(refs)),
     ref_unparsed = refs
-  ))
+  )
+  
+  nrow <- validate_tibble(out)
+  
+  new_tibble(out, nrow = nrow)
 }
