@@ -1,3 +1,5 @@
+# jstor 0.3.6
+
 # jstor 0.3.5
 This is a small release, mainly to fix compatibility with version `1.2.0` of 
 `readr`. There is one breaking change however:
