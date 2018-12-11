@@ -146,14 +146,14 @@ jst_define_import <- function(...) {
         "Your import specification seems to be incorrect, since you are using ",
         "a book function on an article. Please make sure ",
         "that all import functions correspond to the right data type."),
-        type = "import_spec")
+        .subclass = "import_spec")
       },
     article_function_for_book = function(cnd) {
       abort(paste0(
         "Your import specification seems to be incorrect, since you are using ",
         "an article function on a book. Please make sure ",
         "that all import functions correspond to the right data type."),
-        type = "import_spec")
+        .subclass = "import_spec")
     },
     matched_types %>% 
       split(.$meta_type) %>% 
