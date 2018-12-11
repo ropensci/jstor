@@ -37,14 +37,17 @@ extract_footnotes <- function(xml_file) {
 
   # if there are no footnotes, exit and return NA
   if (is_empty(res)) {
-    return(new_tibble(list(footnotes = NA_character_)))
+    return(new_tibble(list(footnotes = NA_character_), nrow = 1L))
   }
 
-  res %>%
+  out <- res %>%
     xml_children() %>%
     map_chr(xml_text) %>%
     str_replace("^\\\n", "") %>%  # remove "\n" at beginning of strings
     list() %>%
-    rlang::set_names("footnotes") %>%
-    new_tibble()
+    rlang::set_names("footnotes")
+  
+  nrow <- validate_tibble(out)
+  
+  new_tibble(out, nrow = nrow)
 }

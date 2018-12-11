@@ -27,9 +27,11 @@ jst_get_full_text <- function(filename) {
 
   text <- read_file(filename, locale = locale(encoding = encoding))
 
-  new_tibble(
-    list(
-      file_name = id, full_text = text, encoding = encoding
-    )
+  out <- list(
+    file_name = id, full_text = text, encoding = encoding
   )
+  
+  nrow <- validate_tibble(out)
+  
+  new_tibble(out, nrow = nrow)
 }

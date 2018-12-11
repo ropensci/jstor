@@ -61,7 +61,7 @@ extract_authors <- function(article) {
       string_name = NA_character_,
       suffix = NA_character_,
       author_number = NA_real_
-    ))
+    ), nrow = 1L)
 
     # case for authors with just "string-name"
   } else if (is_empty(xml_find_all(article, ".//given-names")) &
@@ -70,15 +70,21 @@ extract_authors <- function(article) {
     string_name <- xml_find_all(article, ".//string-name") %>% xml_text()
 
     missings <- rep(NA_character_, length(string_name))
+    
 
-    tibble::new_tibble(list(
+    
+    out <- list(
       prefix = missings,
       given_name = missings,
       surname = missings,
       string_name = string_name,
       suffix = missings,
       author_number = seq_along(string_name)
-    ))
+    )
+    
+    nrow <- validate_tibble(out)
+    
+    tibble::new_tibble(out, nrow = nrow)
 
     # standard case
   } else {
@@ -91,15 +97,19 @@ extract_authors <- function(article) {
 
     # replace some trailing ","s after surnames (occurs when there is a suffix)
     surnames <- gsub(pattern = ",$", replacement =  "", x = surnames)
-
-    tibble::new_tibble(list(
+    
+    out <- list(
       prefix = prefix,
       given_name = given_names,
       surname = surnames,
       string_name = rep(NA_character_, length(given_names)),
       suffix = suffix,
       author_number = seq_along(given_names)
-    ))
+    )
+    
+    nrow <- validate_tibble(out)
+    
+    tibble::new_tibble(out, nrow = nrow)
   }
 }
 

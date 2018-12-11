@@ -142,3 +142,21 @@ check_path <- function(path) {
 is_absolute_path <- function(path) {
   grepl("^(/|[A-Za-z]:|\\\\|~)", path)
 }
+
+# This function checks if the input of the tibble is valid by checking the 
+# lengths of the input.
+# It returns the number of rows, since that is what tibble::new_tibble needs.
+validate_tibble <- function(x) {
+  
+  if (is.atomic(x)) {
+    return(length(x))
+  } else {
+    lengths <- lengths(x)
+    
+    if (length(unique(lengths)) > 1) {
+      abort("There is a problem.")
+    }
+    
+    lengths[1]
+  }
+}

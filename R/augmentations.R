@@ -215,7 +215,10 @@ jst_unify_journal_id <- function(meta_data,
 
 
 parse_ranges <- function(page_range, quietly = FALSE) {
-  splitted_df <- tibble::new_tibble(list(page_range = page_range)) %>% 
+  nrow <- validate_tibble(page_range)
+  
+  splitted_df <- tibble::new_tibble(list(page_range = page_range), 
+                                    nrow = nrow) %>% 
     mutate(id = 1:n(),
            splitted = stringr::str_split(page_range, ",|\\+")) %>% 
     tidyr::unnest()
