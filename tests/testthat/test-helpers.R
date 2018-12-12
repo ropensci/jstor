@@ -62,3 +62,8 @@ test_that("getting footnotes or references on book raises informative error", {
                "Neither footnotes nor references")
 })
 
+test_that("validating input for tibbles works", {
+  expect_error(validate_tibble(list(1:3, 1:2)))
+  expect_equal(validate_tibble(list(1:5, 1:5)), 5L)
+  expect_equal(validate_tibble(letters), 26L)
+})
