@@ -26,8 +26,10 @@ chap_auth <- "testfiles/standard_book.xml" %>%
 test_that("Input data is checked", {
   expect_error(jst_get_book("my_path.txt"))
   expect_error(jst_get_chapters("my_path.txt"))
-  expect_error(jst_get_book("testfiles/standard_case.xml"), "You are using")
-  expect_error(jst_get_chapters("testfiles/standard_case.xml"), "You are using")
+  expect_error(jst_get_book("testfiles/standard_case.xml"), 
+               class = "book_function_for_article")
+  expect_error(jst_get_chapters("testfiles/standard_case.xml"), 
+               class = "book_function_for_article")
 })
 
 test_that("class is correct", {

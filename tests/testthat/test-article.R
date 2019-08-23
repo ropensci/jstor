@@ -30,7 +30,8 @@ article_jcode_stable <- "testfiles/article-jcode-stable.xml" %>%
 # tests -----
 test_that("Input data is checked", {
   expect_error(jst_get_article("my_path.txt"))
-  expect_error(jst_get_article("testfiles/standard_book.xml"), "You are using")
+  expect_error(jst_get_article("testfiles/standard_book.xml"), 
+               class = "article_function_for_book")
 })
 
 
