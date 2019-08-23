@@ -31,8 +31,8 @@ get_zip_content <- function(zip_archive) {
 #' jst_preview_zip(jst_example("pseudo_dfr.zip"))
 jst_preview_zip <- function(zip_archive) {
   get_zip_content(zip_archive) %>% 
-    dplyr::group_by_("type") %>%
-    dplyr::count_("meta_type") %>% 
+    dplyr::group_by(type) %>%
+    dplyr::count(meta_type) %>% 
     dplyr::ungroup()
 }
 
