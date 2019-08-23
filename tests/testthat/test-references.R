@@ -44,7 +44,7 @@ standard_references <- structure(
   class = c("tbl_df", "tbl", "data.frame"), row.names = c(NA, -3L))
 
 
-no_references <- tibble::data_frame(
+no_references <- tibble::tibble(
   file_name = "author-prefix",
   ref_title = NA_character_,
   ref_authors = NA_character_,
