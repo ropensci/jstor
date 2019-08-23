@@ -261,9 +261,19 @@ walk_spec <- function(spec_df, chunk_number, n_batches, out_path,
     funs <- unique(funs)
   }
   
+  # quick hack to fix error
+  if (tidyr_new_interface()) {
+    fun_spec <- spec_df %>% 
+      tidyr::unnest_legacy(fun_names) %>% 
+      dplyr::distinct(meta_type, fun_names)
+  } else {
+    fun_spec <- spec_df %>% 
+      tidyr::unnest(fun_names) %>% 
+      dplyr::distinct(meta_type, fun_names)
+  }
   
   fun_spec <- spec_df %>% 
-    tidyr::unnest(fun_names) %>% 
+    tidyr::unnest_legacy(fun_names) %>% 
     dplyr::distinct(meta_type, fun_names)
     
   out_paths <- fun_spec %>% 
