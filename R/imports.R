@@ -7,6 +7,7 @@
 #' @importFrom stringr str_detect str_replace str_split str_replace_all
 #' @importFrom tibble new_tibble
 #' @importFrom rlang enquos get_expr eval_tidy abort
+#' @importFrom tidyselect one_of
 NULL
 
 #' Pipe operator
