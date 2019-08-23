@@ -221,7 +221,7 @@ parse_ranges <- function(page_range, quietly = FALSE) {
                                     nrow = nrow) %>% 
     mutate(id = 1:n(),
            splitted = stringr::str_split(page_range, ",|\\+")) %>% 
-    tidyr::unnest()
+    tidyr::unnest(one_of("splitted"))
   
   # detect roman numerals which are occasionally used for introduction sections
   roman_chars <- str_detect(splitted_df$splitted, "x|i|v|X|I|V")
