@@ -271,10 +271,6 @@ walk_spec <- function(spec_df, chunk_number, n_batches, out_path,
       tidyr::unnest(fun_names) %>% 
       dplyr::distinct(meta_type, fun_names)
   }
-  
-  fun_spec <- spec_df %>% 
-    tidyr::unnest_legacy(fun_names) %>% 
-    dplyr::distinct(meta_type, fun_names)
     
   out_paths <- fun_spec %>% 
     mutate(out_paths = paste(out_path, meta_type, fun_names, sep = "_")) %>% 
