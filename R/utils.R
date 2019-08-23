@@ -4,5 +4,5 @@ release_questions <- function() {
 }
 
 tidyr_new_interface <- function() {
-  packageVersion("tidyr") > "0.8.99"
+  utils::packageVersion("tidyr") > "0.8.99"
 }
