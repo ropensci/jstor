@@ -340,7 +340,7 @@ You can expand this list with `tidyr::unnest`:
 
 ```{r}
 author_chap %>% 
-  tidyr::unnest() %>% 
+  tidyr::unnest(authors) %>% 
   select(part_id, given_name, surname) %>% 
   head(10) %>% 
   kable()
