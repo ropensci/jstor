@@ -1,4 +1,6 @@
-# jstor 0.3.6.9000
+# jstor 0.3.7
+This is another small release to fix compatibility with `tidyr v1.0.0`. There
+are no other changes.
 
 # jstor 0.3.6
 This is another small release to fix compatibility with `readr v1.3.0` and
