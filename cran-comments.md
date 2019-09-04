@@ -12,6 +12,6 @@
 The links in the vignettes are correct and work when used in a browser, as in
 the last release.
 
-The note on "Missing or unexported objects" is likely due to new functions 
-introduced in tidyr v1.0.0 that I utilise if the user has the latest version of
-tidyr installed.
+The note on "Missing or unexported objects" is about the function
+`'tidyr::unnest_legacy'`, previously not part of `tidyr` that I utilize for 
+users that have a tidyr version before v1.0.0.
