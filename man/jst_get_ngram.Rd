@@ -10,7 +10,7 @@ jst_get_ngram(file)
 \item{file}{A path to a file or a zip location from \code{\link[=jst_subset_ngrams]{jst_subset_ngrams()}}.}
 }
 \value{
-A \link[tibble:tibble]{tibble::tibble} with two columns:
+A \code{\link[tibble:tibble]{tibble::tibble()}} with two columns:
 \itemize{
 \item \emph{ngram}: the ngram term (unigram, bigram, trigram)
 \item \emph{n}: an integer for the number of times the term occurred in the original
@@ -18,7 +18,7 @@ file
 }
 }
 \description{
-Read in data on ngrams via \link[readr:read_tsv]{readr::read_tsv}.
+Read in data on ngrams via \code{\link[readr:read_tsv]{readr::read_tsv()}}.
 }
 \details{
 This function is mainly useful when it is used in together with

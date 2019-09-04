@@ -1,12 +1,12 @@
 #' Read ngram data
 #' 
-#' Read in data on ngrams via [readr::read_tsv].
+#' Read in data on ngrams via [readr::read_tsv()].
 #' 
 #' This function is mainly useful when it is used in together with
 #' [jst_import_zip], where you can use it to specify reading in ngram data.
 #' 
 #' @param file A path to a file or a zip location from [jst_subset_ngrams()].
-#' @return A [tibble::tibble] with two columns: 
+#' @return A [tibble::tibble()] with two columns: 
 #' - *ngram*: the ngram term (unigram, bigram, trigram)
 #' - *n*: an integer for the number of times the term occurred in the original 
 #' file
