@@ -209,12 +209,12 @@ capture_functions <- function(...) {
 
 
 is_jstor <- function(fun) {
-  if (identical(environment(fun), environment(find_article))) {
+  if (identical(environment(fun), environment(jst_get_article))) {
     TRUE
   } else {
     fun %>% 
       check_env() %>% 
-      identical(environment(find_article))
+      identical(environment(jst_get_article))
   }
 }
 

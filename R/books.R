@@ -95,7 +95,7 @@ extract_book_pages <- function(book) {
 #' - part_title *(chr)*: The title of the part.
 #' - part_subtitle *(chr)*: The subtitle of the part, if specified.
 #' - authors *(list)*: A list-column with information on the authors. Can be
-#'   unnested with [tidyr::unnest()]. See the examples and [find_authors()].
+#'   unnested with [tidyr::unnest()]. See the examples and [jst_get_authors()].
 #' - abstract *(chr)*: The abstract to the part.
 #' - part_first_page *(chr)*: The page where the part begins.
 #' 
