@@ -224,7 +224,7 @@ parse_ranges <- function(page_range, quietly = FALSE) {
   
   if (tidyr_new_interface()) {
     splitted_df <- splitted_df %>% 
-      tidyr::unnest(tidyr::one_of("splitted"))
+      tidyr::unnest(cols = c("splitted"))
   } else {
     splitted_df <- splitted_df %>% 
       tidyr::unnest()
