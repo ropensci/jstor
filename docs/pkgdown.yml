@@ -6,4 +6,7 @@ articles:
   analysing-n-grams: analysing-n-grams.html
   automating-file-import: automating-file-import.html
   known-quirks: known-quirks.html
+urls:
+  reference: https://ropensci.github.io/jstor/reference
+  article: https://ropensci.github.io/jstor/articles
 
