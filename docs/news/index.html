@@ -139,7 +139,7 @@
 <h1 class="page-header">
 <a href="#jstor-0-3-7" class="anchor"></a>jstor 0.3.7<small> Unreleased </small>
 </h1>
-<p>This is a small release to fix compatibility with <code>tidyr v1.0.0</code>. There are no other changes.</p>
+<p>This is a small release to fix compatibility with <code>tidyr v1.0.0</code>. Furthermore, the formerly defunct functions following the old naming conventions (like <code>find_article()</code>, <code>find_references()</code>, etc.) have been removed.</p>
 </div>
     <div id="jstor-0-3-6" class="section level1">
 <h1 class="page-header">
@@ -282,7 +282,7 @@ jst_import_zip("zip-archive.zip",
 <ul>
 <li>New function <code><a href="../reference/jst_get_journal_overview.html">jst_get_journal_overview()</a></code> supplies a tibble with contextual information about the journals in JSTOR.</li>
 <li>New function <code><a href="../reference/jst_combine_outputs.html">jst_combine_outputs()</a></code> applies <code><a href="../reference/jst_re_import.html">jst_re_import()</a></code> to a whole directory and lets you combine all related files in one go. It uses the file structure that <code><a href="../reference/jst_import.html">jst_import()</a></code> and <code><a href="../reference/jst_import.html">jst_import_zip()</a></code> provide as a heuristic: a filename with a dash and one or multiple digits at its end (<code>filename-1.csv</code>). All files with identical names (disregarding dash and digits) are combined into one file.</li>
-<li>New function <code><a href="../reference/jst_re_import.html">jst_re_import()</a></code> lets you re_import a <code>.csv</code> file that <code><a href="../reference/jstor_import.html">jstor_import()</a></code> or <code><a href="../reference/jst_import.html">jst_import_zip()</a></code> had exported. It tries to guess the type of content based on the column names or, if column names are not available, from the number of columns, raising a warning if guessing fails and reverting to a generic import.</li>
+<li>New function <code><a href="../reference/jst_re_import.html">jst_re_import()</a></code> lets you re_import a <code>.csv</code> file that <code>jstor_import()</code> or <code><a href="../reference/jst_import.html">jst_import_zip()</a></code> had exported. It tries to guess the type of content based on the column names or, if column names are not available, from the number of columns, raising a warning if guessing fails and reverting to a generic import.</li>
 <li>A new function <code><a href="../reference/jst_subset_ngrams.html">jst_subset_ngrams()</a></code> lets you create a subset of ngram files within a zip-file which you can import with <code><a href="../reference/jst_get_ngram.html">jst_get_ngram()</a></code>.</li>
 <li>A new set of convenience functions for taking a few cleaning steps: <code><a href="../reference/jst_clean_page.html">jst_clean_page()</a></code> tries to turn a character vector with pages into a numeric one, <code><a href="../reference/jst_unify_journal_id.html">jst_unify_journal_id()</a></code> merges different specifications of journals into one, <code><a href="../reference/jst_add_total_pages.html">jst_add_total_pages()</a></code> adds a total count of pages per article, and <code><a href="../reference/jst_augment.html">jst_augment()</a></code> calls all three functions to clean the data set in one go.</li>
 </ul>
