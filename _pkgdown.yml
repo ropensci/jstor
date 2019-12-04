@@ -79,3 +79,6 @@ authors:
     href: https://thomasklebel.eu
 
 url: https://ropensci.github.io/jstor
+
+extra_packages:
+  - tidyverse
