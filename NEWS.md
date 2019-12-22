@@ -1,3 +1,5 @@
+# jstor (development version)
+
 # jstor 0.3.7
 This is a small release to fix compatibility with `tidyr v1.0.0`. Furthermore,
 the formerly defunct functions following the old naming conventions (like
