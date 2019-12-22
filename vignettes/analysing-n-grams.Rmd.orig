@@ -1,14 +1,16 @@
 ---
 title: Analysing n-grams with `jstor` for R
 author: "Thomas Klebel"
-date: "2019-12-22"
+date: "`r Sys.Date()`"
 output:
   rmarkdown::html_vignette:
       toc: true
 ---
 
 
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 The service [DfR](http://www.jstor.org/dfr/) by JSTOR offers several ways for
 text analysis of scientific articles. 
@@ -37,8 +39,7 @@ Up-front, we need to load some packages. `jstor` is  available from
 CRAN, so it can be installed via `install.packages("jstor")`.
 
 
-
-```r
+```{r, message=FALSE}
 library(jstor)
 library(tidyverse)
 library(future)
@@ -58,8 +59,7 @@ parts we want to extract, and where the resulting files should be saved.
 Before importing data, we can take a quick look at the contents of each
 archive with `jst_preview_zip()`:
 
-
-```r
+```{r, eval=FALSE}
 jst_preview_zip("part1.zip")
 
 ## # A tibble: 4 x 3
@@ -69,10 +69,10 @@ jst_preview_zip("part1.zip")
 ## 2 ngram1   ngram1          19759
 ## 3 ngram2   ngram2          19739
 ## 4 ngram3   ngram3          19727
+
 ```
 
-
-```r
+```{r, eval=FALSE}
 jst_preview_zip("part2.zip")
 
 ## # A tibble: 4 x 3
@@ -92,8 +92,7 @@ The following code assumes that you follow a workflow
 organised around projects within RStudio (refer to
 http://r4ds.had.co.nz/workflow-projects.html for further information). 
 
-
-```r
+```{r, eval=FALSE}
 import_spec <- jst_define_import(article = jst_get_article)
 
 jst_import_zip("part1.zip", import_spec = import_spec, out_file = "part1")
@@ -108,41 +107,18 @@ Since `jst_import_zip` writes the results to disk, we need to read the metadata
 from the newly created file. This is made easy by `jst_re_import` which ensures,
 that the data are read with the right column types.
 
-
-```r
+```{r}
 imported_metadata <- c("part1_journal_article_jst_get_article-1.csv",
                        "part2_journal_article_jst_get_article-1.csv") %>% 
   map_df(jst_re_import)
 imported_metadata
 ```
 
-```
-## # A tibble: 23,909 x 19
-##    file_name journal_doi journal_jcode journal_pub_id journal_title
-##    <chr>     <chr>       <chr>         <chr>          <chr>        
-##  1 journal-… <NA>        <NA>          amerjsoci      American Jou…
-##  2 journal-… <NA>        <NA>          amerjsoci      American Jou…
-##  3 journal-… <NA>        <NA>          amerjsoci      American Jou…
-##  4 journal-… <NA>        <NA>          amerjsoci      American Jou…
-##  5 journal-… <NA>        <NA>          amerjsoci      American Jou…
-##  6 journal-… <NA>        <NA>          amerjsoci      American Jou…
-##  7 journal-… <NA>        <NA>          amerjsoci      American Jou…
-##  8 journal-… <NA>        <NA>          amerjsoci      American Jou…
-##  9 journal-… <NA>        <NA>          amerjsoci      American Jou…
-## 10 journal-… <NA>        <NA>          amerjsoci      American Jou…
-## # … with 23,899 more rows, and 14 more variables: article_doi <chr>,
-## #   article_pub_id <chr>, article_jcode <chr>, article_type <chr>,
-## #   article_title <chr>, volume <chr>, issue <chr>, language <chr>,
-## #   pub_day <chr>, pub_month <chr>, pub_year <int>, first_page <chr>,
-## #   last_page <chr>, page_range <chr>
-```
-
 # Cleaning the data
 Data from DfR is inherently messy. To fix a few common issues, we can use 
 `jst_augment()`:
 
-
-```r
+```{r}
 imported_metadata <- jst_augment(imported_metadata, quietly = TRUE)
 ```
 
@@ -153,72 +129,30 @@ them, take a look at the `vignette("known-quirks")`.
 # Exploration
 Before diving into the analysis of n-grams, we might wish to take an exploratory
 look at our metadata. The first thing to look at are the types of articles.
-
-```r
+```{r article-types}
 ggplot(imported_metadata, aes(article_type)) +
   geom_bar() +
   coord_flip()
 ```
 
-![plot of chunk article-types](figure/article-types-1.png)
-
 We can see, that the majority of articles are proper "research-articles", which
 together with book-reviews and miscellaneous articles amount to ~99% of all
 articles.
 
-
-```r
+```{r}
 imported_metadata %>% 
   count(article_type, sort = T) %>% 
   mutate(perc = scales::percent(n/sum(n)))
-```
-
-```
-## # A tibble: 14 x 3
-##    article_type         n perc 
-##    <chr>            <int> <chr>
-##  1 research-article 16289 68.1%
-##  2 book-review       4552 19.0%
-##  3 misc              2850 11.9%
-##  4 other               89 0.4% 
-##  5 in-brief            38 0.2% 
-##  6 discussion          31 0.1% 
-##  7 review-article      25 0.1% 
-##  8 announcement        12 0.1% 
-##  9 index                9 0.0% 
-## 10 editorial            7 0.0% 
-## 11 introduction         3 0.0% 
-## 12 news                 2 0.0% 
-## 13 bibliography         1 0.0% 
-## 14 letter               1 0.0%
 ```
 
 We must be cautious, however, when using this variable to distinguish articles
 into categories. In this instance, we have "research-articles" which are
 actually book-reviews:
 
-
-```r
+```{r}
 imported_metadata %>% 
   filter(article_type == "research-article" & str_detect(article_title, "Book")) %>% 
   select(file_name, article_title, pub_year)
-```
-
-```
-## # A tibble: 190 x 3
-##    file_name                      article_title pub_year
-##    <chr>                          <chr>            <int>
-##  1 journal-article-10.1086_210272 Book Reviews      1999
-##  2 journal-article-10.1086_210273 Book Reviews      1999
-##  3 journal-article-10.1086_210274 Book Reviews      1999
-##  4 journal-article-10.1086_210275 Book Reviews      1999
-##  5 journal-article-10.1086_210276 Book Reviews      1999
-##  6 journal-article-10.1086_210278 Book Reviews      1999
-##  7 journal-article-10.1086_210279 Book Reviews      1999
-##  8 journal-article-10.1086_210280 Book Reviews      1999
-##  9 journal-article-10.1086_210281 Book Reviews      1999
-## 10 journal-article-10.1086_210283 Book Reviews      1999
-## # … with 180 more rows
 ```
 
 For the current demonstration, we want to restrict the type of articles to
@@ -226,8 +160,7 @@ research articles, therefore we need to take steps to remove book reviews and ot
 miscellaneous articles: First, filter by `article_type`, then remove articles
 where the title starts with "Book Review".
 
-
-```r
+```{r}
 research_articles <- imported_metadata %>% 
   filter(article_type == "research-article") %>% 
   filter(!str_detect(article_title, "^Book Review"))
@@ -237,14 +170,11 @@ research_articles <- imported_metadata %>%
 ## The moving wall - filtering articles by time
 Since JSTOR has a [moving wall](https://support.jstor.org/hc/en-us/articles/115004879547-JSTOR-s-Moving-Wall-Archive-vs-Current-Definitions),
 we should take a look at the number of articles per year in our dataset.
-
-```r
+```{r publications-per-year}
 research_articles %>% 
   ggplot(aes(pub_year)) +
   geom_bar() 
 ```
-
-![plot of chunk publications-per-year](figure/publications-per-year-1.png)
 
 From this graph we can see an increase in research articles until 2010, after
 which the number of articles
@@ -253,8 +183,7 @@ exclude articles at least
 from 2015 onward, since the sample might get quite biased toward specific
 journals.
 
-
-```r
+```{r}
 without_wall <- research_articles %>% 
   filter(pub_year < 2015)
 ```
@@ -270,8 +199,7 @@ of Sociology" and "American Sociological Review".
 Since we cleaned the identifiers for journals with `jst_augment` earlier,
 we can select our two flagship-journals very easily.
 
-
-```r
+```{r}
 flagship_journals <- without_wall %>%
   filter(journal_id %in% c("amerjsoci", "amersocirevi"))
 ```
@@ -321,28 +249,15 @@ To make importing a subset of ngrams more convenient, we can use
 `jst_subset_ngrams`. This function returns a list of "zip-locations", which
 `jst_get_ngram` can read.
 
-
-```r
+```{r}
 ngram_selection <- jst_subset_ngrams(c("part1.zip", "part2.zip"), "ngram2",
                                     flagship_journals)
-```
-
-```
-## Error in utils::unzip(zip_archive, list = TRUE): zip Datei 'part2.zip' kann nicht geöffnet werden
-```
-
-```r
 head(ngram_selection, 2)
 ```
 
-```
-## Error in head(ngram_selection, 2): Objekt 'ngram_selection' nicht gefunden
-```
 
 
-
-
-```r
+```{r, eval=FALSE}
 ngram_selection <- jst_subset_ngrams(c("part1.zip", "part2.zip"), "ngram2",
                                     flagship_journals)
 
@@ -351,10 +266,14 @@ imported_bigrams <- ngram_selection %>%
 ```
 
 
+```{r, echo=FALSE, include=TRUE, eval=TRUE}
+# write_csv(imported_bigrams, "imported_bigrams.csv")
 
+imported_bigrams <- data.table::fread("imported_bigrams.csv", showProgress = F)
+```
 
-From the 872 articles in our two flagship journals we
-now have 6,729,813 bigrams. The 
+From the `r dim(flagship_journals)[1]` articles in our two flagship journals we
+now have `r format(dim(imported_bigrams)[1], big.mark = ",")` bigrams. The 
 bigrams are calculated by
 JSTOR for each article independently. In order to reduce the sample to the most 
 common bigrams, we have two choices: either to include only terms which occur
@@ -367,8 +286,7 @@ do not occur repeatedly within articles, but are present in all of them.
 For demonstration purposes we are a bit restrictive and include only those
 terms, which occur at least three times per article. 
 
-
-```r
+```{r}
 top_bigrams <- imported_bigrams %>%
   filter(n >= 3)
 ```
@@ -383,8 +301,7 @@ on their page]. If we would like to restrict the terms a bit further, we could
 use stopwords from `tidytext`:
 
 
-
-```r
+```{r}
 library(tidytext)
 bigrams_separated <- top_bigrams %>%
   separate(bigrams, c("word1", "word2"), sep = " ")
@@ -398,8 +315,7 @@ After removing the stopwords we need to consider the fact, that our bigrams
 were created for each article on its own. In order to analyse them together,
 we need to count the terms for all articles in combination.
 
-
-```r
+```{r}
 bigram_counts <- bigrams_filtered %>%
   group_by(word1, word2) %>%
   summarise(n = sum(n)) %>%
@@ -408,38 +324,20 @@ bigram_counts <- bigrams_filtered %>%
 bigram_counts
 ```
 
-```
-## # A tibble: 106,706 x 3
-## # Groups:   word1 [18,152]
-##    word1        word2            n
-##    <chr>        <chr>        <int>
-##  1 american     sociological  9593
-##  2 sociological review        9198
-##  3 university   press         4603
-##  4 labor        market        3555
-##  5 american     journal       3273
-##  6 9            7             3270
-##  7 7            6             3260
-##  8 10           9             3230
-##  9 amsmath      amsxtra       3192
-## 10 begin        document      3192
-## # … with 106,696 more rows
-```
-
 From the first few terms we can see, that there are still many terms which are
 not very interesting for our analysis. The terms "american" and "sociological"
 are simply part of the title of a journal we selected (American Sociological 
 Review). To clean the terms up, we can employ different approaches. One is to
 simply filter the terms we wish to exclude:
 
-
-```r
+```{r}
 bigram_counts_clean <- bigram_counts %>%
   unite(bigram, word1, word2, sep = " ") %>%
   filter(!bigram %in% c("american sociological", "sociological review",
                         "university press", "american journal",
                         "journal sociology")) %>%
   separate(bigram, c("word1", "word2"))
+
 ```
 
 We will look at another approach after plotting our bigrams.
@@ -451,8 +349,7 @@ common terms. For this we can leverage the power of
 [igraph](http://igraph.org/r/) and
 [ggraph](https://cran.r-project.org/web/packages/ggraph/index.html).
 
-
-```r
+```{r, message=FALSE}
 library(igraph)
 library(ggraph)
 ```
@@ -463,8 +360,7 @@ an `igraph`-object. ^[If you are unfamiliar with graph theory, just take a look
 at Wikipedia: [Graph Theory](https://en.wikipedia.org/wiki/Graph_theory).]
 
 
-
-```r
+```{r}
 bigram_graph <- bigram_counts_clean %>%
   filter(n > 500) %>%
   graph_from_data_frame()
@@ -472,26 +368,10 @@ bigram_graph <- bigram_counts_clean %>%
 bigram_graph
 ```
 
-```
-## IGRAPH 755e99b DN-- 170 161 -- 
-## + attr: name (v/c), n (e/n)
-## + edges from 755e99b (vertex names):
-##  [1] labor                 ->market   9                     ->7       
-##  [3] 7                     ->6        10                    ->9       
-##  [5] amsmath               ->amsxtra  begin                 ->document
-##  [7] declaremathsizes      ->10       declaretextfontcommand->textcyr 
-##  [9] documentclass         ->aastex   encodingdefault       ->ot2     
-## [11] newcommand            ->cyr      ot1                   ->fontenc 
-## [13] ot2                   ->ot1      pagestyle             ->empty   
-## [15] portland              ->xspace  
-## + ... omitted several edges
-```
-
 For plotting, we will use a simple plotting function, adapted from
 https://www.tidytextmining.com/ngrams.html#visualizing-a-network-of-bigrams-with-ggraph.
 
-
-```r
+```{r}
 plot_bigrams <- function(igraph_df, seed = 2016) {
   set.seed(seed)
   
@@ -506,60 +386,25 @@ plot_bigrams <- function(igraph_df, seed = 2016) {
 }
 ```
 
-
-```r
+```{r first-bigram-graph, fig.width=12, fig.height=10}
 plot_bigrams(bigram_graph)
 ```
-
-![plot of chunk first-bigram-graph](figure/first-bigram-graph-1.png)
 Very obvious is a group of nodes which are not relevant to the topic of
 inequality. They come from LaTeX documents and somehow made their way into the
 original dataset. However, since they are more common than most of the other
 terms, they are quite easy to remove. We can look at the nodes/vertices of our
 graph with `V(bigram_graph)`.
 
-
-```r
+```{r}
 V(bigram_graph)
-```
-
-```
-## + 170/170 vertices, named, from 755e99b:
-##   [1] labor                  9                      7                     
-##   [4] 10                     amsmath                begin                 
-##   [7] declaremathsizes       declaretextfontcommand documentclass         
-##  [10] encodingdefault        newcommand             ot1                   
-##  [13] ot2                    pagestyle              portland              
-##  [16] renewcommand           rmdefault              sfdefault             
-##  [19] textcyr                usepackage             6                     
-##  [22] aastex                 amsbsy                 amsfonts              
-##  [25] amssymb                amsxtra                bm                    
-##  [28] cyr                    document               empty                 
-## + ... omitted several vertices
 ```
 
 The first node, "labor", is relevant to us, but all other nodes from 2 to at 
 least 40 are clearly irrelevant. We can remove them by simple subtraction:
 
-
-```r
+```{r}
 bigram_graph_clean <- bigram_graph - 2:40
 bigram_graph_clean
-```
-
-```
-## IGRAPH 3272619 DN-- 131 105 -- 
-## + attr: name (v/c), n (e/n)
-## + edges from 3272619 (vertex names):
-##  [1] labor     ->market     labor     ->force      0         ->0         
-##  [4] table     ->2          1         ->1          income    ->inequality
-##  [7] black     ->white      table     ->1          table     ->3         
-## [10] social    ->capital    model     ->1          model     ->2         
-## [13] african   ->american   0         ->1          human     ->capital   
-## [16] african   ->americans  table     ->4          1         ->2         
-## [19] model     ->3          racial    ->ethnic     individual->level     
-## [22] civil     ->rights     cross     ->national  
-## + ... omitted several edges
 ```
 
 Another apparent group is a combination of "table" or "figure" with digits. This
@@ -569,8 +414,7 @@ figures and tables are very common. For the analysis at hand however, we might
 remove them, along with a few other irrelevant terms.
 
 
-
-```r
+```{r}
 bigram_graph_clean <- bigram_graph_clean - c("table", "model",
                                              as.character(0:5),
                                              "xd", "rh", "landscape", "00",
@@ -580,12 +424,9 @@ bigram_graph_clean <- bigram_graph_clean - c("table", "model",
 
 
 After cleaning up a bit, we can take a fresh look at our bigrams.
-
-```r
+```{r second-bigram-graph, fig.width=12, fig.height=10}
 plot_bigrams(bigram_graph_clean, 234)
 ```
-
-![plot of chunk second-bigram-graph](figure/second-bigram-graph-1.png)
 
 The figure is still far from perfect ("eco" -> "nomic" should clearly be one
 term), but we can begin to analyse our network.
@@ -641,8 +482,7 @@ often "labor market" and "income inequality" appear from year to year.
 For this, we need to join our bigrams with the metadata.
 
 
-
-```r
+```{r}
 time_bigrams <- top_bigrams %>% 
   left_join(flagship_journals, by = "file_name") %>% 
   select(bigrams, n, pub_year)
@@ -650,19 +490,8 @@ time_bigrams <- top_bigrams %>%
 head(time_bigrams)
 ```
 
-```
-##             bigrams  n pub_year
-## 1    private sector 92     1998
-## 2 market transition 68     1998
-## 3               3 t 38     1998
-## 4              1 00 37     1998
-## 5 journal sociology 34     1998
-## 6      state sector 34     1998
-```
-
 Again, we need to sum up the counts, but this time grouped by year:
-
-```r
+```{r}
 time_bigrams <- time_bigrams %>%
   group_by(bigrams, pub_year) %>%
   summarise(n = sum(n)) %>%
@@ -671,28 +500,9 @@ time_bigrams <- time_bigrams %>%
 time_bigrams
 ```
 
-```
-## # A tibble: 248,725 x 3
-## # Groups:   bigrams [157,266]
-##    bigrams               pub_year     n
-##    <chr>                    <int> <int>
-##  1 0 0                       2004  1071
-##  2 et al                     2014   916
-##  3 women s                   2006   885
-##  4 american sociological     2014   860
-##  5 sociological review       2014   814
-##  6 u s                       2014   793
-##  7 et al                     2011   792
-##  8 et al                     2013   748
-##  9 et al                     2010   691
-## 10 et al                     2012   687
-## # … with 248,715 more rows
-```
-
 We now only keep the two terms of interest and plot them in a simple chart.
 
-
-```r
+```{r bigrams-over-time, fig.width=10}
 # filter the terms of interest
 time_comparison <- time_bigrams %>% 
   filter(bigrams == "labor market" | bigrams == "income inequality")
@@ -702,8 +512,6 @@ ggplot(time_comparison, aes(pub_year, n, colour = bigrams)) +
   geom_line() +
   scale_x_continuous(breaks = scales::pretty_breaks(7))
 ```
-
-![plot of chunk bigrams-over-time](figure/bigrams-over-time-1.png)
 
 In this instance, the plot does not reveal trends over time-the frequency of 
 the terms is fluctuating a lot but staying on a similar level. Single spikes
