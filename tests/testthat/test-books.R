@@ -106,7 +106,7 @@ test_that("chapters are correct", {
 
 
 # authors ----
-correct_authors <- tribble(
+correct_authors <- tibble::tribble(
   ~prefix, ~given_name, ~surname, ~string_name, ~suffix, ~author_number,
   NA_character_, "Jon", "Fraenkel",  NA_character_, NA_character_,  1L,
   NA_character_, "Stewart", "Firth", NA_character_, NA_character_,  2L
@@ -114,5 +114,5 @@ correct_authors <- tribble(
 
 test_that("authors are correct", {
   expect_type(chap_auth[["authors"]], "list")
-  expect_identical(chap_auth[[5, "authors"]], correct_authors)
+  expect_identical(chap_auth[[5, "authors"]][[1]], correct_authors)
 })
