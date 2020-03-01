@@ -126,7 +126,7 @@ at the beginning of your script, and the import will use all available cores:
 ```{r, eval=FALSE}
 library(future)
 
-plan(multiprocess)
+plan(multisession)
 ```
 
 You can find out more about futures by reading the package vignette:

@@ -30,7 +30,7 @@ test_that("writing correct results to file works", {
 })
 
 test_that("writing to file in parallel works", {
-  future::plan(future::multiprocess)
+  future::plan(future::multisession)
   temp_dir <- tempdir()
   jstor_convert_to_file(paths, 1, file.path(temp_dir, "/meta_data"), jst_get_article,
                         col_names = TRUE, n_batches = 1)
