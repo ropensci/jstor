@@ -10,7 +10,7 @@ matrix:
     - Rscript -e 'covr::codecov()'
   - r: release
     name: tibble-devel
-    before_script: Rscript -e "remotes::install_github('tidyverse/tibble')"
+    before_script: Rscript -e "remotes::install_github('tidyverse/dplyr')"
   - r: oldrel
 
 sudo: false
