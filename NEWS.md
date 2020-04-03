@@ -2,7 +2,7 @@
 * The package homepage has switched from https://ropensci.github.io/jstor to
 https://docs.ropensci.org/jstor. This simplifies building the site and aligns it
 with the rest of rOpenSci's packages. #80
-* Compatibility fix with tibble 3.0.0.
+* Compatibility fix for tibble 3.0.0.
 
 # jstor 0.3.7
 This is a small release to fix compatibility with `tidyr v1.0.0`. Furthermore,
