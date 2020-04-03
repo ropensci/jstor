@@ -9,7 +9,7 @@ matrix:
     after_success:
     - Rscript -e 'covr::codecov()'
   - r: release
-    name: tibble-devel
+    name: dplyr-devel
     before_script: Rscript -e "remotes::install_github('tidyverse/dplyr')"
   - r: oldrel
 
