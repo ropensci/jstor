@@ -5,13 +5,14 @@ in_memory <- jst_get_journal_overview()
 correct_names <- c(
   "title", "journal_id", "issn", "eissn", "doi", "url", "discipline", 
   "publisher", "coverage_range", "oclc_catalog_identifier", 
-  "lccn_catalog_identifier", "archive_release_date"
+  "lccn_catalog_identifier", "archive_release_date", "collections"
 )
 
 test_that("in memory journal list is available", {
   expect_s3_class(in_memory, "tbl_df")
   expect_identical(names(in_memory), correct_names)
-  expect_identical(nrow(in_memory), 4220L)
+  expect_gt(nrow(in_memory), 4300)
+  expect_lt(nrow(in_memory), 4500)
 })
 
 test_that("out of memory journal list is available and correct", {
