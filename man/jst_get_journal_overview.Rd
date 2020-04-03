@@ -31,7 +31,7 @@ sources of data: a cached version which gets updated with every release, and
 the ability to pull the most recent version directly from DfR (this had to
 be temporarily disabled.)
 
-The cached version was updated on 2018-09-27.
+The cached version was updated on 2020-04-03.
 }
 \examples{
 # use the function without arguments to get a tibble from disk

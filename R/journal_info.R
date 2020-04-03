@@ -14,7 +14,7 @@
 #' the ability to pull the most recent version directly from DfR (this had to
 #' be temporarily disabled.)
 #' 
-#' The cached version was updated on 2018-09-27.
+#' The cached version was updated on 2020-04-03.
 #' 
 #' @param most_recent Should the most recent version be downloaded from DfR? 
 #' (Currently disabled due to changes on the JSTOR-servers).
@@ -52,16 +52,16 @@ jst_get_journal_overview <- function(most_recent = FALSE, quiet = FALSE) {
     # journals <- readxl::read_xls(journal_list)
     # 
     # fix_names <- function(names) {
-    #   names %>% 
+    #   names %>%
     #     tolower() %>%
     #     stringr::str_remove("\\s\\(.*") %>% #remove (years) after coverage_range
     #     str_replace_all("\\s", "_")
     # }
     # 
     # 
-    # journals %>% 
-    #   purrr::set_names(fix_names(names(.))) %>% 
-    #   mutate(journal_id = stringr::str_extract(url, "[^\\/]+$")) %>% 
+    # journals %>%
+    #   purrr::set_names(fix_names(names(.))) %>%
+    #   mutate(journal_id = stringr::str_extract(url, "[^\\/]+$")) %>%
     #   dplyr::select(title, journal_id, dplyr::everything())
     
   } else {
