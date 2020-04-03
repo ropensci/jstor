@@ -24,6 +24,7 @@
 ^vignettes/part2.zip$
 ^vignettes/part1_journal_article_jst_get_article-1.csv$
 ^vignettes/part2_journal_article_jst_get_article-1.csv$
+^vignettes/figure$
 ^data-raw$
 ^cran-comments\.md$
 ^vignettes/.*.icloud$
