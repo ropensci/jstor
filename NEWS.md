@@ -1,4 +1,4 @@
-# jstor (development version)
+# jstor 0.3.8
 * The package homepage has switched from https://ropensci.github.io/jstor to
 https://docs.ropensci.org/jstor. This simplifies building the site and aligns it
 with the rest of rOpenSci's packages. #80
