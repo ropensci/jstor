@@ -5,12 +5,28 @@
 \alias{jst_import_zip}
 \title{Wrapper for file import}
 \usage{
-jst_import(in_paths, out_file, out_path = NULL, .f, col_names = TRUE,
-  n_batches = NULL, files_per_batch = NULL, show_progress = TRUE)
+jst_import(
+  in_paths,
+  out_file,
+  out_path = NULL,
+  .f,
+  col_names = TRUE,
+  n_batches = NULL,
+  files_per_batch = NULL,
+  show_progress = TRUE
+)
 
-jst_import_zip(zip_archive, import_spec, out_file, out_path = NULL,
-  col_names = TRUE, n_batches = NULL, files_per_batch = NULL,
-  show_progress = TRUE, rows = NULL)
+jst_import_zip(
+  zip_archive,
+  import_spec,
+  out_file,
+  out_path = NULL,
+  col_names = TRUE,
+  n_batches = NULL,
+  files_per_batch = NULL,
+  show_progress = TRUE,
+  rows = NULL
+)
 }
 \arguments{
 \item{in_paths}{A character vector to the \code{xml}-files which should be
@@ -60,7 +76,7 @@ many files easier:
 \item \code{\link[readr:write_csv]{readr::write_csv()}}
 }
 
-When using one of the \code{find_*} functions, there should usually be no errors.
+When using one of the \verb{find_*} functions, there should usually be no errors.
 To avoid the whole computation to fail in the unlikely event that an error
 occurs, we use \code{safely()} which let's us
 continue the process, and catch the error along the way.

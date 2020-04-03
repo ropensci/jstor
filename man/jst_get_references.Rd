@@ -17,7 +17,7 @@ A \code{tibble} with the following columns:
 \itemize{
 \item \code{file_name}: the identifier for the article the references come from.
 \item \code{ref_title}: the title of the references sections.
-\item \code{ref_authors}: a string of authors. Several authors are separated with \code{;}.
+\item \code{ref_authors}: a string of authors. Several authors are separated with \verb{;}.
 \item \code{ref_editors}: a string of editors, if available.
 \item \code{ref_collab}: a field that may contain information on the authors, if authors
 are not available.

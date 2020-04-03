@@ -3,7 +3,6 @@
 \docType{package}
 \name{jstor}
 \alias{jstor}
-\alias{jstor-package}
 \title{jstor: Read Data from JSTOR/DfR}
 \description{
 The tool \href{http://www.jstor.org/dfr/}{Data for Research (DfR)} by JSTOR is a

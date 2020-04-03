@@ -4,8 +4,14 @@
 \alias{jst_combine_outputs}
 \title{Combine outputs from converted files}
 \usage{
-jst_combine_outputs(path, write_to_file = TRUE, out_path = NULL,
-  overwrite = FALSE, clean_up = FALSE, warn = TRUE)
+jst_combine_outputs(
+  path,
+  write_to_file = TRUE,
+  out_path = NULL,
+  overwrite = FALSE,
+  clean_up = FALSE,
+  warn = TRUE
+)
 }
 \arguments{
 \item{path}{A path to a directory, containing .csv-files from
@@ -42,7 +48,7 @@ combine files:
 \item Files with similar names (except for trailing dashes with numbers) belong
 together and will be combined into one file.
 \item The names of the combined files can be determined from the original files.
-If you want to combine \code{foo-1.csv} and \code{foo-2.csv}, the combined file will
+If you want to combine \verb{foo-1.csv} and \verb{foo-2.csv}, the combined file will
 be \code{combined_foo.csv}.
 \item The directory only contains files which were imported via
 \code{\link[=jst_import]{jst_import()}} or \code{\link[=jst_import_zip]{jst_import_zip()}}. If the directory contains other

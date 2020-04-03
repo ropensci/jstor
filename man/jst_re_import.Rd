@@ -18,7 +18,7 @@ determined?}
 }
 \details{
 When attempting to re-import, a heuristic is applied. If the file has column
-names which match the names from any of the \code{find_*} functions, the file
+names which match the names from any of the \verb{find_*} functions, the file
 is read with the corresponding specifications. If no column names are
 recognized, files are recognized based on the number of columns. Since both
 references and footnotes have only two columns, the first line is inspected

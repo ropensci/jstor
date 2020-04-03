@@ -35,10 +35,10 @@ This function deals with four cases:
 }
 
 The algorithm to parse page ranges works as follows: A typical page range is
-\code{1-10, 200} where the article starts at page 1, ends at page 10, and has an
+\verb{1-10, 200} where the article starts at page 1, ends at page 10, and has an
 erratum at page 200. For this case, the range is calculated as
 \code{range + single_page}, as in\code{(10 - 1 + 1) + 1 = 11}. Sometimes multiple
-ranges are given: \code{1-10, 11-20}. For those cases all ranges are summed:
+ranges are given: \verb{1-10, 11-20}. For those cases all ranges are summed:
 \code{(10 - 1 + 1) + (20 - 11 + 1) = 20}. Another specification for multiple
 ranges is \code{1-10+11-20}, which is treated similarly.
 }
