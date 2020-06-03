@@ -144,17 +144,18 @@ article <- structure(list(file_name = "journal-article-standard_case", journal_d
     article_type = "research-article", article_title = "Two New Species of Ischaemum", 
     volume = "5", issue = "2", language = "eng", pub_day = "1", pub_month = "1", 
     pub_year = 1950L, first_page = "187", last_page = "188", page_range = "187-188"), 
-    row.names = c(NA, -1L), class = c("tbl_df", "tbl", "data.frame"))
+    row.names = c(NA, -1L), class = c("spec_tbl_df", "tbl_df", "tbl", 
+                                      "data.frame"))
 # authors -----
 authors <- structure(list(file_name = "journal-article-standard_case", prefix = NA_character_, 
     given_name = "N. L.", surname = "Bor", string_name = NA_character_, suffix = NA_character_, 
-    author_number = 1L), row.names = c(NA, -1L), class = c("tbl_df", "tbl", 
-    "data.frame"))
+    author_number = 1L), row.names = c(NA, -1L), class = c("spec_tbl_df",
+    "tbl_df", "tbl", "data.frame"))
 # footnotes ----
 footnotes <- structure(list(file_name = "journal-article-standard_case", footnotes = NA_character_), 
-    row.names = c(NA, -1L), class = c("tbl_df", "tbl", "data.frame"))
+    row.names = c(NA, -1L), class = c("spec_tbl_df", "tbl_df", "tbl", "data.frame"))
 footnotes_wi_cont <- structure(list(file_name = "journal-article-standard_case", footnotes = "Footnotes"), 
-                       row.names = c(NA, -1L), class = c("tbl_df", "tbl", "data.frame"))
+                       row.names = c(NA, -1L), class = c("spec_tbl_df", "tbl_df", "tbl", "data.frame"))
 # references ----
 references <- structure(
   list(
@@ -171,8 +172,8 @@ references <- structure(
     ref_last_page = NA_character_,
     ref_publisher = NA_character_,
     ref_publication_type = NA_character_,
-    ref_unparsed = NA_character_), row.names = c(NA, -1L), class = c("tbl_df", 
-    "tbl", "data.frame"))
+    ref_unparsed = NA_character_), row.names = c(NA, -1L), class = c(
+      "spec_tbl_df", "tbl_df", "tbl", "data.frame"))
 
 references_wi_cont <- structure(
   list(
@@ -191,12 +192,12 @@ references_wi_cont <- structure(
     ref_publication_type = NA_character_,
     ref_unparsed = NA_character_), 
   row.names = c(NA, -1L), 
-  class = c("tbl_df", "tbl", "data.frame"))
+  class = c("spec_tbl_df", "tbl_df", "tbl", "data.frame"))
 
 # ngrams -----
 ngram <- structure(list(file_name = c("book-chapter-standard_book", "book-chapter-standard_book"), 
     ngram = c("Common", "Uncommon"), n = c(400L, 5L)), row.names = c(NA, -2L), 
-    class = c("tbl_df", "tbl", "data.frame"))
+    class = c("spec_tbl_df", "tbl_df", "tbl", "data.frame"))
 
 
 # tests ----
@@ -291,8 +292,8 @@ test_that("files with column names can be combined", {
   combined <- jst_combine_outputs("testfiles/re-import", write_to_file = FALSE,
                       warn = FALSE)
 
-  expect_identical(purrr::pluck(combined, 1), combined_book)
-  expect_identical(purrr::pluck(combined, 2), combined_chapter)
+  expect_equal(purrr::pluck(combined, 1), combined_book)
+  expect_equal(purrr::pluck(combined, 2), combined_chapter)
 })
 
 test_that("files can be written to dir", {
