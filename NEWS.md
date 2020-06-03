@@ -1,4 +1,5 @@
 # jstor (development version)
+This is a small release to fix compatibility with `dplyr v1.0.0`.
 
 # jstor 0.3.8
 * The package homepage has switched from https://ropensci.github.io/jstor to
