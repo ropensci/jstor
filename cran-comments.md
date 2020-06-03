@@ -6,9 +6,9 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 0 notes
 
 * This is a fix adressing changes in the current release of dplyr (v1.0.0)
 
-The links in the vignettes are correct and work when used in a browser, as in
-the last release. 
+Checking on R-hub fails for windows at the moment, but I believe this is 
+unrelated to this package (installation issue within the tidyverse).
