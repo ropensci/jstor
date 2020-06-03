@@ -10,7 +10,7 @@ License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-    dplyr (>= 0.7.4),
+    dplyr (>= 1.0.0),
     tidyr (>= 0.7.2),
     purrr (>= 0.2.4),
     xml2 (>= 1.2.0),
