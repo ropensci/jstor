@@ -1,4 +1,4 @@
-# jstor (development version)
+# jstor 0.3.9
 This is a small release to fix compatibility with `dplyr v1.0.0`.
 
 # jstor 0.3.8
