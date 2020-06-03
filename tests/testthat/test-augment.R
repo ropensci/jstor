@@ -67,9 +67,10 @@ test_that("ranges are parsed correctly", {
 test_that("journal id is unified", {
   meta_data <- jst_get_article(jst_example("article_with_references.xml"))
   
-  output <- jst_unify_journal_id(meta_data)
-  correct_out <- dplyr::select(meta_data,
-                               -journal_doi, -journal_pub_id,
+  output <- jst_unify_journal_id(meta_data) %>% 
+    dplyr::select(file_name, journal_id, everything())
+  
+  correct_out <- dplyr::select(meta_data, -journal_doi, -journal_pub_id,
                                journal_id = journal_jcode)
   
   expect_equal(output, correct_out)
