@@ -24,7 +24,7 @@ recognized, files are recognized based on the number of columns. Since both
 references and footnotes have only two columns, the first line is inspected
 for either \code{"Referenc...|Bilbio...|Endnote..."} or \code{"Footnote..."}.
 In case there is still no match, the file is read with
-\code{\link[readr:read_csv]{readr::read_csv()}} with \code{guess_max = 5000} and a warning is raised.
+\code{\link[readr:read_delim]{readr::read_csv()}} with \code{guess_max = 5000} and a warning is raised.
 }
 \seealso{
 \code{\link[=jst_combine_outputs]{jst_combine_outputs()}}

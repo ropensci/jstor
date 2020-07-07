@@ -27,7 +27,7 @@ for joining with other data for the same file.
 \item part_title \emph{(chr)}: The title of the part.
 \item part_subtitle \emph{(chr)}: The subtitle of the part, if specified.
 \item authors \emph{(list)}: A list-column with information on the authors. Can be
-unnested with \code{\link[tidyr:unnest]{tidyr::unnest()}}. See the examples and \code{\link[=jst_get_authors]{jst_get_authors()}}.
+unnested with \code{\link[tidyr:nest]{tidyr::unnest()}}. See the examples and \code{\link[=jst_get_authors]{jst_get_authors()}}.
 \item abstract \emph{(chr)}: The abstract to the part.
 \item part_first_page \emph{(chr)}: The page where the part begins.
 }
