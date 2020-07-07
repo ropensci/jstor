@@ -18,7 +18,7 @@ file
 }
 }
 \description{
-Read in data on ngrams via \code{\link[readr:read_tsv]{readr::read_tsv()}}.
+Read in data on ngrams via \code{\link[readr:read_delim]{readr::read_tsv()}}.
 }
 \details{
 This function is mainly useful when it is used in together with
