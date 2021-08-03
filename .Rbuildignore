@@ -28,3 +28,4 @@
 ^data-raw$
 ^cran-comments\.md$
 ^vignettes/.*.icloud$
+^.github$
