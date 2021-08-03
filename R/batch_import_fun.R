@@ -49,7 +49,7 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
       res_ok <- tidyr::unnest(res_ok)
     }
     
-    write_csv(res_ok, path = paste0(out_path, "-", chunk_number, ".csv"),
+    write_csv(res_ok, file = paste0(out_path, "-", chunk_number, ".csv"),
               na = "", col_names = col_names)
   }
 
@@ -72,7 +72,7 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
     res_error <- dplyr::bind_cols(error_ids, error_message = error_message)
 
     write_csv(res_error,
-              path = paste0(out_path, "_broken-", chunk_number, ".csv"),
+              file = paste0(out_path, "_broken-", chunk_number, ".csv"),
               na = "", col_names = TRUE)
 
   } # end of "in case we have errors"
