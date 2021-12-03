@@ -6,6 +6,7 @@
 **Author:** [Thomas Klebel](https://thomasklebel.eu) <br> **License:**
 [GPL v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
+[![R-CMD-check](https://github.com/ropensci/jstor/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/ropensci/jstor/actions/workflows/check-standard.yaml)
 [![AppVeyorBuild
 status](https://ci.appveyor.com/api/projects/status/sry2gtwam7qyfw6l?svg=true)](https://ci.appveyor.com/project/tklebel/jstor)
 [![Coverage
