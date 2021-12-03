@@ -73,7 +73,7 @@ many files easier:
 \itemize{
 \item \code{\link[purrr:safely]{purrr::safely()}}
 \item \code{\link[furrr:future_map]{furrr::future_map()}}
-\item \code{\link[readr:write_csv]{readr::write_csv()}}
+\item \code{\link[readr:write_delim]{readr::write_csv()}}
 }
 
 When using one of the \verb{find_*} functions, there should usually be no errors.
@@ -89,7 +89,7 @@ run it in parallel, simply call \code{\link[future:plan]{future::plan()}} with
 running \code{jst_import} or \code{jst_import_zip}.
 
 After importing all files, they are written to disk with
-\code{\link[readr:write_csv]{readr::write_csv()}}.
+\code{\link[readr:write_delim]{readr::write_csv()}}.
 
 Since you might run out of memory when importing a large quantity of files,
 you can split up the files to import  into batches. Each batch is being
