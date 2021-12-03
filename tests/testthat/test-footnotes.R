@@ -1,5 +1,3 @@
-context("footnotes")
-
 library(xml2)
 library(magrittr)
 

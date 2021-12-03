@@ -1,4 +1,4 @@
-context("extraction of page numers")
+# extraction of page numbers
 library(xml2)
 
 # import files -----

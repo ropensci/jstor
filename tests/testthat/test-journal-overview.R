@@ -1,5 +1,3 @@
-context("test-journal-overview.R")
-
 in_memory <- jst_get_journal_overview()
 
 correct_names <- c(

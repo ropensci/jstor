@@ -1,4 +1,3 @@
-context("meta-information")
 library(xml2)
 library(magrittr)
 

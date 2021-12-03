@@ -1,5 +1,3 @@
-context("test-helpers.R")
-
 invalid_file <- "testfiles/invalid_file.xml"
 standard_case <- "testfiles/standard_case.xml"
 

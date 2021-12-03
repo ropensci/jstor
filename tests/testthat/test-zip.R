@@ -1,5 +1,3 @@
-context("test-zip.R")
-
 test_that("jst_preview_zip works", {
   correct_res <- tribble(
     ~type, ~meta_type, ~n,

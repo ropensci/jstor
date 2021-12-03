@@ -1,6 +1,3 @@
-context("test-augment.R")
-
-
 test_that("converting pages works", {
   in_vec <- c("33", "M66", "67M", "AJSv104p126", NA_character_)
   out_vec <- c(33L, 66L, 67L, 126L, NA_integer_)

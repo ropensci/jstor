@@ -1,5 +1,3 @@
-context("extraction of references")
-
 library(xml2)
 library(magrittr)
 

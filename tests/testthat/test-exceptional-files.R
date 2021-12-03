@@ -1,4 +1,3 @@
-context("exceptional-files")
 library(xml2)
 library(magrittr)
 

@@ -1,5 +1,3 @@
-context("test-ngram.R")
-
 ngram1 <- tribble(~file_name, ~ngram, ~n,
                   "ngram1", "Common", 400L,
                   "ngram1", "Uncommon", 5L)

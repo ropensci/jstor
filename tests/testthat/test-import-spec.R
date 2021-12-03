@@ -1,5 +1,3 @@
-context("test-import-spec.R")
-
 test_that("jst_define_import returns correct class", {
   expect_s3_class(jst_define_import(article = jst_get_article),
                   c("jstor_import_spec", "tbl_df", "tbl",

@@ -1,4 +1,3 @@
-context("author-import")
 library(xml2)
 library(magrittr)
 library(tibble)

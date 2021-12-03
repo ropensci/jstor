@@ -1,5 +1,3 @@
-context("full_text")
-
 # base path for id ------
 crazy_path <- "../Entpackt//soc_a-j/jpalestud/2012/41/2/10.1525%2Fjps.2012.xli.issue-2/10.1525%2Fjps.2012.xli.2.204/10.1525%2Fjps.2012.xli.2.204.txt" # nolint
 standard_path <- "../Entpackt//soc_k-z/sozialewelt/1952/3/4/i40039236/40874627/40874627.txt" # nolint
@@ -32,5 +30,5 @@ id est laborum.
 test_that("full-text is read correctly", {
   text <- jst_get_full_text(file_path)
 
-  expect_identical(lorem, text[["full_text"]])
+  expect_snapshot(text[["full_text"]])
 })

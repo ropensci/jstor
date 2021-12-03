@@ -1,4 +1,3 @@
-context("test-books.R")
 library(xml2)
 library(magrittr)
 library(stringr)

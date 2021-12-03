@@ -1,5 +1,3 @@
-context("test-re-import.R")
-
 # # # prepare data
 # jst_import_zip("inst/extdata/pseudo_dfr.zip", import_spec = jst_define_import(article = c(jst_get_article,
 #     jst_get_authors, jst_get_references, jst_get_footnotes), book = c(jst_get_book, jst_get_chapters),
