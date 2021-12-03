@@ -1,7 +1,3 @@
-library(xml2)
-library(magrittr)
-library(stringr)
-
 # import files -----
 result <- "testfiles/standard_book.xml" %>%
   jst_get_book()
@@ -97,7 +93,7 @@ test_that("chapters are correct", {
                    "Fiji’s road to military coup, 2006")
   expect_false(any(!is.na(chapters[["authors"]])))
   expect_identical(chapters[[1, "abstract"]], NA_character_)
-  expect_identical(chapters[[5, "abstract"]] %>% str_trunc(25),
+  expect_identical(chapters[[5, "abstract"]] %>% stringr::str_trunc(25),
                    "Fiji’s December 2006 c...")
   expect_identical(chapters[[1, "part_first_page"]], "i")
   expect_identical(chapters[[5, "part_first_page"]], "3")

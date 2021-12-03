@@ -1,6 +1,3 @@
-library(xml2)
-library(magrittr)
-
 # import files -----
 result_erratum <- "testfiles/erratum.xml" %>%
   jst_get_footnotes()
