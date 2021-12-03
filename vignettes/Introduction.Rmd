@@ -347,4 +347,4 @@ author_chap %>%
 ```
 
 You can learn more about the concept of list-columns in Hadley Wickham's book
-[R for Data Science](http://r4ds.had.co.nz/many-models.html).
+[R for Data Science](https://r4ds.had.co.nz/many-models.html).
