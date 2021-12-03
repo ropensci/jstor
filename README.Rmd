@@ -32,6 +32,11 @@ provides functions and suggests workflows for importing
 datasets from DfR. It was developed to deal with very large datasets which
 require an agreement, but can be used with smaller ones as well.
 
+**Note**: As of 2021, JSTOR has moved changed the way they provide data to a new 
+platform called [Constellate](https://constellate.org/). The package `jstor` has
+not been adapted to this change, and might therefore only be used for legacy 
+data that was optained from the old DfR platform.
+
 The most important set of functions is a group of `jst_get_*` functions:
 
 - `jst_get_article`
