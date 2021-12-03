@@ -1,5 +1,3 @@
-library(readr)
-
 paths <- c("testfiles/standard_case.xml", "broken_path.txt")
 
 # # nolint start
