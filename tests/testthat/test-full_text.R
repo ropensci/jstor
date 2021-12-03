@@ -30,5 +30,5 @@ id est laborum.
 test_that("full-text is read correctly", {
   text <- jst_get_full_text(file_path)
 
-  expect_snapshot(text[["full_text"]])
+  expect_snapshot(text[["full_text"]], variant = Sys.info()['sysname'])
 })
