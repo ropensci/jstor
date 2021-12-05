@@ -85,7 +85,7 @@ greater detail.
 Page numbers are a mess. Besides the issues mentioned above, page numbers might
 sometimes be specified as "pp. 1234-83" as in
 [this article from the American Journal of 
-Sociology](http://www.jstor.org/stable/10.1086/659100).
+Sociology](https://www.jstor.org/stable/10.1086/659100).
 Of course, this results in `first_page = 1234` and `last_page = 83`, and the
 computed number of total pages from `jst_get_total_pages()` will be
 negative. There is currently no general solution for this issue.
