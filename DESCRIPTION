@@ -30,7 +30,7 @@ Suggests:
     rmarkdown,
     future
 BugReports: https://github.com/ropensci/jstor/issues
-URL: https://github.com/ropensci/jstor, https://docs.ropensci.org/jstor
+URL: https://github.com/ropensci/jstor, https://docs.ropensci.org/jstor/
 RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr

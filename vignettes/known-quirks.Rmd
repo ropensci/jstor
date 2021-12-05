@@ -52,7 +52,7 @@ Unfortunately I have neither the time nor the interest to wade through all the
 data which you could get from DfR in order to find all possible quirks. The
 following list is thus inevitably incomplete. If you encounter new 
 quirks/peculiarities, it would be greatly appreciated if you sent me an email,
-or [opened an issue at GitHub](https://github.com/tklebel/jstor/issues).
+or [opened an issue at GitHub](https://github.com/ropensci/jstor/issues).
 I will then include your findings in future version of this vignette, so this 
 vignette can
 be a starting point for everybody who conducts text analysis with data from
