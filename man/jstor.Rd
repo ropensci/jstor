@@ -5,7 +5,7 @@
 \alias{jstor}
 \title{jstor: Read Data from JSTOR/DfR}
 \description{
-The tool \href{http://www.jstor.org/dfr/}{Data for Research (DfR)} by JSTOR is a
+The tool \href{https://www.jstor.org/dfr/}{Data for Research (DfR)} by JSTOR is a
 valuable source for citation analysis and text mining. \code{jstor}
 provides functions and suggests workflows for importing
 datasets from DfR.
@@ -16,7 +16,7 @@ Please refer to the vignettes for information on how to use the package:
 \code{browseVignettes("jstor")}
 
 If you encounter any issues or have ideas for new features, please file an
-issue at \url{https://github.com/tklebel/jstor/issues}.
+issue at \url{https://github.com/ropensci/jstor/issues}.
 }
 \author{
 Thomas Klebel
