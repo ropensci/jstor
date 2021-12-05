@@ -11,4 +11,5 @@
 * This is a fix addressing changes in readr (v2.0.0). 
 
 The notes regarding the links are spurious (jstor.org blocking access), as in
-previous submissions.
+previous submissions. All other links mentioned in the notes have been updated (
+changing http --> https, adding trailing slashes or following moved content).
