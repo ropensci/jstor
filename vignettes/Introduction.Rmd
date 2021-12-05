@@ -68,12 +68,12 @@ Be sure to think carefully about your assumptions and to check the content of
 your data before you make inferences.
 
 Books work a bit differently. Searching for data on
-httpss://www.jstor.org/dfr/results lets you filter for books, which are actually
+https://www.jstor.org/dfr/results lets you filter for books, which are actually
 book chapters. If you receive data from DfR on a book chapter, you always get 
 one xml-file with the whole book, including data on all chapters. Ngram or 
 full-text data for the same entry however is processed only from single
 chapters^[See the
-[technical specifications](httpss://www.jstor.org/dfr/about/technical-specifications)
+[technical specifications](https://www.jstor.org/dfr/about/technical-specifications)
 for more detail.]. Thus, the output of `jst_get_book` for a single file is
 similar to the one from `jst_get_article`: it is one row with general data about
 the book. `jst_get_chapters` gives you data on all chapters, and the resulting 
@@ -347,4 +347,4 @@ author_chap %>%
 ```
 
 You can learn more about the concept of list-columns in Hadley Wickham's book
-[R for Data Science](httpss://r4ds.had.co.nz/many-models.html).
+[R for Data Science](https://r4ds.had.co.nz/many-models.html).
