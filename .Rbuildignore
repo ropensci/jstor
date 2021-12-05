@@ -30,3 +30,5 @@
 ^vignettes/.*.icloud$
 ^.github$
 ^CRAN-SUBMISSION$
+^doc$
+^Meta$

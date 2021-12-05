@@ -15,3 +15,5 @@ vignettes/*.zip
 
 *.rds
 *.icloud
+/doc/
+/Meta/
