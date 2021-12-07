@@ -6,7 +6,7 @@ Authors@R: person("Thomas", "Klebel", email = "t.klebel@hotmail.com",
 Description: Functions and helpers to import metadata, ngrams and full-texts 
     delivered by Data for Research by JSTOR. 
 Depends: R (>= 3.1)
-License: GPL-3 | file LICENSE
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
