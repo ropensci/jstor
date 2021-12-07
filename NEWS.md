@@ -1,5 +1,7 @@
 # jstor 0.3.10
-This is a small release to fix compatibility with `readr v2.0.0`.
+This is a small release to fix compatibility with `readr v2.0.0`. In addition,
+various minor improvements have been made across to package to get it back to
+CRAN.
 
 # jstor 0.3.9
 This is a small release to fix compatibility with `dplyr v1.0.0`.
