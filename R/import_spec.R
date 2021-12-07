@@ -160,7 +160,7 @@ jst_define_import <- function(...) {
       purrr::map(walk_spec, n_batches = 1,
                  chunk_number = 1, out_path = "",
                  show_progress = FALSE, col_names = "",
-                 test_mode = T)
+                 test_mode = TRUE)
     )
   
  
@@ -203,7 +203,7 @@ print.jstor_import_spec <- function(x, ...) {
 
 
 capture_functions <- function(...) {
-  dots <- enquos(..., .named = T)
+  dots <- enquos(..., .named = TRUE)
   dots
 }
 

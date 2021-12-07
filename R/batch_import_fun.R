@@ -149,7 +149,7 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' \dontrun{
 #' # read from file list --------
 #' # find all files
-#' meta_files <- list.files(pattern = "xml", full.names = T)
+#' meta_files <- list.files(pattern = "xml", full.names = TRUE)
 #' 
 #' # import them via `jst_get_article`
 #' jst_import(meta_files, out_file = "imported_metadata", .f = jst_get_article,

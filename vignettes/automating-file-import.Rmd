@@ -168,7 +168,8 @@ example_dir <- system.file("extdata", package = "jstor")
 ## `list.files`
 
 ```{r}
-file_names_listed <- list.files(path = example_dir, full.names = T, pattern = "*.xml")
+file_names_listed <- list.files(path = example_dir, full.names = TRUE,
+                                pattern = "*.xml")
 file_names_listed
 ```
 

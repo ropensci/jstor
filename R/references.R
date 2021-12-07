@@ -50,7 +50,7 @@
 #'   jst_example("parsed_references.xml"),
 #'   parse_refs = TRUE
 #' ) 
-jst_get_references <- function(file_path, parse_refs = F) {
+jst_get_references <- function(file_path, parse_refs = FALSE) {
   xml_file <- read_jstor(file_path)
 
   validate_article(xml_file)

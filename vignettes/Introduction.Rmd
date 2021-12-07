@@ -212,13 +212,13 @@ There is an error here: `fiber` should be `über`. The language of the source
 is German, but the OCR-software assumed English. Therefore, it didn't
 recognize the *Umlaut*. Similar errors are common for text read via OCR.
 
-For other files, we can set `parse_refs = T`, so references will be imported 
+For other files, we can set `parse_refs = TRUE`, so references will be imported 
 in their parsed form, whenever they are available. 
 
 ```{r}
 jst_get_references(
   jst_example("parsed_references.xml"),
-  parse_refs = T
+  parse_refs = TRUE
 ) %>% 
   kable()
 ```

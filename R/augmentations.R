@@ -233,7 +233,7 @@ parse_ranges <- function(page_range, quietly = FALSE) {
   # detect roman numerals which are occasionally used for introduction sections
   roman_chars <- str_detect(splitted_df$splitted, "x|i|v|X|I|V")
   
-  if (any(roman_chars, na.rm = T) && !quietly) {
+  if (any(roman_chars, na.rm = TRUE) && !quietly) {
     warning("Cannot handle roman numerals (`x|i|v|X|I|V`) in rows (",
             paste(which(roman_chars), collapse = ", "),
             ") when computing ",

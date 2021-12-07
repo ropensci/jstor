@@ -70,7 +70,7 @@ jst_combine_outputs <- function(path, write_to_file = TRUE,
     # if it is a directory, list all files
     path <- check_path(path)
     
-    files <- list.files(path, pattern = "-\\d+.csv", full.names = T)
+    files <- list.files(path, pattern = "-\\d+.csv", full.names = TRUE)
   } else {
     path %>% 
       purrr::walk(check_path)
@@ -250,7 +250,7 @@ jst_re_import <- function(file, warn = TRUE) {
                   "Reverting to `read_csv(x, guess_max = 5000)`.", 
                   call. = FALSE)
         }
-        suppressMessages(read_csv(file, guess_max = 5000, col_names = F))
+        suppressMessages(read_csv(file, guess_max = 5000, col_names = FALSE))
       }
     }
   }
