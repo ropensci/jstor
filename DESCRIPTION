@@ -8,7 +8,7 @@ Description: Functions and helpers to import metadata, ngrams and full-texts
 Depends: R (>= 3.1)
 License: GPL-3
 Encoding: UTF-8
-LazyData: true
+LazyData: true | inst/extdata
 Imports:
     dplyr (>= 1.0.0),
     tidyr (>= 0.7.2),

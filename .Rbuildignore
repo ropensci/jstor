@@ -5,7 +5,6 @@
 ^dev_scripts$
 ^test_output$
 ^\.travis\.yml$
-^LICENSE\.md$
 ^appveyor\.yml$
 ^README\.Rmd$
 ^README\.md$
