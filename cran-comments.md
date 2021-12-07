@@ -8,8 +8,16 @@
 
 0 errors | 0 warnings | 1 note
 
-* This is a fix addressing changes in readr (v2.0.0). 
+* This is a fix addressing changes in readr (v2.0.0). Changes in readr where the
+reason for the check errors that lead to the removal of `jstor` from CRAN.
+As the tests and checks noted above indicate, all errors have been resolved.
 
-The notes regarding the links are spurious (jstor.org blocking access), as in
+* The notes regarding the links are spurious (jstor.org blocking access), as in
 previous submissions. All other links mentioned in the notes have been updated (
 changing http --> https, adding trailing slashes or following moved content).
+
+* Changed all occurences of `T` or `F` to `TRUE` and `FALSE`, as requested.
+
+* Removed file LICENSE and mention of it from DESCRIPTION, as requested.
+
+
