@@ -4,7 +4,7 @@
 \alias{jst_get_references}
 \title{Extract all references}
 \usage{
-jst_get_references(file_path, parse_refs = F)
+jst_get_references(file_path, parse_refs = FALSE)
 }
 \arguments{
 \item{file_path}{The path to the \code{.xml}-file from which references should be
