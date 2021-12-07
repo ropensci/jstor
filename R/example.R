@@ -18,8 +18,8 @@
 #' jst_example("article_with_references.xml") 
 jst_example <- function(path = NULL) {
   if (is.null(path)) {
-    dir(system.file("data-raw", package = "jstor"))
+    dir(system.file("extdata", package = "jstor"))
   } else {
-    system.file("data-raw", path, package = "jstor", mustWork = TRUE)
+    system.file("extdata", path, package = "jstor", mustWork = TRUE)
   }
 }
