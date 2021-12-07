@@ -120,13 +120,13 @@ read_jstor <- function(file) {
     
   } else {
     stop("Unknown input file. Must be a `xml`-file.", 
-         call. <- = FALSE)
+         call. = FALSE)
   }
   
 }
 
 # copied from readr
-check_path <- function(path) <- {
+check_path <- function(path) {
   if (file.exists(path))
     return(normalizePath(path, "/", mustWork = FALSE))
   
