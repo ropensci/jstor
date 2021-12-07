@@ -9,6 +9,9 @@ jst_clean_page(page)
 \arguments{
 \item{page}{A character vector for pages.}
 }
+\value{
+An integer vector, cleaned and converted from the input vector.
+}
 \description{
 This function tries to convert character vectors into integers. This function
 should not be called on page ranges.

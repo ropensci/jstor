@@ -10,6 +10,11 @@ jst_example(path = NULL)
 \item{path}{Name of the example file. If \code{NULL}, the example files will be
 listed.}
 }
+\value{
+Either a character vector with the names of example files (if
+\code{jst_example()} is called without supplying an argument), or a character
+vector indicating the path to the example file.
+}
 \description{
 jstor includes several sample files for demonstration purposes. This helper
 makes them easy to access.

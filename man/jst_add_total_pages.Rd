@@ -11,6 +11,10 @@ jst_add_total_pages(meta_data, quietly = FALSE)
 
 \item{quietly}{Should warnings from converting page ranges be suppressed?}
 }
+\value{
+A \code{tibble}, as provided with in \code{meta_data}, with an additional
+column on total number of pages.
+}
 \description{
 This function adds a column with the total count of pages. It calls
 \code{\link[=jst_get_total_pages]{jst_get_total_pages()}} which does the main work.

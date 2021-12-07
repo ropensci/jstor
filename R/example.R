@@ -7,6 +7,11 @@
 #' 
 #' @param path Name of the example file. If `NULL`, the example files will be
 #' listed.
+#' 
+#' @return Either a character vector with the names of example files (if 
+#' `jst_example()` is called without supplying an argument), or a character 
+#' vector indicating the path to the example file.
+#' 
 #' @export
 #' @examples
 #' jst_example()

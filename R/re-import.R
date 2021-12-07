@@ -154,6 +154,9 @@ jst_combine_outputs <- function(path, write_to_file = TRUE,
 #' @param warn Should warnings be emitted, if the type of file cannot be
 #' determined?
 #' 
+#' @return A `tibble`, with the columns determined based on heuristics applied
+#' to the input file.
+#' 
 #' @seealso [jst_combine_outputs()]
 #' @export
 jst_re_import <- function(file, warn = TRUE) {

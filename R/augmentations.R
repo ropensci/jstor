@@ -41,6 +41,9 @@ jst_augment <- function(meta_data, quietly = FALSE) {
 #' should not be called on page ranges.
 #' 
 #' @param page A character vector for pages.
+#' @return An integer vector, cleaned and converted from the input vector.
+#' 
+#' 
 #' @export
 #' @examples 
 #' jst_clean_page("2")
@@ -72,6 +75,10 @@ jst_clean_page <- function(page) {
 #' 
 #' @param meta_data Data which was processed via [jst_get_article()].
 #' @param quietly Should warnings from converting page ranges be suppressed?
+#' 
+#' @return A `tibble`, as provided with in `meta_data`, with an additional 
+#' column on total number of pages.
+#' 
 #' @export
 #' @seealso [jst_get_total_pages()]
 jst_add_total_pages <- function(meta_data,

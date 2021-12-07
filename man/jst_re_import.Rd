@@ -12,6 +12,10 @@ jst_re_import(file, warn = TRUE)
 \item{warn}{Should warnings be emitted, if the type of file cannot be
 determined?}
 }
+\value{
+A \code{tibble}, with the columns determined based on heuristics applied
+to the input file.
+}
 \description{
 \code{jst_re_import()} lets you re-import a file which was exported via
 \code{\link[=jst_import]{jst_import()}} or \code{\link[=jst_import_zip]{jst_import_zip()}}.

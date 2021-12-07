@@ -9,6 +9,10 @@ jst_get_file_name(file_path)
 \arguments{
 \item{file_path}{A path to a file}
 }
+\value{
+A character vector, containing the basename of the file without an
+extension.
+}
 \description{
 This helper simply extracts the basename of a path and removes the extension,
 e.g. \code{foo/bar.txt} is shortened to \code{bar}.

@@ -4,6 +4,9 @@
 #' e.g. `foo/bar.txt` is shortened to `bar`.
 #' 
 #' @param file_path A path to a file
+#' @return A character vector, containing the basename of the file without an
+#' extension.
+#' 
 #' @export
 jst_get_file_name <- function(file_path) {
   if (inherits(file_path, "jstor_zip")) {
