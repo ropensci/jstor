@@ -1,6 +1,9 @@
-── Import specification ─────────────────────────────────────────────────────
+> jst_define_import(article = c(jst_get_article, jst_get_references), pamphlet = jst_get_article,
++ book = jst_get_book, report = jst_get_book)
+-- Import specification --------------------------------------------------------
   Source            Import functions                                                                
-● Journal article   jst_get_article, jst_get_references
-● Pamphlet          jst_get_article     
-● Book chapter      jst_get_book        
-● Research report   jst_get_book        
+* Journal article   jst_get_article, jst_get_references
+* Pamphlet          jst_get_article     
+* Book chapter      jst_get_book        
+* Research report   jst_get_book        
+

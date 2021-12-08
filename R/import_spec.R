@@ -174,7 +174,7 @@ jst_define_import <- function(...) {
   out
 }
 
-
+#' @export
 print.jstor_import_spec <- function(x, ...) {
   cli::cat_rule(left = crayon::bold("Import specification"))
   
