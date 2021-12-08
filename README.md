@@ -11,7 +11,7 @@
 status](https://ci.appveyor.com/api/projects/status/sry2gtwam7qyfw6l?svg=true)](https://ci.appveyor.com/project/tklebel/jstor)
 [![Coverage
 status](https://codecov.io/gh/ropensci/jstor/branch/master/graph/badge.svg)](https://codecov.io/github/ropensci/jstor?branch=master)
-[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![lifecycle](https://img.shields.io/badge/lifecycle-superseded-blue.svg)](https://www.tidyverse.org/lifecycle/#superseded)
 [![CRAN
 status](http://www.r-pkg.org/badges/version/jstor)](https://cran.r-project.org/package=jstor)
 [![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/grand-total/jstor)](https://CRAN.R-project.org/package=jstor)
