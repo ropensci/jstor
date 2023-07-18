@@ -43,8 +43,10 @@ test_that("importing from zip works", {
   
   # test for the content of the files
   test_expected_zip <- function(expected_file) {
-    expect_equal(read_csv(file.path("testfiles", expected_file)),
-                     read_csv(file.path(test_dir, expected_file)))
+    expect_equal(read_csv(file.path("testfiles", expected_file), 
+                                    show_col_types = FALSE),
+                     read_csv(file.path(test_dir, expected_file), 
+                                        show_col_types = FALSE))
   }
   expected_files %>% 
     purrr::map(test_expected_zip)

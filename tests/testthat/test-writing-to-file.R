@@ -19,9 +19,9 @@ test_that("writing correct results to file works", {
                         jst_get_article, col_names = TRUE, n_batches = 1)
 
   expect_equal(read_csv("testfiles/correct_meta_data.csv",
-                            col_names = TRUE),
+                            col_names = TRUE, show_col_types = FALSE),
                    read_csv(file.path(temp_dir, "/meta_data-1.csv"),
-                            col_names = TRUE))
+                            col_names = TRUE, show_col_types = FALSE))
 
   unlink(temp_dir)
 })
@@ -33,9 +33,9 @@ test_that("writing to file in parallel works", {
                         col_names = TRUE, n_batches = 1)
   
   expect_equal(read_csv("testfiles/correct_meta_data.csv",
-                            col_names = TRUE),
+                            col_names = TRUE, show_col_types = FALSE),
                    read_csv(file.path(temp_dir, "/meta_data-1.csv"),
-                            col_names = TRUE))
+                            col_names = TRUE, show_col_types = FALSE))
   
   unlink(temp_dir)
 })
@@ -46,9 +46,9 @@ test_that("not writing column names works", {
                         col_names = FALSE, n_batches = 1)
   
   expect_equal(read_csv("testfiles/correct_meta_data_wo_cols.csv",
-                            col_names = FALSE),
+                            col_names = FALSE, show_col_types = FALSE),
                    read_csv(file.path(temp_dir, "/meta_data-1.csv"),
-                            col_names = FALSE))
+                            col_names = FALSE, show_col_types = FALSE))
   
   unlink(temp_dir)
 })
@@ -61,7 +61,8 @@ test_that("writing error messages to file works", {
                         n_batches = 1)
 
   res <- read_csv(file.path(temp_dir, "meta_data_broken-1.csv"),
-                  col_names = TRUE, col_types = cols(id = col_integer()))
+                  col_names = TRUE, col_types = cols(id = col_integer()),
+                  show_col_types = FALSE)
 
   correct_res <- structure(
     list(
@@ -83,9 +84,9 @@ test_that("import wrapper works with column names", {
              .f = jst_get_article, col_names = T)
 
   expect_equal(read_csv("testfiles/correct_meta_data.csv",
-                            col_names = TRUE),
+                            col_names = TRUE, show_col_types = FALSE),
                    read_csv(file.path(temp_dir, "/meta_data-1.csv"),
-                            col_names = TRUE))
+                            col_names = TRUE, show_col_types = FALSE))
 
   unlink(temp_dir)
 })
@@ -96,9 +97,9 @@ test_that("import wrapper works without column names", {
              .f = jst_get_article, col_names = FALSE)
   
   expect_equal(read_csv("testfiles/correct_meta_data_wo_cols.csv",
-                            col_names = FALSE),
+                            col_names = FALSE, show_col_types = FALSE),
                    read_csv(file.path(temp_dir, "/meta_data-1.csv"),
-                            col_names = FALSE))
+                            col_names = FALSE, show_col_types = FALSE))
   
   unlink(temp_dir)
 })
@@ -109,9 +110,9 @@ test_that("files_per_batch works", {
              .f = jst_get_article, col_names = FALSE, files_per_batch = 2)
   
   expect_equal(read_csv("testfiles/correct_meta_data_wo_cols.csv",
-                            col_names = FALSE),
+                            col_names = FALSE, show_col_types = FALSE),
                    read_csv(file.path(temp_dir, "/meta_data-1.csv"),
-                            col_names = FALSE))
+                            col_names = FALSE, show_col_types = FALSE))
   
   unlink(temp_dir)
 })
@@ -130,9 +131,11 @@ test_that("n_batches works for n > 1", {
   
   expect_equal(
     # duplicate correct result, since we read it in duplicated above
-    read_csv("testfiles/correct_meta_data_wo_cols.csv", col_names = FALSE) %>% 
+    read_csv("testfiles/correct_meta_data_wo_cols.csv", col_names = FALSE, 
+             show_col_types = FALSE) %>% 
       dplyr::slice(c(1, 1)),
-    purrr::map_df(written_files, read_csv, col_names = FALSE)
+    purrr::map_df(written_files, read_csv, col_names = FALSE, 
+                  show_col_types = FALSE)
   )
                    
   unlink(temp_dir)
