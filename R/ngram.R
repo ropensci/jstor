@@ -21,7 +21,8 @@ jst_get_ngram <- function(file) {
     
     out <- readr::read_tsv(file,
                            col_names = c("ngram", "n"), 
-                           col_types = c("ci"))
+                           col_types = c("ci"), 
+                           show_col_types = FALSE)
     attr(out, "spec") <- NULL
     
     expand_and_bind(file, out, ngram = TRUE)
@@ -34,7 +35,8 @@ jst_get_ngram <- function(file) {
     
     out <- readr::read_tsv(con,
                            col_names = c("ngram", "n"), 
-                           col_types = c("ci"))    
+                           col_types = c("ci"),
+                           show_col_types = FALSE)    
     attr(out, "spec") <- NULL
     
     expand_and_bind(file, out, ngram = TRUE)
