@@ -1,3 +1,5 @@
+# jstor 0.3.11
+
 # jstor 0.3.10
 This is a small release to fix compatibility with `readr v2.0.0`. In addition,
 various minor improvements have been made across to package to get it back to
