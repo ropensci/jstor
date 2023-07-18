@@ -1,6 +1,6 @@
 citHeader("To cite jstor in publications, please use:")
 
-citEntry(entry = "article",
+bibentry(bibtype = "article",
   author = "Thomas Klebel",
   title = "jstor: Import and Analyse Data from Scientific Texts",
   journal = "Journal of Open Source Software",
