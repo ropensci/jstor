@@ -103,7 +103,7 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' function in parallel. We use futures for this to give you maximum 
 #' flexibility. By default the code is executed sequentially. If you want to
 #' run it in parallel, simply call [future::plan()] with
-#' [future::multiprocess()] as an argument before
+#' [future::multisession()] as an argument before
 #' running `jst_import` or `jst_import_zip`. 
 #' 
 #' After importing all files, they are written to disk with
@@ -112,7 +112,7 @@ jstor_convert_to_file <- function(in_paths, chunk_number, out_path, fun,
 #' Since you might run out of memory when importing a large quantity of files,
 #' you can split up the files to import  into batches. Each batch is being 
 #' treated separately, therefore for each batch multiple processes from
-#' [future::multiprocess()] are spawned, if you added this plan.
+#' [future::multisession()] are spawned, if you added this plan.
 #' For this reason, it is not recommended to have very small batches,
 #' as there is an overhead for starting and ending the processes. On the other
 #' hand, the batches should not be too large, to not exceed memory limitations.
