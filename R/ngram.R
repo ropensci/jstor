@@ -78,6 +78,7 @@ jst_get_ngram <- function(file) {
 #' 
 #' # import ngram
 #' jst_get_ngram(zip_loc[[1]])
+#' unlink(tmp)
 jst_subset_ngrams <- function(zip_archives, ngram_type, selection,
                               by = file_name) {
   by <- rlang::enquo(by)

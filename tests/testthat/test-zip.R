@@ -50,6 +50,8 @@ test_that("importing from zip works", {
   }
   expected_files %>% 
     purrr::map(test_expected_zip)
+  
+  unlink(test_dir)
 })
 
 test_that("too many arguments for batches throw error", {

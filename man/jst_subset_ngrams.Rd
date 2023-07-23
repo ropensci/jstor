@@ -41,4 +41,5 @@ zip_loc <- jst_subset_ngrams(jst_example("pseudo_dfr.zip"), "ngram1",
 
 # import ngram
 jst_get_ngram(zip_loc[[1]])
+unlink(tmp)
 }

@@ -40,4 +40,5 @@ test_that("subsetting ngrams works", {
   
   
   expect_identical(jst_get_ngram(zip_loc[[1]]), correct_out)
+  unlink(tmp)
 })

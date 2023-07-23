@@ -324,6 +324,7 @@ test_that("reimporting checks inputs", {
   dir.create(file.path(new_dir, "obiwan"))
   expect_error(jst_combine_outputs(file.path(new_dir, "obiwan")), 
                "There are no files")
+  unlink(new_dir)
 })
 
 
