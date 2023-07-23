@@ -17,14 +17,7 @@ test_that("guessing encoding works", {
 
 # text ------
 # nolint start
-lorem <- '<plain_text> <page sequence="1">Lorem ipsum dolor sit amet, 
-consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore 
-magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in 
-voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim
-id est laborum.
-</page>  </plain_text>\n'
+lorem <- '<plain_text> <page sequence="1">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</page>  </plain_text>\n'
 # nolint end
 
 test_that("full-text is read correctly", {
