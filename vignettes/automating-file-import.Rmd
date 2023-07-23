@@ -116,6 +116,11 @@ function `jst_subset_ngrams()` helps you with this (see also the section on
 importing bigrams in the 
 [case study](https://docs.ropensci.org/jstor/articles/analysing-n-grams.html#importing-bigrams)).
 
+```{r, echo=FALSE}
+unlink(tmp)
+```
+
+
 ## Parallel processing
 Since the above process might take a while for larger archives (files have to
 be unpacked, read and parsed), there might be a benefit of executing the 

@@ -48,6 +48,8 @@
 #' jst_combine_outputs(tmp)
 #' list.files(tmp, "csv")
 #' 
+#' unlink(tmp)
+#' 
 #' \dontrun{
 #' # Trying to combine the files again raises an error.
 #' jst_combine_outputs(tmp)
