@@ -1,4 +1,5 @@
 # jstor 0.3.11
+This is a small release to fix compatibility with `future v1.33.0`.
 
 # jstor 0.3.10
 This is a small release to fix compatibility with `readr v2.0.0`. In addition,
