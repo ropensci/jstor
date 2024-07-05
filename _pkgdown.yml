@@ -4,28 +4,14 @@ template:
     bootswatch: simplex
 
 navbar:
-  title: jstor
-  type: default
-  left:
-  - icon: fa-home fa-lg
-    href: index.html
-  - text: Vignettes
-    menu:
-    - text: Introduction
-      href: articles/introduction.html
-    - text: Automating File Import
-      href: articles/automating-file-import.html
-    - text: Known Data Quirks
-      href: articles/known-quirks.html
-  - text: Case Study - Analysing Ngrams
-    href: articles/analysing-n-grams.html
-  - text: Reference
-    href: reference/index.html
-  - text: News
-    href: news/index.html
-  right:
-  - icon: fa-github fa-lg
-    href: https://github.com/tklebel/jstor
+  components:
+    casestudy:
+      text: Case Study - Analysing Ngrams
+      href: articles/analysing-n-grams.html
+  structure:
+    left: [home, articles, casestudy, reference, news]
+    right: [search, github]
+
 
 reference:
 - title: Import metadata
