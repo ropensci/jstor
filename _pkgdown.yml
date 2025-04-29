@@ -65,6 +65,3 @@ authors:
     href: https://thomasklebel.eu
 
 url: https://docs.ropensci.org/jstor
-
-extra_packages:
-  - tidyverse
