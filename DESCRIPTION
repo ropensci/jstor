@@ -28,6 +28,7 @@ Suggests:
     knitr,
     rmarkdown,
     future
+Config/Needs/website: tidyverse
 BugReports: https://github.com/ropensci/jstor/issues
 URL: https://github.com/ropensci/jstor, https://docs.ropensci.org/jstor/
 RoxygenNote: 7.2.2
